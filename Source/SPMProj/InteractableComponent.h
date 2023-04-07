@@ -20,11 +20,10 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UFUNCTION(BlueprintImplementableEvent)
-	void Interact(AActor* Instigator);
-	
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void Interact(AActor* Instigator);
 };
