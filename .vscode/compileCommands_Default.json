@@ -1,0 +1,90 @@
+[
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\InteractableComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\InteractableComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacter.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacter.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacterTest.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacterTest.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\SPMProj.Build.cs",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\SPMProj.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\SPMProj.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	}
+]
