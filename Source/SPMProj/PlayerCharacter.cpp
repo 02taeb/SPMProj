@@ -6,6 +6,7 @@
 #include "InputAction.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -20,6 +21,9 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Display, TEXT("Char spawned"));
+	UCharacterMovementComponent* MovementComp = GetCharacterMovement();
+	if (MovementComp) MovementComp->MaxWalkSpeed = MovementSpeed; // Set the max walking speed here
+
 }
 
 // Called every frame
@@ -33,9 +37,9 @@ void APlayerCharacter::Tick(float DeltaTime)
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	 auto playerController = Cast<APlayerController>(GetController());
- 
+	//get controller
+	auto playerController = Cast<APlayerController>(GetController());
+	
     // Get the local player enhanced input subsystem
     auto eiSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerController->GetLocalPlayer());
     //Add the input mapping context
@@ -44,9 +48,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
     // Get the EnhancedInputComponent
     auto playerEIcomponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
-	//Bind Move() to the mapping
-	//BindAction for enhanced system takes Action, ETriggerEvent, object, and function
-	//ETriggerEvent is an enum, where Triggered means "button is held down".
+	//enhannced inputs tar bara input actions, därmed behöver man bara använda BindAction (inte BindAxis etc)
 	playerEIcomponent->BindAction(inputMoveForward, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveForward);
 	playerEIcomponent->BindAction(inputMoveRight, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveRight);
 	playerEIcomponent->BindAction(inputLookUp, ETriggerEvent::Triggered, this, &APlayerCharacter::LookUp);
