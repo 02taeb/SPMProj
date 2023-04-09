@@ -31,7 +31,7 @@ private:
 	float RotationRate = 10;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
-	float MovementSpeed = 1000;
+	float MovementSpeed = 10000;
 
 	
 
