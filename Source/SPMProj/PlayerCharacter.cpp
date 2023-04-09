@@ -2,6 +2,10 @@
 
 
 #include "PlayerCharacter.h"
+#include "InputMappingContext.h"
+#include "InputAction.h"
+#include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -15,7 +19,7 @@ APlayerCharacter::APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	UE_LOG(LogTemp, Display, TEXT("Char spawned"));
 }
 
 // Called every frame
@@ -30,5 +34,46 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	 auto playerController = Cast<APlayerController>(GetController());
+ 
+    // Get the local player enhanced input subsystem
+    auto eiSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerController->GetLocalPlayer());
+    //Add the input mapping context
+    eiSubsystem->AddMappingContext(inputMapping, 0);
+ 
+    // Get the EnhancedInputComponent
+    auto playerEIcomponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+
+	//Bind Move() to the mapping
+	//BindAction for enhanced system takes Action, ETriggerEvent, object, and function
+	//ETriggerEvent is an enum, where Triggered means "button is held down".
+	playerEIcomponent->BindAction(inputMoveForward, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveForward);
+	playerEIcomponent->BindAction(inputMoveRight, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveRight);
+	playerEIcomponent->BindAction(inputLookUp, ETriggerEvent::Triggered, this, &APlayerCharacter::LookUp);
+	playerEIcomponent->BindAction(inputLookRight, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRight);
 }
 
+void APlayerCharacter::MoveForward(const FInputActionValue & Value) {
+	//To bind to axis mapping: SetupPlayerInputComponent
+	UE_LOG(LogTemp, Display, TEXT("Float value: %f"), Value.Get<float>());
+	AddMovementInput(GetActorForwardVector() * Value.Get<float>());
+	
+}
+
+void APlayerCharacter::MoveRight(const FInputActionValue& Value)
+{
+	UE_LOG(LogTemp, Display, TEXT("Float value: %f"), Value.Get<float>());
+	AddMovementInput(GetActorRightVector() * Value.Get<float>());
+}
+
+void APlayerCharacter::LookUp(const FInputActionValue& Value)
+{
+	UE_LOG(LogTemp, Display, TEXT("Looking up Float value: %f"), Value.Get<float>());
+	AddControllerPitchInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
+}
+
+void APlayerCharacter::LookRight(const FInputActionValue& Value)
+{
+	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
+	UE_LOG(LogTemp, Display, TEXT("looking right Float value: %f"), Value.Get<float>());
+}
