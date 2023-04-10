@@ -27,7 +27,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Interacting")
 	TSubclassOf<class UInteractableComponent> InteractableClass;
 private: 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
@@ -35,10 +35,16 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float MovementSpeed = 10000;
-
-	UPROPERTY(EditAnywhere)
+	
+	// Hur långt från KAMERAN som spelaren kan interagera med objekt.
+	UPROPERTY(EditDefaultsOnly, Category = "Interacting")
+	float InteractableReach = 500;
+	
+	/*
+	UPROPERTY(EditAnywhere, Category = "Interacting")
 	TSoftObjectPtr<AActor> InteractableActor;
-
+	*/
+	
 	//https://community.gamedev.tv/t/how-to-for-ue5-1-enhanced-input-system/221375?_gl=1*kvhzsk*_ga*MTc5MTAzNDQ2Mi4xNjgwMTk0MTc2*_ga_2C81L26GR9*MTY4MTAwODIzNC4yNS4xLjE2ODEwMDgyNjIuMC4wLjA
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
     class UInputMappingContext* InputMapping;
