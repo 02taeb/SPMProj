@@ -6,6 +6,7 @@
 #include "InputAction.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "InteractableComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
@@ -37,22 +38,28 @@ void APlayerCharacter::Tick(float DeltaTime)
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	//get controller
-	auto playerController = Cast<APlayerController>(GetController());
+	
+	// Get controller
+	auto PlayerController = Cast<APlayerController>(GetController());
+	if (PlayerController == nullptr) return;
 	
     // Get the local player enhanced input subsystem
-    auto eiSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(playerController->GetLocalPlayer());
+    auto EISubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+	if (EISubsystem == nullptr) return;
+	
     //Add the input mapping context
-    eiSubsystem->AddMappingContext(inputMapping, 0);
+    EISubsystem->AddMappingContext(InputMapping, 0);
  
     // Get the EnhancedInputComponent
-    auto playerEIcomponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
-
-	//enhannced inputs tar bara input actions, därmed behöver man bara använda BindAction (inte BindAxis etc)
-	playerEIcomponent->BindAction(inputMoveForward, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveForward);
-	playerEIcomponent->BindAction(inputMoveRight, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveRight);
-	playerEIcomponent->BindAction(inputLookUp, ETriggerEvent::Triggered, this, &APlayerCharacter::LookUp);
-	playerEIcomponent->BindAction(inputLookRight, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRight);
+    auto PlayerEIComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	if (PlayerEIComponent == nullptr) return;
+	
+	// Enhanced inputs tar bara input actions, därmed behöver man bara använda BindAction (inte BindAxis etc)
+	PlayerEIComponent->BindAction(InputMoveForward, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveForward);
+	PlayerEIComponent->BindAction(InputMoveRight, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveRight);
+	PlayerEIComponent->BindAction(InputLookUp, ETriggerEvent::Triggered, this, &APlayerCharacter::LookUp);
+	PlayerEIComponent->BindAction(InputLookRight, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRight);
+	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 }
 
 void APlayerCharacter::MoveForward(const FInputActionValue & Value) {
@@ -76,6 +83,14 @@ void APlayerCharacter::LookUp(const FInputActionValue& Value)
 
 void APlayerCharacter::LookRight(const FInputActionValue& Value)
 {
-	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 	UE_LOG(LogTemp, Display, TEXT("looking right Float value: %f"), Value.Get<float>());
+	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
+}
+
+void APlayerCharacter::Interact(const FInputActionValue& Value)
+{
+	if (InteractableActor == nullptr) return;
+	UInteractableComponent* InteractableComponent = Cast<UInteractableComponent>(InteractableActor->GetComponentByClass(InteractableClass));
+	InteractableComponent->Interact(this);
+	UE_LOG(LogTemp, Display, TEXT("Player interact with: %s Actor of class: %s"), *InteractableActor->GetActorNameOrLabel(), *InteractableClass->GetFullName());
 }
