@@ -59,32 +59,38 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputMoveForward, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveForward);
 	PlayerEIComponent->BindAction(InputMoveRight, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveRight);
 	PlayerEIComponent->BindAction(InputLookUp, ETriggerEvent::Triggered, this, &APlayerCharacter::LookUp);
+	PlayerEIcomponent->BindAction(inputLookUpRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookUpRate);
 	PlayerEIComponent->BindAction(InputLookRight, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRight);
+	PlayerEIcomponent->BindAction(inputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 }
 
 void APlayerCharacter::MoveForward(const FInputActionValue & Value) {
-	//To bind to axis mapping: SetupPlayerInputComponent
-	UE_LOG(LogTemp, Display, TEXT("Float value: %f"), Value.Get<float>());
 	AddMovementInput(GetActorForwardVector() * Value.Get<float>());
-	
 }
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("Float value: %f"), Value.Get<float>());
 	AddMovementInput(GetActorRightVector() * Value.Get<float>());
 }
 
 void APlayerCharacter::LookUp(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("Looking up Float value: %f"), Value.Get<float>());
+	AddControllerPitchInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
+}
+
+void APlayerCharacter::LookUpRate(const FInputActionValue &Value)
+{
 	AddControllerPitchInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::LookRight(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("looking right Float value: %f"), Value.Get<float>());
+	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
+}
+
+void APlayerCharacter::LookRightRate(const FInputActionValue &Value)
+{
 	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
