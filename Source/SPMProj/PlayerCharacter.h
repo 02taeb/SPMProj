@@ -37,7 +37,7 @@ private:
 	float MovementSpeed = 10000;
 
 	UPROPERTY(EditAnywhere)
-	AActor* InteractableActor;
+	TSoftObjectPtr<AActor> InteractableActor;
 
 	//https://community.gamedev.tv/t/how-to-for-ue5-1-enhanced-input-system/221375?_gl=1*kvhzsk*_ga*MTc5MTAzNDQ2Mi4xNjgwMTk0MTc2*_ga_2C81L26GR9*MTY4MTAwODIzNC4yNS4xLjE2ODEwMDgyNjIuMC4wLjA
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
