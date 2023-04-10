@@ -52,7 +52,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	playerEIcomponent->BindAction(inputMoveForward, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveForward);
 	playerEIcomponent->BindAction(inputMoveRight, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveRight);
 	playerEIcomponent->BindAction(inputLookUp, ETriggerEvent::Triggered, this, &APlayerCharacter::LookUp);
+	playerEIcomponent->BindAction(inputLookUpRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookUpRate);
 	playerEIcomponent->BindAction(inputLookRight, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRight);
+	playerEIcomponent->BindAction(inputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 }
 
 void APlayerCharacter::MoveForward(const FInputActionValue & Value) {

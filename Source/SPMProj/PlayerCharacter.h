@@ -28,12 +28,14 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
 private:
+	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 10;
-
+	//Show Movement speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float MovementSpeed = 10000;
 
+	//Show Enhanced Inputs in the Editor, Define all inputs + inputmapping in BP inspector
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputMappingContext *inputMapping;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
@@ -49,6 +51,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction *inputLookRightRate;
 
+	//callback functions for Input actions
 	void MoveForward(const FInputActionValue &Value);
 	void MoveRight(const FInputActionValue &Value);
 	void LookUp(const FInputActionValue &Value);
