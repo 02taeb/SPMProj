@@ -8,6 +8,7 @@
 #include "EnhancedInputComponent.h"
 #include "InteractableComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -89,8 +90,29 @@ void APlayerCharacter::LookRight(const FInputActionValue& Value)
 
 void APlayerCharacter::Interact(const FInputActionValue& Value)
 {
-	if (InteractableActor == nullptr) return;
-	UInteractableComponent* InteractableComponent = Cast<UInteractableComponent>(InteractableActor->GetComponentByClass(InteractableClass));
-	InteractableComponent->Interact(this);
-	UE_LOG(LogTemp, Display, TEXT("Player interact with: %s Actor of class: %s"), *InteractableActor->GetActorNameOrLabel(), *InteractableClass->GetFullName());
+	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController == nullptr) return;
+
+	FHitResult HitResult;
+	FVector TraceLocStart;
+	FRotator TraceRot;
+	PlayerController->GetPlayerViewPoint(TraceLocStart, TraceRot);
+	FVector TraceLocEnd = TraceLocStart + TraceRot.Vector() * InteractableReach;
+	bool bHitSucceed = GetWorld()->LineTraceSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, ECC_GameTraceChannel1);
+
+	if (bHitSucceed)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Hit Interactable Actor: %s"), *HitResult.GetActor()->GetActorNameOrLabel());
+		UActorComponent* HitActorComp = HitResult.GetActor()->GetComponentByClass(InteractableClass);
+		if (HitActorComp == nullptr) return;
+		UInteractableComponent* HitInteractableComp = Cast<UInteractableComponent>(HitActorComp);
+		if (HitInteractableComp == nullptr) return;
+		HitInteractableComp->Interact(this);
+	}
+	/*
+		if (InteractableActor == nullptr) return;
+		UInteractableComponent* InteractableComponent = Cast<UInteractableComponent>(InteractableActor->GetComponentByClass(InteractableClass));
+		InteractableComponent->Interact(this);
+		UE_LOG(LogTemp, Display, TEXT("Player interact with: %s Actor of class: %s"), *InteractableActor->GetActorNameOrLabel(), *InteractableClass->GetFullName()); 
+	 */
 }
