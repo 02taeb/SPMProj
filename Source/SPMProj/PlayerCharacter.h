@@ -29,10 +29,11 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Interacting")
 	TSubclassOf<class UInteractableComponent> InteractableClass;
-private: 
+private:
+	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 10;
-
+	//Show Movement speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float MovementSpeed = 10000;
 	
@@ -46,8 +47,9 @@ private:
 	*/
 	
 	//https://community.gamedev.tv/t/how-to-for-ue5-1-enhanced-input-system/221375?_gl=1*kvhzsk*_ga*MTc5MTAzNDQ2Mi4xNjgwMTk0MTc2*_ga_2C81L26GR9*MTY4MTAwODIzNC4yNS4xLjE2ODEwMDgyNjIuMC4wLjA
+	//Show Enhanced Inputs in the Editor, Define all inputs + inputmapping in BP inspector
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
-    class UInputMappingContext* InputMapping;
+    	class UInputMappingContext* InputMapping;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputMoveForward;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
@@ -59,9 +61,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputInteract;
 	
+	//callback functions for Input actions
 	void MoveForward(const FInputActionValue& Value);
 	void MoveRight(const FInputActionValue& Value);
 	void LookUp(const FInputActionValue& Value);
+	void LookUpRate(const FInputActionValue &Value);
 	void LookRight(const FInputActionValue& Value);
+	void LookRightRate(const FInputActionValue &Value);
 	void Interact(const FInputActionValue& Value);
 };
