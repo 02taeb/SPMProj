@@ -56,26 +56,30 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 }
 
 void APlayerCharacter::MoveForward(const FInputActionValue & Value) {
-	//To bind to axis mapping: SetupPlayerInputComponent
-	UE_LOG(LogTemp, Display, TEXT("Float value: %f"), Value.Get<float>());
 	AddMovementInput(GetActorForwardVector() * Value.Get<float>());
-	
 }
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("Float value: %f"), Value.Get<float>());
 	AddMovementInput(GetActorRightVector() * Value.Get<float>());
 }
 
 void APlayerCharacter::LookUp(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Display, TEXT("Looking up Float value: %f"), Value.Get<float>());
+	AddControllerPitchInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
+}
+
+void APlayerCharacter::LookUpRate(const FInputActionValue &Value)
+{
 	AddControllerPitchInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::LookRight(const FInputActionValue& Value)
 {
 	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
-	UE_LOG(LogTemp, Display, TEXT("looking right Float value: %f"), Value.Get<float>());
+}
+
+void APlayerCharacter::LookRightRate(const FInputActionValue &Value)
+{
+	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
