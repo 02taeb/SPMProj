@@ -87,7 +87,7 @@ void APlayerCharacter::LookRight(const FInputActionValue& Value)
 	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
-void APlayerCharacter::Interact()
+void APlayerCharacter::Interact(const FInputActionValue& Value)
 {
 	UInteractableComponent* InteractableComponent = Cast<UInteractableComponent>(InteractableActor->GetComponentByClass(InteractableClass));
 	InteractableComponent->Interact(this);

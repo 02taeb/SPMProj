@@ -57,5 +57,5 @@ private:
 	void MoveRight(const FInputActionValue& Value);
 	void LookUp(const FInputActionValue& Value);
 	void LookRight(const FInputActionValue& Value);
-	void Interact();
+	void Interact(const FInputActionValue& Value);
 };
