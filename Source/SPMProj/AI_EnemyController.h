@@ -20,5 +20,8 @@ protected:
 	virtual void BeginPlay() override;
 	
 
+private: 
+	UPROPERTY(EditAnywhere, Category = "EnemeyStats")
+	float DistanceFromPlayer = 200;
 
 };
