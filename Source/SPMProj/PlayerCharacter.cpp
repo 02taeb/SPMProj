@@ -7,6 +7,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "InteractableComponent.h"
+#include "MeleeWeapon.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -96,6 +97,14 @@ void APlayerCharacter::LookRightRate(const FInputActionValue &Value)
 
 void APlayerCharacter::Interact(const FInputActionValue& Value)
 {
+
+	/*Equip part, just a first test place*/
+	if(AMeleeWeapon* Weapon = Cast<AMeleeWeapon>(OverlapWeapon))
+	{
+		Weapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
+	}
+
+	
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
 

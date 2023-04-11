@@ -3,6 +3,7 @@
 
 #include "MeleeWeapon.h"
 
+#include "PlayerCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -12,8 +13,8 @@ AMeleeWeapon::AMeleeWeapon()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
-	MeleeMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Melee Weapon Mesh"));
-	RootComponent = MeleeMesh;
+	MeleeWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Melee Weapon Mesh"));
+	RootComponent = MeleeWeaponMesh;
 	
 	PickupZone = CreateDefaultSubobject<USphereComponent>(TEXT("Pick-up zone"));
 	PickupZone->SetupAttachment(GetRootComponent());
@@ -33,6 +34,8 @@ void AMeleeWeapon::BeginPlay()
 	Super::BeginPlay();
 	/*Binding the callback function to the delegate*/
 	WeaponBox->OnComponentBeginOverlap.AddDynamic(this, &AMeleeWeapon::OnBoxOverlap);
+	PickupZone->OnComponentBeginOverlap.AddDynamic(this, &AMeleeWeapon::OnSphereBeginOverlap);
+	PickupZone->OnComponentEndOverlap.AddDynamic(this, &AMeleeWeapon::OnSphereEndOverlap);
 }
 
 void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -56,17 +59,41 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	BoxHit,  
 	true );  /*Ignores itself for overlaps*/
 
-	if(GEngine)
+	/*if(GEngine)
 	{
 		FString HitObject = BoxHit.GetActor()->GetActorNameOrLabel();
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, HitObject);
+	}*/
+
+	UE_LOG(LogTemp, Warning, TEXT("Weapon hit result: %s"), *BoxHit.GetActor()->GetActorNameOrLabel());
+}
+
+void AMeleeWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if(APlayerCharacter* Player = Cast<APlayerCharacter>(OtherActor))
+	{
+		Player->SetOverlapWeapon(this);
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("Weapon hit result: %s"), *BoxHit.GetActor()->GetActorNameOrLabel());
+}
+
+void AMeleeWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if(APlayerCharacter* Player = Cast<APlayerCharacter>(OtherActor))
+	{
+		Player->SetOverlapWeapon(nullptr);
+	}
 }
 
 void AMeleeWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AMeleeWeapon::AttachWeaponOnPlayer(USceneComponent* Player, FName SocketLabel)
+{
+	MeleeWeaponMesh->AttachToComponent(Player, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), SocketLabel);
 }
 
