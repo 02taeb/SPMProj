@@ -9,6 +9,7 @@
 #include "InteractableComponent.h"
 #include "MeleeWeapon.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Animation/AnimMontage.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -64,6 +65,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputLookRight, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRight);
 	PlayerEIComponent->BindAction(InputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
+	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
 }
 
 void APlayerCharacter::MoveForward(const FInputActionValue & Value) {
@@ -130,4 +132,13 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		InteractableComponent->Interact(this);
 		UE_LOG(LogTemp, Display, TEXT("Player interact with: %s Actor of class: %s"), *InteractableActor->GetActorNameOrLabel(), *InteractableClass->GetFullName()); 
 	 */
+}
+
+void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && NormalAttackMontage)
+	{
+		AnimInstance->Montage_Play(NormalAttackMontage);
+	}
 }
