@@ -28,6 +28,14 @@ public:
 	// Will return nullptr on no blocking actor, requires nullcheck by implementation.
 	AActor* GetBlockingActor();
 private:
+	// Radius of capsule for SweepTrace from camera to player.
+	UPROPERTY(EditAnywhere)
+	float CapsuleRadius = 50.f;
+
+	// Half height of capsule for SweepTrace from camera to player.
+	UPROPERTY(EditAnywhere)
+	float CapsuleHalfHeight = 100.f;
+	
 	float TransparencyDegree;
 	AActor* BlockingActor;
 	

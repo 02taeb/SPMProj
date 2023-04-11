@@ -38,8 +38,9 @@ void UCameraTransparencyComponent::TickComponent(float DeltaTime, ELevelTick Tic
 	FRotator TraceRot;
 	PlayerController->GetPlayerViewPoint(TraceLocStart, TraceRot);
 	FVector TraceLocEnd = GetOwner()->GetActorLocation();
-	bool bHitSucceed = GetWorld()->LineTraceSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, ECC_Visibility);
-
+	
+	bool bHitSucceed = GetWorld()->SweepSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, TraceRot.Quaternion(), ECC_Visibility, FCollisionShape::MakeCapsule(CapsuleRadius, CapsuleHalfHeight));
+	DrawDebugCapsule(GetWorld(), HitResult.ImpactPoint, CapsuleHalfHeight, CapsuleRadius, TraceRot.Quaternion(), FColor::Red, false, 10.f);
 	if (bHitSucceed)
 	{
 		UE_LOG(LogTemp, Display, TEXT("Hit Actor in front of camer: %s"), *HitResult.GetActor()->GetActorNameOrLabel());
