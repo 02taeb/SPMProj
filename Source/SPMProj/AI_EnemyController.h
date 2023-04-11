@@ -13,5 +13,15 @@ UCLASS()
 class SPMPROJ_API AAI_EnemyController : public AAIController
 {
 	GENERATED_BODY()
+public:
+	virtual void Tick(float DeltaSeconds) override;
+
+protected:
+	virtual void BeginPlay() override;
 	
+
+private: 
+	UPROPERTY(EditAnywhere, Category = "EnemeyStats")
+	float DistanceFromPlayer = 200;
+
 };
