@@ -9,7 +9,14 @@ Instruktions:
 
 Team Size: 10
 
+--------------------------------------------------------------------------
+
 Programmers: Lucas Ilstedt, Daniel Olsson, Hugo Westgren, Mihajlo Radotic
+
 Tech-Artists: Özge Alkan, Therese Johansson
+
 3D-Artists: Sofia Andersson, Evgeniia (Zhenya) Dolgikh
+
 Game Designers/Level Designers: Jens Frenkel Isaksson, Linus Ekberg
+
+--------------------------------------------------------------------------
