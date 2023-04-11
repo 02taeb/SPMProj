@@ -15,6 +15,9 @@ public:
 	AMeleeWeapon();
 	
 	virtual void Tick(float DeltaTime) override;
+
+	/*Attaches the weapon to the skeleton on */
+	void AttachWeaponOnPlayer(USceneComponent* Player, FName SocketLabel);
 protected:
 	virtual void BeginPlay() override;
 
@@ -31,7 +34,7 @@ protected:
 
 private:	
 	UPROPERTY(VisibleAnywhere)
-	class UStaticMeshComponent* MeleeMesh;
+	class UStaticMeshComponent* MeleeWeaponMesh;
 	
 	/*A Sphere for detecting overlapping with Character. If overlapping the Character can pick up the weapon. */
 	UPROPERTY(VisibleAnywhere)
