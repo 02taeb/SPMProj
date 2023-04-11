@@ -44,6 +44,10 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* OverlapWeapon;
+
+	/*Animation montage for basic attack*/
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	class UAnimMontage* NormalAttackMontage;
 	/*
 	UPROPERTY(EditAnywhere, Category = "Interacting")
 	TSoftObjectPtr<AActor> InteractableActor;
@@ -67,6 +71,8 @@ private:
 	class UInputAction* InputLookUpRate;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputLookRightRate;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputAttackMeleeNormal;
 	
 	//callback functions for Input actions
 	void MoveForward(const FInputActionValue& Value);
@@ -76,6 +82,7 @@ private:
 	void LookRight(const FInputActionValue& Value);
 	void LookRightRate(const FInputActionValue &Value);
 	void Interact(const FInputActionValue& Value);
+	void AttackMeleeNormal(const FInputActionValue& Value);
 
 public:
 	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr */
