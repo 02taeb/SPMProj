@@ -24,15 +24,22 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	float GetIntitialMaxHealth();
-	float GetMaxHealth();
-	float GetCurrentHealth();
+	float GetInitialMaxHealth() const;
+	float GetMaxHealth() const;
+	float GetCurrentHealth() const;
 
-	float GetInitialAttackDamage();
-	float GetCurrentAttackDamage();
+	float GetInitialAttackDamage() const;
+	float GetCurrentAttackDamage() const;
 
-	float GetInitialArmor();
-	float GetCurrentArmor();
+	float GetInitialArmor() const;
+	float GetCurrentArmor() const;
+
+	void IncreaseMaxHealth(const float Delta);
+	void IncreaseAttackDamage(const float Delta);
+	void IncreaseArmor(const float Delta);
+	
+	void TakeDamage(const float Damage);
+	void HealHealth(const float HealAmount);
 private:
 	// Health at beginning of game
 	UPROPERTY(EditDefaultsOnly)

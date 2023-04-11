@@ -29,6 +29,76 @@ void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	if (CurrentHealth <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player is dead"));
+		// Death anim
+		// Respawna bak/Ladda om scen för full restart
+			// Konsekvenser av död? Respawna fiender? Förlora stat?
+		// Påverka inv ?
+		// Save/Load
+		// Kallelse till Level blueprint som får sköta det
+	}
 }
 
+float UStatComponent::GetInitialMaxHealth() const
+{
+	return InitialMaxHealth;
+}
+
+float UStatComponent::GetMaxHealth() const
+{
+	return MaxHealth;
+}
+
+float UStatComponent::GetCurrentHealth() const
+{
+	return CurrentHealth;
+}
+
+float UStatComponent::GetInitialAttackDamage() const
+{
+	return InitialAttackDamage;
+}
+
+float UStatComponent::GetCurrentAttackDamage() const
+{
+	return CurrentAttackDamage;
+}
+
+float UStatComponent::GetInitialArmor() const
+{
+	return InitialArmor;
+}
+
+float UStatComponent::GetCurrentArmor() const
+{
+	return CurrentArmor;
+}
+
+void UStatComponent::IncreaseMaxHealth(const float Delta)
+{
+	MaxHealth += Delta;
+}
+
+void UStatComponent::IncreaseAttackDamage(const float Delta)
+{
+	CurrentAttackDamage += Delta;
+}
+
+void UStatComponent::IncreaseArmor(const float Delta)
+{
+	CurrentArmor += Delta;
+}
+
+void UStatComponent::TakeDamage(const float Damage)
+{
+	CurrentHealth -= Damage * (1 / CurrentArmor);
+	UE_LOG(LogTemp, Warning, TEXT("Player received %f damage and lost %f health. New health is %f"),
+		Damage, Damage * (1 / CurrentArmor), CurrentHealth);
+}
+
+void UStatComponent::HealHealth(const float HealAmount)
+{
+	CurrentHealth += FMath::Min(MaxHealth - CurrentHealth, HealAmount);
+}
