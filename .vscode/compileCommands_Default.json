@@ -1,5 +1,37 @@
 [
 	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\AI_EnemyController.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\AI_EnemyController.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\InteractableComponent.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
@@ -9,6 +41,22 @@
 	},
 	{
 		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\InteractableComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\MeleeWeapon.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\MeleeWeapon.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
 			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.255.rsp"
