@@ -2,6 +2,7 @@
 
 
 #include "CameraTransparencyComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 UCameraTransparencyComponent::UCameraTransparencyComponent()
@@ -29,6 +30,31 @@ void UCameraTransparencyComponent::TickComponent(float DeltaTime, ELevelTick Tic
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController == nullptr) return;
+
+	FHitResult HitResult;
+	FVector TraceLocStart;
+	FRotator TraceRot;
+	PlayerController->GetPlayerViewPoint(TraceLocStart, TraceRot);
+	FVector TraceLocEnd = GetOwner()->GetActorLocation();
+	bool bHitSucceed = GetWorld()->LineTraceSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, ECC_Visibility);
+
+	if (bHitSucceed)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Hit Actor in front of camer: %s"), *HitResult.GetActor()->GetActorNameOrLabel());
+		SetTransparency(HitResult, TraceLocStart, PlayerController->GetPawn()->GetActorLocation());
+		BlockingActor = HitResult.GetActor();
+	}
+	else
+	{
+		TransparencyDegree = 1;
+		BlockingActor = nullptr;
+	}
+}
+
+void UCameraTransparencyComponent::SetTransparency(const FHitResult& HitResult, const FVector TraceStart, const FVector PlayerLoc)
+{
+	TransparencyDegree = FVector::Dist(HitResult.GetActor()->GetActorLocation(), TraceStart) / FVector::Dist(TraceStart, PlayerLoc);
 }
 

@@ -24,5 +24,12 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	float GetTransparencyDegree();
+	// Will return nullptr on no blocking actor, requires nullcheck by implementation.
+	AActor* GetBlockingActor();
+private:
+	float TransparencyDegree;
+	AActor* BlockingActor;
+	
+	void SetTransparency(const FHitResult& HitResult, const FVector TraceStart, const FVector );
 };
