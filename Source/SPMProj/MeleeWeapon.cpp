@@ -56,12 +56,23 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	BoxHit,  
 	true );  /*Ignores itself for overlaps*/
 
-	if(GEngine)
+	/*if(GEngine)
 	{
 		FString HitObject = BoxHit.GetActor()->GetActorNameOrLabel();
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, HitObject);
-	}
-	//UE_LOG(LogTemp, Warning, TEXT("Weapon hit result: %s"), *BoxHit.GetActor()->GetActorNameOrLabel());
+	}*/
+
+	UE_LOG(LogTemp, Warning, TEXT("Weapon hit result: %s"), *BoxHit.GetActor()->GetActorNameOrLabel());
+}
+
+void AMeleeWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+}
+
+void AMeleeWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
 }
 
 void AMeleeWeapon::Tick(float DeltaTime)
