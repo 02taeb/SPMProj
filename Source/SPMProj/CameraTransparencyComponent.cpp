@@ -38,12 +38,21 @@ void UCameraTransparencyComponent::TickComponent(float DeltaTime, ELevelTick Tic
 	FRotator TraceRot;
 	PlayerController->GetPlayerViewPoint(TraceLocStart, TraceRot);
 	FVector TraceLocEnd = GetOwner()->GetActorLocation();
-	
-	bool bHitSucceed = GetWorld()->SweepSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, TraceRot.Quaternion(), ECC_Visibility, FCollisionShape::MakeCapsule(CapsuleRadius, CapsuleHalfHeight));
-	DrawDebugCapsule(GetWorld(), HitResult.ImpactPoint, CapsuleHalfHeight, CapsuleRadius, TraceRot.Quaternion(), FColor::Red, false, 10.f);
+	TraceLocStart += 10 * TraceRot.Vector();
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(GetOwner());
+	bool bHitSucceed = GetWorld()->SweepSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, TraceRot.Quaternion(), ECC_Visibility, FCollisionShape::MakeSphere(SphereRadius), Params);
+	// Actual camera location
+	//DrawDebugCamera(GetWorld(), GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraLocation(), TraceRot, 90, 1, FColor::Yellow, false, 10.f);
 	if (bHitSucceed)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Hit Actor in front of camer: %s"), *HitResult.GetActor()->GetActorNameOrLabel());
+		// Sphere at start of Sweep trace
+		//DrawDebugSphere(GetWorld(), TraceLocStart, SphereRadius, 10, FColor::Green, false, 10.f);
+		// Sphere at impact point of sweep trace
+		//DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, SphereRadius, 10, FColor::Red, false, 10.f);
+		// Camera at start of Sweep trace
+		//DrawDebugCamera(GetWorld(), TraceLocStart, TraceRot, 90, 1, FColor::Blue, false, 10.f);
+		//UE_LOG(LogTemp, Display, TEXT("Hit Actor in front of camera: %s"), *HitResult.GetActor()->GetActorNameOrLabel());
 		SetTransparency(HitResult, TraceLocStart, PlayerController->GetPawn()->GetActorLocation());
 		BlockingActor = HitResult.GetActor();
 	}
@@ -52,6 +61,16 @@ void UCameraTransparencyComponent::TickComponent(float DeltaTime, ELevelTick Tic
 		TransparencyDegree = 1;
 		BlockingActor = nullptr;
 	}
+}
+
+float UCameraTransparencyComponent::GetTransparencyDegree()
+{
+	return TransparencyDegree;
+}
+
+AActor* UCameraTransparencyComponent::GetBlockingActor()
+{
+	return BlockingActor;
 }
 
 void UCameraTransparencyComponent::SetTransparency(const FHitResult& HitResult, const FVector TraceStart, const FVector PlayerLoc)
