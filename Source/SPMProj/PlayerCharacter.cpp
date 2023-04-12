@@ -11,12 +11,19 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/AnimMontage.h"
 #include "Kismet/GameplayStatics.h"
+#include "InventoryComponent.h"
+#include "Item.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+		//TESTING FÖR INVENTORY
+	Inventory = CreateDefaultSubobject<UInventoryComponent>("Inventory");
+	Inventory->Capacity = 20;
+	Health = 100.f;
 
 }
 
@@ -143,4 +150,16 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
 	}
+}
+
+	//Använda det item som klickas på, finns möjlighet för c++ och blueprint
+	//Är implementerad i blueprint just nu
+void APlayerCharacter::UseItem(UItem *Item)
+{
+	if (Item)
+	{
+		Item->Use(this);
+		Item->OnUse(this); //Blueprint event
+	}
+	
 }

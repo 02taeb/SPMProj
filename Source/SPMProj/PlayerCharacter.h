@@ -12,6 +12,10 @@ class SPMPROJ_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+		//Test för inventory, ger player ett inventorycomponent
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = true))
+	class UInventoryComponent* Inventory;
+
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
@@ -30,6 +34,15 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Interacting")
 	TSubclassOf<class UInteractableComponent> InteractableClass;
+
+	//En Health för item att heala, kan ändras till annat health system sen
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health")
+	float Health;
+	//Gör att spelaren kan använda item
+	UFUNCTION(BlueprintCallable, Category = "Items")
+	void UseItem(class UItem* Item);
+
+
 private:
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
