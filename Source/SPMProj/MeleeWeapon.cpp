@@ -7,11 +7,14 @@
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AMeleeWeapon::AMeleeWeapon()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	DefaultDamage = 50.f;
 	
 	MeleeWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Melee Weapon Mesh"));
 	RootComponent = MeleeWeaponMesh;
@@ -59,13 +62,13 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	BoxHit,  
 	true );  /*Ignores itself for overlaps*/
 
-	/*if(GEngine)
+	if(IsValid(BoxHit.GetActor()))
 	{
-		FString HitObject = BoxHit.GetActor()->GetActorNameOrLabel();
-		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, HitObject);
-	}*/
+		UGameplayStatics::ApplyDamage(BoxHit.GetActor(), DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+	}
+	
 
-	UE_LOG(LogTemp, Warning, TEXT("Weapon hit result: %s"), *BoxHit.GetActor()->GetActorNameOrLabel());
+	//UE_LOG(LogTemp, Warning, TEXT("Weapon hit result: %s"), *BoxHit.GetActor()->GetActorNameOrLabel());
 }
 
 void AMeleeWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
