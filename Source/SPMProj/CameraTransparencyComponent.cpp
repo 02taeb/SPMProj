@@ -55,6 +55,12 @@ void UCameraTransparencyComponent::TickComponent(float DeltaTime, ELevelTick Tic
 		//UE_LOG(LogTemp, Display, TEXT("Hit Actor in front of camera: %s"), *HitResult.GetActor()->GetActorNameOrLabel());
 		SetTransparency(HitResult, TraceLocStart, PlayerController->GetPawn()->GetActorLocation());
 		BlockingActor = HitResult.GetActor();
+		UStaticMeshComponent* Mesh = Cast<UStaticMeshComponent>(BlockingActor->GetRootComponent());
+		if (Mesh == nullptr) return;
+		else
+		{
+			// Hämta material och ändra transparency med MI_DitherTransparency
+		}
 	}
 	else
 	{
