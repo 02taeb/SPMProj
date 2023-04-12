@@ -6,7 +6,7 @@
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "msvc-x64",
-            "compileCommands": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj.json"
+            "compileCommands": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj.json"
         },
         {
             "name": "Win32",
@@ -14,7 +14,7 @@
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "msvc-x64",
-            "compileCommands": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default.json"
+            "compileCommands": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default.json"
         }
     ],
     "version": 4
