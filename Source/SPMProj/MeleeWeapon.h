@@ -44,6 +44,9 @@ private:
 	UPROPERTY(VisibleAnywhere, Category=WeaponProperties)
 	class UBoxComponent* WeaponBox;
 
+	UPROPERTY(EditAnywhere, Category=WeaponProperties)
+	float DefaultDamage;
+
 	/*Box trace starting and ending points*/
 	UPROPERTY(VisibleAnywhere) 
 	USceneComponent* BTStart;
