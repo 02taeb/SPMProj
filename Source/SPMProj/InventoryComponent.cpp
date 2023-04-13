@@ -2,7 +2,7 @@
 
 
 #include "InventoryComponent.h"
-#include "Item.h"
+#include "ItemActor.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
@@ -17,20 +17,13 @@ UInventoryComponent::UInventoryComponent()
 void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//Adderar items som finns i inventory till att börja med
-
-	for (UItem* Item : DefaultItems)
-	{
-		AddItem(Item);
-	}
-	// ...
 	
 }
 
 
-bool UInventoryComponent::AddItem(UItem *Item)
+bool UInventoryComponent::AddItem(AItemActor *Item)
 {
+	
 
 	//kanske inte behövs
 	if (Item == nullptr)
@@ -44,9 +37,10 @@ bool UInventoryComponent::AddItem(UItem *Item)
 		return false;
 	}
 	
-
+	
 	Item->OwningInventory = this;
-
+	
+	//En world för items behövs kanske inte nu när de är actors
 	//Item vet om sin värld ifall partikeleffekter behöver spawnas vid use
 	
 	Item->World = GetWorld();
@@ -58,14 +52,17 @@ bool UInventoryComponent::AddItem(UItem *Item)
     return true;
 }
 
-bool UInventoryComponent::RemoveItem(UItem *Item)
+bool UInventoryComponent::RemoveItem(AItemActor *Item)
 {
 
 	if (Item)
 	{
 		Item->OwningInventory = nullptr;
 		Item->World = nullptr;
-		Items.RemoveSingle(Item);
+		int32 index = Items.Find(Item);
+		Items.RemoveAt(index);
+		
+		//Items.RemoveSingle(Item);
 		OnInventoryUpdated.Broadcast();
 		return true;
 	}

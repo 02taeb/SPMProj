@@ -59,11 +59,15 @@ void UCameraTransparencyComponent::TickComponent(float DeltaTime, ELevelTick Tic
 		if (Mesh == nullptr) return;
 		else
 		{
-			// Hämta material och ändra transparency med MI_DitherTransparency
+			OnHit(GetBlockingActor(), GetTransparencyDegree() * TransparencyMultiplier);
 		}
 	}
 	else
 	{
+		if (BlockingActor != nullptr)
+		{
+			OnHit(GetBlockingActor(), 1);
+		}
 		TransparencyDegree = 1;
 		BlockingActor = nullptr;
 	}

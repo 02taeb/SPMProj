@@ -12,7 +12,9 @@
 #include "Animation/AnimMontage.h"
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
+#include "ItemActor.h"
 #include "Item.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -31,7 +33,7 @@ APlayerCharacter::APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Display, TEXT("Char spawned"));
+	//UE_LOG(LogTemp, Display, TEXT("Char spawned"));
 	UCharacterMovementComponent* MovementComp = GetCharacterMovement();
 	if (MovementComp) MovementComp->MaxWalkSpeed = MovementSpeed; // Set the max walking speed here
 
@@ -41,7 +43,7 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
 // Called to bind functionality to input
@@ -73,6 +75,16 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
+}
+
+void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
+{
+	UE_LOG(LogTemp, Warning, TEXT("SetWeaponCollision ENTERED BEFORE IF"))
+	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("SetWeaponCollision ENTERED IN IF"))
+		EquipedWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
+	}
 }
 
 void APlayerCharacter::MoveForward(const FInputActionValue & Value) {
@@ -112,7 +124,9 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 	{
 		Weapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
 		/*Association the Player attaching the weapon to the weapon itself, so that we can get the instigator controller in ApplyDamage. GetInstigator() and GetOwner() return Player now when called from Weapon class if it is attached*/
+		Weapon->SetOwner(this);
 		Weapon->SetInstigator(this);
+		EquipedWeapon = Weapon;
 	}
 
 	
@@ -154,10 +168,16 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 
 	//Använda det item som klickas på, finns möjlighet för c++ och blueprint
 	//Är implementerad i blueprint just nu
-void APlayerCharacter::UseItem(UItem *Item)
+void APlayerCharacter::UseItem(AItemActor *Item)
 {
 	if (Item)
 	{
+		if (Item->OwningInventory == nullptr)
+		{
+			UE_LOG(LogTemp, Display, TEXT("No Owning Inventory"));
+			return;
+		}
+		
 		Item->Use(this);
 		Item->OnUse(this); //Blueprint event
 	}

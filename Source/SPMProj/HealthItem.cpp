@@ -18,7 +18,7 @@ void UHealthItem::Use(class APlayerCharacter *Character)
 
         if (OwningInventory)
         {
-            OwningInventory->RemoveItem(this);
+           // OwningInventory->RemoveItem(this);
         }
         
      }

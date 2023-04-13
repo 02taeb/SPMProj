@@ -30,7 +30,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
+	/*Functions to enable or disable weapon box collison in blueprints*/
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponCollison(ECollisionEnabled::Type Collision);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Interacting")
 	TSubclassOf<class UInteractableComponent> InteractableClass;
@@ -40,7 +43,7 @@ public:
 	float Health;
 	//Gör att spelaren kan använda item
 	UFUNCTION(BlueprintCallable, Category = "Items")
-	void UseItem(class UItem* Item);
+	void UseItem(class AItemActor* Item);
 
 
 private:
@@ -57,6 +60,9 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* OverlapWeapon;
+
+	UPROPERTY(VisibleInstanceOnly)
+	class AMeleeWeapon* EquipedWeapon;
 
 	/*Animation montage for basic attack*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
@@ -98,7 +104,12 @@ private:
 	void AttackMeleeNormal(const FInputActionValue& Value);
 
 public:
-	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr */
+	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
+	 * Här i public längst under för att vi har en forward deklaration uppe.
+	 */ 
 	FORCEINLINE void SetOverlapWeapon(AMeleeWeapon* Weapon) { OverlapWeapon = Weapon; }
+	
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE APlayerCharacter* GetPlayerThis() { return this; }
 	
 };

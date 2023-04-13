@@ -1,202 +1,250 @@
 [
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\AI_EnemyController.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\AI_EnemyController.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\AI_EnemyController.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\AI_EnemyController.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\HealthItem.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\Enemy.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\HealthItem.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\Enemy.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InteractableComponent.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\HealthItem.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InteractableComponent.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\HealthItem.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InventoryComponent.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\HealthItemActor.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InventoryComponent.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\HealthItemActor.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\Item.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\InteractableComponent.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\Item.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\InteractableComponent.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\MeleeWeapon.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\InventoryComponent.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\MeleeWeapon.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\InventoryComponent.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\PlayerCharacter.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\Item.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\PlayerCharacter.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\Item.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\PlayerCharacterTest.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\ItemActor.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\PlayerCharacterTest.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\ItemActor.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProj.Build.cs",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\MeleeWeapon.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProj.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\MeleeWeapon.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProj.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacter.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacter.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacterTest.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\StatComponent.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacterTest.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\StatComponent.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\SPMProj.Build.cs",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.255.rsp"
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
 		],
-		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\SPMProj.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\SPMProj.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\StatComponent.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\StatComponent.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	}
 ]

@@ -13,8 +13,6 @@
 AMeleeWeapon::AMeleeWeapon()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
-	DefaultDamage = 50.f;
 	
 	MeleeWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Melee Weapon Mesh"));
 	RootComponent = MeleeWeaponMesh;
@@ -22,9 +20,10 @@ AMeleeWeapon::AMeleeWeapon()
 	PickupZone = CreateDefaultSubobject<USphereComponent>(TEXT("Pick-up zone"));
 	PickupZone->SetupAttachment(GetRootComponent());
 
-	WeaponBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Weapon Box"));
-	WeaponBox->SetupAttachment(GetRootComponent());
-
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Weapon Box"));
+	CollisionBox->SetupAttachment(GetRootComponent());
+	CollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision); /*Disable collision as it should only be enable under the attack*/
+	
 	BTStart = CreateDefaultSubobject<USceneComponent>(TEXT("Box Trace Start Point"));
 	BTStart->SetupAttachment(GetRootComponent());
 
@@ -36,7 +35,7 @@ void AMeleeWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	/*Binding the callback function to the delegate*/
-	WeaponBox->OnComponentBeginOverlap.AddDynamic(this, &AMeleeWeapon::OnBoxOverlap);
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AMeleeWeapon::OnBoxOverlap);
 	PickupZone->OnComponentBeginOverlap.AddDynamic(this, &AMeleeWeapon::OnSphereBeginOverlap);
 	PickupZone->OnComponentEndOverlap.AddDynamic(this, &AMeleeWeapon::OnSphereEndOverlap);
 }
@@ -67,8 +66,6 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		UGameplayStatics::ApplyDamage(BoxHit.GetActor(), DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
 	}
 	
-
-	//UE_LOG(LogTemp, Warning, TEXT("Weapon hit result: %s"), *BoxHit.GetActor()->GetActorNameOrLabel());
 }
 
 void AMeleeWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -87,6 +84,11 @@ void AMeleeWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, 
 	{
 		Player->SetOverlapWeapon(nullptr);
 	}
+}
+
+UBoxComponent* AMeleeWeapon::GetCollisionBox() const
+{
+	return CollisionBox;
 }
 
 void AMeleeWeapon::Tick(float DeltaTime)
