@@ -61,6 +61,9 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* OverlapWeapon;
 
+	UPROPERTY(VisibleInstanceOnly)
+	class AMeleeWeapon* EquipedWeapon;
+
 	/*Animation montage for basic attack*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* NormalAttackMontage;
@@ -105,5 +108,8 @@ public:
 	 * Här i public längst under för att vi har en forward deklaration uppe.
 	 */ 
 	FORCEINLINE void SetOverlapWeapon(AMeleeWeapon* Weapon) { OverlapWeapon = Weapon; }
+	
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE APlayerCharacter* GetPlayerThis() { return this; }
 	
 };
