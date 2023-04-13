@@ -70,6 +70,10 @@ private:
 	/*Animation montage for basic attack*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* NormalAttackMontage;
+
+	/*/*Animation montage for dodge#1# 
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	class UAnimMontage* DodgeMontage;*/
 	/*
 	UPROPERTY(EditAnywhere, Category = "Interacting")
 	TSoftObjectPtr<AActor> InteractableActor;
@@ -97,6 +101,8 @@ private:
 	class UInputAction* InputAttackMeleeNormal;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
     class UInputAction* InputJump;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputDodge;
 
 	
 	//callback functions for Input actions
@@ -109,13 +115,14 @@ private:
 	void Interact(const FInputActionValue& Value);
 	void AttackMeleeNormal(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
+	void Dodge(const FInputActionValue& Value);
 
 public:
 	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
 	 * Här i public längst under för att vi har en forward deklaration uppe.
 	 */ 
 	FORCEINLINE void SetOverlapWeapon(AMeleeWeapon* Weapon) { OverlapWeapon = Weapon; }
-	
+	/*Dumb fucking function, tried too access Player via default Animation bluepring but didnt work... Remove in future*/
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE APlayerCharacter* GetPlayerThis() { return this; }
 	
