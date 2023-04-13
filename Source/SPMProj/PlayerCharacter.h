@@ -40,7 +40,7 @@ public:
 	float Health;
 	//Gör att spelaren kan använda item
 	UFUNCTION(BlueprintCallable, Category = "Items")
-	void UseItem(class UItem* Item);
+	void UseItem(class AItemActor* Item);
 
 
 private:
