@@ -18,12 +18,14 @@ class SPMPROJ_API UInventoryComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UInventoryComponent();
+	
+	UFUNCTION(BlueprintCallable)
+	bool AddItem(class AItemActor* Item);
 
-	bool AddItem(class UItem* Item);
-	bool RemoveItem(class UItem* Item);
+	bool RemoveItem(class AItemActor* Item);
 
 	UPROPERTY(EditDefaultsOnly, Instanced)
-	TArray<class UItem*> DefaultItems;
+ TArray<class AItemActor*> DefaultItems;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
 	int32 Capacity;
@@ -32,7 +34,7 @@ public:
 	FOnInventoryUpdated OnInventoryUpdated;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Items")
-	TArray<class UItem*> Items;
+	TArray<class AItemActor*> Items;
 
 protected:
 	// Called when the game starts
