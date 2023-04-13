@@ -66,7 +66,10 @@ bool UInventoryComponent::RemoveItem(AItemActor *Item)
 	{
 		Item->OwningInventory = nullptr;
 		Item->World = nullptr;
-		Items.RemoveSingle(Item);
+		int32 index = Items.Find(Item);
+		Items.RemoveAt(index);
+		
+		//Items.RemoveSingle(Item);
 		OnInventoryUpdated.Broadcast();
 		return true;
 	}
