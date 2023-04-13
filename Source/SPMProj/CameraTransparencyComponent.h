@@ -34,6 +34,9 @@ private:
 	// Radius of Sphere for SweepTrace from camera to player.
 	UPROPERTY(EditAnywhere)
 	float SphereRadius = 15.f;
+
+	UPROPERTY(EditAnywhere)
+	float TransparencyMultiplier = 0.5;
 	
 	float TransparencyDegree;
 	

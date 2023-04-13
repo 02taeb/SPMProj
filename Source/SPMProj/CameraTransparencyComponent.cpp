@@ -59,11 +59,15 @@ void UCameraTransparencyComponent::TickComponent(float DeltaTime, ELevelTick Tic
 		if (Mesh == nullptr) return;
 		else
 		{
-			OnHit(GetBlockingActor(), GetTransparencyDegree());
+			OnHit(GetBlockingActor(), GetTransparencyDegree() * TransparencyMultiplier);
 		}
 	}
 	else
 	{
+		if (BlockingActor != nullptr)
+		{
+			OnHit(GetBlockingActor(), 1);
+		}
 		TransparencyDegree = 1;
 		BlockingActor = nullptr;
 	}
