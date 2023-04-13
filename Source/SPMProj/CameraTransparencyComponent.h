@@ -7,7 +7,7 @@
 #include "CameraTransparencyComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPMPROJ_API UCameraTransparencyComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -27,12 +27,16 @@ public:
 	float GetTransparencyDegree();
 	// Will return nullptr on no blocking actor, requires nullcheck by implementation.
 	AActor* GetBlockingActor();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHit(AActor* HitActor, float Transparency);
 private:
 	// Radius of Sphere for SweepTrace from camera to player.
 	UPROPERTY(EditAnywhere)
 	float SphereRadius = 15.f;
 	
 	float TransparencyDegree;
+	
 	AActor* BlockingActor;
 	
 	void SetTransparency(const FHitResult& HitResult, const FVector TraceStart, const FVector );
