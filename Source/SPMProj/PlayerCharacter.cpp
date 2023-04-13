@@ -78,9 +78,11 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 {
-	if(OverlapWeapon && OverlapWeapon->GetCollisionBox())
+	UE_LOG(LogTemp, Warning, TEXT("SetWeaponCollision ENTERED BEFORE IF"))
+	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
 	{
-		OverlapWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
+		UE_LOG(LogTemp, Warning, TEXT("SetWeaponCollision ENTERED IN IF"))
+		EquipedWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
 	}
 }
 
@@ -123,6 +125,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		/*Association the Player attaching the weapon to the weapon itself, so that we can get the instigator controller in ApplyDamage. GetInstigator() and GetOwner() return Player now when called from Weapon class if it is attached*/
 		Weapon->SetOwner(this);
 		Weapon->SetInstigator(this);
+		EquipedWeapon = Weapon;
 	}
 
 	
