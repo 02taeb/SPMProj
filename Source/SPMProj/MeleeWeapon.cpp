@@ -13,8 +13,6 @@
 AMeleeWeapon::AMeleeWeapon()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
-	DefaultDamage = 50.f;
 	
 	MeleeWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Melee Weapon Mesh"));
 	RootComponent = MeleeWeaponMesh;
