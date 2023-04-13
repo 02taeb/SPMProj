@@ -13,6 +13,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
 #include "Item.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -73,6 +74,14 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
+}
+
+void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
+{
+	if(OverlapWeapon && OverlapWeapon->GetCollisionBox())
+	{
+		OverlapWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
+	}
 }
 
 void APlayerCharacter::MoveForward(const FInputActionValue & Value) {

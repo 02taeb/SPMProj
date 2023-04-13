@@ -18,6 +18,8 @@ public:
 
 	/*Attaches the weapon to the skeleton on */
 	void AttachWeaponOnPlayer(USceneComponent* Player, FName SocketLabel);
+
+	
 protected:
 	virtual void BeginPlay() override;
 
@@ -42,7 +44,7 @@ private:
 
 	/*Adding a box component to use for collision overlap events, when attacking. To detect when the weapon hits/overlaps some object.*/
 	UPROPERTY(VisibleAnywhere, Category=WeaponProperties)
-	class UBoxComponent* WeaponBox;
+	class UBoxComponent* CollisionBox;
 
 	UPROPERTY(EditDefaultsOnly, Category=WeaponProperties)
 	float DefaultDamage = 25.f;
@@ -52,4 +54,6 @@ private:
 	USceneComponent* BTStart;
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* BTEnd;
+public:
+	UBoxComponent* GetCollisionBox() const;
 };
