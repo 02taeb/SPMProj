@@ -19,10 +19,10 @@ void AHealthItemActor::Use(class APlayerCharacter *Character)
         if (OwningInventory)
         {
             OwningInventory->RemoveItem(this);
-            UE_LOG(LogTemp, Display, TEXT("har inventory"));
         }
         
         
      }
      
 }
+

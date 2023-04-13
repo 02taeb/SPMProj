@@ -17,14 +17,6 @@ UInventoryComponent::UInventoryComponent()
 void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//Adderar items som finns i inventory till att börja med
-
-	/*for (AItemActor* Item : DefaultItems)
-	{
-		AddItem(Item);
-	}*/
-	// ...
 	
 }
 
@@ -47,7 +39,8 @@ bool UInventoryComponent::AddItem(AItemActor *Item)
 	
 	
 	Item->OwningInventory = this;
-
+	
+	//En world för items behövs kanske inte nu när de är actors
 	//Item vet om sin värld ifall partikeleffekter behöver spawnas vid use
 	
 	Item->World = GetWorld();
