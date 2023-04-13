@@ -40,8 +40,12 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	if(Stats)
 	{
 		Stats->TakeDamage(DamageAmount);
+		if(Stats->Dead())
+		{
+			Destroy();
+		}
 	}
 	
-	return 0;
+	return DamageAmount;
 }
 
