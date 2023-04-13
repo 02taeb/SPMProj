@@ -75,7 +75,6 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
-	//PlayerEIComponent->BindAction(InputPauseMeny, ETriggerEvent::Triggered, this, &APlayerCharacter::PauseMeny);
 }
 
 void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
@@ -182,9 +181,5 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 		Item->Use(this);
 		Item->OnUse(this); //Blueprint event
 	}
-	
-}
-
-void PauseMeny(const FInputActionValue &Value) {
 	
 }
