@@ -75,6 +75,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
+	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 }
 
 void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
@@ -166,7 +167,17 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 	}
 }
 
-	//Använda det item som klickas på, finns möjlighet för c++ och blueprint
+void APlayerCharacter::JumpChar(const FInputActionValue& Value)
+{
+	Super::Jump();
+	JumpMaxHoldTime = JumpTime;
+
+	FTimerHandle PlayerStopJumpingHandle;
+	FTimerDelegate PlayerStopJumpingDelegate = FTimerDelegate::CreateUObject(this, &Super::StopJumping);
+	GetWorldTimerManager().SetTimer(PlayerStopJumpingHandle, PlayerStopJumpingDelegate, JumpTime, false);
+}
+
+//Använda det item som klickas på, finns möjlighet för c++ och blueprint
 	//Är implementerad i blueprint just nu
 void APlayerCharacter::UseItem(AItemActor *Item)
 {
