@@ -44,8 +44,8 @@ private:
 	UPROPERTY(VisibleAnywhere, Category=WeaponProperties)
 	class UBoxComponent* WeaponBox;
 
-	UPROPERTY(EditAnywhere, Category=WeaponProperties)
-	float DefaultDamage;
+	UPROPERTY(EditDefaultsOnly, Category=WeaponProperties)
+	float DefaultDamage = 25.f;
 
 	/*Box trace starting and ending points*/
 	UPROPERTY(VisibleAnywhere) 

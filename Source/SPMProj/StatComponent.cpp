@@ -9,7 +9,8 @@ UStatComponent::UStatComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
+	/*I guess...*/
+	CurrentHealth = InitialMaxHealth;
 	// ...
 }
 
@@ -93,9 +94,13 @@ void UStatComponent::IncreaseArmor(const float Delta)
 
 void UStatComponent::TakeDamage(const float Damage)
 {
-	CurrentHealth -= Damage * (1 / CurrentArmor);
+	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0.f, MaxHealth);
 	UE_LOG(LogTemp, Warning, TEXT("Player received %f damage and lost %f health. New health is %f"),
-		Damage, Damage * (1 / CurrentArmor), CurrentHealth);
+			Damage, CurrentHealth - Damage, CurrentHealth);
+	//Death can be called here if 0...
+	/*CurrentHealth -= Damage * (1 / CurrentArmor);   Commented out for testing
+	UE_LOG(LogTemp, Warning, TEXT("Player received %f damage and lost %f health. New health is %f"),
+		Damage, Damage * (1 / CurrentArmor), CurrentHealth);*/
 }
 
 void UStatComponent::HealHealth(const float HealAmount)

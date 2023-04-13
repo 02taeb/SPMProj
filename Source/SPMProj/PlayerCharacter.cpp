@@ -41,7 +41,7 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
 // Called to bind functionality to input
@@ -112,6 +112,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 	{
 		Weapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
 		/*Association the Player attaching the weapon to the weapon itself, so that we can get the instigator controller in ApplyDamage. GetInstigator() and GetOwner() return Player now when called from Weapon class if it is attached*/
+		Weapon->SetOwner(this);
 		Weapon->SetInstigator(this);
 	}
 
