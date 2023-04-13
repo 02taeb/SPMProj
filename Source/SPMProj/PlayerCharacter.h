@@ -53,6 +53,9 @@ private:
 	//Show Movement speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float MovementSpeed = 10000;
+	// Time jumpforce is applied for
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
+    float JumpTime = 0.1;
 	
 	// Hur långt från KAMERAN som spelaren kan interagera med objekt.
 	UPROPERTY(EditDefaultsOnly, Category = "Interacting")
@@ -92,6 +95,8 @@ private:
 	class UInputAction* InputLookRightRate;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputAttackMeleeNormal;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+    class UInputAction* InputJump;
 
 	
 	//callback functions for Input actions
@@ -103,6 +108,7 @@ private:
 	void LookRightRate(const FInputActionValue &Value);
 	void Interact(const FInputActionValue& Value);
 	void AttackMeleeNormal(const FInputActionValue& Value);
+	void JumpChar(const FInputActionValue& Value);
 
 public:
 	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
