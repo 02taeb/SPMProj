@@ -76,6 +76,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
+	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::Dodge);
 }
 
 void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
@@ -161,7 +162,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && NormalAttackMontage)
+	if(AnimInstance && NormalAttackMontage && EquipedWeapon)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
 	}
@@ -175,6 +176,11 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 	FTimerHandle PlayerStopJumpingHandle;
 	FTimerDelegate PlayerStopJumpingDelegate = FTimerDelegate::CreateUObject(this, &Super::StopJumping);
 	GetWorldTimerManager().SetTimer(PlayerStopJumpingHandle, PlayerStopJumpingDelegate, JumpTime, false);
+}
+
+void APlayerCharacter::Dodge(const FInputActionValue& Value)
+{
+	//...
 }
 
 //Använda det item som klickas på, finns möjlighet för c++ och blueprint
