@@ -2,12 +2,14 @@
 
 
 #include "Enemy.h"
-
+#include "StatComponent.h"
 // Sets default values
 AEnemy::AEnemy()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	//Components dont need to be attached.
+	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
 
 }
 
@@ -30,5 +32,16 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+/*The function is called via ApplyDamage, they communicate so to say...*/
+float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	if(Stats)
+	{
+		Stats->TakeDamage(DamageAmount);
+	}
+	
+	return 0;
 }
 
