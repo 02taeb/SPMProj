@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include "StatComponent.h"
+#include "Components/CapsuleComponent.h"
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -10,7 +11,6 @@ AEnemy::AEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 	//Components dont need to be attached.
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
-
 }
 
 // Called when the game starts or when spawned

@@ -32,7 +32,7 @@ void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Player is dead"));
+		//UE_LOG(LogTemp, Warning, TEXT("Player is dead"));
 		// Death anim
 		// Respawna bak/Ladda om scen för full restart
 			// Konsekvenser av död? Respawna fiender? Förlora stat?

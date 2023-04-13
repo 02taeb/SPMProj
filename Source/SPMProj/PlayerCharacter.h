@@ -30,7 +30,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
+	/*Functions to enable or disable weapon box collison in blueprints*/
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponCollison(ECollisionEnabled::Type Collision);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Interacting")
 	TSubclassOf<class UInteractableComponent> InteractableClass;
@@ -98,7 +101,9 @@ private:
 	void AttackMeleeNormal(const FInputActionValue& Value);
 
 public:
-	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr */
+	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
+	 * Här i public längst under för att vi har en forward deklaration uppe.
+	 */ 
 	FORCEINLINE void SetOverlapWeapon(AMeleeWeapon* Weapon) { OverlapWeapon = Weapon; }
 	
 };
