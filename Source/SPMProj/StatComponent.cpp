@@ -109,5 +109,5 @@ void UStatComponent::HealHealth(const float HealAmount)
 
 bool UStatComponent::Dead()
 {
-	return true;
+	return CurrentHealth <= 0.f;
 }
