@@ -40,6 +40,9 @@ public:
 	
 	void TakeDamage(const float Damage);
 	void HealHealth(const float HealAmount);
+
+	bool Dead();
+
 private:
 	// Health at beginning of game
 	UPROPERTY(EditDefaultsOnly)
