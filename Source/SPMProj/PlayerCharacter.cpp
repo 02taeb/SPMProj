@@ -31,7 +31,7 @@ APlayerCharacter::APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Display, TEXT("Char spawned"));
+	//UE_LOG(LogTemp, Display, TEXT("Char spawned"));
 	UCharacterMovementComponent* MovementComp = GetCharacterMovement();
 	if (MovementComp) MovementComp->MaxWalkSpeed = MovementSpeed; // Set the max walking speed here
 
