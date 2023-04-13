@@ -24,9 +24,6 @@ public:
 
 	bool RemoveItem(class AItemActor* Item);
 
-	UPROPERTY(EditDefaultsOnly, Instanced)
- TArray<class AItemActor*> DefaultItems;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
 	int32 Capacity;
 
