@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "HealthItem.h"
+#include "HealthItemActor.h"
 #include "PlayerCharacter.h"
 #include "InventoryComponent.h"
 
-UHealthItem::UHealthItem()
+AHealthItemActor::AHealthItemActor()
 {
    
 }
 
-void UHealthItem::Use(class APlayerCharacter *Character)
+void AHealthItemActor::Use(class APlayerCharacter *Character)
 {
      if (Character)
      {
@@ -18,8 +18,10 @@ void UHealthItem::Use(class APlayerCharacter *Character)
 
         if (OwningInventory)
         {
-           // OwningInventory->RemoveItem(this);
+            OwningInventory->RemoveItem(this);
+            UE_LOG(LogTemp, Display, TEXT("har inventory"));
         }
+        
         
      }
      

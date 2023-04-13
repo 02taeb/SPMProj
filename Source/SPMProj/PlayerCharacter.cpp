@@ -12,6 +12,7 @@
 #include "Animation/AnimMontage.h"
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
+#include "ItemActor.h"
 #include "Item.h"
 #include "Components/BoxComponent.h"
 
@@ -167,10 +168,16 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 
 	//Använda det item som klickas på, finns möjlighet för c++ och blueprint
 	//Är implementerad i blueprint just nu
-void APlayerCharacter::UseItem(UItem *Item)
+void APlayerCharacter::UseItem(AItemActor *Item)
 {
 	if (Item)
 	{
+		if (Item->OwningInventory == nullptr)
+		{
+			UE_LOG(LogTemp, Display, TEXT("No Owning Inventory"));
+			return;
+		}
+		
 		Item->Use(this);
 		Item->OnUse(this); //Blueprint event
 	}
