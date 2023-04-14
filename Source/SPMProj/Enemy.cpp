@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include "StatComponent.h"
+#include "Components/CapsuleComponent.h"
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -10,7 +11,6 @@ AEnemy::AEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 	//Components dont need to be attached.
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
-
 }
 
 // Called when the game starts or when spawned
@@ -40,8 +40,12 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	if(Stats)
 	{
 		Stats->TakeDamage(DamageAmount);
+		if(Stats->Dead())
+		{
+			Destroy();
+		}
 	}
 	
-	return 0;
+	return DamageAmount;
 }
 

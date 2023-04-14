@@ -30,7 +30,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
+	/*Functions to enable or disable weapon box collison in blueprints*/
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponCollison(ECollisionEnabled::Type Collision);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Interacting")
 	TSubclassOf<class UInteractableComponent> InteractableClass;
@@ -40,7 +43,7 @@ public:
 	float Health;
 	//Gör att spelaren kan använda item
 	UFUNCTION(BlueprintCallable, Category = "Items")
-	void UseItem(class UItem* Item);
+	void UseItem(class AItemActor* Item);
 
 
 private:
@@ -50,6 +53,9 @@ private:
 	//Show Movement speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float MovementSpeed = 10000;
+	// Time jumpforce is applied for
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
+    float JumpTime = 0.1;
 	
 	// Hur långt från KAMERAN som spelaren kan interagera med objekt.
 	UPROPERTY(EditDefaultsOnly, Category = "Interacting")
@@ -58,9 +64,16 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* OverlapWeapon;
 
+	UPROPERTY(VisibleInstanceOnly)
+	class AMeleeWeapon* EquipedWeapon;
+
 	/*Animation montage for basic attack*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* NormalAttackMontage;
+
+	/*/*Animation montage for dodge#1# 
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	class UAnimMontage* DodgeMontage;*/
 	/*
 	UPROPERTY(EditAnywhere, Category = "Interacting")
 	TSoftObjectPtr<AActor> InteractableActor;
@@ -86,6 +99,11 @@ private:
 	class UInputAction* InputLookRightRate;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputAttackMeleeNormal;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+    class UInputAction* InputJump;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputDodge;
+
 	
 	//callback functions for Input actions
 	void MoveForward(const FInputActionValue& Value);
@@ -96,9 +114,16 @@ private:
 	void LookRightRate(const FInputActionValue &Value);
 	void Interact(const FInputActionValue& Value);
 	void AttackMeleeNormal(const FInputActionValue& Value);
+	void JumpChar(const FInputActionValue& Value);
+	void Dodge(const FInputActionValue& Value);
 
 public:
-	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr */
+	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
+	 * Här i public längst under för att vi har en forward deklaration uppe.
+	 */ 
 	FORCEINLINE void SetOverlapWeapon(AMeleeWeapon* Weapon) { OverlapWeapon = Weapon; }
+	/*Dumb fucking function, tried too access Player via default Animation bluepring but didnt work... Remove in future*/
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE APlayerCharacter* GetPlayerThis() { return this; }
 	
 };
