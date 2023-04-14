@@ -11,12 +11,12 @@ Team Size: 10
 
 --------------------------------------------------------------------------
 
-Programmers: Lucas Ilstedt, Daniel Olsson, Hugo Westgren, Mihajlo Radotic
+Programmers: [Lucas Ilstedt](https://github.com/02taeb), [Daniel Olsson](https://github.com/OfficialBabyboidaniel), [Hugo Westgren](https://github.com/huglis), [Mihajlo Radotic](https://github.com/mihajlor)
 
-Tech-Artists: Özge Alkan, Therese Johansson
+Tech-Artists: [Özge Alkan](https://github.com/ozgealk), [Therese Johansson](https://github.com/CoolBird69)
 
-3D-Artists: Sofia Andersson, Evgeniia (Zhenya) Dolgikh
+3D-Artists: [Sofia Andersson](https://github.com/soan97), [Evgeniia (Zhenya) Dolgikh](https://github.com/zhenyadolgikh)
 
-Game Designers/Level Designers: Jens Frenkel Isaksson, Linus Ekberg
+Game Designers/Level Designers: [Jens Frenkel Isaksson](https://github.com/NattensK), [Linus Ekberg](https://github.com/KR0SS0)
 
 --------------------------------------------------------------------------
