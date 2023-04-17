@@ -13,7 +13,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
 #include "ItemActor.h"
-//#include "Item.h"
 #include "Components/BoxComponent.h"
 
 // Sets default values
@@ -129,6 +128,8 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		Weapon->SetOwner(this);
 		Weapon->SetInstigator(this);
 		EquipedWeapon = Weapon;
+		OverlapWeapon = nullptr;
+		WeaponState = ECharacterWeaponState::ECWS_Equiped;
 	}
 
 	
@@ -161,10 +162,10 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
-	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && NormalAttackMontage && EquipedWeapon)
+	if(ActionState == ECharacterActionState::ECAS_NoAction)
 	{
-		AnimInstance->Montage_Play(NormalAttackMontage);
+		PlayAttackAnimation();
+		ActionState = ECharacterActionState::ECAS_Attacking;
 	}
 }
 
@@ -181,6 +182,15 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
 	//...
+}
+
+void APlayerCharacter::PlayAttackAnimation()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && NormalAttackMontage && WeaponState == ECharacterWeaponState::ECWS_Equiped)
+	{
+		AnimInstance->Montage_Play(NormalAttackMontage);
+	}
 }
 
 //Använda det item som klickas på, finns möjlighet för c++ och blueprint

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "CharacterStates.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
@@ -12,7 +13,7 @@ class SPMPROJ_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-		//Test för inventory, ger player ett inventorycomponent
+	//Test för inventory, ger player ett inventorycomponent
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = true))
 	class UInventoryComponent* Inventory;
 
@@ -67,6 +68,12 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* EquipedWeapon;
 
+	/*Spelaren börjar unequiped*/
+	ECharacterWeaponState WeaponState = ECharacterWeaponState::ECWS_Unequiped;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	ECharacterActionState ActionState = ECharacterActionState::ECAS_NoAction;
+
 	/*Animation montage for basic attack*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* NormalAttackMontage;
@@ -116,6 +123,8 @@ private:
 	void AttackMeleeNormal(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
+
+	void PlayAttackAnimation();
 
 public:
 	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
