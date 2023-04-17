@@ -13,7 +13,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
 #include "ItemActor.h"
-#include "Item.h"
 #include "Components/BoxComponent.h"
 
 // Sets default values
@@ -129,6 +128,8 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		Weapon->SetOwner(this);
 		Weapon->SetInstigator(this);
 		EquipedWeapon = Weapon;
+		OverlapWeapon = nullptr;
+		WeaponState = ECharacterWeaponState::ECS_Equiped;
 	}
 
 	
@@ -162,7 +163,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && NormalAttackMontage && EquipedWeapon)
+	if(AnimInstance && NormalAttackMontage && WeaponState == ECharacterWeaponState::ECS_Equiped)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
 	}

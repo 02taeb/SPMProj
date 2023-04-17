@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "CharacterStates.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
@@ -12,7 +13,7 @@ class SPMPROJ_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-		//Test för inventory, ger player ett inventorycomponent
+	//Test för inventory, ger player ett inventorycomponent
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = true))
 	class UInventoryComponent* Inventory;
 
@@ -66,6 +67,9 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* EquipedWeapon;
+
+	/*Spelaren börjar unequiped*/
+	ECharacterWeaponState WeaponState = ECharacterWeaponState::ECS_Unequiped;
 
 	/*Animation montage for basic attack*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
