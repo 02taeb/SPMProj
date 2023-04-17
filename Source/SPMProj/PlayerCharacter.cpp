@@ -162,7 +162,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
-	if(ActionState == ECharacterActionState::ECAS_NoAction)
+	if(ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped)
 	{
 		PlayAttackAnimation();
 		ActionState = ECharacterActionState::ECAS_Attacking;
@@ -187,7 +187,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 void APlayerCharacter::PlayAttackAnimation()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && NormalAttackMontage && WeaponState == ECharacterWeaponState::ECWS_Equiped)
+	if(AnimInstance && NormalAttackMontage)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
 	}
