@@ -129,7 +129,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		Weapon->SetInstigator(this);
 		EquipedWeapon = Weapon;
 		OverlapWeapon = nullptr;
-		WeaponState = ECharacterWeaponState::ECS_Equiped;
+		WeaponState = ECharacterWeaponState::ECWS_Equiped;
 	}
 
 	
@@ -162,10 +162,10 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
-	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && NormalAttackMontage && WeaponState == ECharacterWeaponState::ECS_Equiped)
+	if(ActionState == ECharacterActionState::ECAS_NoAction)
 	{
-		AnimInstance->Montage_Play(NormalAttackMontage);
+		ActionState = ECharacterActionState::ECAS_Attacking;
+		PlayAttackAnimation();
 	}
 }
 
@@ -182,6 +182,15 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
 	//...
+}
+
+void APlayerCharacter::PlayAttackAnimation()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && NormalAttackMontage && WeaponState == ECharacterWeaponState::ECWS_Equiped)
+	{
+		AnimInstance->Montage_Play(NormalAttackMontage);
+	}
 }
 
 //Använda det item som klickas på, finns möjlighet för c++ och blueprint

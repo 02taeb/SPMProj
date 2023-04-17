@@ -69,7 +69,9 @@ private:
 	class AMeleeWeapon* EquipedWeapon;
 
 	/*Spelaren börjar unequiped*/
-	ECharacterWeaponState WeaponState = ECharacterWeaponState::ECS_Unequiped;
+	ECharacterWeaponState WeaponState = ECharacterWeaponState::ECWS_Unequiped;
+
+	ECharacterActionState ActionState = ECharacterActionState::ECAS_NoAction;
 
 	/*Animation montage for basic attack*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
@@ -120,6 +122,8 @@ private:
 	void AttackMeleeNormal(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
+
+	void PlayAttackAnimation();
 
 public:
 	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
