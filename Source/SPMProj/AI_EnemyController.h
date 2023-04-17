@@ -21,11 +21,10 @@ protected:
 	
 
 private: 
-	UPROPERTY(EditAnywhere, Category = "EnemeyStats")
+	UPROPERTY(EditAnywhere, Category = "AI_Behavior")
 	float DistanceFromPlayer = 200;
-
-public:
-	UPROPERTY(EditAnywhere)
-	bool isFocusing;
-
+	UPROPERTY(EditAnywhere, Category = "AI_Behavior")
+	bool shouldFocus = true;
+	UPROPERTY(EditAnywhere, Category = "AI_Behavior")
+	bool shouldFollow = true;
 };
