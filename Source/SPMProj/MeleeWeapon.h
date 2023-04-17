@@ -48,6 +48,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category=WeaponProperties)
 	float DefaultDamage = 25.f;
+	UPROPERTY(EditDefaultsOnly, Category=WeaponProperties)
+	float HeavyDamage = 50.f;
 
 	/*Box trace starting and ending points*/
 	UPROPERTY(VisibleAnywhere) 
