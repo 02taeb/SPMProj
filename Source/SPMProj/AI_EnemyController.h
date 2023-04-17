@@ -24,4 +24,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "EnemeyStats")
 	float DistanceFromPlayer = 200;
 
+public:
+	UPROPERTY(EditAnywhere)
+	bool isFocusing;
+
 };
