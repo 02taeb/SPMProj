@@ -74,9 +74,11 @@ private:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ECharacterActionState ActionState = ECharacterActionState::ECAS_NoAction;
 
-	/*Animation montage for basic attack*/
+	/*Attack animation montages*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* NormalAttackMontage;
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	class UAnimMontage* HeavyAttackMontage;
 
 	/*/*Animation montage for dodge#1# 
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
@@ -107,6 +109,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputAttackMeleeNormal;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputAttackMeleeHeavy;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
     class UInputAction* InputJump;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputDodge;
@@ -121,10 +125,12 @@ private:
 	void LookRightRate(const FInputActionValue &Value);
 	void Interact(const FInputActionValue& Value);
 	void AttackMeleeNormal(const FInputActionValue& Value);
+	void AttackMeleeHeavy(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
 
-	void PlayAttackAnimation();
+	void PlayNormalAttackAnimation();
+	void PlayHeavyAttackAnimation();
 	
 	/*Kollar om States uppfyller kravet för att kunna attackera*/
 	bool CanAttack();
@@ -134,8 +140,6 @@ public:
 	 * Här i public längst under för att vi har en forward deklaration uppe.
 	 */ 
 	FORCEINLINE void SetOverlapWeapon(AMeleeWeapon* Weapon) { OverlapWeapon = Weapon; }
+	FORCEINLINE ECharacterActionState GetPlayerAttackType() { return ActionState; }
 	/*Dumb fucking function, tried too access Player via default Animation bluepring but didnt work... Remove in future*/
-	UFUNCTION(BlueprintCallable)
-	FORCEINLINE APlayerCharacter* GetPlayerThis() { return this; }
-	
 };

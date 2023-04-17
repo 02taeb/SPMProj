@@ -63,9 +63,16 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 
 	if(IsValid(BoxHit.GetActor()))
 	{
-		UGameplayStatics::ApplyDamage(BoxHit.GetActor(), DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
-	}
-	
+		APlayerCharacter* PlayerCharacter = Cast<APlayerCharacter>(this->GetOwner());
+		if(PlayerCharacter && PlayerCharacter->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingNormal)
+		{
+			UGameplayStatics::ApplyDamage(BoxHit.GetActor(), DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+		}
+		else
+		{
+			UGameplayStatics::ApplyDamage(BoxHit.GetActor(), HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+		}
+	} 
 }
 
 void AMeleeWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

@@ -74,6 +74,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
+	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeHeavy);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::Dodge);
 }
@@ -91,14 +92,14 @@ void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 void APlayerCharacter::MoveForward(const FInputActionValue & Value)
 {
 	/*Cant move under attack, will be changed!!*/
-	if(ActionState != ECharacterActionState::ECAS_Attacking)
+	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
 }
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 {
 	/*Cant move under attack, will be changed!!*/
-	if(ActionState != ECharacterActionState::ECAS_Attacking)
+	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorRightVector() * Value.Get<float>());
 }
 
@@ -114,13 +115,13 @@ void APlayerCharacter::LookUpRate(const FInputActionValue &Value)
 
 void APlayerCharacter::LookRight(const FInputActionValue& Value)
 {
-	if(ActionState != ECharacterActionState::ECAS_Attacking)
+	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::LookRightRate(const FInputActionValue &Value)
 {
-	if(ActionState != ECharacterActionState::ECAS_Attacking)
+	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
@@ -171,8 +172,17 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
 	if(CanAttack())
 	{
-		PlayAttackAnimation();
-		ActionState = ECharacterActionState::ECAS_Attacking;
+		ActionState = ECharacterActionState::ECAS_AttackingNormal;
+		PlayNormalAttackAnimation();
+	}
+}
+
+void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
+{
+	if(CanAttack())
+	{
+		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
+		PlayHeavyAttackAnimation();
 	}
 }
 
@@ -191,12 +201,21 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 	//...
 }
 
-void APlayerCharacter::PlayAttackAnimation()
+void APlayerCharacter::PlayNormalAttackAnimation()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if(AnimInstance && NormalAttackMontage)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
+	}
+}
+
+void APlayerCharacter::PlayHeavyAttackAnimation()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && NormalAttackMontage)
+	{
+		AnimInstance->Montage_Play(HeavyAttackMontage);
 	}
 }
 
