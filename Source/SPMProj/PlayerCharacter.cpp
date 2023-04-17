@@ -88,13 +88,18 @@ void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 	}
 }
 
-void APlayerCharacter::MoveForward(const FInputActionValue & Value) {
-	AddMovementInput(GetActorForwardVector() * Value.Get<float>());
+void APlayerCharacter::MoveForward(const FInputActionValue & Value)
+{
+	/*Cant move under attack, will be changed!!*/
+	if(ActionState != ECharacterActionState::ECAS_Attacking)
+		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
 }
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 {
-	AddMovementInput(GetActorRightVector() * Value.Get<float>());
+	/*Cant move under attack, will be changed!!*/
+	if(ActionState != ECharacterActionState::ECAS_Attacking)
+		AddMovementInput(GetActorRightVector() * Value.Get<float>());
 }
 
 void APlayerCharacter::LookUp(const FInputActionValue& Value)
