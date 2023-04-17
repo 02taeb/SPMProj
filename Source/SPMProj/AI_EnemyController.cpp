@@ -11,6 +11,24 @@ void AAI_EnemyController::BeginPlay()
 void AAI_EnemyController::Tick(float DeltaSeconds)
 {
     APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-    SetFocus(PlayerPawn);
-    MoveToActor(PlayerPawn, DistanceFromPlayer);
+
+    if (shouldFocus && LineOfSightTo(PlayerPawn, FVector(0)))
+    {
+        SetFocus(PlayerPawn);
+    }
+    else
+    {
+        ClearFocus(EAIFocusPriority::Gameplay);
+    }
+
+    if (shouldFollow && LineOfSightTo(PlayerPawn, FVector(0)))
+    {
+        SetFocus(PlayerPawn);
+        MoveToActor(PlayerPawn, DistanceFromPlayer);
+    }
+    else
+    {
+        ClearFocus(EAIFocusPriority::Gameplay);
+        StopMovement();
+    }
 }
