@@ -88,13 +88,18 @@ void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 	}
 }
 
-void APlayerCharacter::MoveForward(const FInputActionValue & Value) {
-	AddMovementInput(GetActorForwardVector() * Value.Get<float>());
+void APlayerCharacter::MoveForward(const FInputActionValue & Value)
+{
+	/*Cant move under attack, will be changed!!*/
+	if(ActionState != ECharacterActionState::ECAS_Attacking)
+		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
 }
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 {
-	AddMovementInput(GetActorRightVector() * Value.Get<float>());
+	/*Cant move under attack, will be changed!!*/
+	if(ActionState != ECharacterActionState::ECAS_Attacking)
+		AddMovementInput(GetActorRightVector() * Value.Get<float>());
 }
 
 void APlayerCharacter::LookUp(const FInputActionValue& Value)
@@ -109,12 +114,14 @@ void APlayerCharacter::LookUpRate(const FInputActionValue &Value)
 
 void APlayerCharacter::LookRight(const FInputActionValue& Value)
 {
-	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
+	if(ActionState != ECharacterActionState::ECAS_Attacking)
+		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::LookRightRate(const FInputActionValue &Value)
 {
-	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
+	if(ActionState != ECharacterActionState::ECAS_Attacking)
+		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::Interact(const FInputActionValue& Value)
@@ -162,7 +169,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
-	if(ActionState == ECharacterActionState::ECAS_NoAction)
+	if(CanAttack())
 	{
 		PlayAttackAnimation();
 		ActionState = ECharacterActionState::ECAS_Attacking;
@@ -187,10 +194,15 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 void APlayerCharacter::PlayAttackAnimation()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && NormalAttackMontage && WeaponState == ECharacterWeaponState::ECWS_Equiped)
+	if(AnimInstance && NormalAttackMontage)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
 	}
+}
+
+bool APlayerCharacter::CanAttack()
+{
+	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped;
 }
 
 //Använda det item som klickas på, finns möjlighet för c++ och blueprint
