@@ -125,6 +125,9 @@ private:
 	void Dodge(const FInputActionValue& Value);
 
 	void PlayAttackAnimation();
+	
+	/*Kollar om States uppfyller kravet för att kunna attackera*/
+	bool CanAttack();
 
 public:
 	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr

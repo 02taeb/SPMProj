@@ -162,7 +162,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
-	if(ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped)
+	if(CanAttack())
 	{
 		PlayAttackAnimation();
 		ActionState = ECharacterActionState::ECAS_Attacking;
@@ -191,6 +191,11 @@ void APlayerCharacter::PlayAttackAnimation()
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
 	}
+}
+
+bool APlayerCharacter::CanAttack()
+{
+	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped;
 }
 
 //Använda det item som klickas på, finns möjlighet för c++ och blueprint
