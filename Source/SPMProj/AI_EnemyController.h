@@ -21,10 +21,13 @@ protected:
 	
 
 private: 
-	UPROPERTY(EditAnywhere, Category = "AI_Behavior")
+	/* UPROPERTY(EditAnywhere, Category = "AI_Behavior")
 	float DistanceFromPlayer = 200;
 	UPROPERTY(EditAnywhere, Category = "AI_Behavior")
 	bool shouldFocus = true;
 	UPROPERTY(EditAnywhere, Category = "AI_Behavior")
 	bool shouldFollow = true;
+	*/
+	UPROPERTY(EditAnywhere, Category = "Behavior Tree")
+	class UBehaviorTree* AI_EnemyBehavior;
 };

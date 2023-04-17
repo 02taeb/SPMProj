@@ -13,7 +13,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
 #include "ItemActor.h"
-#include "Item.h"
+//#include "Item.h"
 #include "Components/BoxComponent.h"
 
 // Sets default values

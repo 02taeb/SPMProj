@@ -16,6 +16,22 @@
 		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\BTTask_ClearBlackboardValue.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\BTTask_ClearBlackboardValue.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
@@ -48,7 +64,7 @@
 		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\HealthItem.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\EquipableItemActor.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
 			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
@@ -56,7 +72,7 @@
 		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\HealthItem.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\EquipableItemActor.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
 			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
@@ -112,22 +128,6 @@
 		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\Item.cpp",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
-		],
-		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\Item.h",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
-		],
-		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
-	},
-	{
 		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\ItemActor.cpp",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
@@ -169,22 +169,6 @@
 	},
 	{
 		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacter.h",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
-		],
-		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacterTest.cpp",
-		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
-		],
-		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
-	},
-	{
-		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\PlayerCharacterTest.h",
 		"arguments": [
 			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
 			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
