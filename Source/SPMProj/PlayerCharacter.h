@@ -71,6 +71,7 @@ private:
 	/*Spelaren börjar unequiped*/
 	ECharacterWeaponState WeaponState = ECharacterWeaponState::ECWS_Unequiped;
 
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ECharacterActionState ActionState = ECharacterActionState::ECAS_NoAction;
 
 	/*Animation montage for basic attack*/

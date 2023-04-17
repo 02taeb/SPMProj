@@ -164,8 +164,8 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
 	if(ActionState == ECharacterActionState::ECAS_NoAction)
 	{
-		ActionState = ECharacterActionState::ECAS_Attacking;
 		PlayAttackAnimation();
+		ActionState = ECharacterActionState::ECAS_Attacking;
 	}
 }
 

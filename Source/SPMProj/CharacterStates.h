@@ -7,8 +7,9 @@ enum class ECharacterWeaponState : uint8
 	ECWS_Equiped UMETA(DisplayName = "Equiped")
 };
 /*Enum for all action states, like attacking, drinking a health potion, eating an enemy and so on...*/
+UENUM(BlueprintType)
 enum class ECharacterActionState : uint8
 {
-	ECAS_NoAction UMETA(DisplayName = "Unequiped"),
-	ECAS_Attacking UMETA(DisplayName = "Equiped")
+	ECAS_NoAction UMETA(DisplayName = "NoAction"),
+	ECAS_Attacking UMETA(DisplayName = "Attacking")
 };
