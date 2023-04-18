@@ -24,8 +24,11 @@ APlayerCharacter::APlayerCharacter()
 		//TESTING FÖR INVENTORY
 	Inventory = CreateDefaultSubobject<UInventoryComponent>("Inventory");
 	Inventory->Capacity = 20;
+	
 	Health = 100.f;
-
+	
+	bHeavyAttackUsed = false;
+	HeavyAttackCooldown = 5.0f;
 }
 
 // Called when the game starts or when spawned
@@ -179,11 +182,18 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 {
-	if(CanAttack())
+	if(CanAttack() && !bHeavyAttackUsed)
 	{
+		bHeavyAttackUsed = true;
 		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
 		PlayHeavyAttackAnimation();
+		GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
 	}
+}
+
+void APlayerCharacter::ResetHeavyAttackCooldown()
+{
+	bHeavyAttackUsed = false;
 }
 
 void APlayerCharacter::JumpChar(const FInputActionValue& Value)
