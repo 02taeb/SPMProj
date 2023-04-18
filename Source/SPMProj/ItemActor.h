@@ -22,29 +22,21 @@ public:
 	class UWorld* World;
 
 	//Texten när musen är över item i inventory
-	UPROPERTY(EditDefaultsOnly, BluePrintReadWrite, Category = "Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	FText UseText;
-	
-	//Eventuell mesh för item
-	UPROPERTY(EditDefaultsOnly, BluePrintReadWrite, Category = "Item")
-	class UStaticMesh* PickupMesh;
 
 	//bildenm på item i inventory
-	UPROPERTY(EditDefaultsOnly, BluePrintReadWrite, Category = "Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	class UTexture2D* ItemThumbnail;
 
-	UPROPERTY(EditDefaultsOnly, BluePrintReadWrite, Category = "Item")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	FText ItemName;
 
-	UPROPERTY(EditDefaultsOnly, BluePrintReadWrite, Category = "Item", meta = (MultiLine = true))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item", meta = (MultiLine = true))
 	FText ItemDescription;
-
-	//Placeholder, men potentiell weight eller annan extar funktion
-	UPROPERTY(EditDefaultsOnly, BluePrintReadWrite, Category = "Item", meta = (ClampMin = 0.0))
-	float Weight;
 	
 	//vilket Inventory itemet ägs av
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	class UInventoryComponent* OwningInventory;
 
 	//Den här variabeln kan ändras om spelarens character klass ändras
