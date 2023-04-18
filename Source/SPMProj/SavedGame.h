@@ -33,11 +33,14 @@ public:
 	UObject* Checkpoint;
 
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
-	TArray <class AItemActor*> StartItems;
+	TArray <class AItemActor*> CurrentItems;
 
-	UPROPERTY(VisibleAnywhere, Category = "Basic")
+	UPROPERTY(VisibleAnywhere, Category = "Generic")
+	TArray <class AEquipableItemActor*> EquippedItems;
+
+	UPROPERTY(VisibleAnywhere, Category = "Generic")
     FString SaveSlotName;
 
-    UPROPERTY(VisibleAnywhere, Category = "Basic")
+    UPROPERTY(VisibleAnywhere, Category = "Generic")
     uint32 UserIndex;
 };

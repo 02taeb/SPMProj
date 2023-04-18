@@ -12,6 +12,8 @@ AHealthItemActor::AHealthItemActor()
 
 void AHealthItemActor::Use(class APlayerCharacter *Character)
 {
+    Super::Use(Character);
+    
      if (Character)
      {
         Character->Health += HealthToHeal;

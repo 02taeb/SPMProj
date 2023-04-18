@@ -16,6 +16,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
 #include "ItemActor.h"
+#include "EquipableItemActor.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "SavedGame.h"
@@ -88,8 +89,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::Dodge);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Triggered, this, &APlayerCharacter::TargetLock);
 	//Testinputs för load och save
-	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Triggered, this, &APlayerCharacter::SaveGame);
-	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Triggered, this, &APlayerCharacter::LoadGame);
+	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
+	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
 
 }
 
@@ -320,8 +321,25 @@ void APlayerCharacter::SaveGame()
 	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
 	//Set save game instance location to players current location
 	SaveGameInstance->PlayerPosition = this->GetActorLocation();
+
+	//Reset equipped items
+	SaveGameInstance->EquippedItems.Empty();
+
+	//set current inventory to be saved
+	SaveGameInstance->CurrentItems = Inventory->Items;
+
+	for (AItemActor* Item : SaveGameInstance->CurrentItems)
+	{
+		if (Cast<AEquipableItemActor>(Item) && Cast<AEquipableItemActor>(Item)->Equipped)
+		{
+			SaveGameInstance->EquippedItems.Add(Cast<AEquipableItemActor>(Item));	
+		}
+		
+	}
+	
+
 	//save game instance
-	UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("MySlot"), 0);
+	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 
 
 	//log message to show saved game
@@ -333,9 +351,33 @@ void APlayerCharacter::LoadGame()
 	//Create instance of save game
 	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
 	//Load saved game into instance variable
-	SaveGameInstance = Cast<USavedGame>(UGameplayStatics::LoadGameFromSlot("MySlot", 0));
+	SaveGameInstance = Cast<USavedGame>(UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
 	//set players position from saved position
 	this->SetActorLocation(SaveGameInstance->PlayerPosition);
+
+	//set inventory
+	Inventory->Items.Empty();
+
+	//Inventory->Items = SaveGameInstance->CurrentItems;
+	
+
+	
+
+	for (AItemActor* Item : SaveGameInstance->CurrentItems)
+	{
+		if (Cast<AEquipableItemActor>(Item))
+		{
+			Cast<AEquipableItemActor>(Item)->Equipped = false;
+		}
+		
+		Inventory->AddItem(Item);
+	}
+
+	for (AEquipableItemActor* Item : SaveGameInstance->EquippedItems)
+	{
+		Item->Equipped = true;
+	}
+	
 
 
 	//log to check for load

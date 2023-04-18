@@ -3,6 +3,7 @@
 
 #include "InventoryComponent.h"
 #include "ItemActor.h"
+#include "EquipableItemActor.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
@@ -57,6 +58,11 @@ bool UInventoryComponent::RemoveItem(AItemActor *Item)
 
 	if (Item)
 	{
+		if (Cast<AEquipableItemActor>(Item))
+		{
+			Cast<AEquipableItemActor>(Item)->Equipped = false;
+		}
+		
 		Item->OwningInventory = nullptr;
 		Item->World = nullptr;
 		int32 index = Items.Find(Item);
