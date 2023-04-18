@@ -87,7 +87,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeHeavy);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::Dodge);
-	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Triggered, this, &APlayerCharacter::TargetLock);
+	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
 	//Testinputs för load och save
 	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
 	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
@@ -96,10 +96,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 {
-	UE_LOG(LogTemp, Warning, TEXT("SetWeaponCollision ENTERED BEFORE IF"))
 	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("SetWeaponCollision ENTERED IN IF"))
 		EquipedWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
 	}
 }
@@ -225,43 +223,52 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 
 void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 {
-	if(!EnemyTargetLock)
-		EnemyTargetLock = nullptr;
+	/*if(!EnemyTargetLock)
+		EnemyTargetLock = nullptr;*/
 
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
 
-	FHitResult Hit;
+	//FHitResult Hit;
+	//TArray<FHitResult> &OutHits;
+	TArray<FHitResult> HitResults;
 	FVector TraceStart;
 	FRotator TraceRot;
 	PlayerController->GetPlayerViewPoint(TraceStart, TraceRot);
 	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
 	TArray<AActor*> ActorsToIgnore;
 
-	UKismetSystemLibrary::SphereTraceSingle(
+	if(!EnemyTargetLock)
+	{
+		UKismetSystemLibrary::SphereTraceMulti(
 		this,
-		TraceStart, TraceEnd,
+		TraceStart,
+		TraceEnd,
 		100.0f,
 		ETraceTypeQuery::TraceTypeQuery1,
 		false,
 		ActorsToIgnore,
-		EDrawDebugTrace::None,
-		Hit,
+		EDrawDebugTrace::ForDuration,
+		HitResults,
 		true);
-
-	if(IsValid(Hit.GetActor()))
+	} else
 	{
-		EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+		EnemyTargetLock = nullptr;
+	}
+
+	for(auto Hit : HitResults)
+	{
+		if(IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()))
+		{
+			EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+		}
 	}
 }
 
 void APlayerCharacter::KeepRotationOnTarget()
 {
 	if(!IsValid(EnemyTargetLock))
-	{
-		EnemyTargetLock = nullptr;
 		return;
-	}
 	
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
@@ -269,8 +276,8 @@ void APlayerCharacter::KeepRotationOnTarget()
 	if(EnemyTargetLock)
 	{
 		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemyTargetLock->GetActorLocation());
-		//FRotator OffSet = FRotator(40.f, 0.f, 0.f);
-		PlayerController->SetControlRotation(NewRotation);
+		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
+		PlayerController->SetControlRotation(NewRotation + Offset);
 	}
 }
 
