@@ -261,6 +261,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 		if(IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()))
 		{
 			EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+			break;
 		}
 	}
 }
