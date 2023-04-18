@@ -28,7 +28,7 @@ APlayerCharacter::APlayerCharacter()
 	Health = 100.f;
 	
 	bHeavyAttackUsed = false;
-	HeavyAttackCooldown = 5.0f;
+	HeavyAttackCooldown = 7.0f;
 }
 
 // Called when the game starts or when spawned
