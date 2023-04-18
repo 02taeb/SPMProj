@@ -21,7 +21,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	bool AddItem(class AItemActor* Item);
-
+	UFUNCTION(BLueprintCallable)
 	bool RemoveItem(class AItemActor* Item);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
