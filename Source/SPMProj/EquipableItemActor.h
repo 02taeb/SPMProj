@@ -17,5 +17,8 @@ class SPMPROJ_API AEquipableItemActor : public AItemActor
 
 public:
 
+UPROPERTY(BlueprintReadWrite)
+bool Equipped;
+
 
 };

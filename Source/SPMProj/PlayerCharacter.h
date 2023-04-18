@@ -80,6 +80,11 @@ private:
 	UPROPERTY(EditAnywhere, Category=Cooldown)
 	float HeavyAttackCooldown;
 
+	/*Target lock*/
+	class AEnemy* EnemyTargetLock;
+	UPROPERTY(EditAnywhere)
+	float TargetLockDistance = 700.0f;
+
 	/*Attack animation montages*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* NormalAttackMontage;
@@ -120,6 +125,8 @@ private:
     class UInputAction* InputJump;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputDodge;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputTargetLock;
 
 	
 	//callback functions for Input actions
@@ -134,6 +141,9 @@ private:
 	void AttackMeleeHeavy(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
+	void TargetLock(const FInputActionValue& Value);
+
+	void KeepRotationOnTarget();
 
 	void PlayNormalAttackAnimation();
 	void PlayHeavyAttackAnimation();

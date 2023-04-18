@@ -2,6 +2,8 @@
 
 
 #include "ItemActor.h"
+#include "InventoryComponent.h"
+#include "PlayerCharacter.h"
 
 // Sets default values
 AItemActor::AItemActor()
@@ -10,7 +12,6 @@ AItemActor::AItemActor()
 	PrimaryActorTick.bCanEverTick = true;
 
 	//Lite defaultvärden
-    Weight = 1.f;
     ItemName = FText::FromString("Item");
     UseText = FText::FromString("Use");
 }
