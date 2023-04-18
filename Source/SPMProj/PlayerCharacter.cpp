@@ -2,6 +2,8 @@
 
 
 #include "PlayerCharacter.h"
+
+#include "Enemy.h"
 #include "InputMappingContext.h"
 #include "InputAction.h"
 #include "EnhancedInputSubsystems.h"
@@ -10,10 +12,13 @@
 #include "MeleeWeapon.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/AnimMontage.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
 #include "ItemActor.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "SavedGame.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -28,7 +33,7 @@ APlayerCharacter::APlayerCharacter()
 	Health = 100.f;
 	
 	bHeavyAttackUsed = false;
-	HeavyAttackCooldown = 5.0f;
+	HeavyAttackCooldown = 7.0f;
 }
 
 // Called when the game starts or when spawned
@@ -45,7 +50,8 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+
+	KeepRotationOnTarget();
 }
 
 // Called to bind functionality to input
@@ -80,6 +86,11 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeHeavy);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::Dodge);
+	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Triggered, this, &APlayerCharacter::TargetLock);
+	//Testinputs för load och save
+	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Triggered, this, &APlayerCharacter::SaveGame);
+	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Triggered, this, &APlayerCharacter::LoadGame);
+
 }
 
 void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
@@ -211,6 +222,57 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 	//...
 }
 
+void APlayerCharacter::TargetLock(const FInputActionValue& Value)
+{
+	if(!EnemyTargetLock)
+		EnemyTargetLock = nullptr;
+
+	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController == nullptr) return;
+
+	FHitResult Hit;
+	FVector TraceStart;
+	FRotator TraceRot;
+	PlayerController->GetPlayerViewPoint(TraceStart, TraceRot);
+	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
+	TArray<AActor*> ActorsToIgnore;
+
+	UKismetSystemLibrary::SphereTraceSingle(
+		this,
+		TraceStart, TraceEnd,
+		100.0f,
+		ETraceTypeQuery::TraceTypeQuery1,
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::None,
+		Hit,
+		true);
+
+	if(IsValid(Hit.GetActor()))
+	{
+		EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+	}
+}
+
+void APlayerCharacter::KeepRotationOnTarget()
+{
+	if(!IsValid(EnemyTargetLock))
+	{
+		EnemyTargetLock = nullptr;
+		return;
+	}
+	
+	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController == nullptr) return;
+
+	if(EnemyTargetLock)
+	{
+		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemyTargetLock->GetActorLocation());
+		//FRotator OffSet = FRotator(40.f, 0.f, 0.f);
+		PlayerController->SetControlRotation(NewRotation);
+	}
+}
+
 void APlayerCharacter::PlayNormalAttackAnimation()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
@@ -234,7 +296,7 @@ bool APlayerCharacter::CanAttack()
 	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped;
 }
 
-//Använda det item som klickas på, finns möjlighet för c++ och blueprint
+	//Använda det item som klickas på, finns möjlighet för c++ och blueprint
 	//Är implementerad i blueprint just nu
 void APlayerCharacter::UseItem(AItemActor *Item)
 {
@@ -250,4 +312,32 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 		Item->OnUse(this); //Blueprint event
 	}
 	
+}
+
+void APlayerCharacter::SaveGame()
+{
+	//Create instance of SavedGame
+	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
+	//Set save game instance location to players current location
+	SaveGameInstance->PlayerPosition = this->GetActorLocation();
+	//save game instance
+	UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("MySlot"), 0);
+
+
+	//log message to show saved game
+	UE_LOG(LogTemp, Display, TEXT("SAVED"));
+}
+
+void APlayerCharacter::LoadGame()
+{	
+	//Create instance of save game
+	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
+	//Load saved game into instance variable
+	SaveGameInstance = Cast<USavedGame>(UGameplayStatics::LoadGameFromSlot("MySlot", 0));
+	//set players position from saved position
+	this->SetActorLocation(SaveGameInstance->PlayerPosition);
+
+
+	//log to check for load
+	UE_LOG(LogTemp, Display, TEXT("Loaded"));
 }

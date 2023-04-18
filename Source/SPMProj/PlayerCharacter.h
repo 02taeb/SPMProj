@@ -48,6 +48,12 @@ public:
 
 
 private:
+
+	//Function for saving and loading the game
+	void SaveGame();
+
+	void LoadGame();
+
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 10;
@@ -79,6 +85,11 @@ private:
 	bool bHeavyAttackUsed;
 	UPROPERTY(EditAnywhere, Category=Cooldown)
 	float HeavyAttackCooldown;
+
+	/*Target lock*/
+	class AEnemy* EnemyTargetLock;
+	UPROPERTY(EditAnywhere)
+	float TargetLockDistance = 700.0f;
 
 	/*Attack animation montages*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
@@ -120,6 +131,14 @@ private:
     class UInputAction* InputJump;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputDodge;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputTargetLock;
+
+	//testinputs för save och load
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputSaveGame;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputLoadGame;
 
 	
 	//callback functions for Input actions
@@ -134,6 +153,9 @@ private:
 	void AttackMeleeHeavy(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
+	void TargetLock(const FInputActionValue& Value);
+
+	void KeepRotationOnTarget();
 
 	void PlayNormalAttackAnimation();
 	void PlayHeavyAttackAnimation();

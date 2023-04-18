@@ -48,7 +48,7 @@ bool UInventoryComponent::AddItem(AItemActor *Item)
 
 	//Update UI
 	OnInventoryUpdated.Broadcast();
-
+	
     return true;
 }
 
