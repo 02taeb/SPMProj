@@ -42,9 +42,6 @@ public:
 	//Den här variabeln kan ändras om spelarens character klass ändras
 	//Vad som ska hända när du använder item
 	virtual void Use(class APlayerCharacter* Character);
-	
-	//Ta bort item ur inventory utan att använda
-	void Discard(class APlayerCharacter* Character);
 
 	//Samma som Use() men för Blueprints
 	UFUNCTION(BlueprintImplementableEvent)

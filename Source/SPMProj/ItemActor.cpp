@@ -34,16 +34,3 @@ void AItemActor::Use(class APlayerCharacter* Character)
 {
     
 }
-
-void AItemActor::Discard(APlayerCharacter *Character)
-{
-	if (Character)
-     {
-        if (OwningInventory)
-        {
-            OwningInventory->RemoveItem(this);
-        }
-        
-        
-     }
-}
