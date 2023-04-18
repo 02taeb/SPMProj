@@ -16,8 +16,10 @@
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
 #include "ItemActor.h"
+#include "EquipableItemActor.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "SavedGame.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -86,6 +88,10 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::Dodge);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Triggered, this, &APlayerCharacter::TargetLock);
+	//Testinputs för load och save
+	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
+	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
+
 }
 
 void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
@@ -291,7 +297,7 @@ bool APlayerCharacter::CanAttack()
 	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped;
 }
 
-//Använda det item som klickas på, finns möjlighet för c++ och blueprint
+	//Använda det item som klickas på, finns möjlighet för c++ och blueprint
 	//Är implementerad i blueprint just nu
 void APlayerCharacter::UseItem(AItemActor *Item)
 {
@@ -307,4 +313,73 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 		Item->OnUse(this); //Blueprint event
 	}
 	
+}
+
+void APlayerCharacter::SaveGame()
+{
+	//Create instance of SavedGame
+	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
+	//Set save game instance location to players current location
+	SaveGameInstance->PlayerPosition = this->GetActorLocation();
+
+	//Reset equipped items
+	SaveGameInstance->EquippedItems.Empty();
+
+	//set current inventory to be saved
+	SaveGameInstance->CurrentItems = Inventory->Items;
+
+	for (AItemActor* Item : SaveGameInstance->CurrentItems)
+	{
+		if (Cast<AEquipableItemActor>(Item) && Cast<AEquipableItemActor>(Item)->Equipped)
+		{
+			SaveGameInstance->EquippedItems.Add(Cast<AEquipableItemActor>(Item));	
+		}
+		
+	}
+	
+
+	//save game instance
+	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
+
+
+	//log message to show saved game
+	UE_LOG(LogTemp, Display, TEXT("SAVED"));
+}
+
+void APlayerCharacter::LoadGame()
+{	
+	//Create instance of save game
+	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
+	//Load saved game into instance variable
+	SaveGameInstance = Cast<USavedGame>(UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
+	//set players position from saved position
+	this->SetActorLocation(SaveGameInstance->PlayerPosition);
+
+	//set inventory
+	Inventory->Items.Empty();
+
+	//Inventory->Items = SaveGameInstance->CurrentItems;
+	
+
+	
+
+	for (AItemActor* Item : SaveGameInstance->CurrentItems)
+	{
+		if (Cast<AEquipableItemActor>(Item))
+		{
+			Cast<AEquipableItemActor>(Item)->Equipped = false;
+		}
+		
+		Inventory->AddItem(Item);
+	}
+
+	for (AEquipableItemActor* Item : SaveGameInstance->EquippedItems)
+	{
+		Item->Equipped = true;
+	}
+	
+
+
+	//log to check for load
+	UE_LOG(LogTemp, Display, TEXT("Loaded"));
 }

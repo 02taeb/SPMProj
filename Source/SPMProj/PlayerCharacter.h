@@ -48,6 +48,12 @@ public:
 
 
 private:
+
+	//Function for saving and loading the game
+	void SaveGame();
+
+	void LoadGame();
+
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 10;
@@ -127,6 +133,12 @@ private:
 	class UInputAction* InputDodge;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputTargetLock;
+
+	//testinputs för save och load
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputSaveGame;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputLoadGame;
 
 	
 	//callback functions for Input actions
