@@ -16,7 +16,55 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_ClearBlackboardValue.cpp",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocation.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocation.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocationIfSeen.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocationIfSeen.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\BTTask_Attack.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\BTTask_Attack.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\BTTask_ClearBlackboardValue.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
 			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
@@ -48,7 +96,15 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\CharacterStates.h",
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\CharacterStates.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\Enemy.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
 			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
@@ -80,6 +136,23 @@
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\EquipableParasite.cpp",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\EquipableParasite.h",
+		"arguments": [
+			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.256.rsp"
+		],
+		"directory": "Z:\\Programs\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\Daniel\\Documents\\Unreal Projects\\SPMProj\\Source\\SPMProj\\HealthItemActor.cpp",
 		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\EquipableItemActor.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
