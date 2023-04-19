@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "CharacterStates.h"
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
@@ -12,7 +13,7 @@ class SPMPROJ_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-		//Test för inventory, ger player ett inventorycomponent
+	//Test för inventory, ger player ett inventorycomponent
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = true))
 	class UInventoryComponent* Inventory;
 
@@ -47,6 +48,12 @@ public:
 
 
 private:
+
+	//Function for saving and loading the game
+	void SaveGame();
+
+	void LoadGame();
+
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 10;
@@ -67,9 +74,28 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* EquipedWeapon;
 
-	/*Animation montage for basic attack*/
+	/*Spelaren börjar unequiped*/
+	ECharacterWeaponState WeaponState = ECharacterWeaponState::ECWS_Unequiped;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	ECharacterActionState ActionState = ECharacterActionState::ECAS_NoAction;
+
+	/*Cooldown variables*/
+	FTimerHandle HeavyAttackTimer;
+	bool bHeavyAttackUsed;
+	UPROPERTY(EditAnywhere, Category=Cooldown)
+	float HeavyAttackCooldown;
+
+	/*Target lock*/
+	class AEnemy* EnemyTargetLock;
+	UPROPERTY(EditAnywhere)
+	float TargetLockDistance = 700.0f;
+
+	/*Attack animation montages*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* NormalAttackMontage;
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	class UAnimMontage* HeavyAttackMontage;
 
 	/*/*Animation montage for dodge#1# 
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
@@ -100,9 +126,19 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputAttackMeleeNormal;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputAttackMeleeHeavy;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
     class UInputAction* InputJump;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputDodge;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputTargetLock;
+
+	//testinputs för save och load
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputSaveGame;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputLoadGame;
 
 	
 	//callback functions for Input actions
@@ -114,16 +150,26 @@ private:
 	void LookRightRate(const FInputActionValue &Value);
 	void Interact(const FInputActionValue& Value);
 	void AttackMeleeNormal(const FInputActionValue& Value);
+	void AttackMeleeHeavy(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
+	void TargetLock(const FInputActionValue& Value);
 
+	void KeepRotationOnTarget();
+
+	void PlayNormalAttackAnimation();
+	void PlayHeavyAttackAnimation();
+	
+	/*Kollar om States uppfyller kravet för att kunna attackera*/
+	bool CanAttack();
+
+	/*Cooldown metoder*/
+	void ResetHeavyAttackCooldown();
 public:
 	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
 	 * Här i public längst under för att vi har en forward deklaration uppe.
 	 */ 
 	FORCEINLINE void SetOverlapWeapon(AMeleeWeapon* Weapon) { OverlapWeapon = Weapon; }
+	FORCEINLINE ECharacterActionState GetPlayerAttackType() { return ActionState; }
 	/*Dumb fucking function, tried too access Player via default Animation bluepring but didnt work... Remove in future*/
-	UFUNCTION(BlueprintCallable)
-	FORCEINLINE APlayerCharacter* GetPlayerThis() { return this; }
-	
 };

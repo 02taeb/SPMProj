@@ -2,15 +2,18 @@
 
 #include "AI_EnemyController.h"
 #include "Kismet/GameplayStatics.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 void AAI_EnemyController::BeginPlay()
 {
     Super::BeginPlay();
-}
+    if (AI_EnemyBehavior != nullptr)
+    {
+        RunBehaviorTree(AI_EnemyBehavior);
+        APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+        if (PlayerPawn == nullptr)
+            return;
 
-void AAI_EnemyController::Tick(float DeltaSeconds)
-{
-    APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-    SetFocus(PlayerPawn);
-    MoveToActor(PlayerPawn, DistanceFromPlayer);
+        GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
+    }
 }

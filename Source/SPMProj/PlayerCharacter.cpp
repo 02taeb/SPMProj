@@ -2,6 +2,8 @@
 
 
 #include "PlayerCharacter.h"
+
+#include "Enemy.h"
 #include "InputMappingContext.h"
 #include "InputAction.h"
 #include "EnhancedInputSubsystems.h"
@@ -10,11 +12,14 @@
 #include "MeleeWeapon.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/AnimMontage.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
 #include "ItemActor.h"
-#include "Item.h"
+#include "EquipableItemActor.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "SavedGame.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -25,8 +30,11 @@ APlayerCharacter::APlayerCharacter()
 		//TESTING FÖR INVENTORY
 	Inventory = CreateDefaultSubobject<UInventoryComponent>("Inventory");
 	Inventory->Capacity = 20;
+	
 	Health = 100.f;
-
+	
+	bHeavyAttackUsed = false;
+	HeavyAttackCooldown = 7.0f;
 }
 
 // Called when the game starts or when spawned
@@ -43,7 +51,8 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+
+	KeepRotationOnTarget();
 }
 
 // Called to bind functionality to input
@@ -75,27 +84,36 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
 	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
+	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeHeavy);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::Dodge);
+	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
+	//Testinputs för load och save
+	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
+	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
+
 }
 
 void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 {
-	UE_LOG(LogTemp, Warning, TEXT("SetWeaponCollision ENTERED BEFORE IF"))
 	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("SetWeaponCollision ENTERED IN IF"))
 		EquipedWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
 	}
 }
 
-void APlayerCharacter::MoveForward(const FInputActionValue & Value) {
-	AddMovementInput(GetActorForwardVector() * Value.Get<float>());
+void APlayerCharacter::MoveForward(const FInputActionValue & Value)
+{
+	/*Cant move under attack, will be changed!!*/
+	if(ActionState == ECharacterActionState::ECAS_NoAction)
+		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
 }
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 {
-	AddMovementInput(GetActorRightVector() * Value.Get<float>());
+	/*Cant move under attack, will be changed!!*/
+	if(ActionState == ECharacterActionState::ECAS_NoAction)
+		AddMovementInput(GetActorRightVector() * Value.Get<float>());
 }
 
 void APlayerCharacter::LookUp(const FInputActionValue& Value)
@@ -110,12 +128,14 @@ void APlayerCharacter::LookUpRate(const FInputActionValue &Value)
 
 void APlayerCharacter::LookRight(const FInputActionValue& Value)
 {
-	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
+	if(ActionState == ECharacterActionState::ECAS_NoAction)
+		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::LookRightRate(const FInputActionValue &Value)
 {
-	AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
+	if(ActionState == ECharacterActionState::ECAS_NoAction)
+		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::Interact(const FInputActionValue& Value)
@@ -129,6 +149,8 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		Weapon->SetOwner(this);
 		Weapon->SetInstigator(this);
 		EquipedWeapon = Weapon;
+		OverlapWeapon = nullptr;
+		WeaponState = ECharacterWeaponState::ECWS_Equiped;
 	}
 
 	
@@ -161,11 +183,27 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
-	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && NormalAttackMontage && EquipedWeapon)
+	if(CanAttack())
 	{
-		AnimInstance->Montage_Play(NormalAttackMontage);
+		ActionState = ECharacterActionState::ECAS_AttackingNormal;
+		PlayNormalAttackAnimation();
 	}
+}
+
+void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
+{
+	if(CanAttack() && !bHeavyAttackUsed)
+	{
+		bHeavyAttackUsed = true;
+		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
+		PlayHeavyAttackAnimation();
+		GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
+	}
+}
+
+void APlayerCharacter::ResetHeavyAttackCooldown()
+{
+	bHeavyAttackUsed = false;
 }
 
 void APlayerCharacter::JumpChar(const FInputActionValue& Value)
@@ -183,7 +221,91 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 	//...
 }
 
-//Använda det item som klickas på, finns möjlighet för c++ och blueprint
+void APlayerCharacter::TargetLock(const FInputActionValue& Value)
+{
+	/*if(!EnemyTargetLock)
+		EnemyTargetLock = nullptr;*/
+
+	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController == nullptr) return;
+
+	//FHitResult Hit;
+	//TArray<FHitResult> &OutHits;
+	TArray<FHitResult> HitResults;
+	FVector TraceStart;
+	FRotator TraceRot;
+	PlayerController->GetPlayerViewPoint(TraceStart, TraceRot);
+	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
+	TArray<AActor*> ActorsToIgnore;
+
+	if(!EnemyTargetLock)
+	{
+		UKismetSystemLibrary::SphereTraceMulti(
+		this,
+		TraceStart,
+		TraceEnd,
+		100.0f,
+		ETraceTypeQuery::TraceTypeQuery1,
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::ForDuration,
+		HitResults,
+		true);
+	} else
+	{
+		EnemyTargetLock = nullptr;
+	}
+
+	for(auto Hit : HitResults)
+	{
+		if(IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()))
+		{
+			EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+			break;
+		}
+	}
+}
+
+void APlayerCharacter::KeepRotationOnTarget()
+{
+	if(!IsValid(EnemyTargetLock))
+		return;
+	
+	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController == nullptr) return;
+
+	if(EnemyTargetLock)
+	{
+		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemyTargetLock->GetActorLocation());
+		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
+		PlayerController->SetControlRotation(NewRotation + Offset);
+	}
+}
+
+void APlayerCharacter::PlayNormalAttackAnimation()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && NormalAttackMontage)
+	{
+		AnimInstance->Montage_Play(NormalAttackMontage);
+	}
+}
+
+void APlayerCharacter::PlayHeavyAttackAnimation()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && NormalAttackMontage)
+	{
+		AnimInstance->Montage_Play(HeavyAttackMontage);
+	}
+}
+
+bool APlayerCharacter::CanAttack()
+{
+	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped;
+}
+
+	//Använda det item som klickas på, finns möjlighet för c++ och blueprint
 	//Är implementerad i blueprint just nu
 void APlayerCharacter::UseItem(AItemActor *Item)
 {
@@ -199,4 +321,73 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 		Item->OnUse(this); //Blueprint event
 	}
 	
+}
+
+void APlayerCharacter::SaveGame()
+{
+	//Create instance of SavedGame
+	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
+	//Set save game instance location to players current location
+	SaveGameInstance->PlayerPosition = this->GetActorLocation();
+
+	//Reset equipped items
+	SaveGameInstance->EquippedItems.Empty();
+
+	//set current inventory to be saved
+	SaveGameInstance->CurrentItems = Inventory->Items;
+
+	for (AItemActor* Item : SaveGameInstance->CurrentItems)
+	{
+		if (Cast<AEquipableItemActor>(Item) && Cast<AEquipableItemActor>(Item)->Equipped)
+		{
+			SaveGameInstance->EquippedItems.Add(Cast<AEquipableItemActor>(Item));	
+		}
+		
+	}
+	
+
+	//save game instance
+	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
+
+
+	//log message to show saved game
+	UE_LOG(LogTemp, Display, TEXT("SAVED"));
+}
+
+void APlayerCharacter::LoadGame()
+{	
+	//Create instance of save game
+	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
+	//Load saved game into instance variable
+	SaveGameInstance = Cast<USavedGame>(UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
+	//set players position from saved position
+	this->SetActorLocation(SaveGameInstance->PlayerPosition);
+
+	//set inventory
+	Inventory->Items.Empty();
+
+	//Inventory->Items = SaveGameInstance->CurrentItems;
+	
+
+	
+
+	for (AItemActor* Item : SaveGameInstance->CurrentItems)
+	{
+		if (Cast<AEquipableItemActor>(Item))
+		{
+			Cast<AEquipableItemActor>(Item)->Equipped = false;
+		}
+		
+		Inventory->AddItem(Item);
+	}
+
+	for (AEquipableItemActor* Item : SaveGameInstance->EquippedItems)
+	{
+		Item->Equipped = true;
+	}
+	
+
+
+	//log to check for load
+	UE_LOG(LogTemp, Display, TEXT("Loaded"));
 }

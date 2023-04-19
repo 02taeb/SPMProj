@@ -45,7 +45,6 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 			Destroy();
 		}
 	}
-	
 	return DamageAmount;
 }
 
