@@ -33,7 +33,15 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void OnPickup();
+	void OnEquip();
+	void OnUnequip();
+	void OnPlayerDeath();
+
+	virtual void Use(APlayerCharacter* Character) override;
+	
 private:
+	UPROPERTY(EditDefaultsOnly, Category="Parasite")
 	UStaticMeshComponent* StaticMeshComponent;
 	class UStatComponent* StatComponentPtr;
 	AActor* PlayerActorPtr;
@@ -47,8 +55,4 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
 	float Amount = 0;
 
-	void OnPickup();
-	void OnEquip();
-	void OnUnequip();
-	void OnPlayerDeath();
 };
