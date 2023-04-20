@@ -32,7 +32,7 @@ void AEnemy::BeginPlay()
 
 void AEnemy::EnemyAttackBasic()
 {
-	
+	PlayEnemyAttackMontage();
 }
 
 void AEnemy::PlayEnemyAttackMontage()
