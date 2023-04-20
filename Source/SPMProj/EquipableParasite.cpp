@@ -20,13 +20,8 @@ void AEquipableParasite::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//TODO: Fråga Hugo om något behövs göras här? Eller om något behövs i blueprint.
-
 	// Set PlayerPtr
 	PlayerActorPtr = GetWorld()->GetFirstPlayerController()->GetOwner();
-
-	// Set statcomponentptr
-	StatComponentPtr = Cast<UStatComponent>(PlayerActorPtr->GetComponentByClass(TSubclassOf<UStatComponent>()));
 
 	// It would probably be okay to set them already here instead of waiting for pickup
 }
@@ -64,10 +59,10 @@ void AEquipableParasite::Tick(float DeltaTime)
 void AEquipableParasite::OnPickup()
 {
 	// Hide object in world
-	StaticMeshComponent->SetVisibility(false);
+	if(bUseStaticMesh) StaticMeshComponent->SetVisibility(false);
 
-	// Add to inventory
-	//TODO: Fråga Hugo om vad som behövs för att lägga till i inventory
+	// Set statcomponentptr
+	StatComponentPtr = Cast<UStatComponent>(PlayerActorPtr->GetComponentByClass(TSubclassOf<UStatComponent>()));
 
 	// Allow equipping
 	bCanEquip = true;
@@ -82,14 +77,17 @@ void AEquipableParasite::OnEquip()
 	}
 	if (!bCanEquip || bIsEquipped) return;
 
-	// Attach to socket on player
-	StaticMeshComponent->SetVisibility(true);
-	StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
-	StaticMeshComponent->AttachToComponent(
-		Cast<USceneComponent>(PlayerActorPtr->GetComponentByClass(
-			TSubclassOf<USkeletalMeshComponent>())),
-		FAttachmentTransformRules::KeepRelativeTransform,
-		TEXT("ParasiteSocket"));
+	if(bUseStaticMesh)
+	{
+		// Attach to socket on player
+		StaticMeshComponent->SetVisibility(true);
+		StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		StaticMeshComponent->AttachToComponent(
+			Cast<USceneComponent>(PlayerActorPtr->GetComponentByClass(
+				TSubclassOf<USkeletalMeshComponent>())),
+			FAttachmentTransformRules::KeepRelativeTransform,
+			TEXT("ParasiteSocket"));
+	}
 
 	// Give buff to player
 	switch (Stat)
@@ -112,19 +110,19 @@ void AEquipableParasite::OnEquip()
 	// Register as equipped
 	// Allow unequipping
 	bIsEquipped = true;
-	
-	// Remove from inventory? Displayed on UI? Changed appearance in inventory to mark as equipped?
-	//TODO: Fråga Hugo vad som bör göras när ett item blir equipped.
 }
 
 void AEquipableParasite::OnUnequip()
 {
 	if (!bIsEquipped) return;
-	
-	// Reverse of OnEquip()
-	StaticMeshComponent->SetVisibility(false);
-	StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
-	StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
+	if(bUseStaticMesh)
+	{
+		// Reverse of OnEquip()
+		StaticMeshComponent->SetVisibility(false);
+		StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	}
 
 	switch (Stat)
 	{
@@ -144,14 +142,24 @@ void AEquipableParasite::OnUnequip()
 	}
 
 	bIsEquipped = false;
-	
-	// Remove from inventory? Displayed on UI? Changed appearance in inventory to mark as equipped?
-	//TODO: Fråga Hugo vad som bör göras när ett item blir unequipped.
 }
 
 void AEquipableParasite::OnPlayerDeath()
 {
+	//TODO: Kalla på den här metoden när spelaren dör
 	// Destroy this
 	Destroy();
+}
+
+void AEquipableParasite::Use(APlayerCharacter* Character)
+{
+	if (bIsEquipped)
+	{
+		OnUnequip();
+	}
+	else
+	{
+		OnEquip();
+	}
 }
 
