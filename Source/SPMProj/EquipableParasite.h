@@ -39,10 +39,12 @@ private:
 	AActor* PlayerActorPtr;
 	bool bCanEquip = false;
 	bool bIsEquipped = false;
-	
-	UPROPERTY(EditDefaultsOnly, Category="Affect")
+
+	UPROPERTY(EditDefaultsOnly, Category="Parasite")
+	bool bUseStaticMesh = false;
+	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
 	EAffectedStat Stat = EAffectedStat::None;
-	UPROPERTY(EditDefaultsOnly, Category="Affect")
+	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
 	float Amount = 0;
 
 	void OnPickup();

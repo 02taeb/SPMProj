@@ -64,7 +64,7 @@ void AEquipableParasite::Tick(float DeltaTime)
 void AEquipableParasite::OnPickup()
 {
 	// Hide object in world
-	StaticMeshComponent->SetVisibility(false);
+	if(bUseStaticMesh) StaticMeshComponent->SetVisibility(false);
 
 	// Add to inventory
 	//TODO: Fråga Hugo om vad som behövs för att lägga till i inventory
@@ -82,14 +82,17 @@ void AEquipableParasite::OnEquip()
 	}
 	if (!bCanEquip || bIsEquipped) return;
 
-	// Attach to socket on player
-	StaticMeshComponent->SetVisibility(true);
-	StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
-	StaticMeshComponent->AttachToComponent(
-		Cast<USceneComponent>(PlayerActorPtr->GetComponentByClass(
-			TSubclassOf<USkeletalMeshComponent>())),
-		FAttachmentTransformRules::KeepRelativeTransform,
-		TEXT("ParasiteSocket"));
+	if(bUseStaticMesh)
+	{
+		// Attach to socket on player
+		StaticMeshComponent->SetVisibility(true);
+		StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		StaticMeshComponent->AttachToComponent(
+			Cast<USceneComponent>(PlayerActorPtr->GetComponentByClass(
+				TSubclassOf<USkeletalMeshComponent>())),
+			FAttachmentTransformRules::KeepRelativeTransform,
+			TEXT("ParasiteSocket"));
+	}
 
 	// Give buff to player
 	switch (Stat)
@@ -120,11 +123,14 @@ void AEquipableParasite::OnEquip()
 void AEquipableParasite::OnUnequip()
 {
 	if (!bIsEquipped) return;
-	
-	// Reverse of OnEquip()
-	StaticMeshComponent->SetVisibility(false);
-	StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
-	StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
+	if(bUseStaticMesh)
+	{
+		// Reverse of OnEquip()
+		StaticMeshComponent->SetVisibility(false);
+		StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	}
 
 	switch (Stat)
 	{
