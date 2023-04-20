@@ -2,6 +2,8 @@
 
 
 #include "Enemy.h"
+
+#include "MeleeWeapon.h"
 #include "StatComponent.h"
 #include "Components/CapsuleComponent.h"
 // Sets default values
@@ -17,7 +19,29 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if(GetWorld() && WeaponClass)
+	{
+		AMeleeWeapon* EnemyWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
+		EnemyWeapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
+		EnemyWeapon->SetOwner(this);
+		EnemyWeapon->SetInstigator(this);
+		EquipedWeapon = EnemyWeapon;
+	}
+}
+
+void AEnemy::EnemyAttackBasic()
+{
 	
+}
+
+void AEnemy::PlayEnemyAttackMontage()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && EnemyAttackMontage)
+	{
+		AnimInstance->Montage_Play(EnemyAttackMontage);
+	}
 }
 
 // Called every frame
