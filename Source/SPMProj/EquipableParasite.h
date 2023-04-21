@@ -37,22 +37,25 @@ public:
 	void OnEquip();
 	void OnUnequip();
 	void OnPlayerDeath();
+	void OnEat();
 
 	virtual void Use(APlayerCharacter* Character) override;
 	
 private:
-	UPROPERTY(EditDefaultsOnly, Category="Parasite")
-	UStaticMeshComponent* StaticMeshComponent;
 	class UStatComponent* StatComponentPtr;
 	AActor* PlayerActorPtr;
 	bool bCanEquip = false;
 	bool bIsEquipped = false;
 
 	UPROPERTY(EditDefaultsOnly, Category="Parasite")
+	UStaticMeshComponent* StaticMeshComponent;
+	UPROPERTY(EditDefaultsOnly, Category="Parasite")
 	bool bUseStaticMesh = false;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
 	EAffectedStat Stat = EAffectedStat::None;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
-	float Amount = 0;
+	float StartAmount = 0;
+	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
+	float OnEatUpgradeAmount = 2;
 
 };
