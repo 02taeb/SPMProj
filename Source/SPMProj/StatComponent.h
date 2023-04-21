@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <string>
+
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "StatComponent.generated.h"
@@ -41,7 +43,10 @@ public:
 	void TakeDamage(const float Damage);
 	void HealHealth(const float HealAmount);
 
-	bool Dead();
+	bool Dead() const;
+
+	std::string GetState() const;
+	void SetState(const std::string& SavedState);
 
 private:
 	// Health at beginning of game
