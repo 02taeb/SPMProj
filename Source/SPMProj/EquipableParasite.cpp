@@ -34,13 +34,13 @@ void AEquipableParasite::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(-Amount);
+		StatComponentPtr->IncreaseMaxHealth(-StartAmount);
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-Amount);
+		StatComponentPtr->IncreaseArmor(-StartAmount);
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(-Amount);
+		StatComponentPtr->IncreaseAttackDamage(-StartAmount);
 		break;
 	case EAffectedStat::None:
 	default:
@@ -93,13 +93,13 @@ void AEquipableParasite::OnEquip()
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(Amount);
+		StatComponentPtr->IncreaseMaxHealth(StartAmount);
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(Amount);
+		StatComponentPtr->IncreaseArmor(StartAmount);
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(Amount);
+		StatComponentPtr->IncreaseAttackDamage(StartAmount);
 		break;
 	default:
 		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for equipping parasite: %s"),
@@ -127,13 +127,13 @@ void AEquipableParasite::OnUnequip()
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(-Amount);
+		StatComponentPtr->IncreaseMaxHealth(-StartAmount);
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-Amount);
+		StatComponentPtr->IncreaseArmor(-StartAmount);
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(-Amount);
+		StatComponentPtr->IncreaseAttackDamage(-StartAmount);
 		break;
 	default:
 		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for equipping parasite: %s"),
@@ -149,6 +149,26 @@ void AEquipableParasite::OnPlayerDeath()
 	//TODO: Kalla på den här metoden när spelaren dör
 	// Destroy this
 	Destroy();
+}
+
+void AEquipableParasite::OnEat()
+{
+	switch (Stat)
+	{
+	case EAffectedStat::Health:
+		StatComponentPtr->IncreaseMaxHealth(OnEatUpgradeAmount);
+		break;
+	case EAffectedStat::Armor:
+		StatComponentPtr->IncreaseArmor(OnEatUpgradeAmount);
+		break;
+	case EAffectedStat::AttackDamage:
+		StatComponentPtr->IncreaseAttackDamage(OnEatUpgradeAmount);
+		break;
+	default:
+		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for upgrading parasite: %s"),
+			*GetActorNameOrLabel());
+		break;
+	}
 }
 
 void AEquipableParasite::Use(APlayerCharacter* Character)
