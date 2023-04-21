@@ -17,8 +17,3 @@ void AAI_EnemyController::BeginPlay()
         GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
     }
 }
-
-void AAI_EnemyController::Tick(float DeltaSeconds)
-{
-    Super::Tick(DeltaSeconds);
-}

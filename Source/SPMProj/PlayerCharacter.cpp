@@ -86,7 +86,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
 	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeHeavy);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
-	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::Dodge);
+	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Started, this, &APlayerCharacter::Dodge);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
 	//Testinputs för load och save
 	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
@@ -128,13 +128,13 @@ void APlayerCharacter::LookUpRate(const FInputActionValue &Value)
 
 void APlayerCharacter::LookRight(const FInputActionValue& Value)
 {
-	if(ActionState == ECharacterActionState::ECAS_NoAction)
+	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy)
 		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::LookRightRate(const FInputActionValue &Value)
 {
-	if(ActionState == ECharacterActionState::ECAS_NoAction)
+	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy)
 		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
@@ -218,7 +218,40 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
-	//...
+	if(GetCharacterMovement()->GetLastInputVector() == FVector::ZeroVector) return;
+	if(ActionState != ECharacterActionState::ECAS_NoAction) return;
+	
+	ActionState = ECharacterActionState::ECAS_Dodging;
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && DodgeMontage)
+	{
+		AnimInstance->Montage_Play(DodgeMontage);
+		FVector PlayerVelocity = GetVelocity();
+
+		FVector ForwardVector = GetActorForwardVector();
+		FVector RightVector = GetActorRightVector();
+
+		float ForwardDotProduct = FVector::DotProduct(PlayerVelocity, ForwardVector);
+		float RightDotProduct = FVector::DotProduct(PlayerVelocity, RightVector);
+
+		if (ForwardDotProduct > 0 && FMath::Abs(ForwardDotProduct) > FMath::Abs(RightDotProduct))
+		{
+			AnimInstance->Montage_JumpToSection(FName("DodgeForward"), DodgeMontage);
+		}
+		else if (ForwardDotProduct < 0 && FMath::Abs(ForwardDotProduct) > FMath::Abs(RightDotProduct))
+		{
+			AnimInstance->Montage_JumpToSection(FName("DodgeBackwards"), DodgeMontage);
+		}
+		else if (RightDotProduct > 0)
+		{
+			AnimInstance->Montage_JumpToSection(FName("DodgeRight"), DodgeMontage);
+		}
+		else if (RightDotProduct < 0)
+		{
+			AnimInstance->Montage_JumpToSection(FName("DodgeLeft"), DodgeMontage);
+		}
+	}
 }
 
 void APlayerCharacter::TargetLock(const FInputActionValue& Value)
@@ -302,7 +335,7 @@ void APlayerCharacter::PlayHeavyAttackAnimation()
 
 bool APlayerCharacter::CanAttack()
 {
-	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped;
+	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped && ActionState != ECharacterActionState::ECAS_Dodging;
 }
 
 	//Använda det item som klickas på, finns möjlighet för c++ och blueprint

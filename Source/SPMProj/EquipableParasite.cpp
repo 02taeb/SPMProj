@@ -3,11 +3,13 @@
 
 #include "EquipableParasite.h"
 
+#include "StatComponent.h"
+
 // Sets default values
 AEquipableParasite::AEquipableParasite()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Component"));
 	SetRootComponent(StaticMeshComponent);
@@ -19,13 +21,32 @@ void AEquipableParasite::BeginPlay()
 	Super::BeginPlay();
 
 	// Set PlayerPtr
-	// It would probably be okay to set it already here instead of waiting for pickup
+	PlayerActorPtr = GetWorld()->GetFirstPlayerController()->GetOwner();
+
+	// It would probably be okay to set them already here instead of waiting for pickup
 }
 	
 void AEquipableParasite::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
+
 	// Remove buffs from player
+	switch (Stat)
+	{
+	case EAffectedStat::Health:
+		StatComponentPtr->IncreaseMaxHealth(-StartAmount);
+		break;
+	case EAffectedStat::Armor:
+		StatComponentPtr->IncreaseArmor(-StartAmount);
+		break;
+	case EAffectedStat::AttackDamage:
+		StatComponentPtr->IncreaseAttackDamage(-StartAmount);
+		break;
+	case EAffectedStat::None:
+	default:
+		UE_LOG(LogTemp, Warning, TEXT("Unrecognised or unset stat for dying parasite: %s"), *GetActorNameOrLabel());
+		break;
+	}
 }
 
 // Called every frame
@@ -38,27 +59,127 @@ void AEquipableParasite::Tick(float DeltaTime)
 void AEquipableParasite::OnPickup()
 {
 	// Hide object in world
+	if(bUseStaticMesh) StaticMeshComponent->SetVisibility(false);
+
 	// Set statcomponentptr
-	// Add to inventory
+	StatComponentPtr = Cast<UStatComponent>(PlayerActorPtr->GetComponentByClass(TSubclassOf<UStatComponent>()));
+
 	// Allow equipping
+	bCanEquip = true;
 }
 
 void AEquipableParasite::OnEquip()
 {
-	// Attach to socket on player
+	if (Stat == EAffectedStat::None)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Unset stat type for equipping parasite: %s"), *GetActorNameOrLabel());
+		return;
+	}
+	if (!bCanEquip || bIsEquipped) return;
+
+	if(bUseStaticMesh)
+	{
+		// Attach to socket on player
+		StaticMeshComponent->SetVisibility(true);
+		StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		StaticMeshComponent->AttachToComponent(
+			Cast<USceneComponent>(PlayerActorPtr->GetComponentByClass(
+				TSubclassOf<USkeletalMeshComponent>())),
+			FAttachmentTransformRules::KeepRelativeTransform,
+			TEXT("ParasiteSocket"));
+	}
+
 	// Give buff to player
+	switch (Stat)
+	{
+	case EAffectedStat::Health:
+		StatComponentPtr->IncreaseMaxHealth(StartAmount);
+		break;
+	case EAffectedStat::Armor:
+		StatComponentPtr->IncreaseArmor(StartAmount);
+		break;
+	case EAffectedStat::AttackDamage:
+		StatComponentPtr->IncreaseAttackDamage(StartAmount);
+		break;
+	default:
+		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for equipping parasite: %s"),
+			*GetActorNameOrLabel());
+		break;
+	}
+	
 	// Register as equipped
 	// Allow unequipping
-	// Remove from inventory? Displayed on UI? Changed appearance in inventory to mark as equipped?
+	bIsEquipped = true;
 }
 
 void AEquipableParasite::OnUnequip()
 {
-	// Reverse of OnEquip()
+	if (!bIsEquipped) return;
+
+	if(bUseStaticMesh)
+	{
+		// Reverse of OnEquip()
+		StaticMeshComponent->SetVisibility(false);
+		StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	}
+
+	switch (Stat)
+	{
+	case EAffectedStat::Health:
+		StatComponentPtr->IncreaseMaxHealth(-StartAmount);
+		break;
+	case EAffectedStat::Armor:
+		StatComponentPtr->IncreaseArmor(-StartAmount);
+		break;
+	case EAffectedStat::AttackDamage:
+		StatComponentPtr->IncreaseAttackDamage(-StartAmount);
+		break;
+	default:
+		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for equipping parasite: %s"),
+			*GetActorNameOrLabel());
+		break;
+	}
+
+	bIsEquipped = false;
 }
 
 void AEquipableParasite::OnPlayerDeath()
 {
+	//TODO: Kalla på den här metoden när spelaren dör
 	// Destroy this
+	Destroy();
+}
+
+void AEquipableParasite::OnEat()
+{
+	switch (Stat)
+	{
+	case EAffectedStat::Health:
+		StatComponentPtr->IncreaseMaxHealth(OnEatUpgradeAmount);
+		break;
+	case EAffectedStat::Armor:
+		StatComponentPtr->IncreaseArmor(OnEatUpgradeAmount);
+		break;
+	case EAffectedStat::AttackDamage:
+		StatComponentPtr->IncreaseAttackDamage(OnEatUpgradeAmount);
+		break;
+	default:
+		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for upgrading parasite: %s"),
+			*GetActorNameOrLabel());
+		break;
+	}
+}
+
+void AEquipableParasite::Use(APlayerCharacter* Character)
+{
+	if (bIsEquipped)
+	{
+		OnUnequip();
+	}
+	else
+	{
+		OnEquip();
+	}
 }
 

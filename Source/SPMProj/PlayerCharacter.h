@@ -97,13 +97,13 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* HeavyAttackMontage;
 
-	/*/*Animation montage for dodge#1# 
+	/*Animation montage for dodge*/ 
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
-	class UAnimMontage* DodgeMontage;*/
-	/*
-	UPROPERTY(EditAnywhere, Category = "Interacting")
-	TSoftObjectPtr<AActor> InteractableActor;
-	*/
+	class UAnimMontage* DodgeMontage;
+	
+	/*UPROPERTY(EditAnywhere, Category = "Interacting")
+	TSoftObjectPtr<AActor> InteractableActor;*/
+	
 	
 	//https://community.gamedev.tv/t/how-to-for-ue5-1-enhanced-input-system/221375?_gl=1*kvhzsk*_ga*MTc5MTAzNDQ2Mi4xNjgwMTk0MTc2*_ga_2C81L26GR9*MTY4MTAwODIzNC4yNS4xLjE2ODEwMDgyNjIuMC4wLjA
 	//Show Enhanced Inputs in the Editor, Define all inputs + inputmapping in BP inspector
