@@ -6,7 +6,11 @@
 		},
 		{
 			"name": "UE5",
+<<<<<<< HEAD
 			"path": "C:\\UE_5.1"
+=======
+			"path": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 		}
 	],
 	"settings": {

@@ -9,13 +9,21 @@
 				"SPMProj",
 				"Win64",
 				"Debug",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -26,7 +34,11 @@
 				"SPMProj",
 				"Win64",
 				"Debug",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -35,7 +47,11 @@
 			],
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -46,13 +62,21 @@
 				"SPMProj",
 				"Win64",
 				"Debug",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -63,13 +87,21 @@
 				"SPMProj",
 				"Win64",
 				"DebugGame",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -80,7 +112,11 @@
 				"SPMProj",
 				"Win64",
 				"DebugGame",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -89,7 +125,11 @@
 			],
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -100,13 +140,21 @@
 				"SPMProj",
 				"Win64",
 				"DebugGame",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -117,13 +165,21 @@
 				"SPMProj",
 				"Win64",
 				"Development",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -134,7 +190,11 @@
 				"SPMProj",
 				"Win64",
 				"Development",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -143,7 +203,11 @@
 			],
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -154,13 +218,21 @@
 				"SPMProj",
 				"Win64",
 				"Development",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -171,13 +243,21 @@
 				"SPMProj",
 				"Win64",
 				"Test",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -188,7 +268,11 @@
 				"SPMProj",
 				"Win64",
 				"Test",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -197,7 +281,11 @@
 			],
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -208,13 +296,21 @@
 				"SPMProj",
 				"Win64",
 				"Test",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -225,13 +321,21 @@
 				"SPMProj",
 				"Win64",
 				"Shipping",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -242,7 +346,11 @@
 				"SPMProj",
 				"Win64",
 				"Shipping",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -251,7 +359,11 @@
 			],
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -262,13 +374,21 @@
 				"SPMProj",
 				"Win64",
 				"Shipping",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -279,13 +399,21 @@
 				"SPMProjEditor",
 				"Win64",
 				"Debug",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -296,7 +424,11 @@
 				"SPMProjEditor",
 				"Win64",
 				"Debug",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -305,7 +437,11 @@
 			],
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -316,13 +452,21 @@
 				"SPMProjEditor",
 				"Win64",
 				"Debug",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -333,13 +477,21 @@
 				"SPMProjEditor",
 				"Win64",
 				"DebugGame",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -350,7 +502,11 @@
 				"SPMProjEditor",
 				"Win64",
 				"DebugGame",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -359,7 +515,11 @@
 			],
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -370,13 +530,21 @@
 				"SPMProjEditor",
 				"Win64",
 				"DebugGame",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -387,13 +555,21 @@
 				"SPMProjEditor",
 				"Win64",
 				"Development",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -404,7 +580,11 @@
 				"SPMProjEditor",
 				"Win64",
 				"Development",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -413,7 +593,11 @@
 			],
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		},
 		{
@@ -424,13 +608,21 @@
 				"SPMProjEditor",
 				"Win64",
 				"Development",
+<<<<<<< HEAD
 				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+=======
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+>>>>>>> main
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
+<<<<<<< HEAD
 				"cwd": "C:\\UE_5.1"
+=======
+				"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+>>>>>>> main
 			}
 		}
 	]
