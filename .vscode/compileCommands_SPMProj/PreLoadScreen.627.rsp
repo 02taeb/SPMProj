@@ -1,7 +1,6 @@
 /FI "C:\Program Files\Epic Games\UE_5.1\Engine\Intermediate\Build\Win64\UnrealEditor\Development\PreLoadScreen\Definitions.PreLoadScreen.h" 
-/FI "C:\Users\huwe8756\Documents\GitHub\SPMProj\Intermediate\Build\Win64\SPMProjEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h" 
+/FI "C:\Users\daol8481\Documents\GitHub\SPMProj\Intermediate\Build\Win64\SPMProjEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Source" 
-/I "C:\Program Files\Epic Games\UE_5.1\Engine\Source\Runtime\PreLoadScreen\Private" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\Core\UHT" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\Core\VNI" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Source\Runtime" 
