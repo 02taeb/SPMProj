@@ -56,6 +56,8 @@ private:
 	USceneComponent* BTStart;
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* BTEnd;
+
+	void CheckBoxHitActorType(AActor* Actor);
 public:
 	UBoxComponent* GetCollisionBox() const;
 };

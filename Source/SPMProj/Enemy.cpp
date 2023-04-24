@@ -5,6 +5,7 @@
 
 #include "MeleeWeapon.h"
 #include "StatComponent.h"
+#include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 // Sets default values
 AEnemy::AEnemy()
@@ -33,6 +34,14 @@ void AEnemy::BeginPlay()
 void AEnemy::EnemyAttackBasic()
 {
 	PlayEnemyAttackMontage();
+}
+
+void AEnemy::SetWeaponCollison(ECollisionEnabled::Type Collision)
+{
+	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
+	{
+		EquipedWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
+	}
 }
 
 void AEnemy::PlayEnemyAttackMontage()
@@ -66,7 +75,8 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 		Stats->TakeDamage(DamageAmount);
 		if(Stats->Dead())
 		{
-			Destroy();
+			Destroy(); //Dödar fienden (Kommer ändras)
+			EquipedWeapon->Destroy(); //Dödar vapnet 
 		}
 	}
 	return DamageAmount;

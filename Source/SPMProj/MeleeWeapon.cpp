@@ -45,6 +45,7 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 {
 	/*Empty Actor* Array. Sends the array of actors to ignore tracing against (empty for now)*/
 	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(this);
 	/*Hit result out parametar*/
 	FHitResult BoxHit;
 	
@@ -75,6 +76,22 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	} 
 }
 
+void AMeleeWeapon::CheckBoxHitActorType(AActor* Actor)
+{
+	if(Actor)
+	{
+		APlayerCharacter* PlayerCharacter = Cast<APlayerCharacter>(this->GetOwner());
+		if(PlayerCharacter && PlayerCharacter->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingNormal)
+		{
+			UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+		}
+		else
+		{
+			UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+		}
+	} 
+}
+
 void AMeleeWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -92,6 +109,7 @@ void AMeleeWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, 
 		Player->SetOverlapWeapon(nullptr);
 	}
 }
+
 
 UBoxComponent* AMeleeWeapon::GetCollisionBox() const
 {

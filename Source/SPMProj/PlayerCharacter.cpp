@@ -19,6 +19,7 @@
 #include "EquipableItemActor.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/StaticMeshComponent.h"
 #include "SavedGame.h"
 
 // Sets default values
