@@ -20,7 +20,9 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-
+	/*Tag, mostly to check weapon collision*/
+	Tags.Add(FName("Enemy"));
+	
 	if(GetWorld() && WeaponClass)
 	{
 		AMeleeWeapon* EnemyWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
@@ -41,6 +43,7 @@ void AEnemy::SetWeaponCollison(ECollisionEnabled::Type Collision)
 	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
 	{
 		EquipedWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
+		EquipedWeapon->ActorsToIgnore.Empty();
 	}
 }
 
@@ -70,6 +73,7 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	AActor* DamageCauser)
 {
+	UE_LOG(LogTemp, Warning, TEXT("ENEMY HAS TAKEN DAMAGE"));
 	if(Stats)
 	{
 		Stats->TakeDamage(DamageAmount);

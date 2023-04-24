@@ -19,6 +19,8 @@ public:
 	/*Attaches the weapon to the skeleton on */
 	void AttachWeaponOnPlayer(USceneComponent* Player, FName SocketLabel);
 
+	/*Used to store already hit actors under a single attack so that no two overlaps are generated on the same actor*/
+	TArray<AActor*> ActorsToIgnore;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -57,7 +59,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* BTEnd;
 
-	void CheckBoxHitActorType(AActor* Actor);
+	//TArray<AActor*> ActorsToIgnore;
+
+	void HandleWeaponBoxHit(AActor* Actor);
 public:
 	UBoxComponent* GetCollisionBox() const;
 };

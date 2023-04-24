@@ -3,6 +3,7 @@
 
 #include "MeleeWeapon.h"
 
+#include "Enemy.h"
 #include "PlayerCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
@@ -43,10 +44,14 @@ void AMeleeWeapon::BeginPlay()
 void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	/*Empty Actor* Array. Sends the array of actors to ignore tracing against (empty for now)*/
-	TArray<AActor*> ActorsToIgnore;
-	ActorsToIgnore.Add(this);
-	/*Hit result out parametar*/
+	/*Sends the array of actors to ignore tracing against (Filled by ActorToIgnore Array)*/
+	TArray<AActor*> Ignore;
+
+	for(AActor* Actor : ActorsToIgnore)
+	{
+		Ignore.AddUnique(Actor);
+	}
+	
 	FHitResult BoxHit;
 	
 	UKismetSystemLibrary::BoxTraceSingle(
@@ -57,37 +62,42 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	BTStart->GetComponentRotation(),   /*Box trace orientation reference component, taking start*/
 	ETraceTypeQuery::TraceTypeQuery1,  
 	false,   /*Traces only against simple collision*/
-	ActorsToIgnore,
+	Ignore,
 	EDrawDebugTrace::ForDuration,  /*Debug Sphere on ImpactPoint*/
 	BoxHit,  
 	true );  /*Ignores itself for overlaps*/
 
-	if(IsValid(BoxHit.GetActor()))
-	{
-		APlayerCharacter* PlayerCharacter = Cast<APlayerCharacter>(this->GetOwner());
-		if(PlayerCharacter && PlayerCharacter->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingNormal)
-		{
-			UGameplayStatics::ApplyDamage(BoxHit.GetActor(), DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
-		}
-		else
-		{
-			UGameplayStatics::ApplyDamage(BoxHit.GetActor(), HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
-		}
-	} 
+	HandleWeaponBoxHit(BoxHit.GetActor());
 }
 
-void AMeleeWeapon::CheckBoxHitActorType(AActor* Actor)
+void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor)
 {
 	if(Actor)
 	{
-		APlayerCharacter* PlayerCharacter = Cast<APlayerCharacter>(this->GetOwner());
-		if(PlayerCharacter && PlayerCharacter->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingNormal)
+		if(GetOwner()->ActorHasTag(FName("Enemy")) && Actor->ActorHasTag(FName("Enemy"))) return;
+		ActorsToIgnore.AddUnique(Actor);
+		
+		if(GetOwner()->ActorHasTag(FName("Enemy")))
 		{
-			UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
-		}
-		else
+			AEnemy* EnemyInstigator = Cast<AEnemy>(this->GetOwner());
+			if(EnemyInstigator)
+			{
+				UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				UE_LOG(LogTemp, Warning, TEXT("ENEMY"));
+			}
+		} else
 		{
-			UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+			APlayerCharacter* PlayerInstigator = Cast<APlayerCharacter>(this->GetOwner());
+			if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingNormal)
+			{
+				UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				UE_LOG(LogTemp, Warning, TEXT("PLAYER DEF"));
+			}
+			else if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingHeavy)
+			{
+				UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				UE_LOG(LogTemp, Warning, TEXT("PLAYER HEV"));
+			}
 		}
 	} 
 }
