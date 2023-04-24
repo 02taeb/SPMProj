@@ -22,9 +22,7 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
 
     if(Enemy == nullptr) return EBTNodeResult::Failed;
     
-
-    //attackare inte implementerad ännu
-    //Enemy->Attack();
+    Enemy->EnemyAttackBasic();
 
     return EBTNodeResult::Succeeded;
 }
