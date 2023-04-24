@@ -20,6 +20,10 @@ public:
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 	void EnemyAttackBasic();
+
+	/*Functions to enable or disable weapon box collison in blueprints*/
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponCollison(ECollisionEnabled::Type Collision);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

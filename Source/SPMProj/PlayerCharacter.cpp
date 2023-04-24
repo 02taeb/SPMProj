@@ -19,13 +19,18 @@
 #include "EquipableItemActor.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/StaticMeshComponent.h"
 #include "SavedGame.h"
+#include "StatComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	/*Stats*/
+	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
 
 		//TESTING FÖR INVENTORY
 	Inventory = CreateDefaultSubobject<UInventoryComponent>("Inventory");
@@ -94,11 +99,29 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 }
 
+float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
+	if(Stats)
+	{
+		Stats->TakeDamage(DamageAmount);
+		if(Stats->Dead())
+		{
+			/*Död Logiken hör (respawn och sånt)*/
+			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
+		}
+	}
+	
+	return DamageAmount;
+}
+
 void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 {
 	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
 	{
 		EquipedWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
+		EquipedWeapon->ActorsToIgnore.Empty();
 	}
 }
 
