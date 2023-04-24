@@ -3,9 +3,37 @@
 #include "AI_EnemyController.h"
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "PlayerCharacter.h"
+#include "Perception/AISenseConfig_Sight.h"
+
+AAI_EnemyController::AAI_EnemyController(const FObjectInitializer &ObjectInitializer)
+{
+    AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
+
+    // AIPerceptionComponent->bAutoActivate = true;
+
+    SetPerceptionComponent(*AIPerceptionComponent);
+
+    // sight perception
+    Sight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight"));
+
+    // sight variables
+    Sight->SightRadius = 500.0f;
+    Sight->LoseSightRadius = 600.0f;
+    Sight->PeripheralVisionAngleDegrees = 90.0f;
+    Sight->DetectionByAffiliation.bDetectEnemies = true;
+    Sight->DetectionByAffiliation.bDetectNeutrals = true;
+    Sight->DetectionByAffiliation.bDetectFriendlies = false;
+
+    // configure sense
+    AIPerceptionComponent->ConfigureSense(*Sight);
+    // set dominant sense
+    AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());
+}
 
 void AAI_EnemyController::BeginPlay()
 {
+
     Super::BeginPlay();
     if (AI_EnemyBehavior != nullptr)
     {
@@ -17,3 +45,24 @@ void AAI_EnemyController::BeginPlay()
         GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
     }
 }
+
+void AAI_EnemyController::OnPossess(APawn *InPawn)
+{
+Super::OnPossess(InPawn);
+// AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAI_EnemyController::OnPerception);
+}
+
+void AAI_EnemyController::OnPerception(AActor *Actor, FAIStimulus Stimulus)
+{
+    UE_LOG(LogTemp, Display, TEXT("IN onperception method"));
+    APlayerCharacter* player = Cast<APlayerCharacter>(Actor);
+    if(player == nullptr) return;
+   // Agent->SetAnimState(Stimulus.WasSuccessfullySensed());
+    if (Stimulus.WasSuccessfullySensed()) {
+        GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), true);
+    } else {
+          GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), false);
+    }
+}
+
+
