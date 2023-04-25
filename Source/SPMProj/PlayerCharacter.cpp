@@ -344,6 +344,22 @@ void APlayerCharacter::PlayNormalAttackAnimation()
 	if(AnimInstance && NormalAttackMontage)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
+		const int32 RandomAnimation = FMath::RandRange(0, 1);
+		FName AnimSection = FName();
+
+		switch (RandomAnimation)
+		{
+		case 0:
+			AnimSection = FName("BasicAttack1");
+			break;
+		case 1:
+			AnimSection = FName("BasicAttack2");
+			break;
+		default:
+			break;
+		}
+		
+		AnimInstance->Montage_JumpToSection(AnimSection, NormalAttackMontage);
 	}
 }
 
