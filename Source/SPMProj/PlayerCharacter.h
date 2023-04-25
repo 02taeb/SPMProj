@@ -32,6 +32,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 	/*Functions to enable or disable weapon box collison in blueprints*/
 	UFUNCTION(BlueprintCallable)
 	void SetWeaponCollison(ECollisionEnabled::Type Collision);
@@ -53,6 +55,9 @@ private:
 	void SaveGame();
 
 	void LoadGame();
+	
+	UPROPERTY(VisibleAnywhere, Category=Stats)
+	class UStatComponent* Stats;
 
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))

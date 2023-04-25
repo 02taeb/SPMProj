@@ -15,6 +15,8 @@ void UBTService_LastPlayerLocation::TickNode(UBehaviorTreeComponent &OwnerComp, 
 {
     Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
+    //ignore actors that are of enemy
+
     APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
     if (PlayerPawn == nullptr)
         return;
