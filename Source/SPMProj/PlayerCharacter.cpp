@@ -22,6 +22,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "SavedGame.h"
 #include "StatComponent.h"
+#include "Components/SphereComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -173,6 +174,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		Weapon->SetInstigator(this);
 		EquipedWeapon = Weapon;
 		OverlapWeapon = nullptr;
+		Weapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
 		WeaponState = ECharacterWeaponState::ECWS_Equiped;
 	}
 
