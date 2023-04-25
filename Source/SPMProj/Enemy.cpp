@@ -7,6 +7,7 @@
 #include "StatComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -29,6 +30,7 @@ void AEnemy::BeginPlay()
 		EnemyWeapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
 		EnemyWeapon->SetOwner(this);
 		EnemyWeapon->SetInstigator(this);
+		EnemyWeapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
 		EquipedWeapon = EnemyWeapon;
 	}
 }

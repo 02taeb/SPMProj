@@ -26,7 +26,7 @@ public:
 	void OnPerception(AActor* Actor, FAIStimulus Stimulus);
 
 	virtual void OnPossess(APawn* InPawn) override; 
-	virtual void Tick(float DeltaTime) override;
+	//virtual void Tick(float DeltaTime) override;
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "AI")
