@@ -279,18 +279,12 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 
 void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 {
-	/*if(!EnemyTargetLock)
-		EnemyTargetLock = nullptr;*/
-
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
-
-	//FHitResult Hit;
-	//TArray<FHitResult> &OutHits;
+	
 	TArray<FHitResult> HitResults;
-	FVector TraceStart;
-	FRotator TraceRot;
-	PlayerController->GetPlayerViewPoint(TraceStart, TraceRot);
+	FVector TraceStart = GetActorLocation();
+	FRotator TraceRot = GetActorRotation();
 	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
 	TArray<AActor*> ActorsToIgnore;
 
@@ -300,7 +294,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 		this,
 		TraceStart,
 		TraceEnd,
-		100.0f,
+		60.0f,
 		ETraceTypeQuery::TraceTypeQuery1,
 		false,
 		ActorsToIgnore,
@@ -310,6 +304,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	} else
 	{
 		EnemyTargetLock = nullptr;
+		return;
 	}
 
 	for(auto Hit : HitResults)
