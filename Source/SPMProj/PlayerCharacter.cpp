@@ -23,6 +23,7 @@
 #include "SavedGame.h"
 #include "StatComponent.h"
 #include "Components/SphereComponent.h"
+#include "EquipableParasite.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -104,6 +105,14 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	AActor* DamageCauser)
 {
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
+	
+	//Temporär damage + death
+	Health = Health - 25;
+	if (Health <= 0)
+	{
+		Destroy();
+	}
+	
 	if(Stats)
 	{
 		Stats->TakeDamage(DamageAmount);
@@ -388,6 +397,19 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 		
 		Item->Use(this);
 		Item->OnUse(this); //Blueprint event
+	}
+	
+}
+
+void APlayerCharacter::OnEat()
+{
+	for (AItemActor* Item : Inventory->Items)
+	{
+		if (Cast<AEquipableParasite>(Item))
+		{
+			Cast<AEquipableParasite>(Item)->OnEat();
+		}
+		
 	}
 	
 }

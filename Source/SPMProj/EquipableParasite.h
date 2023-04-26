@@ -39,16 +39,19 @@ public:
 	void OnPlayerDeath();
 	void OnEat();
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parasite")
+	UStaticMeshComponent* StaticMeshComponent;
+
+	AActor* PlayerActorPtr;
 	virtual void Use(APlayerCharacter* Character) override;
 	
 private:
 	class UStatComponent* StatComponentPtr;
-	AActor* PlayerActorPtr;
 	bool bCanEquip = false;
 	bool bIsEquipped = false;
 
-	UPROPERTY(EditDefaultsOnly, Category="Parasite")
-	UStaticMeshComponent* StaticMeshComponent;
+	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parasite")
+	// UStaticMeshComponent* StaticMeshComponent;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite")
 	bool bUseStaticMesh = false;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
