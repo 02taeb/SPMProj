@@ -309,7 +309,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 		ETraceTypeQuery::TraceTypeQuery1,
 		false,
 		ActorsToIgnore,
-		EDrawDebugTrace::ForDuration,
+		EDrawDebugTrace::None,
 		HitResults,
 		true);
 	} else
