@@ -65,7 +65,7 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	Ignore,
 	EDrawDebugTrace::ForDuration,  /*Debug Sphere on ImpactPoint*/
 	BoxHit,  
-	true );  /*Ignores itself for overlaps*/
+	true);  /*Ignores itself for overlaps*/
 
 	HandleWeaponBoxHit(BoxHit.GetActor());
 }
