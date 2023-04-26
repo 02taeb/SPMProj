@@ -105,6 +105,14 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	AActor* DamageCauser)
 {
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
+	
+	//Temporär damage + death
+	Health = Health - 25;
+	if (Health <= 0)
+	{
+		Destroy();
+	}
+	
 	if(Stats)
 	{
 		Stats->TakeDamage(DamageAmount);
