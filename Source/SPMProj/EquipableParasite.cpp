@@ -30,6 +30,11 @@ void AEquipableParasite::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
+	if (StatComponentPtr == nullptr)
+	{
+		return;
+	}
+	
 	// Remove buffs from player
 	switch (Stat)
 	{
@@ -61,20 +66,11 @@ void AEquipableParasite::OnPickup()
 	// Hide object in world
 	 if(bUseStaticMesh) StaticMeshComponent->SetVisibility(false);
 
-	//PlayerActorPtr = GetWorld()->GetFirstPlayerController()->GetOwner();
-
-	
-
-	if (PlayerActorPtr == nullptr)
-	{
-		UE_LOG(LogTemp, Display, TEXT("NULL"));
-	}
-	
 
 	// Set statcomponentptr
 	if (PlayerActorPtr == nullptr)
 	{
-		UE_LOG(LogTemp, Display, TEXT("NULL PLAYERPOINTER"));
+		UE_LOG(LogTemp, Display, TEXT("Null PlayerActorPointer"));
 	}
 
 	StatComponentPtr = Cast<UStatComponent>(PlayerActorPtr->GetComponentByClass(UStatComponent::StaticClass()));
@@ -98,7 +94,7 @@ void AEquipableParasite::OnEquip()
 		UE_LOG(LogTemp, Warning, TEXT("Unset stat type for equipping parasite: %s"), *GetActorNameOrLabel());
 		if (StatComponentPtr == nullptr)
 		{
-			UE_LOG(LogTemp, Display, TEXT("NULL"));
+			UE_LOG(LogTemp, Display, TEXT("StatComponentPtr is null"));
 		}
 		
 		return;
