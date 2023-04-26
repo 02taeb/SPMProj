@@ -33,7 +33,6 @@ AAI_EnemyController::AAI_EnemyController(const FObjectInitializer &ObjectInitial
 
 void AAI_EnemyController::BeginPlay()
 {
-
     Super::BeginPlay();
     if (AI_EnemyBehavior != nullptr)
     {
@@ -48,21 +47,28 @@ void AAI_EnemyController::BeginPlay()
 
 void AAI_EnemyController::OnPossess(APawn *InPawn)
 {
-Super::OnPossess(InPawn);
-// AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAI_EnemyController::OnPerception);
+    Super::OnPossess(InPawn);
+
+    UE_LOG(LogTemp, Display, TEXT("OnPossess method being called"));
+    AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAI_EnemyController::OnPerception);
 }
 
 void AAI_EnemyController::OnPerception(AActor *Actor, FAIStimulus Stimulus)
 {
     UE_LOG(LogTemp, Display, TEXT("IN onperception method"));
-    APlayerCharacter* player = Cast<APlayerCharacter>(Actor);
-    if(player == nullptr) return;
-   // Agent->SetAnimState(Stimulus.WasSuccessfullySensed());
-    if (Stimulus.WasSuccessfullySensed()) {
+    APlayerCharacter *player = Cast<APlayerCharacter>(Actor);
+    if (player == nullptr)
+        return;
+
+    UE_LOG(LogTemp, Display, TEXT("Onperception is calling"));
+    // Agent->SetAnimState(Stimulus.WasSuccessfullySensed());
+
+    if (Stimulus.WasSuccessfullySensed())
+    {
         GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), true);
-    } else {
-          GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), false);
+    }
+    else
+    {
+        GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), false);
     }
 }
-
-
