@@ -6,7 +6,11 @@
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "msvc-x64",
+<<<<<<< HEAD
+            "compileCommands": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj.json"
+=======
             "compileCommands": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj.json"
+>>>>>>> main
         },
         {
             "name": "Win32",
@@ -14,7 +18,11 @@
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "msvc-x64",
+<<<<<<< HEAD
+            "compileCommands": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default.json"
+=======
             "compileCommands": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default.json"
+>>>>>>> main
         }
     ],
     "version": 4

@@ -23,6 +23,7 @@
 #include "SavedGame.h"
 #include "StatComponent.h"
 #include "Components/SphereComponent.h"
+#include "EquipableParasite.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -388,6 +389,19 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 		
 		Item->Use(this);
 		Item->OnUse(this); //Blueprint event
+	}
+	
+}
+
+void APlayerCharacter::OnEat()
+{
+	for (AItemActor* Item : Inventory->Items)
+	{
+		if (Cast<AEquipableParasite>(Item))
+		{
+			Cast<AEquipableParasite>(Item)->OnEat();
+		}
+		
 	}
 	
 }
