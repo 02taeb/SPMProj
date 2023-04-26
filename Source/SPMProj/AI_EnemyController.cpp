@@ -40,7 +40,7 @@ void AAI_EnemyController::BeginPlay()
         if (const APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0); PlayerPawn == nullptr)
             return;
 
-        GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
+        //GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
     }
 }
 
