@@ -22,6 +22,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "SavedGame.h"
 #include "StatComponent.h"
+#include "Components/SphereComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -173,6 +174,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		Weapon->SetInstigator(this);
 		EquipedWeapon = Weapon;
 		OverlapWeapon = nullptr;
+		Weapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
 		WeaponState = ECharacterWeaponState::ECWS_Equiped;
 	}
 
@@ -279,18 +281,12 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 
 void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 {
-	/*if(!EnemyTargetLock)
-		EnemyTargetLock = nullptr;*/
-
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
-
-	//FHitResult Hit;
-	//TArray<FHitResult> &OutHits;
+	
 	TArray<FHitResult> HitResults;
-	FVector TraceStart;
-	FRotator TraceRot;
-	PlayerController->GetPlayerViewPoint(TraceStart, TraceRot);
+	FVector TraceStart = GetActorLocation();
+	FRotator TraceRot = GetActorRotation();
 	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
 	TArray<AActor*> ActorsToIgnore;
 
@@ -300,7 +296,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 		this,
 		TraceStart,
 		TraceEnd,
-		100.0f,
+		60.0f,
 		ETraceTypeQuery::TraceTypeQuery1,
 		false,
 		ActorsToIgnore,
@@ -310,6 +306,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	} else
 	{
 		EnemyTargetLock = nullptr;
+		return;
 	}
 
 	for(auto Hit : HitResults)
@@ -344,6 +341,22 @@ void APlayerCharacter::PlayNormalAttackAnimation()
 	if(AnimInstance && NormalAttackMontage)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
+		const int32 RandomAnimation = FMath::RandRange(0, 1);
+		FName AnimSection = FName();
+
+		switch (RandomAnimation)
+		{
+		case 0:
+			AnimSection = FName("BasicAttack1");
+			break;
+		case 1:
+			AnimSection = FName("BasicAttack2");
+			break;
+		default:
+			break;
+		}
+		
+		AnimInstance->Montage_JumpToSection(AnimSection, NormalAttackMontage);
 	}
 }
 

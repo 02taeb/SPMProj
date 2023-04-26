@@ -46,7 +46,7 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 {
 	/*Sends the array of actors to ignore tracing against (Filled by ActorToIgnore Array)*/
 	TArray<AActor*> Ignore;
-
+	Ignore.Add(this->GetOwner());
 	for(AActor* Actor : ActorsToIgnore)
 	{
 		Ignore.AddUnique(Actor);

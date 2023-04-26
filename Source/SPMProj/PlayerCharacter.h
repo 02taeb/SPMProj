@@ -94,7 +94,7 @@ private:
 	/*Target lock*/
 	class AEnemy* EnemyTargetLock;
 	UPROPERTY(EditAnywhere)
-	float TargetLockDistance = 700.0f;
+	float TargetLockDistance = 500.0f;
 
 	/*Attack animation montages*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
