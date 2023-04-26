@@ -21,8 +21,8 @@ void AEquipableParasite::BeginPlay()
 	Super::BeginPlay();
 
 	// Set PlayerPtr
-	PlayerActorPtr = GetWorld()->GetFirstPlayerController()->GetOwner();
-
+	//PlayerActorPtr = GetWorld()->GetFirstPlayerController()->GetOwner();
+	
 	// It would probably be okay to set them already here instead of waiting for pickup
 }
 	
@@ -59,10 +59,33 @@ void AEquipableParasite::Tick(float DeltaTime)
 void AEquipableParasite::OnPickup()
 {
 	// Hide object in world
-	if(bUseStaticMesh) StaticMeshComponent->SetVisibility(false);
+	 if(bUseStaticMesh) StaticMeshComponent->SetVisibility(false);
+
+	//PlayerActorPtr = GetWorld()->GetFirstPlayerController()->GetOwner();
+
+	
+
+	if (PlayerActorPtr == nullptr)
+	{
+		UE_LOG(LogTemp, Display, TEXT("NULL"));
+	}
+	
 
 	// Set statcomponentptr
-	StatComponentPtr = Cast<UStatComponent>(PlayerActorPtr->GetComponentByClass(TSubclassOf<UStatComponent>()));
+	if (PlayerActorPtr == nullptr)
+	{
+		UE_LOG(LogTemp, Display, TEXT("NULL PLAYERPOINTER"));
+	}
+
+	StatComponentPtr = Cast<UStatComponent>(PlayerActorPtr->GetComponentByClass(UStatComponent::StaticClass()));
+	
+	if (StatComponentPtr == nullptr)
+	{
+		UE_LOG(LogTemp, Display, TEXT("nullptr"));
+	}
+	else{
+		UE_LOG(LogTemp, Display, TEXT("not null"));
+	}
 
 	// Allow equipping
 	bCanEquip = true;
@@ -73,6 +96,11 @@ void AEquipableParasite::OnEquip()
 	if (Stat == EAffectedStat::None)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Unset stat type for equipping parasite: %s"), *GetActorNameOrLabel());
+		if (StatComponentPtr == nullptr)
+		{
+			UE_LOG(LogTemp, Display, TEXT("NULL"));
+		}
+		
 		return;
 	}
 	if (!bCanEquip || bIsEquipped) return;
@@ -148,11 +176,15 @@ void AEquipableParasite::OnPlayerDeath()
 {
 	//TODO: Kalla på den här metoden när spelaren dör
 	// Destroy this
-	Destroy();
+
+	//Kommenterade bort då jag tror Destroy kommer skapa problem då pointers i inventory kommer vara null, kanske borde göras genom remove item istället
+	// Destroy();
 }
 
 void AEquipableParasite::OnEat()
 {
+	UE_LOG(LogTemp, Display, TEXT("Reached Parasites OnEat"));
+
 	switch (Stat)
 	{
 	case EAffectedStat::Health:

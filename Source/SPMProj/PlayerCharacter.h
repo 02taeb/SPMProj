@@ -47,6 +47,8 @@ public:
 	//Gör att spelaren kan använda item
 	UFUNCTION(BlueprintCallable, Category = "Items")
 	void UseItem(class AItemActor* Item);
+	UFUNCTION(BlueprintCallable)
+	void OnEat ();
 
 
 private:
