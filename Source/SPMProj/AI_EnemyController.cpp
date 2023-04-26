@@ -37,11 +37,10 @@ void AAI_EnemyController::BeginPlay()
     if (AI_EnemyBehavior != nullptr)
     {
         RunBehaviorTree(AI_EnemyBehavior);
-        APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-        if (PlayerPawn == nullptr)
+        if (const APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0); PlayerPawn == nullptr)
             return;
 
-        GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
+        //GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
     }
 }
 
@@ -56,8 +55,7 @@ void AAI_EnemyController::OnPossess(APawn *InPawn)
 void AAI_EnemyController::OnPerception(AActor *Actor, FAIStimulus Stimulus)
 {
     UE_LOG(LogTemp, Display, TEXT("IN onperception method"));
-    APlayerCharacter *player = Cast<APlayerCharacter>(Actor);
-    if (player == nullptr)
+    if (const APlayerCharacter *Player = Cast<APlayerCharacter>(Actor); Player == nullptr)
         return;
 
     UE_LOG(LogTemp, Display, TEXT("Onperception is calling"));
