@@ -30,10 +30,12 @@ AAI_EnemyController::AAI_EnemyController(const FObjectInitializer& ObjectInitial
 	// set dominant sense
 	AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());
 	
+	UE_LOG(LogTemp, Display, TEXT("Creating Enemy"));
 	if (GetPawn() != nullptr)
 	{
+		UE_LOG(LogTemp, Display, TEXT("setting start location"));
 		GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
-	}
+	}	
 }
 
 void AAI_EnemyController::BeginPlay()
