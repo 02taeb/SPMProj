@@ -6,69 +6,74 @@
 #include "PlayerCharacter.h"
 #include "Perception/AISenseConfig_Sight.h"
 
-AAI_EnemyController::AAI_EnemyController(const FObjectInitializer &ObjectInitializer)
+AAI_EnemyController::AAI_EnemyController(const FObjectInitializer& ObjectInitializer)
 {
-    AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
+	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
 
-    // AIPerceptionComponent->bAutoActivate = true;
+	// AIPerceptionComponent->bAutoActivate = true;
 
-    SetPerceptionComponent(*AIPerceptionComponent);
+	SetPerceptionComponent(*AIPerceptionComponent);
 
-    // sight perception
-    Sight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight"));
+	// sight perception
+	Sight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight"));
 
-    // sight variables
-    Sight->SightRadius = 500.0f;
-    Sight->LoseSightRadius = 600.0f;
-    Sight->PeripheralVisionAngleDegrees = 90.0f;
-    Sight->DetectionByAffiliation.bDetectEnemies = true;
-    Sight->DetectionByAffiliation.bDetectNeutrals = true;
-    Sight->DetectionByAffiliation.bDetectFriendlies = false;
+	// sight variables
+	Sight->SightRadius = 500.0f;
+	Sight->LoseSightRadius = 600.0f;
+	Sight->PeripheralVisionAngleDegrees = 90.0f;
+	Sight->DetectionByAffiliation.bDetectEnemies = true;
+	Sight->DetectionByAffiliation.bDetectNeutrals = true;
+	Sight->DetectionByAffiliation.bDetectFriendlies = false;
 
-    // configure sense
-    AIPerceptionComponent->ConfigureSense(*Sight);
-    // set dominant sense
-    AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());
+	// configure sense
+	AIPerceptionComponent->ConfigureSense(*Sight);
+	// set dominant sense
+	AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());
+	
+	UE_LOG(LogTemp, Display, TEXT("Creating Enemy"));
+	if (GetPawn() != nullptr)
+	{
+		UE_LOG(LogTemp, Display, TEXT("setting start location"));
+		GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
+	}	
 }
 
 void AAI_EnemyController::BeginPlay()
 {
-    Super::BeginPlay();
-    if (AI_EnemyBehavior != nullptr)
-    {
-        RunBehaviorTree(AI_EnemyBehavior);
-        APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-        if (PlayerPawn == nullptr)
-            return;
+	Super::BeginPlay();
+	if (AI_EnemyBehavior != nullptr)
+	{
+		RunBehaviorTree(AI_EnemyBehavior);
 
-        GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
-    }
+		//varför skrev du denna kod daniel lmao
+		//if (const APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0); PlayerPawn == nullptr)
+		//  return;
+	}
 }
 
-void AAI_EnemyController::OnPossess(APawn *InPawn)
+void AAI_EnemyController::OnPossess(APawn* InPawn)
 {
-    Super::OnPossess(InPawn);
+	Super::OnPossess(InPawn);
 
-    UE_LOG(LogTemp, Display, TEXT("OnPossess method being called"));
-    AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAI_EnemyController::OnPerception);
+	UE_LOG(LogTemp, Display, TEXT("OnPossess method being called"));
+	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAI_EnemyController::OnPerception);
 }
 
-void AAI_EnemyController::OnPerception(AActor *Actor, FAIStimulus Stimulus)
+void AAI_EnemyController::OnPerception(AActor* Actor, FAIStimulus Stimulus)
 {
-    UE_LOG(LogTemp, Display, TEXT("IN onperception method"));
-    APlayerCharacter *player = Cast<APlayerCharacter>(Actor);
-    if (player == nullptr)
-        return;
+	UE_LOG(LogTemp, Display, TEXT("IN onperception method"));
+	if (const APlayerCharacter* Player = Cast<APlayerCharacter>(Actor); Player == nullptr)
+		return;
 
-    UE_LOG(LogTemp, Display, TEXT("Onperception is calling"));
-    // Agent->SetAnimState(Stimulus.WasSuccessfullySensed());
+	UE_LOG(LogTemp, Display, TEXT("Onperception is calling"));
+	// Agent->SetAnimState(Stimulus.WasSuccessfullySensed());
 
-    if (Stimulus.WasSuccessfullySensed())
-    {
-        GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), true);
-    }
-    else
-    {
-        GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), false);
-    }
+	if (Stimulus.WasSuccessfullySensed())
+	{
+		GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), true);
+	}
+	else
+	{
+		GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), false);
+	}
 }
