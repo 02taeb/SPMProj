@@ -32,6 +32,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 	/*Functions to enable or disable weapon box collison in blueprints*/
 	UFUNCTION(BlueprintCallable)
 	void SetWeaponCollison(ECollisionEnabled::Type Collision);
@@ -45,6 +47,8 @@ public:
 	//Gör att spelaren kan använda item
 	UFUNCTION(BlueprintCallable, Category = "Items")
 	void UseItem(class AItemActor* Item);
+	UFUNCTION(BlueprintCallable)
+	void OnEat ();
 
 
 private:
@@ -53,6 +57,9 @@ private:
 	void SaveGame();
 
 	void LoadGame();
+	
+	UPROPERTY(VisibleAnywhere, Category=Stats)
+	class UStatComponent* Stats;
 
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
@@ -89,7 +96,7 @@ private:
 	/*Target lock*/
 	class AEnemy* EnemyTargetLock;
 	UPROPERTY(EditAnywhere)
-	float TargetLockDistance = 700.0f;
+	float TargetLockDistance = 500.0f;
 
 	/*Attack animation montages*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
@@ -97,13 +104,13 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* HeavyAttackMontage;
 
-	/*/*Animation montage for dodge#1# 
+	/*Animation montage for dodge*/ 
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
-	class UAnimMontage* DodgeMontage;*/
-	/*
-	UPROPERTY(EditAnywhere, Category = "Interacting")
-	TSoftObjectPtr<AActor> InteractableActor;
-	*/
+	class UAnimMontage* DodgeMontage;
+	
+	/*UPROPERTY(EditAnywhere, Category = "Interacting")
+	TSoftObjectPtr<AActor> InteractableActor;*/
+	
 	
 	//https://community.gamedev.tv/t/how-to-for-ue5-1-enhanced-input-system/221375?_gl=1*kvhzsk*_ga*MTc5MTAzNDQ2Mi4xNjgwMTk0MTc2*_ga_2C81L26GR9*MTY4MTAwODIzNC4yNS4xLjE2ODEwMDgyNjIuMC4wLjA
 	//Show Enhanced Inputs in the Editor, Define all inputs + inputmapping in BP inspector

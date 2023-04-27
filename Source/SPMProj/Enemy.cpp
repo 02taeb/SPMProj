@@ -2,8 +2,12 @@
 
 
 #include "Enemy.h"
+
+#include "MeleeWeapon.h"
 #include "StatComponent.h"
+#include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -17,7 +21,41 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	/*Tag, mostly to check weapon collision*/
+	Tags.Add(FName("Enemy"));
 	
+	if(GetWorld() && WeaponClass)
+	{
+		AMeleeWeapon* EnemyWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
+		EnemyWeapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
+		EnemyWeapon->SetOwner(this);
+		EnemyWeapon->SetInstigator(this);
+		EnemyWeapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
+		EquipedWeapon = EnemyWeapon;
+	}
+}
+
+void AEnemy::EnemyAttackBasic()
+{
+	PlayEnemyAttackMontage();
+}
+
+void AEnemy::SetWeaponCollison(ECollisionEnabled::Type Collision)
+{
+	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
+	{
+		EquipedWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
+		EquipedWeapon->ActorsToIgnore.Empty();
+	}
+}
+
+void AEnemy::PlayEnemyAttackMontage()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && EnemyAttackMontage)
+	{
+		AnimInstance->Montage_Play(EnemyAttackMontage);
+	}
 }
 
 // Called every frame
@@ -37,12 +75,14 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	AActor* DamageCauser)
 {
+	UE_LOG(LogTemp, Warning, TEXT("ENEMY HAS TAKEN DAMAGE"));
 	if(Stats)
 	{
 		Stats->TakeDamage(DamageAmount);
 		if(Stats->Dead())
 		{
-			Destroy();
+			Destroy(); //Dödar fienden (Kommer ändras)
+			EquipedWeapon->Destroy(); //Dödar vapnet 
 		}
 	}
 	return DamageAmount;

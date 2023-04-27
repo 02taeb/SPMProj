@@ -4,6 +4,7 @@
 #include "InventoryComponent.h"
 #include "ItemActor.h"
 #include "EquipableItemActor.h"
+#include "EquipableParasite.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
@@ -37,6 +38,12 @@ bool UInventoryComponent::AddItem(AItemActor *Item)
 	{
 		return false;
 	}
+
+	if (Cast<AEquipableParasite>(Item))
+	{
+		Cast<AEquipableParasite>(Item)->PlayerActorPtr = this->GetOwner();
+	}
+	
 	
 	
 	Item->OwningInventory = this;
@@ -49,6 +56,15 @@ bool UInventoryComponent::AddItem(AItemActor *Item)
 
 	//Update UI
 	OnInventoryUpdated.Broadcast();
+
+	 if (AEquipableParasite* Par = Cast<AEquipableParasite>(Item))
+	 	Par->OnPickup();
+
+	if (Cast<AEquipableParasite>(Item))
+	{
+		Cast<AEquipableParasite>(Item)->OnPickup();
+	}
+	
 	
     return true;
 }
@@ -62,6 +78,9 @@ bool UInventoryComponent::RemoveItem(AItemActor *Item)
 		{
 			Cast<AEquipableItemActor>(Item)->Equipped = false;
 		}
+
+		if (AEquipableParasite* Par = Cast<AEquipableParasite>(Item))
+			Par->OnPlayerDeath();
 		
 		Item->OwningInventory = nullptr;
 		Item->World = nullptr;

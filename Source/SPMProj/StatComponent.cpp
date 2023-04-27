@@ -3,6 +3,8 @@
 
 #include "StatComponent.h"
 
+#include <string>
+
 // Sets default values for this component's properties
 UStatComponent::UStatComponent()
 {
@@ -107,7 +109,45 @@ void UStatComponent::HealHealth(const float HealAmount)
 	CurrentHealth += FMath::Min(MaxHealth - CurrentHealth, HealAmount);
 }
 
-bool UStatComponent::Dead()
+bool UStatComponent::Dead() const
 {
 	return CurrentHealth <= 0.f;
+}
+
+std::string UStatComponent::GetState() const
+{
+	std::string State = "";
+	State += std::to_string(InitialMaxHealth) + ";";
+	State += std::to_string(MaxHealth) + ";";
+	State += std::to_string(CurrentHealth) + ";";
+	State += std::to_string(InitialAttackDamage) + ";";
+	State += std::to_string(CurrentAttackDamage) + ";";
+	State += std::to_string(InitialArmor) + ";";
+	State += std::to_string(CurrentArmor);
+	return State;
+}
+
+void UStatComponent::SetState(const std::string& SavedState)
+{
+	int Counter = 0;
+	std::string Values[7];
+	std::string Temp = "";
+	
+	for (int i = 0; i < SavedState.length(); i++)
+	{
+		if (SavedState[i] == ';')
+		{
+			Values[Counter++] = Temp;
+			Temp = "";
+		}
+		Temp += SavedState[i];
+	}
+
+	InitialMaxHealth = std::stof(Values[0]);
+	MaxHealth = std::stof(Values[1]);
+	CurrentHealth = std::stof(Values[2]);
+	InitialAttackDamage = std::stof(Values[3]);
+	CurrentAttackDamage = std::stof(Values[4]);
+	InitialArmor = std::stof(Values[5]);
+	CurrentArmor = std::stof(Values[6]);
 }

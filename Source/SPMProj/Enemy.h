@@ -18,6 +18,12 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
+	void EnemyAttackBasic();
+
+	/*Functions to enable or disable weapon box collison in blueprints*/
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponCollison(ECollisionEnabled::Type Collision);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -25,4 +31,16 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere, Category=Stats)
 	class UStatComponent* Stats;
+
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	class UAnimMontage* EnemyAttackMontage;
+
+	/*Spawn weapon class variable. Used to spawn the weapon on the Enemies right hand socket*/
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AMeleeWeapon> WeaponClass;
+
+	UPROPERTY(VisibleInstanceOnly)
+	class AMeleeWeapon* EquipedWeapon;
+	
+	void PlayEnemyAttackMontage();
 };

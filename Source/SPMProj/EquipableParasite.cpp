@@ -20,14 +20,9 @@ void AEquipableParasite::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//TODO: Fråga Hugo om något behövs göras här? Eller om något behövs i blueprint.
-
 	// Set PlayerPtr
-	PlayerActorPtr = GetWorld()->GetFirstPlayerController()->GetOwner();
-
-	// Set statcomponentptr
-	StatComponentPtr = Cast<UStatComponent>(PlayerActorPtr->GetComponentByClass(TSubclassOf<UStatComponent>()));
-
+	//PlayerActorPtr = GetWorld()->GetFirstPlayerController()->GetOwner();
+	
 	// It would probably be okay to set them already here instead of waiting for pickup
 }
 	
@@ -35,17 +30,22 @@ void AEquipableParasite::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
 
+	if (StatComponentPtr == nullptr)
+	{
+		return;
+	}
+	
 	// Remove buffs from player
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(-Amount);
+		StatComponentPtr->IncreaseMaxHealth(-StartAmount);
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-Amount);
+		StatComponentPtr->IncreaseArmor(-StartAmount);
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(-Amount);
+		StatComponentPtr->IncreaseAttackDamage(-StartAmount);
 		break;
 	case EAffectedStat::None:
 	default:
@@ -64,10 +64,24 @@ void AEquipableParasite::Tick(float DeltaTime)
 void AEquipableParasite::OnPickup()
 {
 	// Hide object in world
-	StaticMeshComponent->SetVisibility(false);
+	 if(bUseStaticMesh) StaticMeshComponent->SetVisibility(false);
 
-	// Add to inventory
-	//TODO: Fråga Hugo om vad som behövs för att lägga till i inventory
+
+	// Set statcomponentptr
+	if (PlayerActorPtr == nullptr)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Null PlayerActorPointer"));
+	}
+
+	StatComponentPtr = Cast<UStatComponent>(PlayerActorPtr->GetComponentByClass(UStatComponent::StaticClass()));
+	
+	if (StatComponentPtr == nullptr)
+	{
+		UE_LOG(LogTemp, Display, TEXT("nullptr"));
+	}
+	else{
+		UE_LOG(LogTemp, Display, TEXT("not null"));
+	}
 
 	// Allow equipping
 	bCanEquip = true;
@@ -78,30 +92,38 @@ void AEquipableParasite::OnEquip()
 	if (Stat == EAffectedStat::None)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Unset stat type for equipping parasite: %s"), *GetActorNameOrLabel());
+		if (StatComponentPtr == nullptr)
+		{
+			UE_LOG(LogTemp, Display, TEXT("StatComponentPtr is null"));
+		}
+		
 		return;
 	}
 	if (!bCanEquip || bIsEquipped) return;
 
-	// Attach to socket on player
-	StaticMeshComponent->SetVisibility(true);
-	StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
-	StaticMeshComponent->AttachToComponent(
-		Cast<USceneComponent>(PlayerActorPtr->GetComponentByClass(
-			TSubclassOf<USkeletalMeshComponent>())),
-		FAttachmentTransformRules::KeepRelativeTransform,
-		TEXT("ParasiteSocket"));
+	if(bUseStaticMesh)
+	{
+		// Attach to socket on player
+		StaticMeshComponent->SetVisibility(true);
+		StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		StaticMeshComponent->AttachToComponent(
+			Cast<USceneComponent>(PlayerActorPtr->GetComponentByClass(
+				TSubclassOf<USkeletalMeshComponent>())),
+			FAttachmentTransformRules::KeepRelativeTransform,
+			TEXT("ParasiteSocket"));
+	}
 
 	// Give buff to player
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(Amount);
+		StatComponentPtr->IncreaseMaxHealth(StartAmount);
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(Amount);
+		StatComponentPtr->IncreaseArmor(StartAmount);
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(Amount);
+		StatComponentPtr->IncreaseAttackDamage(StartAmount);
 		break;
 	default:
 		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for equipping parasite: %s"),
@@ -112,30 +134,30 @@ void AEquipableParasite::OnEquip()
 	// Register as equipped
 	// Allow unequipping
 	bIsEquipped = true;
-	
-	// Remove from inventory? Displayed on UI? Changed appearance in inventory to mark as equipped?
-	//TODO: Fråga Hugo vad som bör göras när ett item blir equipped.
 }
 
 void AEquipableParasite::OnUnequip()
 {
 	if (!bIsEquipped) return;
-	
-	// Reverse of OnEquip()
-	StaticMeshComponent->SetVisibility(false);
-	StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
-	StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
+	if(bUseStaticMesh)
+	{
+		// Reverse of OnEquip()
+		StaticMeshComponent->SetVisibility(false);
+		StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	}
 
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(-Amount);
+		StatComponentPtr->IncreaseMaxHealth(-StartAmount);
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-Amount);
+		StatComponentPtr->IncreaseArmor(-StartAmount);
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(-Amount);
+		StatComponentPtr->IncreaseAttackDamage(-StartAmount);
 		break;
 	default:
 		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for equipping parasite: %s"),
@@ -144,14 +166,48 @@ void AEquipableParasite::OnUnequip()
 	}
 
 	bIsEquipped = false;
-	
-	// Remove from inventory? Displayed on UI? Changed appearance in inventory to mark as equipped?
-	//TODO: Fråga Hugo vad som bör göras när ett item blir unequipped.
 }
 
 void AEquipableParasite::OnPlayerDeath()
 {
+	//TODO: Kalla på den här metoden när spelaren dör
 	// Destroy this
-	Destroy();
+
+	//Kommenterade bort då jag tror Destroy kommer skapa problem då pointers i inventory kommer vara null, kanske borde göras genom remove item istället
+	// Destroy();
+}
+
+void AEquipableParasite::OnEat()
+{
+	UE_LOG(LogTemp, Display, TEXT("Reached Parasites OnEat"));
+
+	switch (Stat)
+	{
+	case EAffectedStat::Health:
+		StatComponentPtr->IncreaseMaxHealth(OnEatUpgradeAmount);
+		break;
+	case EAffectedStat::Armor:
+		StatComponentPtr->IncreaseArmor(OnEatUpgradeAmount);
+		break;
+	case EAffectedStat::AttackDamage:
+		StatComponentPtr->IncreaseAttackDamage(OnEatUpgradeAmount);
+		break;
+	default:
+		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for upgrading parasite: %s"),
+			*GetActorNameOrLabel());
+		break;
+	}
+}
+
+void AEquipableParasite::Use(APlayerCharacter* Character)
+{
+	if (bIsEquipped)
+	{
+		OnUnequip();
+	}
+	else
+	{
+		OnEquip();
+	}
 }
 

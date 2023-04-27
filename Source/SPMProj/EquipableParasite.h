@@ -33,20 +33,32 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
-	UStaticMeshComponent* StaticMeshComponent;
-	class UStatComponent* StatComponentPtr;
-	AActor* PlayerActorPtr;
-	bool bCanEquip = false;
-	bool bIsEquipped = false;
-	
-	UPROPERTY(EditDefaultsOnly, Category="Affect")
-	EAffectedStat Stat = EAffectedStat::None;
-	UPROPERTY(EditDefaultsOnly, Category="Affect")
-	float Amount = 0;
-
 	void OnPickup();
 	void OnEquip();
 	void OnUnequip();
 	void OnPlayerDeath();
+	void OnEat();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parasite")
+	UStaticMeshComponent* StaticMeshComponent;
+
+	AActor* PlayerActorPtr;
+	virtual void Use(APlayerCharacter* Character) override;
+	
+private:
+	class UStatComponent* StatComponentPtr;
+	bool bCanEquip = false;
+	bool bIsEquipped = false;
+
+	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parasite")
+	// UStaticMeshComponent* StaticMeshComponent;
+	UPROPERTY(EditDefaultsOnly, Category="Parasite")
+	bool bUseStaticMesh = false;
+	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
+	EAffectedStat Stat = EAffectedStat::None;
+	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
+	float StartAmount = 0;
+	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
+	float OnEatUpgradeAmount = 2;
+
 };

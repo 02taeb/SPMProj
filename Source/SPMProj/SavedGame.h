@@ -20,27 +20,30 @@ public:
 	
 	USavedGame();
 
-	UPROPERTY(VisibleAnywhere, Category = "Generic")
-	FString PlayerName;
-
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Generic")
 	FVector PlayerPosition;
 
+	//Health att spara ner kanske inte behövs om vi kör checkpoints som bonfires
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
 	float Health;
 
+	//Används inte men kanske något sånt i framtiden
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
 	UObject* Checkpoint;
 
+	//Hela inventory som sparas
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
 	TArray <class AItemActor*> CurrentItems;
 
+	//Alla items som är equipped när spelaren sparar
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
 	TArray <class AEquipableItemActor*> EquippedItems;
 
+	//namnet på save slot, ändras inte nu så finns bara en save
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
     FString SaveSlotName;
 
+	//Vet inte exakt vad userindex är men behövs för att spara, just nu är den alltid 0
     UPROPERTY(VisibleAnywhere, Category = "Generic")
     uint32 UserIndex;
 };
