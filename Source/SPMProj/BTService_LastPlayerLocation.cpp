@@ -17,7 +17,7 @@ void UBTService_LastPlayerLocation::TickNode(UBehaviorTreeComponent &OwnerComp, 
 
     //ignore actors that are of enemy
 
-    APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+    const APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
     if (PlayerPawn == nullptr)
         return;
 
