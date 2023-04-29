@@ -4,149 +4,149 @@
 		{
 			"name": "Launch SPMProj (Debug)",
 			"request": "launch",
-			"program": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
+			"program": "C:\\Users\\46723\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
 			"preLaunchTask": "SPMProj Win64 Debug Build",
 			"args": [
 			],
-			"cwd": "C:\\Program Files\\Epic Games\\UE_5.1",
+			"cwd": "E:\\allprograms2\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "E:\\allprograms2\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "E:\\allprograms2\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProj (DebugGame)",
 			"request": "launch",
-			"program": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
+			"program": "C:\\Users\\46723\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
 			"preLaunchTask": "SPMProj Win64 DebugGame Build",
 			"args": [
 			],
-			"cwd": "C:\\Program Files\\Epic Games\\UE_5.1",
+			"cwd": "E:\\allprograms2\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "E:\\allprograms2\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "E:\\allprograms2\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProj (Development)",
 			"request": "launch",
-			"program": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame.exe",
+			"program": "C:\\Users\\46723\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame.exe",
 			"preLaunchTask": "SPMProj Win64 Development Build",
 			"args": [
 			],
-			"cwd": "C:\\Program Files\\Epic Games\\UE_5.1",
+			"cwd": "E:\\allprograms2\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "E:\\allprograms2\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "E:\\allprograms2\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProj (Test)",
 			"request": "launch",
-			"program": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
+			"program": "C:\\Users\\46723\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
 			"preLaunchTask": "SPMProj Win64 Test Build",
 			"args": [
 			],
-			"cwd": "C:\\Program Files\\Epic Games\\UE_5.1",
+			"cwd": "E:\\allprograms2\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "E:\\allprograms2\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "E:\\allprograms2\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProj (Shipping)",
 			"request": "launch",
-			"program": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
+			"program": "C:\\Users\\46723\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
 			"preLaunchTask": "SPMProj Win64 Shipping Build",
 			"args": [
 			],
-			"cwd": "C:\\Program Files\\Epic Games\\UE_5.1",
+			"cwd": "E:\\allprograms2\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "E:\\allprograms2\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "E:\\allprograms2\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProjEditor (Debug)",
 			"request": "launch",
-			"program": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
+			"program": "E:\\allprograms2\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
 			"preLaunchTask": "SPMProjEditor Win64 Debug Build",
 			"args": [
-				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
+				"C:\\Users\\46723\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
 			],
-			"cwd": "C:\\Program Files\\Epic Games\\UE_5.1",
+			"cwd": "E:\\allprograms2\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "E:\\allprograms2\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "E:\\allprograms2\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProjEditor (DebugGame)",
 			"request": "launch",
-			"program": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
+			"program": "E:\\allprograms2\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
 			"preLaunchTask": "SPMProjEditor Win64 DebugGame Build",
 			"args": [
-				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
+				"C:\\Users\\46723\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
 			],
-			"cwd": "C:\\Program Files\\Epic Games\\UE_5.1",
+			"cwd": "E:\\allprograms2\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "E:\\allprograms2\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "E:\\allprograms2\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProjEditor (Development)",
 			"request": "launch",
-			"program": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
+			"program": "E:\\allprograms2\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
 			"preLaunchTask": "SPMProjEditor Win64 Development Build",
 			"args": [
-				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
+				"C:\\Users\\46723\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
 			],
-			"cwd": "C:\\Program Files\\Epic Games\\UE_5.1",
+			"cwd": "E:\\allprograms2\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "E:\\allprograms2\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\Program Files\\Epic Games\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "E:\\allprograms2\\UE_5.1"
 			}
 		},
 		{
 			"name": "Generate Project Files",
 			"type": "coreclr",
 			"request": "launch",
-			"program": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Build\\BatchFiles\\RunUBT.bat",
+			"program": "E:\\allprograms2\\UE_5.1\\Engine\\Build\\BatchFiles\\RunUBT.bat",
 			"args": [
 				"-projectfiles",
 				"-vscode",
-				"-project=C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+				"-project=C:\\Users\\46723\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-game",
 				"-engine"
 			],
 			"console": "externalTerminal",
 			"stopAtEntry": false,
-			"cwd": "C:\\Program Files\\Epic Games\\UE_5.1"
+			"cwd": "E:\\allprograms2\\UE_5.1"
 		}
 	]
 }
