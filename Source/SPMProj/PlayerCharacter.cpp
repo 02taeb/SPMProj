@@ -271,11 +271,11 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeBackwards"), DodgeMontage);
 		}
-		else if (RightDotProduct > 0)
+		else if (RightDotProduct > 0 && FMath::Abs(RightDotProduct) > FMath::Abs(ForwardDotProduct))
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeRight"), DodgeMontage);
 		}
-		else if (RightDotProduct < 0)
+		else if (RightDotProduct < 0 && FMath::Abs(RightDotProduct) > FMath::Abs(ForwardDotProduct))
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeLeft"), DodgeMontage);
 		}
