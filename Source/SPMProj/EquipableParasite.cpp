@@ -134,6 +134,7 @@ void AEquipableParasite::OnEquip()
 	// Register as equipped
 	// Allow unequipping
 	bIsEquipped = true;
+	Equipped = true;
 }
 
 void AEquipableParasite::OnUnequip()
@@ -166,6 +167,7 @@ void AEquipableParasite::OnUnequip()
 	}
 
 	bIsEquipped = false;
+	Equipped = false;
 }
 
 void AEquipableParasite::OnPlayerDeath()

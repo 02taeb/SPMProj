@@ -105,7 +105,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	AActor* DamageCauser)
 {
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
-	
+
 	//Temporär damage + death
 	Health = Health - 25;
 	if (Health <= 0)
@@ -395,9 +395,14 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 
 void APlayerCharacter::OnEat()
 {
+
+	// Heala spelaren
+
+
+	// Uppgradera equipped parasiter
 	for (AItemActor* Item : Inventory->Items)
 	{
-		if (Cast<AEquipableParasite>(Item))
+		if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
 		{
 			Cast<AEquipableParasite>(Item)->OnEat();
 		}
