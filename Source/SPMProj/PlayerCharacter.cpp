@@ -105,7 +105,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	AActor* DamageCauser)
 {
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
-	
+
 	//Temporär damage + death
 	Health = Health - 25;
 	if (Health <= 0)
@@ -192,11 +192,9 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 	if (PlayerController == nullptr) return;
 
 	FHitResult HitResult;
-	FVector TraceLocStart;
-	FRotator TraceRot;
-	PlayerController->GetPlayerViewPoint(TraceLocStart, TraceRot);
-	FVector TraceLocEnd = TraceLocStart + TraceRot.Vector() * InteractableReach;
-	bool bHitSucceed = GetWorld()->LineTraceSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, ECC_GameTraceChannel1);
+	FVector TraceLocStart = GetActorLocation();
+	FVector TraceLocEnd = TraceLocStart + GetActorForwardVector() * InteractableReach;
+	bool bHitSucceed = GetWorld()->SweepSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, FQuat::Identity, ECC_GameTraceChannel1, FCollisionShape::MakeCapsule(34, 100));
 
 	if (bHitSucceed)
 	{
@@ -207,12 +205,6 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		if (HitInteractableComp == nullptr) return;
 		HitInteractableComp->Interact(this);
 	}
-	/*
-		if (InteractableActor == nullptr) return;
-		UInteractableComponent* InteractableComponent = Cast<UInteractableComponent>(InteractableActor->GetComponentByClass(InteractableClass));
-		InteractableComponent->Interact(this);
-		UE_LOG(LogTemp, Display, TEXT("Player interact with: %s Actor of class: %s"), *InteractableActor->GetActorNameOrLabel(), *InteractableClass->GetFullName()); 
-	 */
 }
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
@@ -403,9 +395,14 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 
 void APlayerCharacter::OnEat()
 {
+
+	// Heala spelaren
+
+
+	// Uppgradera equipped parasiter
 	for (AItemActor* Item : Inventory->Items)
 	{
-		if (Cast<AEquipableParasite>(Item))
+		if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
 		{
 			Cast<AEquipableParasite>(Item)->OnEat();
 		}
