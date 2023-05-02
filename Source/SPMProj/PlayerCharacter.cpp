@@ -110,6 +110,11 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	Health = Health - 25;
 	if (Health <= 0)
 	{
+		for (AItemActor* Item : Inventory->Items)
+		{
+			if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
+				Cast<AEquipableParasite>(Item)->OnPlayerDeath();
+		}
 		Destroy();
 	}
 	
@@ -246,6 +251,8 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
 	if(GetCharacterMovement()->GetLastInputVector() == FVector::ZeroVector) return;
 	if(ActionState != ECharacterActionState::ECAS_NoAction) return;
+	//if(ActionState == ECharacterActionState::ECAS_Dodging || ActionState == ECharacterActionState::ECAS_AttackingHeavy) return;
+	//if(ActionState != ECharacterActionState::ECAS_AttackingNormal || ActionState != ECharacterActionState::ECAS_NoAction) return;
 	
 	ActionState = ECharacterActionState::ECAS_Dodging;
 
@@ -269,11 +276,11 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeBackwards"), DodgeMontage);
 		}
-		else if (RightDotProduct > 0)
+		else if (RightDotProduct > 0 && FMath::Abs(RightDotProduct) > FMath::Abs(ForwardDotProduct))
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeRight"), DodgeMontage);
 		}
-		else if (RightDotProduct < 0)
+		else if (RightDotProduct < 0 && FMath::Abs(RightDotProduct) > FMath::Abs(ForwardDotProduct))
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeLeft"), DodgeMontage);
 		}
@@ -397,7 +404,7 @@ void APlayerCharacter::OnEat()
 {
 
 	// Heala spelaren
-
+	Stats->HealHealth(OnEatHealAmount);
 
 	// Uppgradera equipped parasiter
 	for (AItemActor* Item : Inventory->Items)
