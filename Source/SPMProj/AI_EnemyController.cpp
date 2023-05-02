@@ -38,6 +38,11 @@ AAI_EnemyController::AAI_EnemyController(const FObjectInitializer& ObjectInitial
 void AAI_EnemyController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (AI_EnemyBehavior != nullptr)
+	{
+		RunBehaviorTree(AI_EnemyBehavior);
+	}
 	
 }
 
