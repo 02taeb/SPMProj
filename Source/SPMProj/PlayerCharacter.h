@@ -58,7 +58,7 @@ private:
 
 	void LoadGame();
 	
-	UPROPERTY(VisibleAnywhere, Category=Stats)
+	UPROPERTY(VisibleAnywhere, Category="Stats")
 	class UStatComponent* Stats;
 
 	//Show rotation speed in the Editor, Define value in BP inspector
@@ -74,6 +74,9 @@ private:
 	// Hur långt från KAMERAN som spelaren kan interagera med objekt.
 	UPROPERTY(EditDefaultsOnly, Category = "Interacting")
 	float InteractableReach = 500;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Stats")
+	float OnEatHealAmount = 25;
 
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* OverlapWeapon;
