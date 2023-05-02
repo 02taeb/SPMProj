@@ -50,6 +50,7 @@ public:
 private:
 	class UStatComponent* StatComponentPtr;
 	bool bCanEquip = false;
+	int TimesUpgraded = 0;
 
 	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parasite")
 	// UStaticMeshComponent* StaticMeshComponent;

@@ -110,6 +110,11 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	Health = Health - 25;
 	if (Health <= 0)
 	{
+		for (AItemActor* Item : Inventory->Items)
+		{
+			if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
+				Cast<AEquipableParasite>(Item)->OnPlayerDeath();
+		}
 		Destroy();
 	}
 	
@@ -397,7 +402,7 @@ void APlayerCharacter::OnEat()
 {
 
 	// Heala spelaren
-
+	Stats->HealHealth(OnEatHealAmount);
 
 	// Uppgradera equipped parasiter
 	for (AItemActor* Item : Inventory->Items)
