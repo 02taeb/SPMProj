@@ -9,6 +9,8 @@
 #include "Components/SphereComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
 
 // Sets default values
 AMeleeWeapon::AMeleeWeapon()
@@ -99,6 +101,8 @@ void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor)
 				UE_LOG(LogTemp, Warning, TEXT("PLAYER HEV"));
 			}
 		}
+		//Behöver
+		UNiagaraComponent* NiagaraComp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, GetActorLocation());
 	} 
 }
 

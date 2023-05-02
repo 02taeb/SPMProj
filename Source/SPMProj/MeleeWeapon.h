@@ -21,6 +21,10 @@ public:
 
 	/*Used to store already hit actors under a single attack so that no two overlaps are generated on the same actor*/
 	TArray<AActor*> ActorsToIgnore;
+
+	//För partikeleffekt vid hit
+	UPROPERTY(EditAnywhere)
+	class UNiagaraSystem* HitEffect;
 	
 protected:
 	virtual void BeginPlay() override;
