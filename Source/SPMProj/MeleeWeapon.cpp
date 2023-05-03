@@ -69,6 +69,7 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	BoxHit,  
 	true);  /*Ignores itself for overlaps*/
 
+	OnHit(BoxHit.GetActor(), BoxHit.ImpactPoint, BoxHit);
 	HandleWeaponBoxHit(BoxHit.GetActor());
 }
 
