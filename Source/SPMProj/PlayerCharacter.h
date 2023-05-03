@@ -164,6 +164,11 @@ private:
 	class UInputAction* InputSaveGame;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputLoadGame;
+	
+
+	/*Test functions for dodge with old input system*/
+	void Forward(float Value);
+	void Right(float Value);
 
 	//inputs for cheats
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
