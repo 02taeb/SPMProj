@@ -8,6 +8,7 @@
 #include "CharacterStates.h"
 #include "PlayerCharacter.generated.h"
 
+class AMeleeWeapon;
 UCLASS()
 class SPMPROJ_API APlayerCharacter : public ACharacter
 {
@@ -49,10 +50,24 @@ public:
 	void UseItem(class AItemActor* Item);
 	UFUNCTION(BlueprintCallable)
 	void OnEat ();
-
-
+	
+	bool bInstaKill = false;
 private:
-
+	// Cheat vars
+	UPROPERTY(EditAnywhere, Category = "Cheats")
+	TSubclassOf<AMeleeWeapon> MeleeWeaponClass;
+	UPROPERTY(EditAnywhere, Category = "Cheats")
+	float NoClipSpeed = 50;
+	UCharacterMovementComponent* MovementComp;
+	bool bGodMode = false;
+	bool bNoClip = false;
+	UPROPERTY(EditAnywhere, Category = "Cheats")
+	FVector TP1;
+	UPROPERTY(EditAnywhere, Category = "Cheats")
+	FVector TP2;
+	UPROPERTY(EditAnywhere, Category = "Cheats")
+	FVector TP3;
+	
 	//Function for saving and loading the game
 	void SaveGame();
 
@@ -155,6 +170,21 @@ private:
 	void Forward(float Value);
 	void Right(float Value);
 
+	//inputs for cheats
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* InputGodMode;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* InputInstaKill;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* InputNoClip;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* InputSpawnSword;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* InputTPFirst;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* InputTPSecond;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* InputTPThird;
 	
 	//callback functions for Input actions
 	void MoveForward(const FInputActionValue& Value);
@@ -169,6 +199,14 @@ private:
 	void JumpChar(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
 	void TargetLock(const FInputActionValue& Value);
+
+	void GodMode(const FInputActionValue& Value);
+	void InstaKill(const FInputActionValue& Value);
+	void NoClip(const FInputActionValue& Value);
+	void SpawnSword(const FInputActionValue& Value);
+	void TPFirst(const FInputActionValue& Value);
+	void TPSecond(const FInputActionValue& Value);
+	void TPThird(const FInputActionValue& Value);
 
 	void KeepRotationOnTarget();
 
