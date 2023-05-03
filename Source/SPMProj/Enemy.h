@@ -43,4 +43,14 @@ private:
 	class AMeleeWeapon* EquipedWeapon;
 	
 	void PlayEnemyAttackMontage();
+
+public:
+	//fixa bättre sen
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE void setIsAttacking(bool value) 
+	{
+		isAttacking = value; 
+	}
+
+	bool isAttacking = false; 
 };
