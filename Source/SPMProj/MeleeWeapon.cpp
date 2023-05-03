@@ -93,12 +93,26 @@ void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor)
 			APlayerCharacter* PlayerInstigator = Cast<APlayerCharacter>(this->GetOwner());
 			if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingNormal)
 			{
-				UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				if (PlayerInstigator->bInstaKill)
+				{
+					UGameplayStatics::ApplyDamage(Actor, DefaultDamage * 9999, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				}
+				else
+				{
+					UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				}
 				UE_LOG(LogTemp, Warning, TEXT("PLAYER DEF"));
 			}
 			else if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingHeavy)
 			{
-				UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				if (PlayerInstigator->bInstaKill)
+				{
+					UGameplayStatics::ApplyDamage(Actor, HeavyDamage * 9999, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				}
+				else
+				{
+					UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				}
 				UE_LOG(LogTemp, Warning, TEXT("PLAYER HEV"));
 			}
 		}

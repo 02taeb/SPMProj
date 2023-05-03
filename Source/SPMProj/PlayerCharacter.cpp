@@ -24,6 +24,7 @@
 #include "StatComponent.h"
 #include "Components/SphereComponent.h"
 #include "EquipableParasite.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -49,7 +50,7 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	//UE_LOG(LogTemp, Display, TEXT("Char spawned"));
-	UCharacterMovementComponent* MovementComp = GetCharacterMovement();
+	MovementComp = GetCharacterMovement();
 	if (MovementComp) MovementComp->MaxWalkSpeed = MovementSpeed; // Set the max walking speed here
 
 }
@@ -98,15 +99,24 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	//Testinputs för load och save
 	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
 	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
-
+	//Cheat inputs
+	PlayerEIComponent->BindAction(InputGodMode, ETriggerEvent::Started, this, &APlayerCharacter::GodMode);
+	PlayerEIComponent->BindAction(InputInstaKill, ETriggerEvent::Started, this, &APlayerCharacter::InstaKill);
+	PlayerEIComponent->BindAction(InputNoClip, ETriggerEvent::Started, this, &APlayerCharacter::NoClip);
+	PlayerEIComponent->BindAction(InputSpawnSword, ETriggerEvent::Started, this, &APlayerCharacter::SpawnSword);
+	PlayerEIComponent->BindAction(InputTPFirst, ETriggerEvent::Started, this, &APlayerCharacter::TPFirst);
+	PlayerEIComponent->BindAction(InputTPSecond, ETriggerEvent::Started, this, &APlayerCharacter::TPSecond);
+	PlayerEIComponent->BindAction(InputTPThird, ETriggerEvent::Started, this, &APlayerCharacter::TPThird);
 }
 
 float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	AActor* DamageCauser)
 {
+	if (bGodMode) return 0;
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
 
 	//Temporär damage + death
+	
 	Health = Health - 25;
 	if (Health <= 0)
 	{
@@ -142,6 +152,11 @@ void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 
 void APlayerCharacter::MoveForward(const FInputActionValue & Value)
 {
+	if (bNoClip)
+	{
+		SetActorLocation(GetActorLocation() + GetActorForwardVector() * Value.Get<float>() * NoClipSpeed);
+		return;
+	}
 	/*Cant move under attack, will be changed!!*/
 	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
@@ -149,6 +164,11 @@ void APlayerCharacter::MoveForward(const FInputActionValue & Value)
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 {
+	if (bNoClip)
+	{
+		SetActorLocation(GetActorLocation() + GetActorRightVector() * Value.Get<float>() * NoClipSpeed);
+		return;
+	}
 	/*Cant move under attack, will be changed!!*/
 	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorRightVector() * Value.Get<float>());
@@ -239,6 +259,11 @@ void APlayerCharacter::ResetHeavyAttackCooldown()
 
 void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 {
+	if (bNoClip)
+	{
+		SetActorLocation(GetActorLocation() + GetActorUpVector() * NoClipSpeed);
+		return;
+	}
 	Super::Jump();
 	JumpMaxHoldTime = JumpTime;
 
@@ -249,6 +274,11 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
+	if (bNoClip)
+	{
+		SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
+		return;
+	}
 	if(GetCharacterMovement()->GetLastInputVector() == FVector::ZeroVector) return;
 	if(ActionState != ECharacterActionState::ECAS_NoAction) return;
 	//if(ActionState == ECharacterActionState::ECAS_Dodging || ActionState == ECharacterActionState::ECAS_AttackingHeavy) return;
@@ -325,6 +355,48 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 			break;
 		}
 	}
+}
+
+void APlayerCharacter::GodMode(const FInputActionValue& Value)
+{
+	bGodMode = !bGodMode;
+	UE_LOG(LogTemp, Display, TEXT("God mode: %d"), bGodMode);
+}
+
+void APlayerCharacter::InstaKill(const FInputActionValue& Value)
+{
+	bInstaKill = !bInstaKill;
+	UE_LOG(LogTemp, Display, TEXT("Instakill: %d"), bInstaKill);
+}
+
+void APlayerCharacter::NoClip(const FInputActionValue& Value)
+{
+	bNoClip = !bNoClip;
+	MovementComp -> GravityScale = bNoClip ? 0 : 1;
+	SetActorEnableCollision(!bNoClip);
+	UE_LOG(LogTemp, Display, TEXT("No clip: %d"), bNoClip);
+}
+
+void APlayerCharacter::SpawnSword(const FInputActionValue& Value)
+{
+	const FVector SpawnLoc = GetActorLocation();
+	GetWorld()->SpawnActor(MeleeWeaponClass, &SpawnLoc);
+	UE_LOG(LogTemp, Display, TEXT("Spawned Sword"));
+}
+
+void APlayerCharacter::TPFirst(const FInputActionValue& Value)
+{
+	SetActorLocation(TP1);
+}
+
+void APlayerCharacter::TPSecond(const FInputActionValue& Value)
+{
+	SetActorLocation(TP2);
+}
+
+void APlayerCharacter::TPThird(const FInputActionValue& Value)
+{
+	SetActorLocation(TP3);
 }
 
 void APlayerCharacter::KeepRotationOnTarget()
