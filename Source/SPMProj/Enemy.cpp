@@ -52,6 +52,7 @@ void AEnemy::SetWeaponCollison(ECollisionEnabled::Type Collision)
 void AEnemy::PlayEnemyAttackMontage()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	
 	if(AnimInstance && EnemyAttackMontage)
 	{
 		AnimInstance->Montage_Play(EnemyAttackMontage);
