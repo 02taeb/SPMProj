@@ -169,11 +169,10 @@ void APlayerCharacter::MoveForward(const FInputActionValue & Value)
 		SetActorLocation(GetActorLocation() + GetActorForwardVector() * Value.Get<float>() * NoClipSpeed);
 		return;
 	}
-	//LastForwardValue = Value.Get<float>();
+	
 	/*Cant move under attack, will be changed!!*/
 	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
-	//UE_LOG(LogTemp, Warning, TEXT("Last Forward input vector: %f"), Value.Get<float>());
 }
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
@@ -183,11 +182,10 @@ void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 		SetActorLocation(GetActorLocation() + GetActorRightVector() * Value.Get<float>() * NoClipSpeed);
 		return;
 	}
-	//LastRightValue = Value.Get<float>();
+	
 	/*Cant move under attack, will be changed!!*/
 	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorRightVector() * Value.Get<float>());
-	//UE_LOG(LogTemp, Warning, TEXT("Last Right input vector: %f"),  Value.Get<float>());
 }
 
 void APlayerCharacter::LookUp(const FInputActionValue& Value)
@@ -432,19 +430,23 @@ void APlayerCharacter::KeepRotationOnTarget()
 void APlayerCharacter::PlayNormalAttackAnimation()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	//UAnimInstance* AnimInstance = MySkeletalMeshComponent->GetAnimInstance();
+	
 	if(AnimInstance && NormalAttackMontage)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
-		const int32 RandomAnimation = FMath::RandRange(0, 1);
+		//const int32 RandomAnimation = FMath::RandRange(0, 1);
 		FName AnimSection = FName();
 
-		switch (RandomAnimation)
+		switch (ComboIndex)
 		{
-		case 0:
-			AnimSection = FName("BasicAttack1");
-			break;
 		case 1:
+			AnimSection = FName("BasicAttack1");
+			ComboIndex++;
+			break;
+		case 2:
 			AnimSection = FName("BasicAttack2");
+			ComboIndex = 1;
 			break;
 		default:
 			break;

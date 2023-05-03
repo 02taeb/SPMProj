@@ -122,6 +122,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* HeavyAttackMontage;
 
+	int32 ComboIndex = 1;
+
 	/*Animation montage for dodge*/ 
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* DodgeMontage;
