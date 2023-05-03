@@ -68,4 +68,7 @@ private:
 	void HandleWeaponBoxHit(AActor* Actor);
 public:
 	UBoxComponent* GetCollisionBox() const;
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHit(AActor* HitActor, FVector HitLocation, FHitResult HitResult);
 };

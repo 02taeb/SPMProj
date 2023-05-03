@@ -81,6 +81,10 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
     // Get the EnhancedInputComponent
     auto PlayerEIComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	if (PlayerEIComponent == nullptr) return;
+
+	/*Test*/
+	PlayerInputComponent->BindAxis("Forward", this, &APlayerCharacter::Forward);
+	PlayerInputComponent->BindAxis("Right", this, &APlayerCharacter::Right);
 	
 	// Enhanced inputs tar bara input actions, därmed behöver man bara använda BindAction (inte BindAxis etc)
 	PlayerEIComponent->BindAction(InputMoveForward, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveForward);
@@ -140,18 +144,30 @@ void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 	}
 }
 
+void APlayerCharacter::Forward(float Value)
+{
+}
+
+void APlayerCharacter::Right(float Value)
+{
+}
+
 void APlayerCharacter::MoveForward(const FInputActionValue & Value)
 {
+	//LastForwardValue = Value.Get<float>();
 	/*Cant move under attack, will be changed!!*/
 	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
+	//UE_LOG(LogTemp, Warning, TEXT("Last Forward input vector: %f"), Value.Get<float>());
 }
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 {
+	//LastRightValue = Value.Get<float>();
 	/*Cant move under attack, will be changed!!*/
 	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorRightVector() * Value.Get<float>());
+	//UE_LOG(LogTemp, Warning, TEXT("Last Right input vector: %f"),  Value.Get<float>());
 }
 
 void APlayerCharacter::LookUp(const FInputActionValue& Value)
@@ -249,38 +265,36 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
-	if(GetCharacterMovement()->GetLastInputVector() == FVector::ZeroVector) return;
-	if(ActionState != ECharacterActionState::ECAS_NoAction) return;
-	//if(ActionState == ECharacterActionState::ECAS_Dodging || ActionState == ECharacterActionState::ECAS_AttackingHeavy) return;
-	//if(ActionState != ECharacterActionState::ECAS_AttackingNormal || ActionState != ECharacterActionState::ECAS_NoAction) return;
-	
-	ActionState = ECharacterActionState::ECAS_Dodging;
+	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_NoAction) return;
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if(AnimInstance && DodgeMontage)
 	{
+		auto PlayerEIComponent = FindComponentByClass<UInputComponent>();
+		if (PlayerEIComponent == nullptr) return;
+		
+		float ForwardAxisValue = PlayerEIComponent->GetAxisValue("Forward");
+		float RightAxisValue = PlayerEIComponent->GetAxisValue("Right");
+
+		if(FMath::Abs(ForwardAxisValue) == FMath::Abs(RightAxisValue)) return;
+
 		AnimInstance->Montage_Play(DodgeMontage);
-		FVector PlayerVelocity = GetVelocity();
 
-		FVector ForwardVector = GetActorForwardVector();
-		FVector RightVector = GetActorRightVector();
+		ActionState = ECharacterActionState::ECAS_Dodging;
 
-		float ForwardDotProduct = FVector::DotProduct(PlayerVelocity, ForwardVector);
-		float RightDotProduct = FVector::DotProduct(PlayerVelocity, RightVector);
-
-		if (ForwardDotProduct > 0 && FMath::Abs(ForwardDotProduct) > FMath::Abs(RightDotProduct))
+		if (ForwardAxisValue > 0)
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeForward"), DodgeMontage);
 		}
-		else if (ForwardDotProduct < 0 && FMath::Abs(ForwardDotProduct) > FMath::Abs(RightDotProduct))
+		else if (ForwardAxisValue < 0)
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeBackwards"), DodgeMontage);
 		}
-		else if (RightDotProduct > 0 && FMath::Abs(RightDotProduct) > FMath::Abs(ForwardDotProduct))
+		else if (RightAxisValue > 0)
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeRight"), DodgeMontage);
 		}
-		else if (RightDotProduct < 0 && FMath::Abs(RightDotProduct) > FMath::Abs(ForwardDotProduct))
+		else if (RightAxisValue < 0)
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeLeft"), DodgeMontage);
 		}
