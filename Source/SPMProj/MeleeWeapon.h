@@ -15,6 +15,17 @@ public:
 	AMeleeWeapon();
 	
 	virtual void Tick(float DeltaTime) override;
+
+	/*Attaches the weapon to the skeleton on */
+	void AttachWeaponOnPlayer(USceneComponent* Player, FName SocketLabel);
+
+	/*Used to store already hit actors under a single attack so that no two overlaps are generated on the same actor*/
+	TArray<AActor*> ActorsToIgnore;
+
+	//För partikeleffekt vid hit
+	UPROPERTY(EditAnywhere)
+	class UNiagaraSystem* HitEffect;
+	
 protected:
 	virtual void BeginPlay() override;
 
@@ -23,9 +34,15 @@ protected:
 	UFUNCTION()
     void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	UFUNCTION() 
+	virtual void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	virtual void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 private:	
 	UPROPERTY(VisibleAnywhere)
-	class UStaticMeshComponent* MeleeMesh;
+	class UStaticMeshComponent* MeleeWeaponMesh;
 	
 	/*A Sphere for detecting overlapping with Character. If overlapping the Character can pick up the weapon. */
 	UPROPERTY(VisibleAnywhere)
@@ -33,11 +50,25 @@ private:
 
 	/*Adding a box component to use for collision overlap events, when attacking. To detect when the weapon hits/overlaps some object.*/
 	UPROPERTY(VisibleAnywhere, Category=WeaponProperties)
-	class UBoxComponent* WeaponBox;
+	class UBoxComponent* CollisionBox;
+
+	UPROPERTY(EditDefaultsOnly, Category=WeaponProperties)
+	float DefaultDamage = 25.f;
+	UPROPERTY(EditDefaultsOnly, Category=WeaponProperties)
+	float HeavyDamage = 50.f;
 
 	/*Box trace starting and ending points*/
 	UPROPERTY(VisibleAnywhere) 
 	USceneComponent* BTStart;
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* BTEnd;
+
+	//TArray<AActor*> ActorsToIgnore;
+
+	void HandleWeaponBoxHit(AActor* Actor);
+public:
+	UBoxComponent* GetCollisionBox() const;
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHit(AActor* HitActor, FVector HitLocation, FHitResult HitResult);
 };

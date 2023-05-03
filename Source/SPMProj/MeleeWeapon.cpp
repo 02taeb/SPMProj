@@ -3,24 +3,30 @@
 
 #include "MeleeWeapon.h"
 
+#include "Enemy.h"
+#include "PlayerCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
 
 // Sets default values
 AMeleeWeapon::AMeleeWeapon()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
-	MeleeMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Melee Weapon Mesh"));
-	RootComponent = MeleeMesh;
+	MeleeWeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Melee Weapon Mesh"));
+	RootComponent = MeleeWeaponMesh;
 	
 	PickupZone = CreateDefaultSubobject<USphereComponent>(TEXT("Pick-up zone"));
 	PickupZone->SetupAttachment(GetRootComponent());
 
-	WeaponBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Weapon Box"));
-	WeaponBox->SetupAttachment(GetRootComponent());
-
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Weapon Box"));
+	CollisionBox->SetupAttachment(GetRootComponent());
+	CollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision); /*Disable collision as it should only be enable under the attack*/
+	
 	BTStart = CreateDefaultSubobject<USceneComponent>(TEXT("Box Trace Start Point"));
 	BTStart->SetupAttachment(GetRootComponent());
 
@@ -32,15 +38,22 @@ void AMeleeWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	/*Binding the callback function to the delegate*/
-	WeaponBox->OnComponentBeginOverlap.AddDynamic(this, &AMeleeWeapon::OnBoxOverlap);
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &AMeleeWeapon::OnBoxOverlap);
+	PickupZone->OnComponentBeginOverlap.AddDynamic(this, &AMeleeWeapon::OnSphereBeginOverlap);
+	PickupZone->OnComponentEndOverlap.AddDynamic(this, &AMeleeWeapon::OnSphereEndOverlap);
 }
 
 void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	/*Empty Actor* Array. Sends the array of actors to ignore tracing against (empty for now)*/
-	TArray<AActor*> ActorsToIgnore;
-	/*Hit result out parametar*/
+	/*Sends the array of actors to ignore tracing against (Filled by ActorToIgnore Array)*/
+	TArray<AActor*> Ignore;
+	Ignore.Add(this->GetOwner());
+	for(AActor* Actor : ActorsToIgnore)
+	{
+		Ignore.AddUnique(Actor);
+	}
+	
 	FHitResult BoxHit;
 	
 	UKismetSystemLibrary::BoxTraceSingle(
@@ -51,22 +64,81 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	BTStart->GetComponentRotation(),   /*Box trace orientation reference component, taking start*/
 	ETraceTypeQuery::TraceTypeQuery1,  
 	false,   /*Traces only against simple collision*/
-	ActorsToIgnore,
-	EDrawDebugTrace::ForDuration,  /*Debug Sphere on ImpactPoint*/
+	Ignore,
+	EDrawDebugTrace::None,  /*Debug Sphere on ImpactPoint*/
 	BoxHit,  
-	true );  /*Ignores itself for overlaps*/
+	true);  /*Ignores itself for overlaps*/
 
-	if(GEngine)
+	OnHit(BoxHit.GetActor(), BoxHit.ImpactPoint, BoxHit);
+	HandleWeaponBoxHit(BoxHit.GetActor());
+}
+
+void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor)
+{
+	if(Actor)
 	{
-		FString HitObject = BoxHit.GetActor()->GetActorNameOrLabel();
-		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, HitObject);
+		if(GetOwner()->ActorHasTag(FName("Enemy")) && Actor->ActorHasTag(FName("Enemy"))) return;
+		ActorsToIgnore.AddUnique(Actor);
+		
+		if(GetOwner()->ActorHasTag(FName("Enemy")))
+		{
+			AEnemy* EnemyInstigator = Cast<AEnemy>(this->GetOwner());
+			if(EnemyInstigator)
+			{
+				UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				UE_LOG(LogTemp, Warning, TEXT("ENEMY"));
+			}
+		} else
+		{
+			APlayerCharacter* PlayerInstigator = Cast<APlayerCharacter>(this->GetOwner());
+			if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingNormal)
+			{
+				UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				UE_LOG(LogTemp, Warning, TEXT("PLAYER DEF"));
+			}
+			else if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingHeavy)
+			{
+				UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				UE_LOG(LogTemp, Warning, TEXT("PLAYER HEV"));
+			}
+		}
+		//Behöver
+		UNiagaraComponent* NiagaraComp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, GetActorLocation());
+	} 
+}
+
+void AMeleeWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if(APlayerCharacter* Player = Cast<APlayerCharacter>(OtherActor))
+	{
+		Player->SetOverlapWeapon(this);
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("Weapon hit result: %s"), *BoxHit.GetActor()->GetActorNameOrLabel());
+}
+
+void AMeleeWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if(APlayerCharacter* Player = Cast<APlayerCharacter>(OtherActor))
+	{
+		Player->SetOverlapWeapon(nullptr);
+	}
+}
+
+
+UBoxComponent* AMeleeWeapon::GetCollisionBox() const
+{
+	return CollisionBox;
 }
 
 void AMeleeWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AMeleeWeapon::AttachWeaponOnPlayer(USceneComponent* Player, FName SocketLabel)
+{
+	MeleeWeaponMesh->AttachToComponent(Player, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), SocketLabel);
 }
 
