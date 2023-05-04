@@ -31,6 +31,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	// Check if all enemies are dead and open the door if so
+	UFUNCTION()
 	void CheckEnemiesDead();
 };
 
