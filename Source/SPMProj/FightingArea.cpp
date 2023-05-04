@@ -36,7 +36,14 @@ void AFightingArea::BeginPlay()
 			UE_LOG(LogTemp, Warning, TEXT("Enemy is invalid or pending kill"));
 			return;
 		}
-
+		
+		TArray<AActor*> OverlappingActors;
+		Bounds->GetOverlappingActors(OverlappingActors);
+	
+		for (AActor* OverlappingActor : OverlappingActors)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Overlapping actor: %s"), *OverlappingActor->GetName());
+		}
 		
 		if (Enemy != nullptr && Bounds->IsOverlappingActor(Enemy))
 		{
