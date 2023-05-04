@@ -34,6 +34,9 @@ private:
 	UPROPERTY(VisibleAnywhere, Category=Stats)
 	class UStatComponent* Stats;
 
+	UPROPERTY(EditDefaultsOnly, Category = Damaged)
+	TSubclassOf<AActor> ActorToSpawn;
+
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* EnemyAttackMontage;
 

@@ -25,6 +25,9 @@ public:
 	//För partikeleffekt vid hit
 	UPROPERTY(EditAnywhere)
 	class UNiagaraSystem* HitEffect;
+
+	UPROPERTY(VisibleAnywhere)
+	class UStaticMeshComponent* MeleeWeaponMesh;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -41,8 +44,6 @@ protected:
 	virtual void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 private:	
-	UPROPERTY(VisibleAnywhere)
-	class UStaticMeshComponent* MeleeWeaponMesh;
 	
 	/*A Sphere for detecting overlapping with Character. If overlapping the Character can pick up the weapon. */
 	UPROPERTY(VisibleAnywhere)

@@ -52,6 +52,10 @@ public:
 	void OnEat ();
 	
 	bool bInstaKill = false;
+
+	//Statcomponent, är public fär blueprint access
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Stats")
+	class UStatComponent* Stats;
 private:
 	// Cheat vars
 	UPROPERTY(EditAnywhere, Category = "Cheats")
@@ -73,8 +77,6 @@ private:
 
 	void LoadGame();
 	
-	UPROPERTY(VisibleAnywhere, Category="Stats")
-	class UStatComponent* Stats;
 
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
