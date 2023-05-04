@@ -1,7 +1,6 @@
 /FI "C:\Program Files\Epic Games\UE_5.1\Engine\Plugins\Experimental\GeometryFlow\Intermediate\Build\Win64\UnrealEditor\Development\GeometryFlowMeshProcessingEditor\Definitions.GeometryFlowMeshProcessingEditor.h" 
-/FI "C:\Users\huwe8756\Documents\GitHub\SPMProj\Intermediate\Build\Win64\SPMProjEditor\Development\Core\SharedPCH.Core.ShadowErrors.h" 
+/FI "C:\Users\daol8481\Documents\GitHub\SPMProj\Intermediate\Build\Win64\SPMProjEditor\Development\Core\SharedPCH.Core.ShadowErrors.h" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Source" 
-/I "C:\Program Files\Epic Games\UE_5.1\Engine\Plugins\Experimental\GeometryFlow\Source\GeometryFlowMeshProcessingEditor\Private" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Plugins\Runtime\MeshModelingToolset\Intermediate\Build\Win64\UnrealEditor\Inc\ModelingOperatorsEditorOnly\UHT" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Plugins\Runtime\MeshModelingToolset\Intermediate\Build\Win64\UnrealEditor\Inc\ModelingOperatorsEditorOnly\VNI" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Plugins\Runtime\MeshModelingToolset\Source" 

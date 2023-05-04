@@ -1,7 +1,6 @@
 /FI "C:\Program Files\Epic Games\UE_5.1\Engine\Plugins\Experimental\MeshModelingToolsetExp\Intermediate\Build\Win64\UnrealEditor\Development\MeshModelingToolsEditorOnlyExp\Definitions.MeshModelingToolsEditorOnlyExp.h" 
-/FI "C:\Users\huwe8756\Documents\GitHub\SPMProj\Intermediate\Build\Win64\SPMProjEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h" 
+/FI "C:\Users\daol8481\Documents\GitHub\SPMProj\Intermediate\Build\Win64\SPMProjEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Source" 
-/I "C:\Program Files\Epic Games\UE_5.1\Engine\Plugins\Experimental\MeshModelingToolsetExp\Source\MeshModelingToolsEditorOnlyExp\Private" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\BSPUtils\UHT" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\BSPUtils\VNI" 
 /I "C:\Program Files\Epic Games\UE_5.1\Engine\Source\Developer" 
