@@ -150,8 +150,11 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			Stats->CurrentHealth = 0;
 			this->GetMesh()->SetVisibility(false);
 			this->GetMesh()->SetGenerateOverlapEvents(false);
+			if (EquipedWeapon)
+			{
+				EquipedWeapon->MeleeWeaponMesh->SetVisibility(false);
+			}
 			this->GetController()->UnPossess();
-			EquipedWeapon->MeleeWeaponMesh->SetVisibility(false);
 			
 			//Destroy();
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
