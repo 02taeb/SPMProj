@@ -47,6 +47,23 @@ void ABossManager::Tick(float DeltaTime)
 	
 	if (bShouldTimer)
 		Timer += DeltaTime;
+	else
+	{
+		for (const AActor* Enemy : SpawnedEnemies)
+		{
+			if (Enemy == nullptr) continue;
+			if (Enemy->IsValidLowLevel() || !Enemy->IsActorBeingDestroyed())
+			{
+				bAllEnemiesKilled = false;
+				break;
+			}
+		}
+		if (bAllEnemiesKilled)
+		{
+			CleanupAttackStyle2();
+			AttackStyle3();
+		}
+	}
 
 	if (Timer >= CurrentAttackSpeed)
 	{
@@ -60,34 +77,18 @@ void ABossManager::Attack()
 	switch (CurrentPhase)
 	{
 	case 1:
-		if (AttackCounter <= 3)
-		{
-			AttackCounter++;
+		if (AttackCounter++ <= 3)
 			AttackStyle1();
-		}
 		else
-		{
 			AttackStyle3();
-			AttackCounter = 1;
-		}
 		break;
 		
 	case 2:
 	case 3:
-		if (AttackCounter <= 3)
-		{
-			AttackCounter++;
+		if (AttackCounter++ <= 3)
 			AttackStyle1();
-		}
-		else if (AttackCounter == 4)
-		{
-			AttackCounter++;
-			AttackStyle2();
-		}
 		else
-		{
-			AttackStyle3();
-		}
+			AttackStyle2();
 		break;
 		
 	default:
@@ -109,24 +110,36 @@ void ABossManager::AttackStyle1()
 		// Spawn impact particles on impact point
 }
 
-void ABossManager::AttackStyle2() const
+void ABossManager::AttackStyle2()
 {
+	bShouldTimer = false;
 	const int SpawnAmount = CurrentPhase == 2 ? EnemySpawnAmount1 : EnemySpawnAmount2;
-	// Play particle system
+	// Play SpawnEnemy particle system
+	SpawnedEnemies.Init(nullptr, SpawnAmount);
 	for (int i = 0; i < SpawnAmount; i++)
 	{
 		// Spawn Enemy
+			// AActor* EnemyPtr = SomeNameSpace::SpawnActor(EnemyClass, SomeLoc, FQuat::Identity);
+		// Add enemy to SpawnedEnemies
+			// SpawnedEnemies.Insert(EnemyPtr, i);
 	}
+}
+
+void ABossManager::CleanupAttackStyle2()
+{
+	bAllEnemiesKilled = true;
+	// Remove SpawnEnemyParticleSystem
+	SpawnedEnemies.Empty();
 }
 
 void ABossManager::AttackStyle3()
 {
-	bShouldTimer = false;
 	// Charge crystals attack
 
 	// if (PlayerSucceededAttackStyle)
 		CurrentAttackSpeed = CurrentPhase == 1 ? AttackSpeed2 : AttackSpeed3;
 	// When attack style is finished:
 	bShouldTimer = true;
+	AttackCounter = 1;
 }
 

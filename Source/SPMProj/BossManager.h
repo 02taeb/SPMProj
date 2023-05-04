@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// https://docs.google.com/document/d/1zbFGIPhauUL5gDWVG89M4AJs5NrDjQq4cCItJ8cFN8I/edit
 
 #pragma once
 
@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "BossManager.generated.h"
 
+class AEnemy;
 class UBoxComponent;
 class UNiagaraSystem;
 class ABossCrystal;
@@ -37,6 +38,8 @@ private:
 	bool bShouldTimer = true;
 	bool bFightStarted = false;
 	bool bPassedChecks = true;
+	bool bAllEnemiesKilled = true;
+	TArray<AActor*> SpawnedEnemies;
 
 	UPROPERTY(EditAnywhere, Category = "BossFight|Values")
 	float AttackSpeed1 = 10;
@@ -78,9 +81,13 @@ private:
 	TArray<UBoxComponent*> AttackPattern5;
 	UPROPERTY(EditAnywhere, Category = "BossFight|AttackPatterns")
 	TArray<UBoxComponent*> AttackPattern6;
+
+	UPROPERTY(EditAnywhere, Category = "BossFight|MinionClass")
+	TSubclassOf<AEnemy> EnemyClass;
 	
 	void Attack();
 	void AttackStyle1();
-	void AttackStyle2() const;
+	void AttackStyle2();
+	void CleanupAttackStyle2();
 	void AttackStyle3();
 };
