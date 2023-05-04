@@ -29,7 +29,7 @@ public:
 	//virtual void Tick(float DeltaTime) override;
 
 protected:
-	UPROPERTY(VisibleAnywhere, Category = "AI")
+	UPROPERTY(VisibleAnywhere, Category = "AI Perception")
 	class UAIPerceptionComponent* AIPerceptionComponent;
 
 	virtual void BeginPlay() override;
