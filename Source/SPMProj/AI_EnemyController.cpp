@@ -10,11 +10,8 @@
 AAI_EnemyController::AAI_EnemyController(const FObjectInitializer& ObjectInitializer)
 {
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
-
+	
 	AIPerceptionComponent->bAutoActivate = true;
-
-	SetPerceptionComponent(*AIPerceptionComponent);
-
 	// sight perception
 	Sight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight"));
 
@@ -26,11 +23,7 @@ AAI_EnemyController::AAI_EnemyController(const FObjectInitializer& ObjectInitial
 	Sight->DetectionByAffiliation.bDetectNeutrals = DetectNeutrals;
 	Sight->DetectionByAffiliation.bDetectFriendlies = DetectFriendies;
 
-	// configure sense
-	AIPerceptionComponent->ConfigureSense(*Sight);
 	
-	// set dominant sense
-	AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());
 	
 	UE_LOG(LogTemp, Display, TEXT("Creating Enemy"));
 }
@@ -43,6 +36,14 @@ void AAI_EnemyController::BeginPlay()
 	{
 		RunBehaviorTree(AI_EnemyBehavior);
 	}
+	
+	SetPerceptionComponent(*AIPerceptionComponent);
+
+	// configure sense
+	AIPerceptionComponent->ConfigureSense(*Sight);
+	
+	// set dominant sense
+	AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());
 	
 }
 

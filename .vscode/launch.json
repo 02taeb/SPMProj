@@ -4,7 +4,7 @@
 		{
 			"name": "Launch SPMProj (Debug)",
 			"request": "launch",
-			"program": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
+			"program": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
 			"preLaunchTask": "SPMProj Win64 Debug Build",
 			"args": [
 			],
@@ -20,7 +20,7 @@
 		{
 			"name": "Launch SPMProj (DebugGame)",
 			"request": "launch",
-			"program": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
+			"program": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
 			"preLaunchTask": "SPMProj Win64 DebugGame Build",
 			"args": [
 			],
@@ -36,7 +36,7 @@
 		{
 			"name": "Launch SPMProj (Development)",
 			"request": "launch",
-			"program": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame.exe",
+			"program": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame.exe",
 			"preLaunchTask": "SPMProj Win64 Development Build",
 			"args": [
 			],
@@ -52,7 +52,7 @@
 		{
 			"name": "Launch SPMProj (Test)",
 			"request": "launch",
-			"program": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
+			"program": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
 			"preLaunchTask": "SPMProj Win64 Test Build",
 			"args": [
 			],
@@ -68,7 +68,7 @@
 		{
 			"name": "Launch SPMProj (Shipping)",
 			"request": "launch",
-			"program": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
+			"program": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
 			"preLaunchTask": "SPMProj Win64 Shipping Build",
 			"args": [
 			],
@@ -87,7 +87,7 @@
 			"program": "C:\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
 			"preLaunchTask": "SPMProjEditor Win64 Debug Build",
 			"args": [
-				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
 			],
 			"cwd": "C:\\UE_5.1",
 			"stopAtEntry": false,
@@ -104,7 +104,7 @@
 			"program": "C:\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
 			"preLaunchTask": "SPMProjEditor Win64 DebugGame Build",
 			"args": [
-				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
 			],
 			"cwd": "C:\\UE_5.1",
 			"stopAtEntry": false,
@@ -121,7 +121,7 @@
 			"program": "C:\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
 			"preLaunchTask": "SPMProjEditor Win64 Development Build",
 			"args": [
-				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
+				"C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
 			],
 			"cwd": "C:\\UE_5.1",
 			"stopAtEntry": false,
@@ -140,7 +140,7 @@
 			"args": [
 				"-projectfiles",
 				"-vscode",
-				"-project=C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+				"-project=C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-game",
 				"-engine"
 			],

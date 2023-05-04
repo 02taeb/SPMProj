@@ -200,6 +200,22 @@
 		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\FightingArea.cpp",
+		"arguments": [
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+		],
+		"directory": "C:\\UE_5.1\\Engine\\Source"
+	},
+	{
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\FightingArea.h",
+		"arguments": [
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+		],
+		"directory": "C:\\UE_5.1\\Engine\\Source"
+	},
+	{
 		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\HealthItemActor.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",

@@ -462,6 +462,10 @@ void APlayerCharacter::PlayNormalAttackAnimation()
 			break;
 		case 2:
 			AnimSection = FName("BasicAttack2");
+			ComboIndex++;
+			break;
+		case 3:
+			AnimSection = FName("BasicAttack3");
 			ComboIndex = 1;
 			break;
 		default:
