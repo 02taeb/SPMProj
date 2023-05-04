@@ -40,7 +40,12 @@ void AEnemy::EnemyAttackBasic()
 	PlayEnemyAttackMontage();
 }
 
-void AEnemy::SetWeaponCollison(ECollisionEnabled::Type Collision)
+UStatComponent* AEnemy::GetStats() const
+{
+	return Stats;
+}
+
+void AEnemy::SetWeaponCollison(ECollisionEnabled::Type Collision) const
 {
 	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
 	{
@@ -49,7 +54,7 @@ void AEnemy::SetWeaponCollison(ECollisionEnabled::Type Collision)
 	}
 }
 
-void AEnemy::PlayEnemyAttackMontage()
+void AEnemy::PlayEnemyAttackMontage() const
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	
@@ -82,6 +87,7 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 		Stats->TakeDamage(DamageAmount);
 		if(Stats->Dead())
 		{
+			Die();
 			Destroy(); //Dödar fienden (Kommer ändras)
 			EquipedWeapon->Destroy(); //Dödar vapnet 
 		}
@@ -89,3 +95,7 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	return DamageAmount;
 }
 
+void AEnemy::Die() const
+{
+	OnDeath.Broadcast();
+}

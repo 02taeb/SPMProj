@@ -10,11 +10,8 @@
 AAI_EnemyController::AAI_EnemyController(const FObjectInitializer& ObjectInitializer)
 {
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
-
+	
 	AIPerceptionComponent->bAutoActivate = true;
-
-	SetPerceptionComponent(*AIPerceptionComponent);
-
 	// sight perception
 	Sight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight"));
 
@@ -26,11 +23,7 @@ AAI_EnemyController::AAI_EnemyController(const FObjectInitializer& ObjectInitial
 	Sight->DetectionByAffiliation.bDetectNeutrals = DetectNeutrals;
 	Sight->DetectionByAffiliation.bDetectFriendlies = DetectFriendies;
 
-	// configure sense
-	AIPerceptionComponent->ConfigureSense(*Sight);
 	
-	// set dominant sense
-	AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());
 	
 	UE_LOG(LogTemp, Display, TEXT("Creating Enemy"));
 }
@@ -44,25 +37,33 @@ void AAI_EnemyController::BeginPlay()
 		RunBehaviorTree(AI_EnemyBehavior);
 	}
 	
+	SetPerceptionComponent(*AIPerceptionComponent);
+
+	// configure sense
+	AIPerceptionComponent->ConfigureSense(*Sight);
+	
+	// set dominant sense
+	AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());
+	
 }
 
 void AAI_EnemyController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	UE_LOG(LogTemp, Display, TEXT("OnPossess method being called"));
+	//UE_LOG(LogTemp, Display, TEXT("OnPossess method being called"));
 	
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAI_EnemyController::OnPerception);
 }
 
 void AAI_EnemyController::OnPerception(AActor* Actor, FAIStimulus Stimulus)
 {
-	UE_LOG(LogTemp, Display, TEXT("IN onperception method"));
+	//UE_LOG(LogTemp, Display, TEXT("IN onperception method"));
 	APlayerCharacter* Player = Cast<APlayerCharacter>(Actor);
 	if ( Player == nullptr)
 		return;
 
-	UE_LOG(LogTemp, Display, TEXT("Onperception is calling"));
+	//UE_LOG(LogTemp, Display, TEXT("Onperception is calling"));
 	// Agent->SetAnimState(Stimulus.WasSuccessfullySensed());
 
 	// SetFocus(Stimulus.WasSuccessfullySensed() ? Player : nullptr);
