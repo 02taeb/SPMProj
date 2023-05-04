@@ -60,12 +60,12 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	this, 
 	BTStart->GetComponentLocation(),     /*Getting the world location of the start and end trace points*/
 	BTEnd->GetComponentLocation(),
-	FVector(3.5f, 3.5f, 3.5f),   /*Size of trace box*/
+	FVector(4.5f, 4.5f, 4.5f),   /*Size of trace box*/
 	BTStart->GetComponentRotation(),   /*Box trace orientation reference component, taking start*/
 	ETraceTypeQuery::TraceTypeQuery1,  
 	false,   /*Traces only against simple collision*/
 	Ignore,
-	EDrawDebugTrace::ForDuration,  /*Debug Sphere on ImpactPoint*/
+	EDrawDebugTrace::None,  /*Debug Sphere on ImpactPoint*/
 	BoxHit,  
 	true);  /*Ignores itself for overlaps*/
 

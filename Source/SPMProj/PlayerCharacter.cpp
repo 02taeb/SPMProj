@@ -292,6 +292,8 @@ void APlayerCharacter::ResetHeavyAttackCooldown()
 
 void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 {
+	if(ActionState == ECharacterActionState::ECAS_Dodging) return;
+	
 	if (bNoClip)
 	{
 		SetActorLocation(GetActorLocation() + GetActorUpVector() * NoClipSpeed);
