@@ -288,11 +288,17 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
+	if(EquipedWeapon && EquipedWeapon->GetCollisionBox()->GetCollisionEnabled() == ECollisionEnabled::QueryOnly)
+	{
+		SetWeaponCollison(ECollisionEnabled::NoCollision);
+	}
+	
 	if (bNoClip)
 	{
 		SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
 		return;
 	}
+	
 	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_NoAction) return;
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
