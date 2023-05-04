@@ -51,6 +51,7 @@ void AFightingArea::Tick(float DeltaSeconds)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Found an enemy in bounds"));
 				Enemies.Add(Enemy);
+				//rider crash här 
 				Enemy->OnDeath.AddDynamic(this, &AFightingArea::CheckEnemiesDead);
 			}
 		}
