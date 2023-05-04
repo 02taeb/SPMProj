@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
+//delegate for enemy death
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEnemyDeathSignature);
 
 UCLASS()
 class SPMPROJ_API AEnemy : public ACharacter
@@ -23,7 +25,7 @@ public:
 
 	/*Functions to enable or disable weapon box collison in blueprints*/
 	UFUNCTION(BlueprintCallable)
-	void SetWeaponCollison(ECollisionEnabled::Type Collision);
+	void SetWeaponCollison(ECollisionEnabled::Type Collision) const;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -42,5 +44,13 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* EquipedWeapon;
 	
-	void PlayEnemyAttackMontage();
+	void PlayEnemyAttackMontage() const;
+
+public:
+	//get stats
+	class UStatComponent* GetStats() const;
+	//function to call for enemy death delegate //fråga daniel om ni inte fattar
+	void Die() const;
+	// OnDeath delegate that is triggered when the enemy dies
+	FEnemyDeathSignature OnDeath;
 };

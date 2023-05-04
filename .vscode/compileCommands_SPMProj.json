@@ -3,7 +3,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\AI_EnemyController.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -11,7 +11,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\AI_EnemyController.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -19,7 +19,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_LastPlayerLocation.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -27,7 +27,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_LastPlayerLocation.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -35,7 +35,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_PatrolLocations.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -43,7 +43,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_PatrolLocations.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -51,7 +51,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocation.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -59,7 +59,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocation.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -67,7 +67,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocationIfSeen.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -75,7 +75,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocationIfSeen.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -83,7 +83,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_StartLocation.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -91,7 +91,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_StartLocation.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -99,7 +99,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_Attack.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -107,7 +107,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_Attack.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -115,7 +115,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_ClearBlackboardValue.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -123,7 +123,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_ClearBlackboardValue.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -131,7 +131,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -139,7 +139,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -147,7 +147,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\CharacterStates.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -155,7 +155,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\Enemy.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -163,7 +163,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\Enemy.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -171,7 +171,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\EquipableItemActor.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -179,7 +179,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\EquipableItemActor.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -187,7 +187,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\EquipableParasite.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -195,7 +195,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\EquipableParasite.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -203,7 +203,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\HealthItemActor.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -211,7 +211,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\HealthItemActor.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -219,7 +219,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InteractableComponent.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -227,7 +227,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InteractableComponent.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -235,7 +235,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InventoryComponent.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -243,7 +243,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InventoryComponent.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -251,7 +251,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\ItemActor.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -259,7 +259,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\ItemActor.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -267,7 +267,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\MeleeWeapon.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -275,7 +275,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\MeleeWeapon.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -283,7 +283,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\PlayerCharacter.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -291,7 +291,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\PlayerCharacter.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -299,7 +299,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProj.Build.cs",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -307,7 +307,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProj.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -315,7 +315,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProj.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -323,7 +323,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -331,7 +331,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -339,7 +339,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SavedGame.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -347,7 +347,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SavedGame.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -355,7 +355,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\StatComponent.cpp",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	},
@@ -363,7 +363,7 @@
 		"file": "C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\StatComponent.h",
 		"arguments": [
 			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
-			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.262.rsp"
+			"@C:\\Users\\daol8481\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_SPMProj\\SPMProj.263.rsp"
 		],
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.1\\Engine\\Source"
 	}

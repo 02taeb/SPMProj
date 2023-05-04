@@ -13,12 +13,13 @@ UCLASS()
 class SPMPROJ_API UBTService_StartLocation : public UBTService_BlackboardBase
 {
 	GENERATED_BODY()
+
 public:
 	UBTService_StartLocation();
 
-protected:
-	virtual void TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds) override;
+public:
+	virtual void OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
-	private:
-	int i = 0;
+private:
+	bool bStartLocationSet = false;
 };

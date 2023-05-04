@@ -9,6 +9,8 @@
 #include "Components/SphereComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
 
 // Sets default values
 AMeleeWeapon::AMeleeWeapon()
@@ -67,6 +69,7 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	BoxHit,  
 	true);  /*Ignores itself for overlaps*/
 
+	OnHit(BoxHit.GetActor(), BoxHit.ImpactPoint, BoxHit);
 	HandleWeaponBoxHit(BoxHit.GetActor());
 }
 
@@ -90,15 +93,31 @@ void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor)
 			APlayerCharacter* PlayerInstigator = Cast<APlayerCharacter>(this->GetOwner());
 			if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingNormal)
 			{
-				UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				if (PlayerInstigator->bInstaKill)
+				{
+					UGameplayStatics::ApplyDamage(Actor, DefaultDamage * 9999, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				}
+				else
+				{
+					UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				}
 				UE_LOG(LogTemp, Warning, TEXT("PLAYER DEF"));
 			}
 			else if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingHeavy)
 			{
-				UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				if (PlayerInstigator->bInstaKill)
+				{
+					UGameplayStatics::ApplyDamage(Actor, HeavyDamage * 9999, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				}
+				else
+				{
+					UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				}
 				UE_LOG(LogTemp, Warning, TEXT("PLAYER HEV"));
 			}
 		}
+		//Behöver
+		UNiagaraComponent* NiagaraComp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, GetActorLocation());
 	} 
 }
 

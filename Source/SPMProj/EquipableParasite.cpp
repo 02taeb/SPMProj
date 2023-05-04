@@ -64,8 +64,7 @@ void AEquipableParasite::Tick(float DeltaTime)
 void AEquipableParasite::OnPickup()
 {
 	// Hide object in world
-	 if(bUseStaticMesh) StaticMeshComponent->SetVisibility(false);
-
+	StaticMeshComponent->SetVisibility(false);
 
 	// Set statcomponentptr
 	if (PlayerActorPtr == nullptr)
@@ -134,6 +133,7 @@ void AEquipableParasite::OnEquip()
 	// Register as equipped
 	// Allow unequipping
 	bIsEquipped = true;
+	Equipped = true;
 }
 
 void AEquipableParasite::OnUnequip()
@@ -151,13 +151,13 @@ void AEquipableParasite::OnUnequip()
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(-StartAmount);
+		StatComponentPtr->IncreaseMaxHealth(-(StartAmount + OnEatUpgradeAmount * TimesUpgraded));
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-StartAmount);
+		StatComponentPtr->IncreaseArmor(-(StartAmount + OnEatUpgradeAmount * TimesUpgraded));
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(-StartAmount);
+		StatComponentPtr->IncreaseAttackDamage(-(StartAmount + OnEatUpgradeAmount * TimesUpgraded));
 		break;
 	default:
 		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for equipping parasite: %s"),
@@ -166,6 +166,7 @@ void AEquipableParasite::OnUnequip()
 	}
 
 	bIsEquipped = false;
+	Equipped = false;
 }
 
 void AEquipableParasite::OnPlayerDeath()
@@ -180,7 +181,7 @@ void AEquipableParasite::OnPlayerDeath()
 void AEquipableParasite::OnEat()
 {
 	UE_LOG(LogTemp, Display, TEXT("Reached Parasites OnEat"));
-
+	TimesUpgraded++;
 	switch (Stat)
 	{
 	case EAffectedStat::Health:

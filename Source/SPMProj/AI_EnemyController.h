@@ -21,15 +21,15 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	class APlayerCharacter* Agent;
-
+	
 	UFUNCTION()
 	void OnPerception(AActor* Actor, FAIStimulus Stimulus);
-
+	
 	virtual void OnPossess(APawn* InPawn) override; 
 	//virtual void Tick(float DeltaTime) override;
 
 protected:
-	UPROPERTY(VisibleAnywhere, Category = "AI")
+	UPROPERTY(VisibleAnywhere, Category = "AI Perception")
 	class UAIPerceptionComponent* AIPerceptionComponent;
 
 	virtual void BeginPlay() override;
@@ -37,5 +37,23 @@ protected:
 private: 
 	UPROPERTY(EditAnywhere, Category = "Behavior Tree")
 	class UBehaviorTree* AI_EnemyBehavior;
+
+	UPROPERTY(EditAnywhere, Category= "AI Perception")
+	float SightRadius = 500.0f;
+
+	UPROPERTY(EditAnywhere, Category= "AI Perception")
+	float LoseSightRadius = 600.0f;
+
+	UPROPERTY(EditAnywhere, Category= "AI Perception")
+	float PeripheralVisionAngleDegrees = 90.0f;
+
+	UPROPERTY(EditAnywhere, Category= "AI Perception")
+	bool DetectEnemies = true;
+
+	UPROPERTY(EditAnywhere, Category= "AI Perception")
+	bool DetectNeutrals = true;
+
+	UPROPERTY(EditAnywhere, Category= "AI Perception")
+	bool DetectFriendies = true;
 
 };

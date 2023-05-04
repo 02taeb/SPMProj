@@ -24,6 +24,7 @@
 #include "StatComponent.h"
 #include "Components/SphereComponent.h"
 #include "EquipableParasite.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -49,7 +50,7 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	//UE_LOG(LogTemp, Display, TEXT("Char spawned"));
-	UCharacterMovementComponent* MovementComp = GetCharacterMovement();
+	MovementComp = GetCharacterMovement();
 	if (MovementComp) MovementComp->MaxWalkSpeed = MovementSpeed; // Set the max walking speed here
 
 }
@@ -81,6 +82,10 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
     // Get the EnhancedInputComponent
     auto PlayerEIComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	if (PlayerEIComponent == nullptr) return;
+
+	/*Test*/
+	PlayerInputComponent->BindAxis("Forward", this, &APlayerCharacter::Forward);
+	PlayerInputComponent->BindAxis("Right", this, &APlayerCharacter::Right);
 	
 	// Enhanced inputs tar bara input actions, därmed behöver man bara använda BindAction (inte BindAxis etc)
 	PlayerEIComponent->BindAction(InputMoveForward, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveForward);
@@ -98,18 +103,32 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	//Testinputs för load och save
 	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
 	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
-
+	//Cheat inputs
+	PlayerEIComponent->BindAction(InputGodMode, ETriggerEvent::Started, this, &APlayerCharacter::GodMode);
+	PlayerEIComponent->BindAction(InputInstaKill, ETriggerEvent::Started, this, &APlayerCharacter::InstaKill);
+	PlayerEIComponent->BindAction(InputNoClip, ETriggerEvent::Started, this, &APlayerCharacter::NoClip);
+	PlayerEIComponent->BindAction(InputSpawnSword, ETriggerEvent::Started, this, &APlayerCharacter::SpawnSword);
+	PlayerEIComponent->BindAction(InputTPFirst, ETriggerEvent::Started, this, &APlayerCharacter::TPFirst);
+	PlayerEIComponent->BindAction(InputTPSecond, ETriggerEvent::Started, this, &APlayerCharacter::TPSecond);
+	PlayerEIComponent->BindAction(InputTPThird, ETriggerEvent::Started, this, &APlayerCharacter::TPThird);
 }
 
 float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	AActor* DamageCauser)
 {
+	if (bGodMode) return 0;
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
-	
+
 	//Temporär damage + death
+	
 	Health = Health - 25;
 	if (Health <= 0)
 	{
+		for (AItemActor* Item : Inventory->Items)
+		{
+			if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
+				Cast<AEquipableParasite>(Item)->OnPlayerDeath();
+		}
 		Destroy();
 	}
 	
@@ -135,8 +154,22 @@ void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 	}
 }
 
+void APlayerCharacter::Forward(float Value)
+{
+}
+
+void APlayerCharacter::Right(float Value)
+{
+}
+
 void APlayerCharacter::MoveForward(const FInputActionValue & Value)
 {
+	if (bNoClip)
+	{
+		SetActorLocation(GetActorLocation() + GetActorForwardVector() * Value.Get<float>() * NoClipSpeed);
+		return;
+	}
+	
 	/*Cant move under attack, will be changed!!*/
 	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
@@ -144,6 +177,12 @@ void APlayerCharacter::MoveForward(const FInputActionValue & Value)
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 {
+	if (bNoClip)
+	{
+		SetActorLocation(GetActorLocation() + GetActorRightVector() * Value.Get<float>() * NoClipSpeed);
+		return;
+	}
+	
 	/*Cant move under attack, will be changed!!*/
 	if(ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorRightVector() * Value.Get<float>());
@@ -192,11 +231,9 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 	if (PlayerController == nullptr) return;
 
 	FHitResult HitResult;
-	FVector TraceLocStart;
-	FRotator TraceRot;
-	PlayerController->GetPlayerViewPoint(TraceLocStart, TraceRot);
-	FVector TraceLocEnd = TraceLocStart + TraceRot.Vector() * InteractableReach;
-	bool bHitSucceed = GetWorld()->LineTraceSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, ECC_GameTraceChannel1);
+	FVector TraceLocStart = GetActorLocation();
+	FVector TraceLocEnd = TraceLocStart + GetActorForwardVector() * InteractableReach;
+	bool bHitSucceed = GetWorld()->SweepSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, FQuat::Identity, ECC_GameTraceChannel1, FCollisionShape::MakeCapsule(34, 100));
 
 	if (bHitSucceed)
 	{
@@ -207,12 +244,6 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		if (HitInteractableComp == nullptr) return;
 		HitInteractableComp->Interact(this);
 	}
-	/*
-		if (InteractableActor == nullptr) return;
-		UInteractableComponent* InteractableComponent = Cast<UInteractableComponent>(InteractableActor->GetComponentByClass(InteractableClass));
-		InteractableComponent->Interact(this);
-		UE_LOG(LogTemp, Display, TEXT("Player interact with: %s Actor of class: %s"), *InteractableActor->GetActorNameOrLabel(), *InteractableClass->GetFullName()); 
-	 */
 }
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
@@ -242,6 +273,11 @@ void APlayerCharacter::ResetHeavyAttackCooldown()
 
 void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 {
+	if (bNoClip)
+	{
+		SetActorLocation(GetActorLocation() + GetActorUpVector() * NoClipSpeed);
+		return;
+	}
 	Super::Jump();
 	JumpMaxHoldTime = JumpTime;
 
@@ -252,36 +288,41 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
-	if(GetCharacterMovement()->GetLastInputVector() == FVector::ZeroVector) return;
-	if(ActionState != ECharacterActionState::ECAS_NoAction) return;
-	
-	ActionState = ECharacterActionState::ECAS_Dodging;
+	if (bNoClip)
+	{
+		SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
+		return;
+	}
+	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_NoAction) return;
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if(AnimInstance && DodgeMontage)
 	{
+		auto PlayerEIComponent = FindComponentByClass<UInputComponent>();
+		if (PlayerEIComponent == nullptr) return;
+		
+		float ForwardAxisValue = PlayerEIComponent->GetAxisValue("Forward");
+		float RightAxisValue = PlayerEIComponent->GetAxisValue("Right");
+
+		if(FMath::Abs(ForwardAxisValue) == FMath::Abs(RightAxisValue)) return;
+
 		AnimInstance->Montage_Play(DodgeMontage);
-		FVector PlayerVelocity = GetVelocity();
 
-		FVector ForwardVector = GetActorForwardVector();
-		FVector RightVector = GetActorRightVector();
+		ActionState = ECharacterActionState::ECAS_Dodging;
 
-		float ForwardDotProduct = FVector::DotProduct(PlayerVelocity, ForwardVector);
-		float RightDotProduct = FVector::DotProduct(PlayerVelocity, RightVector);
-
-		if (ForwardDotProduct > 0 && FMath::Abs(ForwardDotProduct) > FMath::Abs(RightDotProduct))
+		if (ForwardAxisValue > 0)
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeForward"), DodgeMontage);
 		}
-		else if (ForwardDotProduct < 0 && FMath::Abs(ForwardDotProduct) > FMath::Abs(RightDotProduct))
+		else if (ForwardAxisValue < 0)
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeBackwards"), DodgeMontage);
 		}
-		else if (RightDotProduct > 0)
+		else if (RightAxisValue > 0)
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeRight"), DodgeMontage);
 		}
-		else if (RightDotProduct < 0)
+		else if (RightAxisValue < 0)
 		{
 			AnimInstance->Montage_JumpToSection(FName("DodgeLeft"), DodgeMontage);
 		}
@@ -328,6 +369,48 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	}
 }
 
+void APlayerCharacter::GodMode(const FInputActionValue& Value)
+{
+	bGodMode = !bGodMode;
+	UE_LOG(LogTemp, Display, TEXT("God mode: %d"), bGodMode);
+}
+
+void APlayerCharacter::InstaKill(const FInputActionValue& Value)
+{
+	bInstaKill = !bInstaKill;
+	UE_LOG(LogTemp, Display, TEXT("Instakill: %d"), bInstaKill);
+}
+
+void APlayerCharacter::NoClip(const FInputActionValue& Value)
+{
+	bNoClip = !bNoClip;
+	MovementComp -> GravityScale = bNoClip ? 0 : 1;
+	SetActorEnableCollision(!bNoClip);
+	UE_LOG(LogTemp, Display, TEXT("No clip: %d"), bNoClip);
+}
+
+void APlayerCharacter::SpawnSword(const FInputActionValue& Value)
+{
+	const FVector SpawnLoc = GetActorLocation();
+	GetWorld()->SpawnActor(MeleeWeaponClass, &SpawnLoc);
+	UE_LOG(LogTemp, Display, TEXT("Spawned Sword"));
+}
+
+void APlayerCharacter::TPFirst(const FInputActionValue& Value)
+{
+	SetActorLocation(TP1);
+}
+
+void APlayerCharacter::TPSecond(const FInputActionValue& Value)
+{
+	SetActorLocation(TP2);
+}
+
+void APlayerCharacter::TPThird(const FInputActionValue& Value)
+{
+	SetActorLocation(TP3);
+}
+
 void APlayerCharacter::KeepRotationOnTarget()
 {
 	if(!IsValid(EnemyTargetLock))
@@ -347,19 +430,27 @@ void APlayerCharacter::KeepRotationOnTarget()
 void APlayerCharacter::PlayNormalAttackAnimation()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	//UAnimInstance* AnimInstance = MySkeletalMeshComponent->GetAnimInstance();
+	
 	if(AnimInstance && NormalAttackMontage)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
-		const int32 RandomAnimation = FMath::RandRange(0, 1);
+		//const int32 RandomAnimation = FMath::RandRange(0, 1);
 		FName AnimSection = FName();
 
-		switch (RandomAnimation)
+		switch (ComboIndex)
 		{
-		case 0:
-			AnimSection = FName("BasicAttack1");
-			break;
 		case 1:
+			AnimSection = FName("BasicAttack1");
+			ComboIndex++;
+			break;
+		case 2:
 			AnimSection = FName("BasicAttack2");
+			ComboIndex++;
+			break;
+		case 3:
+			AnimSection = FName("BasicAttack3");
+			ComboIndex = 1;
 			break;
 		default:
 			break;
@@ -403,9 +494,14 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 
 void APlayerCharacter::OnEat()
 {
+
+	// Heala spelaren
+	Stats->HealHealth(OnEatHealAmount);
+
+	// Uppgradera equipped parasiter
 	for (AItemActor* Item : Inventory->Items)
 	{
-		if (Cast<AEquipableParasite>(Item))
+		if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
 		{
 			Cast<AEquipableParasite>(Item)->OnEat();
 		}

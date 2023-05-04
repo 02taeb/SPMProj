@@ -44,11 +44,13 @@ public:
 
 	AActor* PlayerActorPtr;
 	virtual void Use(APlayerCharacter* Character) override;
+
+	bool bIsEquipped = false;
 	
 private:
 	class UStatComponent* StatComponentPtr;
 	bool bCanEquip = false;
-	bool bIsEquipped = false;
+	int TimesUpgraded = 0;
 
 	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parasite")
 	// UStaticMeshComponent* StaticMeshComponent;

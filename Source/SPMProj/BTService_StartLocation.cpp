@@ -10,13 +10,22 @@
 
 UBTService_StartLocation::UBTService_StartLocation()
 {
-    NodeName = TEXT("Set Start Location");
+	NodeName = TEXT("Set Start Location");
+	//set desired behavior for my service.
+	bNotifyBecomeRelevant = true;
+	bNotifyTick = false;
+	bNotifyCeaseRelevant = true;
 }
 
-void UBTService_StartLocation::TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds)
+//set startlocation when service becomes relevant 
+void UBTService_StartLocation::OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-    Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
-    if (i == 0)
-        OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), OwnerComp.GetAIOwner()->GetPawn()->GetActorLocation());
-    i++;
+	Super::OnBecomeRelevant(OwnerComp, NodeMemory);
+	UE_LOG(LogTemp, Warning, TEXT("startlocation setting"));
+	if (!bStartLocationSet)
+	{
+		OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(),
+		                                                     OwnerComp.GetAIOwner()->GetPawn()->GetActorLocation());
+		bStartLocationSet = true;
+	}
 }
