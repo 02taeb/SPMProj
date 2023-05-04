@@ -65,7 +65,7 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	ETraceTypeQuery::TraceTypeQuery1,  
 	false,   /*Traces only against simple collision*/
 	Ignore,
-	EDrawDebugTrace::None,  /*Debug Sphere on ImpactPoint*/
+	EDrawDebugTrace::ForDuration,  /*Debug Sphere on ImpactPoint*/
 	BoxHit,  
 	true);  /*Ignores itself for overlaps*/
 

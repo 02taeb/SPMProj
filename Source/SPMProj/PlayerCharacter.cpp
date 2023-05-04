@@ -95,8 +95,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputLookRight, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRight);
 	PlayerEIComponent->BindAction(InputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
-	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
-	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeHeavy);
+	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Started, this, &APlayerCharacter::AttackMeleeNormal);
+	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Started, this, &APlayerCharacter::AttackMeleeHeavy);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Started, this, &APlayerCharacter::Dodge);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
@@ -307,11 +307,17 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
+	if(EquipedWeapon && EquipedWeapon->GetCollisionBox()->GetCollisionEnabled() == ECollisionEnabled::QueryOnly)
+	{
+		SetWeaponCollison(ECollisionEnabled::NoCollision);
+	}
+	
 	if (bNoClip)
 	{
 		SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
 		return;
 	}
+	
 	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_NoAction) return;
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
