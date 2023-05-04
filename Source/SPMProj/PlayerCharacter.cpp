@@ -95,8 +95,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputLookRight, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRight);
 	PlayerEIComponent->BindAction(InputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
-	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeNormal);
-	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Triggered, this, &APlayerCharacter::AttackMeleeHeavy);
+	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Started, this, &APlayerCharacter::AttackMeleeNormal);
+	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Started, this, &APlayerCharacter::AttackMeleeHeavy);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Started, this, &APlayerCharacter::Dodge);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
@@ -121,16 +121,16 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 
 	//Temporär damage + death
 	
-	Health = Health - 25;
-	if (Health <= 0)
-	{
-		for (AItemActor* Item : Inventory->Items)
-		{
-			if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
-				Cast<AEquipableParasite>(Item)->OnPlayerDeath();
-		}
-		Destroy();
-	}
+	// Health = Health - 25;
+	// if (Health <= 0)
+	// {
+	// 	for (AItemActor* Item : Inventory->Items)
+	// 	{
+	// 		if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
+	// 			Cast<AEquipableParasite>(Item)->OnPlayerDeath();
+	// 	}
+	// 	Destroy();
+	// }
 	
 	if(Stats)
 	{
@@ -138,6 +138,25 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		if(Stats->Dead())
 		{
 			/*Död Logiken hör (respawn och sånt)*/
+			for (AItemActor* Item : Inventory->Items)
+			{
+				if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
+				{
+					Cast<AEquipableParasite>(Item)->OnPlayerDeath();
+
+				}
+			}
+
+			Stats->CurrentHealth = 0;
+			this->GetMesh()->SetVisibility(false);
+			this->GetMesh()->SetGenerateOverlapEvents(false);
+			if (EquipedWeapon)
+			{
+				EquipedWeapon->MeleeWeaponMesh->SetVisibility(false);
+			}
+			this->GetController()->UnPossess();
+			
+			//Destroy();
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
 		}
 	}
@@ -288,11 +307,17 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
+	if(EquipedWeapon && EquipedWeapon->GetCollisionBox()->GetCollisionEnabled() == ECollisionEnabled::QueryOnly)
+	{
+		SetWeaponCollison(ECollisionEnabled::NoCollision);
+	}
+	
 	if (bNoClip)
 	{
 		SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
 		return;
 	}
+	
 	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_NoAction) return;
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();

@@ -8,26 +8,26 @@
 
 UBTService_PlayerLocationIfSeen::UBTService_PlayerLocationIfSeen()
 {
-    NodeName = TEXT("Update Player Location If Seen");
+	NodeName = TEXT("Update Player Location If Seen");
 }
 
-void UBTService_PlayerLocationIfSeen::TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds)
+void UBTService_PlayerLocationIfSeen::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
-    Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
+	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
-    APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-    if (PlayerPawn == nullptr)
-        return;
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (PlayerPawn == nullptr)
+		return;
 
-    if (OwnerComp.GetAIOwner() == nullptr)
-        return;
-    if (OwnerComp.GetBlackboardComponent()->GetValueAsBool("IsFacingTowardsPlayer"))
-    {
-        UE_LOG(LogTemp, Display, TEXT("Seeing the player and setting its locations"));
-        OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), PlayerPawn->GetActorLocation());
-    } 
-    else {
-        UE_LOG(LogTemp, Display, TEXT("not Seeing the player and setting its locations"));
-        OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
-    }
+	if (OwnerComp.GetAIOwner() == nullptr)
+		return;
+	if (OwnerComp.GetBlackboardComponent()->GetValueAsBool("IsFacingTowardsPlayer"))
+	{
+		OwnerComp.GetBlackboardComponent()->
+		          SetValueAsVector(GetSelectedBlackboardKey(), PlayerPawn->GetActorLocation());
+	}
+	else
+	{
+		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
+	}
 }

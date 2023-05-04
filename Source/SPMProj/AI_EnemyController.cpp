@@ -51,19 +51,19 @@ void AAI_EnemyController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 
-	UE_LOG(LogTemp, Display, TEXT("OnPossess method being called"));
+	//UE_LOG(LogTemp, Display, TEXT("OnPossess method being called"));
 	
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAI_EnemyController::OnPerception);
 }
 
 void AAI_EnemyController::OnPerception(AActor* Actor, FAIStimulus Stimulus)
 {
-	UE_LOG(LogTemp, Display, TEXT("IN onperception method"));
+	//UE_LOG(LogTemp, Display, TEXT("IN onperception method"));
 	APlayerCharacter* Player = Cast<APlayerCharacter>(Actor);
 	if ( Player == nullptr)
 		return;
 
-	UE_LOG(LogTemp, Display, TEXT("Onperception is calling"));
+	//UE_LOG(LogTemp, Display, TEXT("Onperception is calling"));
 	// Agent->SetAnimState(Stimulus.WasSuccessfullySensed());
 
 	// SetFocus(Stimulus.WasSuccessfullySensed() ? Player : nullptr);

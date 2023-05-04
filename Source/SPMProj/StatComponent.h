@@ -48,6 +48,10 @@ public:
 	std::string GetState() const;
 	void SetState(const std::string& SavedState);
 
+	// Current Health, är public så den kan nås i blueprint
+	UPROPERTY(BlueprintReadOnly)
+	float CurrentHealth;
+
 private:
 	// Health at beginning of game
 	UPROPERTY(EditDefaultsOnly)
@@ -55,8 +59,6 @@ private:
 	// Current max health with upgrades
 	UPROPERTY(EditAnywhere)
 	float MaxHealth;
-	// Current health
-	float CurrentHealth;
 
 	// Attack damage at beginning of game
 	UPROPERTY(EditDefaultsOnly)
