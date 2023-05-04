@@ -65,7 +65,7 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	ETraceTypeQuery::TraceTypeQuery1,  
 	false,   /*Traces only against simple collision*/
 	Ignore,
-	EDrawDebugTrace::None,  /*Debug Sphere on ImpactPoint*/
+	EDrawDebugTrace::ForDuration,  /*Debug Sphere on ImpactPoint*/
 	BoxHit,  
 	true);  /*Ignores itself for overlaps*/
 
@@ -116,7 +116,7 @@ void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor)
 				UE_LOG(LogTemp, Warning, TEXT("PLAYER HEV"));
 			}
 		}
-		//Behöver
+		//är test för partikeleffekt när vapen träffar något
 		UNiagaraComponent* NiagaraComp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, GetActorLocation());
 	} 
 }

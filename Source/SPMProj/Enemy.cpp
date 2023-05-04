@@ -83,10 +83,16 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 {
 	UE_LOG(LogTemp, Warning, TEXT("ENEMY HAS TAKEN DAMAGE"));
 	if(Stats)
-	{
-		Stats->TakeDamage(DamageAmount);
+	{	
+		
+		Stats->TakeDamage(DamageAmount);		
 		if(Stats->Dead())
 		{
+			if (ActorToSpawn)
+			{
+				GetWorld()->SpawnActor<AActor>(ActorToSpawn, GetActorLocation() - FVector(0,0,100), GetActorRotation());
+			}
+			
 			Die();
 			Destroy(); //Dödar fienden (Kommer ändras)
 			EquipedWeapon->Destroy(); //Dödar vapnet 

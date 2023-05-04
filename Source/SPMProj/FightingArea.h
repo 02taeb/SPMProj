@@ -14,7 +14,10 @@ class AFightingArea : public AActor
 
 public:
 	AFightingArea();
-
+	
+	virtual void Tick(float DeltaSeconds) override;
+	
+	
 protected:
 	// Array of enemies in the fighting area
 	TArray<AEnemy*> Enemies;
@@ -22,6 +25,7 @@ protected:
 	// Box component that defines the bounds of the fighting area
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* Bounds;
+
 
 	// Door that opens when all enemies are dead
 	UPROPERTY(EditAnywhere)
