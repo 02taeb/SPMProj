@@ -24,11 +24,6 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
 	
     if(Enemy == nullptr) return EBTNodeResult::Failed;
 	
-	//UAnimInstance *AnimInstance = Enemy->GetMesh()->GetAnimInstance();
-
-	//fixa bättre sen
-	Enemy->isAttacking = true;
-	
     Enemy->EnemyAttackBasic();
 
 	
