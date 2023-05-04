@@ -10,11 +10,8 @@
 AAI_EnemyController::AAI_EnemyController(const FObjectInitializer& ObjectInitializer)
 {
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
-
+	
 	AIPerceptionComponent->bAutoActivate = true;
-
-	SetPerceptionComponent(*AIPerceptionComponent);
-
 	// sight perception
 	Sight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight"));
 
@@ -25,6 +22,8 @@ AAI_EnemyController::AAI_EnemyController(const FObjectInitializer& ObjectInitial
 	Sight->DetectionByAffiliation.bDetectEnemies = DetectEnemies;
 	Sight->DetectionByAffiliation.bDetectNeutrals = DetectNeutrals;
 	Sight->DetectionByAffiliation.bDetectFriendlies = DetectFriendies;
+
+	SetPerceptionComponent(*AIPerceptionComponent);
 
 	// configure sense
 	AIPerceptionComponent->ConfigureSense(*Sight);
@@ -43,6 +42,13 @@ void AAI_EnemyController::BeginPlay()
 	{
 		RunBehaviorTree(AI_EnemyBehavior);
 	}
+	/*AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
+	SetPerceptionComponent(*AIPerceptionComponent);
+	AIPerceptionComponent->bAutoActivate = true;
+	AIPerceptionComponent->ConfigureSense(*Sight);
+	
+	// set dominant sense
+	AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());*/
 	
 }
 
@@ -53,6 +59,7 @@ void AAI_EnemyController::OnPossess(APawn* InPawn)
 	UE_LOG(LogTemp, Display, TEXT("OnPossess method being called"));
 	
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAI_EnemyController::OnPerception);
+	
 }
 
 void AAI_EnemyController::OnPerception(AActor* Actor, FAIStimulus Stimulus)
