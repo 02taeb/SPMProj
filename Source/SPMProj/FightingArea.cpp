@@ -10,15 +10,64 @@ AFightingArea::AFightingArea()
 	Door = nullptr;
 	Bounds = CreateDefaultSubobject<UBoxComponent>("Bounds");
 	RootComponent = Bounds;
+	
+	PrimaryActorTick.bCanEverTick = true;
+}
+
+void AFightingArea::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
+	UE_LOG(LogTemp, Warning, TEXT("Ticking"));
+	
+		TArray<AActor*> FoundEnemies;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemy::StaticClass(), FoundEnemies);
+		for (AActor* EnemyActor : FoundEnemies)
+		{
+			AEnemy* Enemy = Cast<AEnemy>(EnemyActor);
+			//hittar enemy men overlapping actor not working
+
+			if (Bounds == nullptr || Enemy == nullptr)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Bounds or Enemy is null"));
+				return;
+			}
+							
+			if (!Enemy->IsValidLowLevel() || Enemy->IsPendingKill())
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Enemy is invalid or pending kill"));
+				return;
+			}
+		
+			TArray<AActor*> OverlappingActors;
+			Bounds->GetOverlappingActors(OverlappingActors);
+	
+			for (AActor* OverlappingActor : OverlappingActors)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Overlapping actor: %s"), *OverlappingActor->GetName());
+			}
+		
+			if (Enemy != nullptr && Bounds->IsOverlappingActor(Enemy))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Found an enemy in bounds"));
+				Enemies.Add(Enemy);
+				Enemy->OnDeath.AddDynamic(this, &AFightingArea::CheckEnemiesDead);
+			}
+		}
+	
 }
 
 void AFightingArea::BeginPlay()
 {
+	
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
+
+//	GetWorld()->OnWorldBeginPlay
+	
+//	UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
 
 	// Find all of the enemies in the fighting area
-	TArray<AActor*> FoundEnemies;
+	/*TArray<AActor*> FoundEnemies;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemy::StaticClass(), FoundEnemies);
 	for (AActor* EnemyActor : FoundEnemies)
 	{
@@ -51,7 +100,7 @@ void AFightingArea::BeginPlay()
 			Enemies.Add(Enemy);
 			Enemy->OnDeath.AddDynamic(this, &AFightingArea::CheckEnemiesDead);
 		}
-	}
+	}*/
 }
 
 void AFightingArea::CheckEnemiesDead()
