@@ -116,7 +116,7 @@ void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor)
 				UE_LOG(LogTemp, Warning, TEXT("PLAYER HEV"));
 			}
 		}
-		//Behöver
+		//är test för partikeleffekt när vapen träffar något
 		UNiagaraComponent* NiagaraComp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, GetActorLocation());
 	} 
 }

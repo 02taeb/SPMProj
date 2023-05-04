@@ -121,16 +121,16 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 
 	//Temporär damage + death
 	
-	Health = Health - 25;
-	if (Health <= 0)
-	{
-		for (AItemActor* Item : Inventory->Items)
-		{
-			if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
-				Cast<AEquipableParasite>(Item)->OnPlayerDeath();
-		}
-		Destroy();
-	}
+	// Health = Health - 25;
+	// if (Health <= 0)
+	// {
+	// 	for (AItemActor* Item : Inventory->Items)
+	// 	{
+	// 		if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
+	// 			Cast<AEquipableParasite>(Item)->OnPlayerDeath();
+	// 	}
+	// 	Destroy();
+	// }
 	
 	if(Stats)
 	{
@@ -138,6 +138,25 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		if(Stats->Dead())
 		{
 			/*Död Logiken hör (respawn och sånt)*/
+			for (AItemActor* Item : Inventory->Items)
+			{
+				if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
+				{
+					Cast<AEquipableParasite>(Item)->OnPlayerDeath();
+
+				}
+			}
+
+			Stats->CurrentHealth = 0;
+			this->GetMesh()->SetVisibility(false);
+			this->GetMesh()->SetGenerateOverlapEvents(false);
+			if (EquipedWeapon)
+			{
+				EquipedWeapon->MeleeWeaponMesh->SetVisibility(false);
+			}
+			this->GetController()->UnPossess();
+			
+			//Destroy();
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
 		}
 	}
