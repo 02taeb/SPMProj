@@ -21,11 +21,13 @@ void UBTService_PlayerLocationIfSeen::TickNode(UBehaviorTreeComponent &OwnerComp
 
     if (OwnerComp.GetAIOwner() == nullptr)
         return;
-    if (OwnerComp.GetAIOwner()->LineOfSightTo(PlayerPawn, FVector(0,0,0)))
+    if (OwnerComp.GetBlackboardComponent()->GetValueAsBool("IsFacingTowardsPlayer"))
     {
+        UE_LOG(LogTemp, Display, TEXT("Seeing the player and setting its locations"));
         OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), PlayerPawn->GetActorLocation());
     } 
     else {
+        UE_LOG(LogTemp, Display, TEXT("not Seeing the player and setting its locations"));
         OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
     }
 }

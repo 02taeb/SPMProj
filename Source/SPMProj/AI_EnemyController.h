@@ -24,7 +24,7 @@ public:
 	
 	UFUNCTION()
 	void OnPerception(AActor* Actor, FAIStimulus Stimulus);
-
+	
 	virtual void OnPossess(APawn* InPawn) override; 
 	//virtual void Tick(float DeltaTime) override;
 
@@ -42,7 +42,7 @@ private:
 	float SightRadius = 500.0f;
 
 	UPROPERTY(EditAnywhere, Category= "AI Perception")
-	float LoseSightRadius = 500.0f;
+	float LoseSightRadius = 600.0f;
 
 	UPROPERTY(EditAnywhere, Category= "AI Perception")
 	float PeripheralVisionAngleDegrees = 90.0f;
