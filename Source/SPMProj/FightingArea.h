@@ -37,5 +37,10 @@ protected:
 	// Check if all enemies are dead and open the door if so
 	UFUNCTION()
 	void CheckEnemiesDead();
+
+private:
+	//timer 
+	FTimerHandle TimerHandle;
+	void SetUpFightingArea();
 };
 
