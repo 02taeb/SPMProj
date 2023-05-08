@@ -41,8 +41,8 @@ APlayerCharacter::APlayerCharacter()
 	
 	Health = 100.f;
 	
-	bHeavyAttackUsed = false;
-	HeavyAttackCooldown = 7.0f;
+	/*bHeavyAttackUsed = false;
+	HeavyAttackCooldown = 7.0f;*/
 }
 
 // Called when the game starts or when spawned
@@ -276,19 +276,19 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 {
-	if(CanAttack() && !bHeavyAttackUsed)
+	if(CanAttack()) /*if(CanAttack() && !bHeavyAttackUsed)*/
 	{
-		bHeavyAttackUsed = true;
+		///bHeavyAttackUsed = true;
 		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
 		PlayHeavyAttackAnimation();
-		GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
+		//GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
 	}
 }
 
-void APlayerCharacter::ResetHeavyAttackCooldown()
+/*void APlayerCharacter::ResetHeavyAttackCooldown()
 {
 	bHeavyAttackUsed = false;
-}
+}*/
 
 void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 {
@@ -320,7 +320,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		return;
 	}
 	
-	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_NoAction) return;
+	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction) return;
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if(AnimInstance && DodgeMontage)
