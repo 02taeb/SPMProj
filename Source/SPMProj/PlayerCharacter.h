@@ -107,11 +107,11 @@ private:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ECharacterActionState ActionState = ECharacterActionState::ECAS_NoAction;
 
-	/*Cooldown variables*/
+	/*/*Cooldown variables#1#
 	FTimerHandle HeavyAttackTimer;
 	bool bHeavyAttackUsed;
 	UPROPERTY(EditAnywhere, Category=Cooldown)
-	float HeavyAttackCooldown;
+	float HeavyAttackCooldown;*/
 
 	/*Target lock*/
 	class AEnemy* EnemyTargetLock;
@@ -221,7 +221,7 @@ private:
 	bool CanAttack();
 
 	/*Cooldown metoder*/
-	void ResetHeavyAttackCooldown();
+	//void ResetHeavyAttackCooldown();
 public:
 	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
 	 * Här i public längst under för att vi har en forward deklaration uppe.
