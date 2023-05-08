@@ -25,9 +25,9 @@ void UBTService_StartLocation::OnBecomeRelevant(UBehaviorTreeComponent& OwnerCom
 	if (!bStartLocationSet)
 	{
 		//set startlocation and startrotation	
-		OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(),
+		OwnerComp.GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"),
 		                                                     OwnerComp.GetAIOwner()->GetPawn()->GetActorLocation());
-		OwnerComp.GetBlackboardComponent()->SetValueAsRotator(GetSelectedBlackboardKey(),
+		OwnerComp.GetBlackboardComponent()->SetValueAsRotator(TEXT("StartRotation"),
 															 OwnerComp.GetAIOwner()->GetPawn()->GetActorRotation());
 		bStartLocationSet = true;
 	}
