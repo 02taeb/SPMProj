@@ -68,12 +68,12 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	EDrawDebugTrace::None,  /*Debug Sphere on ImpactPoint*/
 	BoxHit,  
 	true);  /*Ignores itself for overlaps*/
-
+	
 	OnHit(BoxHit.GetActor(), BoxHit.ImpactPoint, BoxHit);
-	HandleWeaponBoxHit(BoxHit.GetActor());
+	HandleWeaponBoxHit(BoxHit.GetActor(), BoxHit.ImpactPoint);
 }
 
-void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor)
+void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor, const FVector ImpactPoint)
 {
 	if(Actor)
 	{
@@ -99,6 +99,8 @@ void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor)
 				}
 				else
 				{
+					AEnemy* HitEnemy = Cast<AEnemy>(Actor);
+					if(HitEnemy) HitEnemy->CalculateHitDirection(ImpactPoint); /*Viktigt att kallas innan ApplyDamage!!*/
 					UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
 				}
 				UE_LOG(LogTemp, Warning, TEXT("PLAYER DEF"));
@@ -111,6 +113,8 @@ void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor)
 				}
 				else
 				{
+					AEnemy* HitEnemy = Cast<AEnemy>(Actor);
+					if(HitEnemy) HitEnemy->CalculateHitDirection(ImpactPoint); /*Viktigt att kallas innan ApplyDamage!!*/
 					UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
 				}
 				UE_LOG(LogTemp, Warning, TEXT("PLAYER HEV"));
