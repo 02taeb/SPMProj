@@ -71,12 +71,18 @@ private:
 	FVector TP2;
 	UPROPERTY(EditAnywhere, Category = "Cheats")
 	FVector TP3;
+
+	// Respawning
+	UFUNCTION(BlueprintCallable)
+	void SetRespawnPoint(FVector Position);
+	void Respawn();
+	FVector RespawnPoint;
+	bool bIsRespawning = false;
 	
 	//Function for saving and loading the game
+	UFUNCTION(BlueprintCallable)
 	void SaveGame();
-
 	void LoadGame();
-	
 
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))

@@ -40,6 +40,48 @@ void AEnemy::EnemyAttackBasic()
 	PlayEnemyAttackMontage();
 }
 
+void AEnemy::PlayEnemyHitReact()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	
+	if(AnimInstance && EnemyHitReactMontage)
+	{
+		AnimInstance->Montage_Play(EnemyHitReactMontage);
+		
+		FName SectionToPlay = FName("HitStraight");
+
+		if((HitAngle >= -45.f && HitAngle < 45.f) /*|| (HitAngle >= -135.f && HitAngle < 135.f)*/) /*From hit from front or from back (same animation for now)*/
+		{
+			SectionToPlay = FName("HitStraight");
+		} else if(HitAngle >= -135.f && HitAngle < -45.f)
+		{
+			SectionToPlay = FName("HitFromLeft");
+		} else if(HitAngle >= 45.f && HitAngle < 135.f)
+		{
+			SectionToPlay = FName("HitFromRight");
+		}
+		
+		AnimInstance->Montage_JumpToSection(SectionToPlay, EnemyHitReactMontage);
+	}
+}
+
+void AEnemy::CalculateHitDirection(const FVector ImpactPoint)
+{
+	const FVector ForwardV = GetActorForwardVector();
+	const FVector ToImpact = (ImpactPoint - GetActorLocation()).GetSafeNormal();
+
+	const double CosTheta = FVector::DotProduct(ForwardV, ToImpact);
+	/*The angle between enemys forward vector and the vector from enemys location to the impact point (inverted cos), converted to degrees*/
+	HitAngle = FMath::RadiansToDegrees(FMath::Acos(CosTheta));
+
+	/*Checking if the Angle/Vector is negative of positive by using cross product, in order to get the exact direction of the hit*/
+	/*If CrossProduct is positive, the enemy is hit from the right*/
+	/*If CrossProduct is negative, the enemy is hit from the left*/
+	const FVector CrossProduct = FVector::CrossProduct(ForwardV, ToImpact);
+	if(CrossProduct.Z < 0) HitAngle *= -1.f;
+}
+
+
 UStatComponent* AEnemy::GetStats() const
 {
 	return Stats;
@@ -96,8 +138,12 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 			Die();
 			Destroy(); //Dödar fienden (Kommer ändras)
 			EquipedWeapon->Destroy(); //Dödar vapnet 
+		} else
+		{
+			PlayEnemyHitReact();
 		}
 	}
+	
 	return DamageAmount;
 }
 

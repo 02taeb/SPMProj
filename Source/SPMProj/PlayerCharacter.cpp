@@ -53,6 +53,7 @@ void APlayerCharacter::BeginPlay()
 	MovementComp = GetCharacterMovement();
 	if (MovementComp) MovementComp->MaxWalkSpeed = MovementSpeed; // Set the max walking speed here
 
+	RespawnPoint = GetActorLocation();
 }
 
 // Called every frame
@@ -116,7 +117,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	AActor* DamageCauser)
 {
-	if (bGodMode) return 0;
+	if (bGodMode || bIsRespawning) return 0;
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
 
 	//Temporär damage + death
@@ -147,6 +148,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 				}
 			}
 
+			bIsRespawning = true;
 			Stats->CurrentHealth = 0;
 			this->GetMesh()->SetVisibility(false);
 			this->GetMesh()->SetGenerateOverlapEvents(false);
@@ -154,9 +156,11 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			{
 				EquipedWeapon->MeleeWeaponMesh->SetVisibility(false);
 			}
-			this->GetController()->UnPossess();
-			
+			//this->GetController()->UnPossess();
+			DisableInput(Cast<APlayerController>(this->GetController()));
 			//Destroy();
+			FTimerHandle RespawnTimer;
+			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,5);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
 		}
 	}
@@ -437,6 +441,26 @@ void APlayerCharacter::TPThird(const FInputActionValue& Value)
 {
 	SetActorLocation(TP3);
 }
+
+void APlayerCharacter::SetRespawnPoint(FVector Position)
+{
+	RespawnPoint = Position;
+}
+
+void APlayerCharacter::Respawn()
+{
+	SetActorLocation(RespawnPoint);
+	Stats->CurrentHealth = Stats->GetMaxHealth();
+	this->GetMesh()->SetVisibility(true);
+	this->GetMesh()->SetGenerateOverlapEvents(true);
+	if (EquipedWeapon)
+	{
+		EquipedWeapon->MeleeWeaponMesh->SetVisibility(true);
+	}
+	EnableInput(Cast<APlayerController>(this->GetController()));
+	bIsRespawning = false;
+}
+
 
 void APlayerCharacter::KeepRotationOnTarget()
 {
