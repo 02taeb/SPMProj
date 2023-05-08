@@ -4,12 +4,21 @@
 #include "BossManager.h"
 
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABossManager::ABossManager()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
+	BossCloud = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Compoenet"));
+	BossCloud->SetupAttachment(RootComponent);
+	ArenaCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Component"));
+	ArenaCollider->SetupAttachment(RootComponent);
+	DummyParentForColls = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
+	DummyParentForColls->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -99,6 +108,7 @@ void ABossManager::Attack()
 
 void ABossManager::AttackStyle1()
 {
+	
 	// Indicate hit
 		// Pick random pattern from predetermined
 	// Start counting down to hit - dependent on attack speed
