@@ -10,97 +10,14 @@ AFightingArea::AFightingArea()
 	Door = nullptr;
 	Bounds = CreateDefaultSubobject<UBoxComponent>("Bounds");
 	RootComponent = Bounds;
-	
-	PrimaryActorTick.bCanEverTick = true;
-}
-
-void AFightingArea::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-	
-	UE_LOG(LogTemp, Warning, TEXT("Ticking"));
-	
-		TArray<AActor*> FoundEnemies;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemy::StaticClass(), FoundEnemies);
-		for (AActor* EnemyActor : FoundEnemies)
-		{
-			AEnemy* Enemy = Cast<AEnemy>(EnemyActor);
-			//hittar enemy men overlapping actor not working
-
-			if (Bounds == nullptr || Enemy == nullptr)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Bounds or Enemy is null"));
-				return;
-			}
-							
-			if (!Enemy->IsValidLowLevel() || Enemy->IsPendingKill())
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Enemy is invalid or pending kill"));
-				return;
-			}
-		
-			TArray<AActor*> OverlappingActors;
-			Bounds->GetOverlappingActors(OverlappingActors);
-	
-			for (AActor* OverlappingActor : OverlappingActors)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Overlapping actor: %s"), *OverlappingActor->GetName());
-			}
-		
-			if (Enemy != nullptr && Bounds->IsOverlappingActor(Enemy))
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Found an enemy in bounds"));
-				Enemies.Add(Enemy);
-				Enemy->OnDeath.AddDynamic(this, &AFightingArea::CheckEnemiesDead);
-			}
-		}
-	
 }
 
 void AFightingArea::BeginPlay()
 {
-	
 	Super::BeginPlay();
-
-//	GetWorld()->OnWorldBeginPlay
 	
-//	UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
-
-	// Find all of the enemies in the fighting area
-	/*TArray<AActor*> FoundEnemies;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemy::StaticClass(), FoundEnemies);
-	for (AActor* EnemyActor : FoundEnemies)
-	{
-		AEnemy* Enemy = Cast<AEnemy>(EnemyActor);
-		//hittar enemy men overlapping actor not working
-
-		if (Bounds == nullptr || Enemy == nullptr)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Bounds or Enemy is null"));
-			return;
-		}
-							
-		if (!Enemy->IsValidLowLevel() || Enemy->IsPendingKill())
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Enemy is invalid or pending kill"));
-			return;
-		}
-		
-		TArray<AActor*> OverlappingActors;
-		Bounds->GetOverlappingActors(OverlappingActors);
-	
-		for (AActor* OverlappingActor : OverlappingActors)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Overlapping actor: %s"), *OverlappingActor->GetName());
-		}
-		
-		if (Enemy != nullptr && Bounds->IsOverlappingActor(Enemy))
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Found an enemy in bounds"));
-			Enemies.Add(Enemy);
-			Enemy->OnDeath.AddDynamic(this, &AFightingArea::CheckEnemiesDead);
-		}
-	}*/
+	//timer to allow enemies to be set up before the fighting area. This way, the fighting area can find enemies in its defined bounds and not nullptrs."
+	GetWorldTimerManager().SetTimer(SetTimer, this, &AFightingArea::SetUpFightingArea, 0.5f, false);
 }
 
 void AFightingArea::CheckEnemiesDead()
@@ -114,12 +31,40 @@ void AFightingArea::CheckEnemiesDead()
 			return;
 		}
 	}
-	UE_LOG(LogTemp, Warning, TEXT("ALl enemies were dead"));
-
 	// Open the door if all enemies are dead
+	UE_LOG(LogTemp, Warning, TEXT("ALl enemies were dead"));
+	//Ensure door is not nullptr
+	ensureMsgf(Door != nullptr, TEXT("Door is nullptr"));
 	if (Door != nullptr)
 	{
+		//Open door
 		Door->SetActorEnableCollision(false);
 		Door->SetActorHiddenInGame(true);
+	}
+}
+
+void AFightingArea::SetUpFightingArea()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Set up arena "));
+
+	// Find all of the enemies in the fighting area
+	TArray<AActor*> FoundEnemies;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemy::StaticClass(), FoundEnemies);
+	for (AActor* EnemyActor : FoundEnemies)
+	{
+		AEnemy* Enemy = Cast<AEnemy>(EnemyActor);
+
+		// Ensure that the bounds and enemy are not null
+		ensureMsgf(Bounds != nullptr || Enemy != nullptr, TEXT("Bounds or Enemy is null"));
+		if (Bounds == nullptr || Enemy == nullptr) return;
+
+		// If the enemy is within the bounds, add it to the list of enemies
+		if (Bounds->IsOverlappingActor(Enemy))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Found an enemy in bounds"));
+			Enemies.Add(Enemy);
+			// Bind to the OnDeath event of the enemy to check if all enemies are dead
+			Enemy->OnDeath.AddDynamic(this, &AFightingArea::CheckEnemiesDead);
+		}
 	}
 }
