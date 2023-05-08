@@ -15,22 +15,20 @@ class AFightingArea : public AActor
 public:
 	AFightingArea();
 	
-	virtual void Tick(float DeltaSeconds) override;
-	
-	
 protected:
+	//define in protected to allow childs of this class to access these values	
+	
 	// Array of enemies in the fighting area
 	TArray<AEnemy*> Enemies;
 
 	// Box component that defines the bounds of the fighting area
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* Bounds;
-
-
+	
 	// Door that opens when all enemies are dead
 	UPROPERTY(EditAnywhere)
 	AActor* Door;
-
+	
 	// Override BeginPlay() to initialize the fighting area
 	virtual void BeginPlay() override;
 
@@ -40,7 +38,8 @@ protected:
 
 private:
 	//timer 
-	FTimerHandle TimerHandle;
+	FTimerHandle SetTimer;
+	//callback function
 	void SetUpFightingArea();
 };
 
