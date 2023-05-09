@@ -54,6 +54,7 @@ void APlayerCharacter::BeginPlay()
 	if (MovementComp) MovementComp->MaxWalkSpeed = MovementSpeed; // Set the max walking speed here
 
 	RespawnPoint = GetActorLocation();
+	GravityScale = MovementComp->GravityScale;
 }
 
 // Called every frame
@@ -62,6 +63,9 @@ void APlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	KeepRotationOnTarget();
+
+	// Inc grav when falling
+	MovementComp->GravityScale = GetVelocity().Z < 0 ? MovementComp->GravityScale + AddedGravityWhenFalling : GravityScale;
 }
 
 // Called to bind functionality to input
