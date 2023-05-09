@@ -5,6 +5,9 @@
 
 #include <string>
 
+#include "NiagaraFunctionLibrary.h"
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values for this component's properties
 UStatComponent::UStatComponent()
 {
