@@ -147,7 +147,11 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 
 				}
 			}
-
+			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
+			{
+				AnimInstance->StopAllMontages(0.2f);
+			}
 			bIsRespawning = true;
 			Stats->CurrentHealth = 0;
 			this->GetMesh()->SetVisibility(false);
