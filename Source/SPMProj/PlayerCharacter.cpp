@@ -154,7 +154,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
 			{
-				AnimInstance->StopAllMontages(0.2f);
+				AnimInstance->StopAllMontages(0.1f);
 			}
 			bIsRespawning = true;
 			Stats->CurrentHealth = 0;
@@ -375,6 +375,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 {
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
+	if(ActionState != ECharacterActionState::ECAS_NoAction) return;
 	
 	TArray<FHitResult> HitResults;
 	FVector TraceStart = GetActorLocation();
@@ -561,6 +562,7 @@ void APlayerCharacter::PlayPlayerHitReact()
 	if(AnimInstance && HitReactMontage)
 	{
 		AnimInstance->Montage_Play(HitReactMontage);
+		ActionState = ECharacterActionState::ECAS_IsHit;
 		
 		FName SectionToPlay = FName("HitStraight");
 
