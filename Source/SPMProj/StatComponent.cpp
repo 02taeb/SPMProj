@@ -110,12 +110,6 @@ void UStatComponent::TakeDamage(const float Damage)
 void UStatComponent::HealHealth(const float HealAmount)
 {
 	CurrentHealth += FMath::Min(MaxHealth - CurrentHealth, HealAmount);
-	if (HealSystem)
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, HealSystem, GetOwner()->GetActorLocation());
-	if(!Decal) return;
-	FVector DecalLoc = GetOwner()->GetActorLocation();
-	DecalLoc.Z -= 100;
-	UGameplayStatics::SpawnDecalAtLocation(this, Decal, FVector(1), DecalLoc);
 }
 
 bool UStatComponent::Dead() const

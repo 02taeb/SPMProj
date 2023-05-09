@@ -9,7 +9,6 @@
 #include "StatComponent.generated.h"
 
 
-class UNiagaraSystem;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPMPROJ_API UStatComponent : public UActorComponent
 {
@@ -52,10 +51,6 @@ public:
 	// Current Health, är public så den kan nås i blueprint
 	UPROPERTY(BlueprintReadOnly)
 	float CurrentHealth;
-	UPROPERTY(EditAnywhere, Category="Effects")
-	UNiagaraSystem* HealSystem;
-	UPROPERTY(EditAnywhere, Category="Effects")
-	UMaterialInterface* Decal;
 
 private:
 	// Health at beginning of game

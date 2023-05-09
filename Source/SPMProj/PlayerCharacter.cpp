@@ -618,6 +618,7 @@ void APlayerCharacter::OnEat()
 
 	// Heala spelaren
 	Stats->HealHealth(OnEatHealAmount);
+	OnHeal();
 	PlayCrouchAnimation();
 
 	// Uppgradera equipped parasiter
