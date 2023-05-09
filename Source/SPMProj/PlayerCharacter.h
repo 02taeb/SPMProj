@@ -74,6 +74,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Cheats")
 	FVector TP3;
 
+	float GravityScale;
+	UPROPERTY(EditAnywhere, Category = "InputSpeeds")
+	float AddedGravityWhenFalling = 0.5f;
+
 	// Respawning
 	UFUNCTION(BlueprintCallable)
 	void SetRespawnPoint(FVector Position);
