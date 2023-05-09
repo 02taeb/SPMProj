@@ -35,6 +35,8 @@ public:
 
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
+	void CalculateHitDirection(const FVector ImpactPoint);
+
 	/*Functions to enable or disable weapon box collison in blueprints*/
 	UFUNCTION(BlueprintCallable)
 	void SetWeaponCollison(ECollisionEnabled::Type Collision);
@@ -139,6 +141,11 @@ private:
 	//Anims för ätande
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	UAnimMontage* CrouchMontage;
+
+	/*Animation montage för hit react*/
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	UAnimMontage* HitReactMontage;
+	double HitAngle;
 	
 	/*UPROPERTY(EditAnywhere, Category = "Interacting")
 	TSoftObjectPtr<AActor> InteractableActor;*/
@@ -226,6 +233,7 @@ private:
 
 	void PlayNormalAttackAnimation();
 	void PlayHeavyAttackAnimation();
+	void PlayPlayerHitReact();
 	void PlayCrouchAnimation();
 	void StopCrouch();
 	
@@ -240,5 +248,5 @@ public:
 	 */ 
 	FORCEINLINE void SetOverlapWeapon(AMeleeWeapon* Weapon) { OverlapWeapon = Weapon; }
 	FORCEINLINE ECharacterActionState GetPlayerAttackType() { return ActionState; }
-	/*Dumb fucking function, tried too access Player via default Animation bluepring but didnt work... Remove in future*/
+	
 };
