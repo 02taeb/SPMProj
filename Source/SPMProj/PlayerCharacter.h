@@ -135,6 +135,10 @@ private:
 	/*Animation montage for dodge*/ 
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* DodgeMontage;
+
+	//Anims för ätande
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	UAnimMontage* CrouchMontage;
 	
 	/*UPROPERTY(EditAnywhere, Category = "Interacting")
 	TSoftObjectPtr<AActor> InteractableActor;*/
@@ -222,6 +226,8 @@ private:
 
 	void PlayNormalAttackAnimation();
 	void PlayHeavyAttackAnimation();
+	void PlayCrouchAnimation();
+	void StopCrouch();
 	
 	/*Kollar om States uppfyller kravet för att kunna attackera*/
 	bool CanAttack();

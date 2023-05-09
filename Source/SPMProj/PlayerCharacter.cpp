@@ -520,6 +520,24 @@ void APlayerCharacter::PlayHeavyAttackAnimation()
 	}
 }
 
+void APlayerCharacter::PlayCrouchAnimation()
+{
+	DisableInput(Cast<APlayerController>(Controller));
+	ActionState = ECharacterActionState::ECAS_Crouching;
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && CrouchMontage)
+		AnimInstance->Montage_Play(CrouchMontage);
+	FTimerHandle StopEatingHandle;
+	GetWorld()->GetTimerManager().SetTimer(StopEatingHandle, this, &APlayerCharacter::StopCrouch, 1);
+}
+
+void APlayerCharacter::StopCrouch()
+{
+	EnableInput(Cast<APlayerController>(Controller));
+	ActionState = ECharacterActionState::ECAS_NoAction;
+}
+
+
 bool APlayerCharacter::CanAttack()
 {
 	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped && ActionState != ECharacterActionState::ECAS_Dodging;
@@ -548,6 +566,7 @@ void APlayerCharacter::OnEat()
 
 	// Heala spelaren
 	Stats->HealHealth(OnEatHealAmount);
+	PlayCrouchAnimation();
 
 	// Uppgradera equipped parasiter
 	for (AItemActor* Item : Inventory->Items)
