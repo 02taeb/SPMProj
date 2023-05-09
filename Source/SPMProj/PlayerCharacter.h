@@ -58,6 +58,9 @@ public:
 	//Statcomponent, är public fär blueprint access
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Stats")
 	class UStatComponent* Stats;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHeal();
 private:
 	// Cheat vars
 	UPROPERTY(EditAnywhere, Category = "Cheats")
