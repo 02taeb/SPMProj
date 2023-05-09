@@ -71,12 +71,18 @@ private:
 	FVector TP2;
 	UPROPERTY(EditAnywhere, Category = "Cheats")
 	FVector TP3;
+
+	// Respawning
+	UFUNCTION(BlueprintCallable)
+	void SetRespawnPoint(FVector Position);
+	void Respawn();
+	FVector RespawnPoint;
+	bool bIsRespawning = false;
 	
 	//Function for saving and loading the game
+	UFUNCTION(BlueprintCallable)
 	void SaveGame();
-
 	void LoadGame();
-	
 
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
@@ -107,11 +113,11 @@ private:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ECharacterActionState ActionState = ECharacterActionState::ECAS_NoAction;
 
-	/*Cooldown variables*/
+	/*/*Cooldown variables#1#
 	FTimerHandle HeavyAttackTimer;
 	bool bHeavyAttackUsed;
 	UPROPERTY(EditAnywhere, Category=Cooldown)
-	float HeavyAttackCooldown;
+	float HeavyAttackCooldown;*/
 
 	/*Target lock*/
 	class AEnemy* EnemyTargetLock;
@@ -221,7 +227,7 @@ private:
 	bool CanAttack();
 
 	/*Cooldown metoder*/
-	void ResetHeavyAttackCooldown();
+	//void ResetHeavyAttackCooldown();
 public:
 	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
 	 * Här i public längst under för att vi har en forward deklaration uppe.

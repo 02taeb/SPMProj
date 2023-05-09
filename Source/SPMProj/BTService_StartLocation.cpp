@@ -21,11 +21,14 @@ UBTService_StartLocation::UBTService_StartLocation()
 void UBTService_StartLocation::OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::OnBecomeRelevant(OwnerComp, NodeMemory);
-	//UE_LOG(LogTemp, Warning, TEXT("startlocation setting"));
+	
 	if (!bStartLocationSet)
 	{
-		OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(),
+		//set startlocation and startrotation	
+		OwnerComp.GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"),
 		                                                     OwnerComp.GetAIOwner()->GetPawn()->GetActorLocation());
+		OwnerComp.GetBlackboardComponent()->SetValueAsRotator(TEXT("StartRotation"),
+															 OwnerComp.GetAIOwner()->GetPawn()->GetActorRotation());
 		bStartLocationSet = true;
 	}
 }

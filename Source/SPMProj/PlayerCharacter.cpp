@@ -41,8 +41,8 @@ APlayerCharacter::APlayerCharacter()
 	
 	Health = 100.f;
 	
-	bHeavyAttackUsed = false;
-	HeavyAttackCooldown = 7.0f;
+	/*bHeavyAttackUsed = false;
+	HeavyAttackCooldown = 7.0f;*/
 }
 
 // Called when the game starts or when spawned
@@ -53,6 +53,7 @@ void APlayerCharacter::BeginPlay()
 	MovementComp = GetCharacterMovement();
 	if (MovementComp) MovementComp->MaxWalkSpeed = MovementSpeed; // Set the max walking speed here
 
+	RespawnPoint = GetActorLocation();
 }
 
 // Called every frame
@@ -116,7 +117,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	AActor* DamageCauser)
 {
-	if (bGodMode) return 0;
+	if (bGodMode || bIsRespawning) return 0;
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
 
 	//Temporär damage + death
@@ -147,6 +148,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 				}
 			}
 
+			bIsRespawning = true;
 			Stats->CurrentHealth = 0;
 			this->GetMesh()->SetVisibility(false);
 			this->GetMesh()->SetGenerateOverlapEvents(false);
@@ -154,9 +156,11 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			{
 				EquipedWeapon->MeleeWeaponMesh->SetVisibility(false);
 			}
-			this->GetController()->UnPossess();
-			
+			//this->GetController()->UnPossess();
+			DisableInput(Cast<APlayerController>(this->GetController()));
 			//Destroy();
+			FTimerHandle RespawnTimer;
+			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,5);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
 		}
 	}
@@ -276,19 +280,19 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 {
-	if(CanAttack() && !bHeavyAttackUsed)
+	if(CanAttack()) /*if(CanAttack() && !bHeavyAttackUsed)*/
 	{
-		bHeavyAttackUsed = true;
+		///bHeavyAttackUsed = true;
 		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
 		PlayHeavyAttackAnimation();
-		GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
+		//GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
 	}
 }
 
-void APlayerCharacter::ResetHeavyAttackCooldown()
+/*void APlayerCharacter::ResetHeavyAttackCooldown()
 {
 	bHeavyAttackUsed = false;
-}
+}*/
 
 void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 {
@@ -320,7 +324,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		return;
 	}
 	
-	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_NoAction) return;
+	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction) return;
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if(AnimInstance && DodgeMontage)
@@ -437,6 +441,26 @@ void APlayerCharacter::TPThird(const FInputActionValue& Value)
 {
 	SetActorLocation(TP3);
 }
+
+void APlayerCharacter::SetRespawnPoint(FVector Position)
+{
+	RespawnPoint = Position;
+}
+
+void APlayerCharacter::Respawn()
+{
+	SetActorLocation(RespawnPoint);
+	Stats->CurrentHealth = Stats->GetMaxHealth();
+	this->GetMesh()->SetVisibility(true);
+	this->GetMesh()->SetGenerateOverlapEvents(true);
+	if (EquipedWeapon)
+	{
+		EquipedWeapon->MeleeWeaponMesh->SetVisibility(true);
+	}
+	EnableInput(Cast<APlayerController>(this->GetController()));
+	bIsRespawning = false;
+}
+
 
 void APlayerCharacter::KeepRotationOnTarget()
 {

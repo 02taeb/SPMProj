@@ -40,6 +40,7 @@ private:
 	bool bPassedChecks = true;
 	bool bAllEnemiesKilled = true;
 	TArray<AActor*> SpawnedEnemies;
+	USceneComponent* DummyParentForColls;
 
 	UPROPERTY(EditAnywhere, Category = "BossFight|Values")
 	float AttackSpeed1 = 10;
@@ -60,27 +61,26 @@ private:
 	UNiagaraSystem* Impact;
 	UPROPERTY(EditAnywhere, Category = "BossFight|Particles")
 	UNiagaraSystem* SpawnEnemies;
-
-	UPROPERTY(EditAnywhere, Category = "BossFight|Components")
-	UStaticMeshComponent* BossCloud;
-	UPROPERTY(EditAnywhere, Category = "BossFight|Components")
-	UBoxComponent* ArenaCollider;
 	
 	UPROPERTY(EditAnywhere, Category = "BossFight|Crystals")
 	TArray<TSoftObjectPtr<ABossCrystal>> BossCrystals;
 
+	
+	UStaticMeshComponent* BossCloud;
+	UBoxComponent* ArenaCollider;
+	
 	UPROPERTY(EditAnywhere, Category = "BossFight|AttackPatterns")
-	TArray<UBoxComponent*> AttackPattern1;
+	TArray<FComponentReference> AttackPattern1;
 	UPROPERTY(EditAnywhere, Category = "BossFight|AttackPatterns")
-	TArray<UBoxComponent*> AttackPattern2;
+	TArray<FComponentReference> AttackPattern2;
 	UPROPERTY(EditAnywhere, Category = "BossFight|AttackPatterns")
-	TArray<UBoxComponent*> AttackPattern3;
+	TArray<FComponentReference> AttackPattern3;
 	UPROPERTY(EditAnywhere, Category = "BossFight|AttackPatterns")
-	TArray<UBoxComponent*> AttackPattern4;
+	TArray<FComponentReference> AttackPattern4;
 	UPROPERTY(EditAnywhere, Category = "BossFight|AttackPatterns")
-	TArray<UBoxComponent*> AttackPattern5;
+	TArray<FComponentReference> AttackPattern5;
 	UPROPERTY(EditAnywhere, Category = "BossFight|AttackPatterns")
-	TArray<UBoxComponent*> AttackPattern6;
+	TArray<FComponentReference> AttackPattern6;
 
 	UPROPERTY(EditAnywhere, Category = "BossFight|MinionClass")
 	TSubclassOf<AEnemy> EnemyClass;

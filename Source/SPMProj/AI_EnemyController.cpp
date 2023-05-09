@@ -47,6 +47,7 @@ void AAI_EnemyController::BeginPlay()
 	
 }
 
+
 void AAI_EnemyController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
@@ -67,7 +68,7 @@ void AAI_EnemyController::OnPerception(AActor* Actor, FAIStimulus Stimulus)
 	// Agent->SetAnimState(Stimulus.WasSuccessfullySensed());
 
 	// SetFocus(Stimulus.WasSuccessfullySensed() ? Player : nullptr);
-
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &AAI_EnemyController::setBoolBlackBoardValue, 3.f, false);
 	if (Stimulus.WasSuccessfullySensed())
 	{
 		GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), true);
@@ -76,4 +77,8 @@ void AAI_EnemyController::OnPerception(AActor* Actor, FAIStimulus Stimulus)
 	{
 		GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), false);
 	}
+}
+void AAI_EnemyController::setBoolBlackBoardValue()
+{
+	
 }

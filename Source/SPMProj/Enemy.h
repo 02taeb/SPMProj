@@ -22,6 +22,10 @@ public:
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 	void EnemyAttackBasic();
+	
+	void PlayEnemyHitReact();
+
+	void CalculateHitDirection(const FVector ImpactPoint);
 
 	/*Functions to enable or disable weapon box collison in blueprints*/
 	UFUNCTION(BlueprintCallable)
@@ -39,6 +43,10 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* EnemyAttackMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	class UAnimMontage* EnemyHitReactMontage;
+	double HitAngle;
 
 	/*Spawn weapon class variable. Used to spawn the weapon on the Enemies right hand socket*/
 	UPROPERTY(EditAnywhere)

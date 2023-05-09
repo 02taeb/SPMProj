@@ -21,6 +21,7 @@ void UBTService_PlayerLocationIfSeen::TickNode(UBehaviorTreeComponent& OwnerComp
 
 	if (OwnerComp.GetAIOwner() == nullptr)
 		return;
+	
 	if (OwnerComp.GetBlackboardComponent()->GetValueAsBool("IsFacingTowardsPlayer"))
 	{
 		OwnerComp.GetBlackboardComponent()->
