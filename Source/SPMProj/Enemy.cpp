@@ -130,14 +130,17 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 		Stats->TakeDamage(DamageAmount);		
 		if(Stats->Dead())
 		{
+			/*
 			if (ActorToSpawn)
 			{
 				GetWorld()->SpawnActor<AActor>(ActorToSpawn, GetActorLocation() - FVector(0,0,100), GetActorRotation());
 			}
-			
-			Die();
-			Destroy(); //Dödar fienden (Kommer ändras)
+			*/
+			GetMesh()->SetCollisionResponseToChannel(ECC_GameTraceChannel1, ECR_Block);
+			OnDeathBPEvent();
 			EquipedWeapon->Destroy(); //Dödar vapnet 
+			Die();
+			//Destroy(); //Dödar fienden (Kommer ändras)
 		} else
 		{
 			PlayEnemyHitReact();

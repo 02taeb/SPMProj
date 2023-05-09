@@ -22,8 +22,6 @@ public:
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 	void EnemyAttackBasic();
-	
-	void PlayEnemyHitReact();
 
 	void CalculateHitDirection(const FVector ImpactPoint);
 
@@ -44,6 +42,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* EnemyAttackMontage;
 
+	/*Animation montage för hit react*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* EnemyHitReactMontage;
 	double HitAngle;
@@ -57,7 +56,11 @@ private:
 	
 	void PlayEnemyAttackMontage() const;
 
+	void PlayEnemyHitReact();
+
 public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDeathBPEvent();
 	//get stats
 	class UStatComponent* GetStats() const;
 	//function to call for enemy death delegate //fråga daniel om ni inte fattar

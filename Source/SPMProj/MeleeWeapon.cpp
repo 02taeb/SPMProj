@@ -85,6 +85,8 @@ void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor, const FVector ImpactPoint)
 			AEnemy* EnemyInstigator = Cast<AEnemy>(this->GetOwner());
 			if(EnemyInstigator)
 			{
+				APlayerCharacter* HitPlayer = Cast<APlayerCharacter>(Actor);
+				if(HitPlayer) HitPlayer->CalculateHitDirection(ImpactPoint);
 				UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
 				UE_LOG(LogTemp, Warning, TEXT("ENEMY"));
 			}

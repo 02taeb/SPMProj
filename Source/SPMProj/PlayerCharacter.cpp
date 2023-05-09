@@ -54,6 +54,7 @@ void APlayerCharacter::BeginPlay()
 	if (MovementComp) MovementComp->MaxWalkSpeed = MovementSpeed; // Set the max walking speed here
 
 	RespawnPoint = GetActorLocation();
+	GravityScale = MovementComp->GravityScale;
 }
 
 // Called every frame
@@ -62,6 +63,9 @@ void APlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	KeepRotationOnTarget();
+
+	// Inc grav when falling
+	MovementComp->GravityScale = GetVelocity().Z < 0 ? MovementComp->GravityScale + AddedGravityWhenFalling : GravityScale;
 }
 
 // Called to bind functionality to input
@@ -117,7 +121,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	AActor* DamageCauser)
 {
-	if (bGodMode || bIsRespawning) return 0;
+	if (ActionState == ECharacterActionState::ECAS_Dodging || bGodMode || bIsRespawning) return 0;
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
 
 	//Temporär damage + death
@@ -147,7 +151,11 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 
 				}
 			}
-
+			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
+			{
+				AnimInstance->StopAllMontages(0.2f);
+			}
 			bIsRespawning = true;
 			Stats->CurrentHealth = 0;
 			this->GetMesh()->SetVisibility(false);
@@ -162,6 +170,9 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			FTimerHandle RespawnTimer;
 			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,5);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
+		} else
+		{
+			PlayPlayerHitReact();
 		}
 	}
 	
@@ -520,12 +531,71 @@ void APlayerCharacter::PlayHeavyAttackAnimation()
 	}
 }
 
+void APlayerCharacter::PlayCrouchAnimation()
+{
+	DisableInput(Cast<APlayerController>(Controller));
+	ActionState = ECharacterActionState::ECAS_Crouching;
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && CrouchMontage)
+		AnimInstance->Montage_Play(CrouchMontage);
+	FTimerHandle StopEatingHandle;
+	GetWorld()->GetTimerManager().SetTimer(StopEatingHandle, this, &APlayerCharacter::StopCrouch, 1);
+}
+
+void APlayerCharacter::StopCrouch()
+{
+	EnableInput(Cast<APlayerController>(Controller));
+	ActionState = ECharacterActionState::ECAS_NoAction;
+}
+
+
 bool APlayerCharacter::CanAttack()
 {
 	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped && ActionState != ECharacterActionState::ECAS_Dodging;
 }
 
-	//Använda det item som klickas på, finns möjlighet för c++ och blueprint
+void APlayerCharacter::PlayPlayerHitReact()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	
+	if(AnimInstance && HitReactMontage)
+	{
+		AnimInstance->Montage_Play(HitReactMontage);
+		
+		FName SectionToPlay = FName("HitStraight");
+
+		if((HitAngle >= -45.f && HitAngle < 45.f) /*|| (HitAngle >= -135.f && HitAngle < 135.f)*/) /*From hit from front or from back (same animation for now)*/
+			{
+			SectionToPlay = FName("HitStraight");
+			} else if(HitAngle >= -135.f && HitAngle < -45.f)
+			{
+				SectionToPlay = FName("HitFromLeft");
+			} else if(HitAngle >= 45.f && HitAngle < 135.f)
+			{
+				SectionToPlay = FName("HitFromRight");
+			}
+		
+		AnimInstance->Montage_JumpToSection(SectionToPlay, HitReactMontage);
+	}
+}
+
+void APlayerCharacter::CalculateHitDirection(const FVector ImpactPoint)
+{
+	const FVector ForwardV = GetActorForwardVector();
+	const FVector ToImpact = (ImpactPoint - GetActorLocation()).GetSafeNormal();
+
+	const double CosTheta = FVector::DotProduct(ForwardV, ToImpact);
+	/*The angle between players forward vector and the vector from players location to the impact point (inverted cos), converted to degrees*/
+	HitAngle = FMath::RadiansToDegrees(FMath::Acos(CosTheta));
+
+	/*Checking if the Angle/Vector is negative of positive by using cross product, in order to get the exact direction of the hit*/
+	/*If CrossProduct is positive, the player is hit from the right*/
+	/*If CrossProduct is negative, the player is hit from the left*/
+	const FVector CrossProduct = FVector::CrossProduct(ForwardV, ToImpact);
+	if(CrossProduct.Z < 0) HitAngle *= -1.f;
+}
+
+//Använda det item som klickas på, finns möjlighet för c++ och blueprint
 	//Är implementerad i blueprint just nu
 void APlayerCharacter::UseItem(AItemActor *Item)
 {
@@ -548,6 +618,7 @@ void APlayerCharacter::OnEat()
 
 	// Heala spelaren
 	Stats->HealHealth(OnEatHealAmount);
+	PlayCrouchAnimation();
 
 	// Uppgradera equipped parasiter
 	for (AItemActor* Item : Inventory->Items)
