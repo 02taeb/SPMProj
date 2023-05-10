@@ -53,7 +53,7 @@ private:
 	TSubclassOf<class AMeleeWeapon> WeaponClass;
 
 	UPROPERTY(VisibleInstanceOnly)
-	class AMeleeWeapon* EquipedWeapon;
+	class AMeleeWeapon* EnemyWeapon;
 	
 	void PlayEnemyAttackMontage();
 
