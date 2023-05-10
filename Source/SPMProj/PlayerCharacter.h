@@ -81,6 +81,23 @@ private:
 	UPROPERTY(EditAnywhere, Category = "InputSpeeds")
 	float AddedGravityWhenFalling = 0.5f;
 
+
+	//Audio
+	class UAudioComponent* AudioComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* EatingSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* NormalAttackSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* HeavyAttackSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* JumpSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* TakeDamageSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* DeathSoundCue;
+
 	// Respawning
 	UFUNCTION(BlueprintCallable)
 	void SetRespawnPoint(FVector Position);
@@ -92,6 +109,9 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void SaveGame();
 	void LoadGame();
+
+	//Function for setting soundcue and playing sound
+	void PlaySound(class USoundCue* Sound);
 
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
