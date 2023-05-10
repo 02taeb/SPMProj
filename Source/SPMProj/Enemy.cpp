@@ -26,12 +26,12 @@ void AEnemy::BeginPlay()
 	
 	if(GetWorld() && WeaponClass)
 	{
-		AMeleeWeapon* EnemyWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
+		EnemyWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
 		EnemyWeapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
 		EnemyWeapon->SetOwner(this);
 		EnemyWeapon->SetInstigator(this);
 		EnemyWeapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
-		EquipedWeapon = EnemyWeapon;
+		//EquipedWeapon = EnemyWeapon;
 	}
 }
 
@@ -89,10 +89,10 @@ UStatComponent* AEnemy::GetStats() const
 
 void AEnemy::SetWeaponCollison(ECollisionEnabled::Type Collision) const
 {
-	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
+	if(EnemyWeapon && EnemyWeapon->GetCollisionBox())
 	{
-		EquipedWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
-		EquipedWeapon->ActorsToIgnore.Empty();
+		EnemyWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
+		EnemyWeapon->ActorsToIgnore.Empty();
 	}
 }
 
@@ -161,7 +161,7 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 			}
 			GetMesh()->SetCollisionResponseToChannel(ECC_GameTraceChannel1, ECR_Block);
 			OnDeathBPEvent();
-			EquipedWeapon->Destroy(); //Dödar vapnet 
+			EnemyWeapon->Destroy(); //Dödar vapnet 
 			Die();
 			//Destroy(); //Dödar fienden (Kommer ändras)
 		} else
