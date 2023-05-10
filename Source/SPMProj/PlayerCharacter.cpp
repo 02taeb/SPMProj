@@ -25,6 +25,8 @@
 #include "Components/SphereComponent.h"
 #include "EquipableParasite.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/AudioComponent.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -35,9 +37,12 @@ APlayerCharacter::APlayerCharacter()
 	/*Stats*/
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
 
+	AudioComponent = CreateDefaultSubobject<UAudioComponent>("Audio");
+
 		//TESTING FÖR INVENTORY
 	Inventory = CreateDefaultSubobject<UInventoryComponent>("Inventory");
 	Inventory->Capacity = 20;
+	
 	
 	// Health = 100.f;
 	
@@ -123,19 +128,6 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 {
 	if (ActionState == ECharacterActionState::ECAS_Dodging || bGodMode || bIsRespawning) return 0;
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
-
-	//Temporär damage + death
-	
-	// Health = Health - 25;
-	// if (Health <= 0)
-	// {
-	// 	for (AItemActor* Item : Inventory->Items)
-	// 	{
-	// 		if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
-	// 			Cast<AEquipableParasite>(Item)->OnPlayerDeath();
-	// 	}
-	// 	Destroy();
-	// }
 	
 	if(Stats)
 	{
@@ -143,6 +135,8 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		if(Stats->Dead())
 		{
 			/*Död Logiken hör (respawn och sånt)*/
+			PlaySound(DeathSoundCue);
+
 			for (AItemActor* Item : Inventory->Items)
 			{
 				if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
@@ -174,6 +168,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		} else
 		{
 			PlayPlayerHitReact();
+			PlaySound(TakeDamageSoundCue);
 		}
 	}
 	
@@ -285,6 +280,7 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
 	if(CanAttack())
 	{
+		PlaySound(NormalAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingNormal;
 		PlayNormalAttackAnimation();
 	}
@@ -295,6 +291,7 @@ void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 	if(CanAttack()) /*if(CanAttack() && !bHeavyAttackUsed)*/
 	{
 		///bHeavyAttackUsed = true;
+		PlaySound(HeavyAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
 		PlayHeavyAttackAnimation();
 		//GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
@@ -316,6 +313,7 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 		return;
 	}
 	Super::Jump();
+	PlaySound(JumpSoundCue);
 	JumpMaxHoldTime = JumpTime;
 
 	FTimerHandle PlayerStopJumpingHandle;
@@ -619,6 +617,8 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 void APlayerCharacter::OnEat()
 {
 
+	PlaySound(EatingSoundCue);
+
 	// Heala spelaren
 	Stats->HealHealth(OnEatHealAmount);
 	OnHeal();
@@ -703,4 +703,14 @@ void APlayerCharacter::LoadGame()
 
 	//log to check for load
 	UE_LOG(LogTemp, Display, TEXT("Loaded"));
+}
+
+void APlayerCharacter::PlaySound(USoundCue *Sound)
+{
+	if (AudioComponent && Sound)
+	{
+		AudioComponent->SetSound(Sound);
+		AudioComponent->Play();
+	}
+	
 }
