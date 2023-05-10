@@ -128,7 +128,7 @@ void AEquipableParasite::OnEquip()
 			Loc,
 			FRotator(0),
 			EAttachLocation::KeepWorldPosition,
-			true);
+			false);
 	}
 	else if(System)
 		System->Activate();
