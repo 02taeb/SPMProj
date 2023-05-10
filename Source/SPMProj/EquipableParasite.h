@@ -6,6 +6,7 @@
 #include "EquipableItemActor.h"
 #include "EquipableParasite.generated.h"
 
+class UNiagaraComponent;
 UENUM()
 enum class EAffectedStat {
 	None,
@@ -62,5 +63,8 @@ private:
 	float StartAmount = 0;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
 	float OnEatUpgradeAmount = 2;
+	UPROPERTY(EditDefaultsOnly, Category="Parasite")
+	class UNiagaraSystem* Particles;
+	UNiagaraComponent* System;
 
 };

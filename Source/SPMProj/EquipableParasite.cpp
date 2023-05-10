@@ -3,7 +3,11 @@
 
 #include "EquipableParasite.h"
 
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
 #include "StatComponent.h"
+#include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AEquipableParasite::AEquipableParasite()
@@ -112,6 +116,28 @@ void AEquipableParasite::OnEquip()
 			TEXT("ParasiteSocket"));
 	}
 
+	if (Particles && !System)
+	{
+		System =
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+				this,
+				Particles,
+				UGameplayStatics::GetPlayerCharacter(
+					this,
+					0)->
+					GetActorLocation());
+		System->
+		AttachToComponent(
+			UGameplayStatics::GetPlayerCharacter(
+				this,
+				0)->
+				GetRootComponent(),
+				FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+		//System->SetRelativeLocation(FVector(0));
+	}
+	else if(System)
+		System->Activate();
+	
 	// Give buff to player
 	switch (Stat)
 	{
@@ -147,6 +173,9 @@ void AEquipableParasite::OnUnequip()
 		StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
 		StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
+
+	if(Particles && System)
+		System->Deactivate();
 
 	switch (Stat)
 	{
