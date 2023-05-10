@@ -39,7 +39,7 @@ APlayerCharacter::APlayerCharacter()
 	Inventory = CreateDefaultSubobject<UInventoryComponent>("Inventory");
 	Inventory->Capacity = 20;
 	
-	Health = 100.f;
+	// Health = 100.f;
 	
 	/*bHeavyAttackUsed = false;
 	HeavyAttackCooldown = 7.0f;*/
