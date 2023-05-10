@@ -3,7 +3,12 @@
 
 #include "EquipableParasite.h"
 
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "PlayerCharacter.h"
 #include "StatComponent.h"
+#include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AEquipableParasite::AEquipableParasite()
@@ -19,11 +24,6 @@ AEquipableParasite::AEquipableParasite()
 void AEquipableParasite::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// Set PlayerPtr
-	//PlayerActorPtr = GetWorld()->GetFirstPlayerController()->GetOwner();
-	
-	// It would probably be okay to set them already here instead of waiting for pickup
 }
 	
 void AEquipableParasite::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -59,6 +59,10 @@ void AEquipableParasite::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
+	if (System && System->IsActive())
+		System->SetWorldLocation(UGameplayStatics::GetPlayerCharacter(this, 0)->GetActorLocation());
+	
 }
 
 void AEquipableParasite::OnPickup()
@@ -112,6 +116,23 @@ void AEquipableParasite::OnEquip()
 			TEXT("ParasiteSocket"));
 	}
 
+	if (Particles && !System)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Spawning Particles!"));
+		FVector Loc = UGameplayStatics::GetPlayerCharacter(this, 0)->GetActorLocation();
+		Loc.Z -= 100;
+		System = UNiagaraFunctionLibrary::SpawnSystemAttached(
+			Particles,
+			UGameplayStatics::GetPlayerCharacter(this, 0)->GetMesh(),
+			TEXT("ball_rSocket"),
+			Loc,
+			FRotator(0),
+			EAttachLocation::KeepWorldPosition,
+			false);
+	}
+	else if(System)
+		System->Activate();
+	
 	// Give buff to player
 	switch (Stat)
 	{
@@ -147,6 +168,9 @@ void AEquipableParasite::OnUnequip()
 		StaticMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
 		StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
+
+	if(Particles && System)
+		System->Deactivate();
 
 	switch (Stat)
 	{
