@@ -62,7 +62,6 @@ void AEquipableParasite::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void AEquipableParasite::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AEquipableParasite::OnPickup()
@@ -118,22 +117,14 @@ void AEquipableParasite::OnEquip()
 
 	if (Particles && !System)
 	{
-		System =
-			UNiagaraFunctionLibrary::SpawnSystemAtLocation(
-				this,
-				Particles,
-				UGameplayStatics::GetPlayerCharacter(
-					this,
-					0)->
-					GetActorLocation());
-		System->
-		AttachToComponent(
-			UGameplayStatics::GetPlayerCharacter(
-				this,
-				0)->
-				GetRootComponent(),
-				FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-		//System->SetRelativeLocation(FVector(0));
+		System = UNiagaraFunctionLibrary::SpawnSystemAttached(
+			Particles,
+			UGameplayStatics::GetPlayerCharacter(this, 0)->GetMesh(),
+			TEXT("ball_r"),
+			FVector(0),
+			FRotator(0),
+			EAttachLocation::SnapToTarget,
+			true);
 	}
 	else if(System)
 		System->Activate();
