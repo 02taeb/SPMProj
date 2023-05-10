@@ -41,7 +41,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* EnemyAttackMontage;
-	int32 AttackIndex = 1;
 
 	/*Animation montage för hit react*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
@@ -55,7 +54,7 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* EquipedWeapon;
 	
-	void PlayEnemyAttackMontage();
+	void PlayEnemyAttackMontage() const;
 
 	void PlayEnemyHitReact();
 

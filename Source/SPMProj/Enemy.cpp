@@ -96,31 +96,13 @@ void AEnemy::SetWeaponCollison(ECollisionEnabled::Type Collision) const
 	}
 }
 
-void AEnemy::PlayEnemyAttackMontage() 
+void AEnemy::PlayEnemyAttackMontage() const
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	
 	if(AnimInstance && EnemyAttackMontage)
 	{
 		AnimInstance->Montage_Play(EnemyAttackMontage);
-
-		FName SectionToPlay = FName();
-
-		switch (AttackIndex)
-		{
-		case 1:
-			SectionToPlay = FName("BasicFirst");
-			AttackIndex++;
-			break;
-		case 2:
-			SectionToPlay = FName("BasicSecond");
-			AttackIndex = 1;
-			break;
-		default:
-			break;
-		}
-
-		AnimInstance->Montage_JumpToSection(SectionToPlay, EnemyAttackMontage);
 	}
 }
 
@@ -154,11 +136,6 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 				GetWorld()->SpawnActor<AActor>(ActorToSpawn, GetActorLocation() - FVector(0,0,100), GetActorRotation());
 			}
 			*/
-			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
-			{
-				AnimInstance->StopAllMontages(0.1f);
-			}
 			GetMesh()->SetCollisionResponseToChannel(ECC_GameTraceChannel1, ECR_Block);
 			OnDeathBPEvent();
 			EquipedWeapon->Destroy(); //Dödar vapnet 

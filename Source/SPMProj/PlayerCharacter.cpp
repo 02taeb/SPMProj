@@ -25,8 +25,6 @@
 #include "Components/SphereComponent.h"
 #include "EquipableParasite.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/AudioComponent.h"
-#include "Sound/SoundCue.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -37,14 +35,11 @@ APlayerCharacter::APlayerCharacter()
 	/*Stats*/
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
 
-	AudioComponent = CreateDefaultSubobject<UAudioComponent>("Audio");
-
 		//TESTING FÖR INVENTORY
 	Inventory = CreateDefaultSubobject<UInventoryComponent>("Inventory");
 	Inventory->Capacity = 20;
 	
-	
-	// Health = 100.f;
+	Health = 100.f;
 	
 	/*bHeavyAttackUsed = false;
 	HeavyAttackCooldown = 7.0f;*/
@@ -128,6 +123,19 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 {
 	if (ActionState == ECharacterActionState::ECAS_Dodging || bGodMode || bIsRespawning) return 0;
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
+
+	//Temporär damage + death
+	
+	// Health = Health - 25;
+	// if (Health <= 0)
+	// {
+	// 	for (AItemActor* Item : Inventory->Items)
+	// 	{
+	// 		if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
+	// 			Cast<AEquipableParasite>(Item)->OnPlayerDeath();
+	// 	}
+	// 	Destroy();
+	// }
 	
 	if(Stats)
 	{
@@ -135,21 +143,18 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		if(Stats->Dead())
 		{
 			/*Död Logiken hör (respawn och sånt)*/
-			PlaySound(DeathSoundCue);
-
 			for (AItemActor* Item : Inventory->Items)
 			{
 				if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
 				{
-					//Cast<AEquipableParasite>(Item)->OnPlayerDeath();
-					Inventory->RemoveItem(Item);
+					Cast<AEquipableParasite>(Item)->OnPlayerDeath();
 
 				}
 			}
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
 			{
-				AnimInstance->StopAllMontages(0.1f);
+				AnimInstance->StopAllMontages(0.2f);
 			}
 			bIsRespawning = true;
 			Stats->CurrentHealth = 0;
@@ -168,7 +173,6 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		} else
 		{
 			PlayPlayerHitReact();
-			PlaySound(TakeDamageSoundCue);
 		}
 	}
 	
@@ -280,7 +284,6 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
 	if(CanAttack())
 	{
-		PlaySound(NormalAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingNormal;
 		PlayNormalAttackAnimation();
 	}
@@ -291,7 +294,6 @@ void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 	if(CanAttack()) /*if(CanAttack() && !bHeavyAttackUsed)*/
 	{
 		///bHeavyAttackUsed = true;
-		PlaySound(HeavyAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
 		PlayHeavyAttackAnimation();
 		//GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
@@ -313,7 +315,6 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 		return;
 	}
 	Super::Jump();
-	PlaySound(JumpSoundCue);
 	JumpMaxHoldTime = JumpTime;
 
 	FTimerHandle PlayerStopJumpingHandle;
@@ -374,7 +375,6 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 {
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
-	if(ActionState != ECharacterActionState::ECAS_NoAction) return;
 	
 	TArray<FHitResult> HitResults;
 	FVector TraceStart = GetActorLocation();
@@ -561,7 +561,6 @@ void APlayerCharacter::PlayPlayerHitReact()
 	if(AnimInstance && HitReactMontage)
 	{
 		AnimInstance->Montage_Play(HitReactMontage);
-		ActionState = ECharacterActionState::ECAS_IsHit;
 		
 		FName SectionToPlay = FName("HitStraight");
 
@@ -616,8 +615,6 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 
 void APlayerCharacter::OnEat()
 {
-
-	PlaySound(EatingSoundCue);
 
 	// Heala spelaren
 	Stats->HealHealth(OnEatHealAmount);
@@ -703,14 +700,4 @@ void APlayerCharacter::LoadGame()
 
 	//log to check for load
 	UE_LOG(LogTemp, Display, TEXT("Loaded"));
-}
-
-void APlayerCharacter::PlaySound(USoundCue *Sound)
-{
-	if (AudioComponent && Sound)
-	{
-		AudioComponent->SetSound(Sound);
-		AudioComponent->Play();
-	}
-	
 }

@@ -173,7 +173,7 @@ void AEquipableParasite::OnPlayerDeath()
 {
 	//TODO: Kalla på den här metoden när spelaren dör
 	// Destroy this
-	
+
 	//Kommenterade bort då jag tror Destroy kommer skapa problem då pointers i inventory kommer vara null, kanske borde göras genom remove item istället
 	// Destroy();
 }
