@@ -147,7 +147,8 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			{
 				if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
 				{
-					Cast<AEquipableParasite>(Item)->OnPlayerDeath();
+					//Cast<AEquipableParasite>(Item)->OnPlayerDeath();
+					Inventory->RemoveItem(Item);
 
 				}
 			}
