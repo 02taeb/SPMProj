@@ -8,6 +8,8 @@
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/AudioComponent.h"
+#include "Sound/SoundCue.h"
 // Sets default values
 AEnemy::AEnemy()
 {
@@ -15,6 +17,8 @@ AEnemy::AEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 	//Components dont need to be attached.
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
+
+	AudioComponent = CreateDefaultSubobject<UAudioComponent>("Audio");
 }
 
 // Called when the game starts or when spawned
@@ -100,6 +104,8 @@ void AEnemy::PlayEnemyAttackMontage()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	
+	PlaySound(AttackSoundCue);
+
 	if(AnimInstance && EnemyAttackMontage)
 	{
 		AnimInstance->Montage_Play(EnemyAttackMontage);
@@ -145,6 +151,8 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	if(Stats)
 	{	
 		
+		PlaySound(TakeDamageSoundCue);
+
 		Stats->TakeDamage(DamageAmount);		
 		if(Stats->Dead())
 		{
@@ -159,6 +167,7 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 			{
 				AnimInstance->StopAllMontages(0.1f);
 			}
+			PlaySound(DeathSoundCue);
 			GetMesh()->SetCollisionResponseToChannel(ECC_GameTraceChannel1, ECR_Block);
 			OnDeathBPEvent();
 			EnemyWeapon->Destroy(); //Dödar vapnet 
@@ -176,4 +185,14 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 void AEnemy::Die() const
 {
 	OnDeath.Broadcast();
+}
+
+void AEnemy::PlaySound(USoundCue *Sound)
+{
+	if (AudioComponent && Sound)
+	{
+		AudioComponent->SetSound(Sound);
+		AudioComponent->Play();
+	}
+	
 }
