@@ -607,6 +607,24 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 			UE_LOG(LogTemp, Display, TEXT("No Owning Inventory"));
 			return;
 		}
+		// Max two equipped parasites
+		if (Cast<AEquipableParasite>(Item))
+		{
+			int counter = 0;
+			for (AItemActor* ItemActor : Item->OwningInventory->Items)
+			{
+				AEquipableParasite* Par = Cast<AEquipableParasite>(ItemActor);
+				if (Par && Par->bIsEquipped)
+				{
+					counter++;
+					if (counter >= 2)
+					{
+						return;
+					}
+				}
+			}
+			OnEquipParasite();
+		}
 		
 		Item->Use(this);
 		Item->OnUse(this); //Blueprint event

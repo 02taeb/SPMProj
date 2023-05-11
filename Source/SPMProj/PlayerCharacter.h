@@ -61,6 +61,8 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnHeal();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEquipParasite();
 private:
 	// Cheat vars
 	UPROPERTY(EditAnywhere, Category = "Cheats")
