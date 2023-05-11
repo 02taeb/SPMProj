@@ -164,6 +164,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			}
 			//this->GetController()->UnPossess();
 			DisableInput(Cast<APlayerController>(this->GetController()));
+			ActionState = ECharacterActionState::ECAS_NoAction;
 			//Destroy();
 			FTimerHandle RespawnTimer;
 			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,5);
