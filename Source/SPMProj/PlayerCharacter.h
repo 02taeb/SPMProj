@@ -99,6 +99,8 @@ private:
 	class USoundCue* TakeDamageSoundCue;
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
 	class USoundCue* DeathSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* RollSoundCue;
 
 	// Respawning
 	UFUNCTION(BlueprintCallable)
