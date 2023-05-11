@@ -22,6 +22,10 @@ void UInventoryComponent::BeginPlay()
 	
 }
 
+bool UInventoryComponent::IsFull()
+{
+	return Items.Num() >= Capacity;
+}
 
 bool UInventoryComponent::AddItem(AItemActor *Item)
 {
@@ -34,7 +38,7 @@ bool UInventoryComponent::AddItem(AItemActor *Item)
 	}
 	
 
-	if (Items.Num() >= Capacity || !Item)
+	if (IsFull() || !Item)
 	{
 		return false;
 	}

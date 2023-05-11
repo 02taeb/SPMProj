@@ -64,6 +64,8 @@ public:
 	void OnHeal();
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnEquipParasite(AEquipableParasite* Par1, AEquipableParasite* Par2);
+	UFUNCTION(BlueprintCallable)
+	bool BothParSlotsFull(AEquipableParasite* UsingPar);
 private:
 	// Cheat vars
 	UPROPERTY(EditAnywhere, Category = "Cheats")
