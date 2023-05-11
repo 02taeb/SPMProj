@@ -8,6 +8,7 @@
 #include "CharacterStates.h"
 #include "PlayerCharacter.generated.h"
 
+class AEquipableParasite;
 class AMeleeWeapon;
 UCLASS()
 class SPMPROJ_API APlayerCharacter : public ACharacter
@@ -62,7 +63,7 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnHeal();
 	UFUNCTION(BlueprintImplementableEvent)
-	void OnEquipParasite();
+	void OnEquipParasite(AEquipableParasite* Par1, AEquipableParasite* Par2);
 private:
 	// Cheat vars
 	UPROPERTY(EditAnywhere, Category = "Cheats")
@@ -83,6 +84,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "InputSpeeds")
 	float AddedGravityWhenFalling = 0.5f;
 
+	AEquipableParasite* EquippedPar1 = nullptr;
+	AEquipableParasite* EquippedPar2 = nullptr;
 
 	//Audio
 	class UAudioComponent* AudioComponent;

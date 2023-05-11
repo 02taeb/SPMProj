@@ -611,26 +611,28 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 			return;
 		}
 		// Max two equipped parasites
-		if (Cast<AEquipableParasite>(Item))
+		AEquipableParasite* EquippingPar = Cast<AEquipableParasite>(Item);
+		if (EquippingPar != nullptr)
 		{
-			int counter = 0;
-			for (AItemActor* ItemActor : Item->OwningInventory->Items)
+			if (EquippedPar2 != nullptr && EquippedPar2 == EquippingPar)
+				EquippedPar2 = nullptr;
+			else if (EquippedPar1 != nullptr && EquippedPar1 == EquippingPar)
 			{
-				AEquipableParasite* Par = Cast<AEquipableParasite>(ItemActor);
-				if (Par && Par->bIsEquipped)
-				{
-					counter++;
-					if (counter >= 2)
-					{
-						return;
-					}
-				}
+				EquippedPar1 = EquippedPar2;
+				EquippedPar2 = nullptr;
 			}
-			OnEquipParasite();
+			else if (EquippedPar1 == nullptr)
+				EquippedPar1 = EquippingPar;
+			else if (EquippedPar2 == nullptr)
+				EquippedPar2 = EquippingPar;
+			else
+				return;
 		}
-		
+
 		Item->Use(this);
 		Item->OnUse(this); //Blueprint event
+		if (EquippingPar != nullptr)
+			OnEquipParasite(EquippedPar1, EquippedPar2);
 	}
 	
 }
