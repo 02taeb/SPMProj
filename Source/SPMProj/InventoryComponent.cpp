@@ -5,6 +5,7 @@
 #include "ItemActor.h"
 #include "EquipableItemActor.h"
 #include "EquipableParasite.h"
+#include "PlayerCharacter.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
@@ -84,7 +85,12 @@ bool UInventoryComponent::RemoveItem(AItemActor *Item)
 		}
 
 		if (AEquipableParasite* Par = Cast<AEquipableParasite>(Item))
+		{
+		    if (Par->bIsEquipped)
+		        Cast<APlayerCharacter>(GetOwner())->UseItem(Item);
+		        
 			Par->OnPlayerDeath();
+		}
 		
 		Item->OwningInventory = nullptr;
 		Item->World = nullptr;
