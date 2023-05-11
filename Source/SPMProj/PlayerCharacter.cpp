@@ -666,6 +666,11 @@ void APlayerCharacter::OnEat()
 	
 }
 
+bool APlayerCharacter::BothParSlotsFull(AEquipableParasite* UsingPar)
+{
+	return EquippedPar1 != nullptr && EquippedPar2 != nullptr && EquippedPar1 != UsingPar && EquippedPar2 != UsingPar;
+}
+
 void APlayerCharacter::SaveGame()
 {
 	//Create instance of SavedGame
