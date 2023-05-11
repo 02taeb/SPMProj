@@ -346,29 +346,36 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		
 		float ForwardAxisValue = PlayerEIComponent->GetAxisValue("Forward");
 		float RightAxisValue = PlayerEIComponent->GetAxisValue("Right");
-
-		if(FMath::Abs(ForwardAxisValue) == FMath::Abs(RightAxisValue)) return;
+		if(FMath::Abs(ForwardAxisValue) == 0 && FMath::Abs(RightAxisValue) == 0) return;
 
 		AnimInstance->Montage_Play(DodgeMontage);
 		PlaySound(RollSoundCue);
-
 		ActionState = ECharacterActionState::ECAS_Dodging;
 
-		if (ForwardAxisValue > 0)
+		if(FMath::Abs(ForwardAxisValue) == 1 && FMath::Abs(RightAxisValue) == 1)
 		{
-			AnimInstance->Montage_JumpToSection(FName("DodgeForward"), DodgeMontage);
-		}
-		else if (ForwardAxisValue < 0)
+			if(ForwardAxisValue == 1 && RightAxisValue == -1) AnimInstance->Montage_JumpToSection(FName("DodgeFL"), DodgeMontage);
+			if(ForwardAxisValue == 1 && RightAxisValue == 1) AnimInstance->Montage_JumpToSection(FName("DodgeFR"), DodgeMontage);
+			if(ForwardAxisValue == -1 && RightAxisValue == -1) AnimInstance->Montage_JumpToSection(FName("DodgeBL"), DodgeMontage);
+			if(ForwardAxisValue == -1 && RightAxisValue == 1) AnimInstance->Montage_JumpToSection(FName("DodgeBR"), DodgeMontage);
+		} else
 		{
-			AnimInstance->Montage_JumpToSection(FName("DodgeBackwards"), DodgeMontage);
-		}
-		else if (RightAxisValue > 0)
-		{
-			AnimInstance->Montage_JumpToSection(FName("DodgeRight"), DodgeMontage);
-		}
-		else if (RightAxisValue < 0)
-		{
-			AnimInstance->Montage_JumpToSection(FName("DodgeLeft"), DodgeMontage);
+			if (ForwardAxisValue > 0)
+			{
+				AnimInstance->Montage_JumpToSection(FName("DodgeForward"), DodgeMontage);
+			}
+			else if (ForwardAxisValue < 0)
+			{
+				AnimInstance->Montage_JumpToSection(FName("DodgeBackwards"), DodgeMontage);
+			}
+			else if (RightAxisValue > 0)
+			{
+				AnimInstance->Montage_JumpToSection(FName("DodgeRight"), DodgeMontage);
+			}
+			else if (RightAxisValue < 0)
+			{
+				AnimInstance->Montage_JumpToSection(FName("DodgeLeft"), DodgeMontage);
+			}
 		}
 	}
 }

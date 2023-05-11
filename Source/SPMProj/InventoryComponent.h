@@ -10,7 +10,7 @@
 //BLueprint binds to this to update UI
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInventoryUpdated);
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPMPROJ_API UInventoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -33,6 +33,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Items")
 	TArray<class AItemActor*> Items;
 
+    UFUNCTION(BlueprintCallable)
+    bool IsFull();
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
