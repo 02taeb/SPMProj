@@ -132,6 +132,9 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	if(Stats)
 	{
 		Stats->TakeDamage(DamageAmount);
+		
+		PlaySound(TakeDamageSoundCue);
+
 		if(Stats->Dead())
 		{
 			/*Död Logiken hör (respawn och sånt)*/
@@ -168,7 +171,6 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		} else
 		{
 			PlayPlayerHitReact();
-			PlaySound(TakeDamageSoundCue);
 		}
 	}
 	
@@ -348,6 +350,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		if(FMath::Abs(ForwardAxisValue) == FMath::Abs(RightAxisValue)) return;
 
 		AnimInstance->Montage_Play(DodgeMontage);
+		PlaySound(RollSoundCue);
 
 		ActionState = ECharacterActionState::ECAS_Dodging;
 
