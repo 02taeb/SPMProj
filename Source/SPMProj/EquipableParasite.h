@@ -51,8 +51,8 @@ public:
 private:
 	class UStatComponent* StatComponentPtr;
 	bool bCanEquip = false;
-	int TimesUpgraded = 0;
-
+	float CurrentAmount;
+	
 	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parasite")
 	// UStaticMeshComponent* StaticMeshComponent;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite")
@@ -63,6 +63,8 @@ private:
 	float StartAmount = 0;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
 	float OnEatUpgradeAmount = 2;
+	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
+	float MaxAmount = 10;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite")
 	class UNiagaraSystem* Particles;
 	UNiagaraComponent* System;
