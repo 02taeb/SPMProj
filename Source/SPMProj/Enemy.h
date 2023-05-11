@@ -48,6 +48,18 @@ private:
 	class UAnimMontage* EnemyHitReactMontage;
 	double HitAngle;
 
+	//Audio
+	class UAudioComponent* AudioComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* TakeDamageSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* DeathSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* AttackSoundCue;
+
+	void PlaySound(USoundCue* Sound);
+
 	/*Spawn weapon class variable. Used to spawn the weapon on the Enemies right hand socket*/
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AMeleeWeapon> WeaponClass;
