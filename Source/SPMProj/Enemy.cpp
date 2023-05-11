@@ -26,12 +26,12 @@ void AEnemy::BeginPlay()
 	
 	if(GetWorld() && WeaponClass)
 	{
-		EnemyWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
-		EnemyWeapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
-		EnemyWeapon->SetOwner(this);
-		EnemyWeapon->SetInstigator(this);
-		EnemyWeapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
-		//EquipedWeapon = EnemyWeapon;
+		AMeleeWeapon* EquipedWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
+		EquipedWeapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
+		EquipedWeapon->SetOwner(this);
+		EquipedWeapon->SetInstigator(this);
+		EquipedWeapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
+		EnemyWeapon = EquipedWeapon;
 	}
 }
 
