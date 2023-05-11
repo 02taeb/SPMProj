@@ -5,6 +5,7 @@
 
 #include "MeleeWeapon.h"
 #include "StatComponent.h"
+#include "BehaviorTree/BehaviorTreeComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
@@ -184,6 +185,13 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 
 void AEnemy::Die() const
 {
+	if (AController* AIController = GetController())
+	{
+		if (UBehaviorTreeComponent* BehaviorComp = AIController->FindComponentByClass<UBehaviorTreeComponent>())
+		{
+			BehaviorComp->StopTree();
+		}
+	}
 	OnDeath.Broadcast();
 }
 
