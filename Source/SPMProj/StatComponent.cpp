@@ -24,6 +24,7 @@ void UStatComponent::BeginPlay()
 	Super::BeginPlay();
 	/*I guess...*/
 	CurrentHealth = InitialMaxHealth; //Ska ändras vara dynamisk
+	CurrentStamina = 1;
 	// ...
 	
 }
@@ -79,6 +80,16 @@ float UStatComponent::GetInitialArmor() const
 float UStatComponent::GetCurrentArmor() const
 {
 	return CurrentArmor;
+}
+
+float UStatComponent::GetCurrentStamina() const
+{
+	return CurrentStamina;
+}
+
+void UStatComponent::DecreaseStamina(float DecreaseAmount)
+{
+	CurrentStamina = FMath::Clamp(CurrentStamina - DecreaseAmount, 0.f, 1.f);
 }
 
 void UStatComponent::IncreaseMaxHealth(const float Delta)
