@@ -21,7 +21,7 @@ void AFightingArea::BeginPlay()
 }
 
 void AFightingArea::CheckEnemiesDead()
-{
+{	
 	UE_LOG(LogTemp, Warning, TEXT("Checking if enemies are dead"));
 	// Check if all enemies are dead
 	for (AEnemy* Enemy : Enemies)

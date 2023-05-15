@@ -167,7 +167,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			ActionState = ECharacterActionState::ECAS_NoAction;
 			//Destroy();
 			FTimerHandle RespawnTimer;
-			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,5);
+			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,1);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
 		} else
 		{
