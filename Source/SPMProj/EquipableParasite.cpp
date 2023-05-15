@@ -24,6 +24,7 @@ AEquipableParasite::AEquipableParasite()
 void AEquipableParasite::BeginPlay()
 {
 	Super::BeginPlay();
+	CurrentAmount = StartAmount;
 }
 	
 void AEquipableParasite::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -175,13 +176,13 @@ void AEquipableParasite::OnUnequip()
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(-(StartAmount + OnEatUpgradeAmount * TimesUpgraded));
+		StatComponentPtr->IncreaseMaxHealth(-CurrentAmount);
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-(StartAmount + OnEatUpgradeAmount * TimesUpgraded));
+		StatComponentPtr->IncreaseArmor(-CurrentAmount);
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(-(StartAmount + OnEatUpgradeAmount * TimesUpgraded));
+		StatComponentPtr->IncreaseAttackDamage(-CurrentAmount);
 		break;
 	default:
 		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for equipping parasite: %s"),
@@ -206,17 +207,17 @@ void AEquipableParasite::OnPlayerDeath()
 void AEquipableParasite::OnEat()
 {
 	UE_LOG(LogTemp, Display, TEXT("Reached Parasites OnEat"));
-	TimesUpgraded++;
+	
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(OnEatUpgradeAmount);
+		StatComponentPtr->IncreaseMaxHealth(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(OnEatUpgradeAmount);
+		StatComponentPtr->IncreaseArmor(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(OnEatUpgradeAmount);
+		StatComponentPtr->IncreaseAttackDamage(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
 		break;
 	default:
 		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for upgrading parasite: %s"),

@@ -167,7 +167,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			ActionState = ECharacterActionState::ECAS_NoAction;
 			//Destroy();
 			FTimerHandle RespawnTimer;
-			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,5);
+			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,1);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
 		} else
 		{
@@ -281,8 +281,17 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
+	if (Stats->GetCurrentStamina() < Stats->NormalAttackCost)
+	{
+		return;
+	}
+	
+
 	if(CanAttack())
 	{
+		Stats->DecreaseStamina(Stats->NormalAttackCost);
+		Stats->RestoreStamina();
+		//GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::RestoreStamina, Stats->StaminaDelayRate, true);
 		PlaySound(NormalAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingNormal;
 		PlayNormalAttackAnimation();
@@ -291,12 +300,19 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 {
+
+	if (Stats->GetCurrentStamina() < Stats->HeavyAttackCost)
+	{
+		return;
+	}
+	
 	if(CanAttack()) /*if(CanAttack() && !bHeavyAttackUsed)*/
 	{
 		///bHeavyAttackUsed = true;
 		PlaySound(HeavyAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
 		PlayHeavyAttackAnimation();
+		Stats->DecreaseStamina(Stats->HeavyAttackCost);
 		//GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
 	}
 }
@@ -315,13 +331,25 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 		SetActorLocation(GetActorLocation() + GetActorUpVector() * NoClipSpeed);
 		return;
 	}
-	Super::Jump();
-	PlaySound(JumpSoundCue);
-	JumpMaxHoldTime = JumpTime;
 
-	FTimerHandle PlayerStopJumpingHandle;
-	FTimerDelegate PlayerStopJumpingDelegate = FTimerDelegate::CreateUObject(this, &Super::StopJumping);
-	GetWorldTimerManager().SetTimer(PlayerStopJumpingHandle, PlayerStopJumpingDelegate, JumpTime, false);
+	if (Stats->GetCurrentStamina() < Stats->JumpCost)
+	{
+		return;
+	}
+	
+	if (Super::CanJump())
+	{
+			
+		Super::Jump();
+		Stats->DecreaseStamina(Stats->JumpCost);
+		PlaySound(JumpSoundCue);
+		JumpMaxHoldTime = JumpTime;
+
+		FTimerHandle PlayerStopJumpingHandle;
+		FTimerDelegate PlayerStopJumpingDelegate = FTimerDelegate::CreateUObject(this, &Super::StopJumping);
+		GetWorldTimerManager().SetTimer(PlayerStopJumpingHandle, PlayerStopJumpingDelegate, JumpTime, false);
+
+	}
 }
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
@@ -339,6 +367,13 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 	
 	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction) return;
 
+
+	if (Stats->GetCurrentStamina() < Stats->RollCost)
+	{
+		return;
+	}
+	
+
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if(AnimInstance && DodgeMontage)
 	{
@@ -352,6 +387,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		AnimInstance->Montage_Play(DodgeMontage);
 		PlaySound(RollSoundCue);
 		ActionState = ECharacterActionState::ECAS_Dodging;
+		Stats->DecreaseStamina(Stats->RollCost);
 
 		if(FMath::Abs(ForwardAxisValue) == 1 && FMath::Abs(RightAxisValue) == 1)
 		{

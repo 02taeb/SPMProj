@@ -36,6 +36,9 @@ public:
 	float GetInitialArmor() const;
 	float GetCurrentArmor() const;
 
+	float GetCurrentStamina() const;
+	void DecreaseStamina(float DecreaseAmount);
+
 	void IncreaseMaxHealth(const float Delta);
 	void IncreaseAttackDamage(const float Delta);
 	void IncreaseArmor(const float Delta);
@@ -52,6 +55,27 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	float CurrentHealth;
 
+	UPROPERTY(BlueprintReadOnly)
+	float CurrentStamina;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
+	float NormalAttackCost;
+	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
+	float HeavyAttackCost;
+	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
+	float RollCost;
+	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
+	float JumpCost;
+	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
+	float StaminaDelayRate;
+
+
+	UFUNCTION(BlueprintReadWrite)
+	void RestoreStamina();
+
+	UPROPERTY(BlueprintReadWrite)
+	bool Restore;
+
 private:
 	// Health at beginning of game
 	UPROPERTY(EditDefaultsOnly)
@@ -59,6 +83,8 @@ private:
 	// Current max health with upgrades
 	UPROPERTY(EditAnywhere)
 	float MaxHealth;
+
+	bool Decreased;
 
 	// Attack damage at beginning of game
 	UPROPERTY(EditDefaultsOnly)
