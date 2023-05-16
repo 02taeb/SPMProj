@@ -281,17 +281,20 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
-	if (Stats->GetCurrentStamina() < Stats->NormalAttackCost)
+	if (Stats->GetCurrentStamina() <= 0)
 	{
 		return;
 	}
 	
+	if (!Super::CanJump())
+	{
+		return;
+	}
 
 	if(CanAttack())
 	{
 		Stats->DecreaseStamina(Stats->NormalAttackCost);
-		Stats->RestoreStamina();
-		//GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::RestoreStamina, Stats->StaminaDelayRate, true);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
 		PlaySound(NormalAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingNormal;
 		PlayNormalAttackAnimation();
@@ -301,7 +304,12 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 {
 
-	if (Stats->GetCurrentStamina() < Stats->HeavyAttackCost)
+	if (Stats->GetCurrentStamina() <= 0)
+	{
+		return;
+	}
+
+	if (!Super::CanJump())
 	{
 		return;
 	}
@@ -313,6 +321,8 @@ void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
 		PlayHeavyAttackAnimation();
 		Stats->DecreaseStamina(Stats->HeavyAttackCost);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
+
 		//GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
 	}
 }
@@ -332,7 +342,7 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 		return;
 	}
 
-	if (Stats->GetCurrentStamina() < Stats->JumpCost)
+	if (Stats->GetCurrentStamina() <= 0)
 	{
 		return;
 	}
@@ -342,6 +352,7 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 			
 		Super::Jump();
 		Stats->DecreaseStamina(Stats->JumpCost);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
 		PlaySound(JumpSoundCue);
 		JumpMaxHoldTime = JumpTime;
 
@@ -359,6 +370,12 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		SetWeaponCollison(ECollisionEnabled::NoCollision);
 	}
 	
+	if (!Super::CanJump())
+	{
+		return;
+	}
+	
+
 	if (bNoClip)
 	{
 		SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
@@ -368,7 +385,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction) return;
 
 
-	if (Stats->GetCurrentStamina() < Stats->RollCost)
+	if (Stats->GetCurrentStamina() <= 0)
 	{
 		return;
 	}
@@ -388,6 +405,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		PlaySound(RollSoundCue);
 		ActionState = ECharacterActionState::ECAS_Dodging;
 		Stats->DecreaseStamina(Stats->RollCost);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
 
 		if(FMath::Abs(ForwardAxisValue) == 1 && FMath::Abs(RightAxisValue) == 1)
 		{
