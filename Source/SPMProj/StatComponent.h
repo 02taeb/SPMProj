@@ -71,7 +71,7 @@ public:
 
 
 	UFUNCTION(BlueprintCallable)
-	void RestoreStamina(float DeltaTime);
+	void RestoreStamina();
 
 	UPROPERTY(BlueprintReadWrite)
 	bool Restore;
