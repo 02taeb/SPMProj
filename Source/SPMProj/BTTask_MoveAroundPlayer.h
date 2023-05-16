@@ -14,7 +14,6 @@ class SPMPROJ_API UBTTask_MoveAroundPlayer : public UBTTaskNode
 {
 	GENERATED_BODY()
 
-
 public:
 	UBTTask_MoveAroundPlayer();
 
