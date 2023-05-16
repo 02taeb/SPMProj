@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTask_MoveAroundPlayer.h"
+#include "BTTask_ResetTargetLock.h"
 #include "AIController.h"
 #include "Enemy.h"
 
-UBTTask_MoveAroundPlayer::UBTTask_MoveAroundPlayer()
+UBTTask_ResetTargetLock::UBTTask_ResetTargetLock()
 {
-	NodeName = "Move around the player";
+	NodeName = "Reset Target Lock";
 }
 
-EBTNodeResult::Type UBTTask_MoveAroundPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTTask_ResetTargetLock::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 
@@ -20,7 +20,7 @@ EBTNodeResult::Type UBTTask_MoveAroundPlayer::ExecuteTask(UBehaviorTreeComponent
 	
 	if(Enemy == nullptr) return EBTNodeResult::Failed;
 	
-	Enemy->TargetLockPlayer();
+	Enemy->ResetTargetLock();
 	
 	return EBTNodeResult::Succeeded;	
 	
