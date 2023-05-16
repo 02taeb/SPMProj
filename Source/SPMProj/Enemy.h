@@ -50,6 +50,7 @@ private:
 	class UAnimMontage* EnemyHitReactMontage;
 	double HitAngle;
 
+
 	//Audio
 	class UAudioComponent* AudioComponent;
 
@@ -61,6 +62,8 @@ private:
 	class USoundCue* AttackSoundCue;
 
 	void PlaySound(USoundCue* Sound);
+
+	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
 
 	/*Spawn weapon class variable. Used to spawn the weapon on the Enemies right hand socket*/
 	UPROPERTY(EditAnywhere)
