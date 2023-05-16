@@ -68,6 +68,8 @@ public:
 	float JumpCost;
 	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
 	float StaminaDelayRate;
+	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
+	float StaminaRestoreRate;
 
 
 	UFUNCTION(BlueprintCallable)

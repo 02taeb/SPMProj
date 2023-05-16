@@ -181,11 +181,12 @@ void UStatComponent::RestoreStamina(float DeltaTime)
 
 	if (CurrentStamina == 1)
 	{
+		Restore = false;
 		return;
 	}
 	
-	CurrentStamina += DeltaTime / 0.5f;
-	CurrentStamina += FMath::Clamp(CurrentStamina, 0.f, 1.f);
+	CurrentStamina += DeltaTime / StaminaRestoreRate;
+	CurrentStamina = FMath::Clamp(CurrentStamina, 0.f, 1.f);
 
 	return;
 	
