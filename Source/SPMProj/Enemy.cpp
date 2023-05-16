@@ -51,6 +51,11 @@ void AEnemy::EnemyAttackBasic()
 	PlayEnemyAttackMontage();
 }
 
+void AEnemy::EndPlay(EEndPlayReason::Type EndPlayReason)
+{
+	EnemyWeapon->Destroy();
+}
+
 void AEnemy::PlayEnemyHitReact()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
@@ -230,6 +235,7 @@ void AEnemy::Die() const
 			BehaviorComp->StopTree();
 		}
 	}
+	
 	OnDeath.Broadcast();
 }
 
