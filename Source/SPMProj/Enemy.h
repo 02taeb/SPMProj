@@ -76,6 +76,8 @@ private:
 public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnDeathBPEvent();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHitBPEvent();
 	//get stats
 	class UStatComponent* GetStats() const;
 	//function to call for enemy death delegate //fråga daniel om ni inte fattar
@@ -83,4 +85,17 @@ public:
 	// OnDeath delegate that is triggered when the enemy dies
 	FEnemyDeathSignature OnDeath;
 	
+	void TargetLockPlayer();
+	void MoveAlongTargetLock();
+
+private:
+	//player TargetLock
+	class APlayerCharacter* PlayerTargetLock = nullptr;
+	UPROPERTY(EditAnywhere, Category=" Target Lock")
+	float TargetLockDistance = 500.0f;
+	UPROPERTY(EditAnywhere, Category= "Target Lock")
+	float MoveAroundPlayerDistance = 200.0f;
+
+public:
+	void ResetTargetLock();
 };

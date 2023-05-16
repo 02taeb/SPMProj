@@ -68,10 +68,14 @@ public:
 	float JumpCost;
 	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
 	float StaminaDelayRate;
+	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
+	float StaminaRestoreRate;
 
 
-	
-	void RestoreStamina();
+	UFUNCTION(BlueprintCallable)
+	void RestoreStamina(float DeltaTime);
+
+	void SetRestore();
 
 	UPROPERTY(BlueprintReadWrite)
 	bool Restore;
