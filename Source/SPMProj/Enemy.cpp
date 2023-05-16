@@ -14,6 +14,7 @@
 #include "Components/SphereComponent.h"
 #include "Components/AudioComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Sound/SoundCue.h"
 // Sets default values
 AEnemy::AEnemy()
@@ -227,6 +228,63 @@ void AEnemy::Die() const
 		}
 	}
 	OnDeath.Broadcast();
+}
+
+void AEnemy::TargetLockPlayer()
+{
+	AController* PlayerController = GetController();
+	if (PlayerController == nullptr) return;
+	// if(ActionState != ECharacterActionState::ECAS_NoAction) return;
+	
+	TArray<FHitResult> HitResults;
+	FVector TraceStart = GetActorLocation();
+	FRotator TraceRot = GetActorRotation();
+	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
+	TArray<AActor*> ActorsToIgnore;
+
+	if(!PlayerTargetLock)
+	{
+		UKismetSystemLibrary::SphereTraceMulti(
+		this,
+		TraceStart,
+		TraceEnd,
+		60.0f,
+		ETraceTypeQuery::TraceTypeQuery1,
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::None,
+		HitResults,
+		true);
+	} else
+	{
+		PlayerTargetLock = nullptr;
+		return;
+	}
+
+	for(auto Hit : HitResults)
+	{
+		if(IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(APlayerCharacter::StaticClass()))
+		{
+			PlayerTargetLock = Cast<APlayerCharacter>(Hit.GetActor());
+			break;
+		}
+	}
+}
+
+void AEnemy::MoveAlongTargetLock()
+{
+	if(!IsValid(PlayerTargetLock))
+		return;
+	
+	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController == nullptr) return;
+
+	if(PlayerTargetLock)
+	{
+		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), PlayerTargetLock->GetActorLocation());
+		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
+		PlayerController->SetControlRotation(NewRotation + Offset);
+	}
 }
 
 
