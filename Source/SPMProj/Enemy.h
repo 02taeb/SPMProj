@@ -15,11 +15,12 @@ class SPMPROJ_API AEnemy : public ACharacter
 
 public:
 	AEnemy();
-	
+
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	                         AActor* DamageCauser) override;
 
 	void EnemyAttackBasic();
 
@@ -28,6 +29,7 @@ public:
 	/*Functions to enable or disable weapon box collison in blueprints*/
 	UFUNCTION(BlueprintCallable)
 	void SetWeaponCollison(ECollisionEnabled::Type Collision) const;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -66,7 +68,7 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly)
 	class AMeleeWeapon* EnemyWeapon;
-	
+
 	void PlayEnemyAttackMontage();
 
 	void PlayEnemyHitReact();
@@ -82,4 +84,5 @@ public:
 	void Die() const;
 	// OnDeath delegate that is triggered when the enemy dies
 	FEnemyDeathSignature OnDeath;
+	
 };
