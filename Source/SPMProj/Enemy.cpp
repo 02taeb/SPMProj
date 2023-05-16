@@ -186,9 +186,9 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	if (Stats)
 	{
 		PlaySound(TakeDamageSoundCue);
-
-		Stats->TakeDamage(DamageAmount);
-		if (Stats->Dead())
+		OnHitBPEvent();
+		Stats->TakeDamage(DamageAmount);		
+		if(Stats->Dead())
 		{
 			/*
 			if (ActorToSpawn)
