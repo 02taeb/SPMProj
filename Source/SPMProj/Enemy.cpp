@@ -3,18 +3,22 @@
 
 #include "Enemy.h"
 
+#include "AIController.h"
 #include "MeleeWeapon.h"
+#include "PlayerCharacter.h"
 #include "StatComponent.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/AudioComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 // Sets default values
 AEnemy::AEnemy()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	//Components dont need to be attached.
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
@@ -28,8 +32,8 @@ void AEnemy::BeginPlay()
 	Super::BeginPlay();
 	/*Tag, mostly to check weapon collision*/
 	Tags.Add(FName("Enemy"));
-	
-	if(GetWorld() && WeaponClass)
+
+	if (GetWorld() && WeaponClass)
 	{
 		AMeleeWeapon* EquipedWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
 		EquipedWeapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
@@ -48,25 +52,56 @@ void AEnemy::EnemyAttackBasic()
 void AEnemy::PlayEnemyHitReact()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	
-	if(AnimInstance && EnemyHitReactMontage)
+
+	if (AnimInstance && EnemyHitReactMontage)
 	{
 		AnimInstance->Montage_Play(EnemyHitReactMontage);
-		
+
 		FName SectionToPlay = FName("HitStraight");
 
-		if((HitAngle >= -45.f && HitAngle < 45.f) /*|| (HitAngle >= -135.f && HitAngle < 135.f)*/) /*From hit from front or from back (same animation for now)*/
+		if ((HitAngle >= -45.f && HitAngle < 45.f) /*|| (HitAngle >= -135.f && HitAngle < 135.f)*/)
+		/*From hit from front or from back (same animation for now)*/
 		{
 			SectionToPlay = FName("HitStraight");
-		} else if(HitAngle >= -135.f && HitAngle < -45.f)
+		}
+		else if (HitAngle >= -135.f && HitAngle < -45.f)
 		{
 			SectionToPlay = FName("HitFromLeft");
-		} else if(HitAngle >= 45.f && HitAngle < 135.f)
+		}
+		else if (HitAngle >= 45.f && HitAngle < 135.f)
 		{
 			SectionToPlay = FName("HitFromRight");
 		}
-		
+
 		AnimInstance->Montage_JumpToSection(SectionToPlay, EnemyHitReactMontage);
+	}
+
+	//set playerLocation if enemy has been hit by player
+	UBlackboardComponent* Blackboard = nullptr;
+
+	// Get the controller of the enemy actor
+	AController* EnemyController = GetController();
+	if (EnemyController)
+	{
+		// Try to cast the controller to an AAIController
+		AAIController* AIController = Cast<AAIController>(EnemyController);
+		if (AIController)
+		{
+			// Get the Blackboard component from the AI controller
+			Blackboard = AIController->GetBlackboardComponent();
+		}
+	}
+
+	if (Blackboard)
+	{
+		//get player
+		APlayerCharacter* Player = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		ensureMsgf(Player != nullptr, TEXT("Player is nullptr"));
+		if(Player != nullptr)
+		{
+		//set player location as a BB value
+		Blackboard->SetValueAsVector("PlayerLocation", Player->GetActorLocation());
+		}
 	}
 }
 
@@ -83,7 +118,7 @@ void AEnemy::CalculateHitDirection(const FVector ImpactPoint)
 	/*If CrossProduct is positive, the enemy is hit from the right*/
 	/*If CrossProduct is negative, the enemy is hit from the left*/
 	const FVector CrossProduct = FVector::CrossProduct(ForwardV, ToImpact);
-	if(CrossProduct.Z < 0) HitAngle *= -1.f;
+	if (CrossProduct.Z < 0) HitAngle *= -1.f;
 }
 
 
@@ -94,20 +129,20 @@ UStatComponent* AEnemy::GetStats() const
 
 void AEnemy::SetWeaponCollison(ECollisionEnabled::Type Collision) const
 {
-	if(EnemyWeapon && EnemyWeapon->GetCollisionBox())
+	if (EnemyWeapon && EnemyWeapon->GetCollisionBox())
 	{
 		EnemyWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
 		EnemyWeapon->ActorsToIgnore.Empty();
 	}
 }
 
-void AEnemy::PlayEnemyAttackMontage() 
+void AEnemy::PlayEnemyAttackMontage()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	
+
 	PlaySound(AttackSoundCue);
 
-	if(AnimInstance && EnemyAttackMontage)
+	if (AnimInstance && EnemyAttackMontage)
 	{
 		AnimInstance->Montage_Play(EnemyAttackMontage);
 
@@ -135,25 +170,23 @@ void AEnemy::PlayEnemyAttackMontage()
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
+
 /*The function is called via ApplyDamage, they communicate so to say...*/
 float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
-	AActor* DamageCauser)
+                         AActor* DamageCauser)
 {
 	UE_LOG(LogTemp, Warning, TEXT("ENEMY HAS TAKEN DAMAGE"));
-	if(Stats)
-	{	
-		
+	if (Stats)
+	{
 		PlaySound(TakeDamageSoundCue);
-
+		OnHitBPEvent();
 		Stats->TakeDamage(DamageAmount);		
 		if(Stats->Dead())
 		{
@@ -164,7 +197,7 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 			}
 			*/
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
+			if (AnimInstance && AnimInstance->IsAnyMontagePlaying())
 			{
 				AnimInstance->StopAllMontages(0.1f);
 			}
@@ -174,12 +207,13 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 			EnemyWeapon->Destroy(); //Dödar vapnet 
 			Die();
 			//Destroy(); //Dödar fienden (Kommer ändras)
-		} else
+		}
+		else
 		{
 			PlayEnemyHitReact();
 		}
 	}
-	
+
 	return DamageAmount;
 }
 
@@ -195,12 +229,12 @@ void AEnemy::Die() const
 	OnDeath.Broadcast();
 }
 
-void AEnemy::PlaySound(USoundCue *Sound)
+
+void AEnemy::PlaySound(USoundCue* Sound)
 {
 	if (AudioComponent && Sound)
 	{
 		AudioComponent->SetSound(Sound);
 		AudioComponent->Play();
 	}
-	
 }
