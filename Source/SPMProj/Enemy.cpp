@@ -153,7 +153,7 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	{	
 		
 		PlaySound(TakeDamageSoundCue);
-
+		OnHitBPEvent();
 		Stats->TakeDamage(DamageAmount);		
 		if(Stats->Dead())
 		{

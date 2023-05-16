@@ -74,6 +74,8 @@ private:
 public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnDeathBPEvent();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHitBPEvent();
 	//get stats
 	class UStatComponent* GetStats() const;
 	//function to call for enemy death delegate //fråga daniel om ni inte fattar
