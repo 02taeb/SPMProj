@@ -56,11 +56,13 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	
 	FHitResult BoxHit;
 	
+	UBoxComponent* Box = Cast<UBoxComponent>(GetComponentByClass(UBoxComponent::StaticClass()));
+	FVector BoxSize = FVector(Box->Bounds.BoxExtent);
 	UKismetSystemLibrary::BoxTraceSingle(
 	this, 
 	BTStart->GetComponentLocation(),     /*Getting the world location of the start and end trace points*/
 	BTEnd->GetComponentLocation(),
-	FVector(4.5f, 4.5f, 4.5f),   /*Size of trace box*/
+	BoxSize,   /*Size of trace box*/
 	BTStart->GetComponentRotation(),   /*Box trace orientation reference component, taking start*/
 	ETraceTypeQuery::TraceTypeQuery1,  
 	false,   /*Traces only against simple collision*/
