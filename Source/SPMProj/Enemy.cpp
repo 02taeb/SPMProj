@@ -291,6 +291,45 @@ void AEnemy::TargetLockPlayer()
 			break;
 		}
 	}
+	// Rest of the code...
+
+	bool bMoveLeft = FMath::RandBool(); // Randomize the movement direction
+
+	// fixa så de nt är teleport
+	
+	if (bMoveLeft)
+	{
+		// Move left
+		FVector MoveOffset = FVector(0.0f, -MoveAroundPlayerDistance, 0.0f); // Adjust the values as needed
+		AddActorLocalOffset(MoveOffset);
+	}
+	else
+	{
+		// Move right
+		FVector MoveOffset = FVector(0.0f, MoveAroundPlayerDistance, 0.0f); // Adjust the values as needed
+		AddActorLocalOffset(MoveOffset);
+	}
+
+
+	/*FVector MovementDirection = FVector::ZeroVector;
+
+	if (bMoveLeft)
+	{
+		// Move left
+		MovementDirection = FVector(0, -MoveAroundPlayerDistance, 0);
+	}
+	else
+	{
+		// Move right
+		MovementDirection = FVector(0, MoveAroundPlayerDistance, 0);
+	}
+
+	// Apply movement input
+	AddMovementInput(MovementDirection);*/
+	
+	//check for other players within bounds 
+	//move left or right with randomizer else dont move
+	
 }
 
 void AEnemy::MoveAlongTargetLock()
@@ -307,7 +346,9 @@ void AEnemy::MoveAlongTargetLock()
 		                                                              PlayerTargetLock->GetActorLocation());
 		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
 		EnemyController->SetControlRotation(NewRotation + Offset);
+		
 	}
+	
 }
 
 void AEnemy::ResetTargetLock()

@@ -91,8 +91,10 @@ public:
 private:
 	//player TargetLock
 	class APlayerCharacter* PlayerTargetLock = nullptr;
-	UPROPERTY(EditAnywhere, Category=" Target Lock ")
+	UPROPERTY(EditAnywhere, Category=" Target Lock")
 	float TargetLockDistance = 500.0f;
+	UPROPERTY(EditAnywhere, Category= "Target Lock")
+	float MoveAroundPlayerDistance = 200.0f;
 
 public:
 	void ResetTargetLock();
