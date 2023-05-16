@@ -27,7 +27,7 @@ public:
 	void OnPerception(AActor* Actor, FAIStimulus Stimulus);
 
 	virtual void OnPossess(APawn* InPawn) override;
-	//virtual void Tick(float DeltaTime) override;
+	/*virtual void Tick(float DeltaTime) override;*/
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "AI Perception")
@@ -59,5 +59,6 @@ private:
 
 private:
 	FTimerHandle TimerHandle;
-	void setBoolBlackBoardValue();
+	
+	//void setBoolBlackBoardValue(); används inte
 };

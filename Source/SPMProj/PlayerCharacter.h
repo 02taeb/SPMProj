@@ -86,6 +86,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "InputSpeeds")
 	float AddedGravityWhenFalling = 0.5f;
 
+	FTimerHandle StaminaTimer;
+
 	AEquipableParasite* EquippedPar1 = nullptr;
 	AEquipableParasite* EquippedPar2 = nullptr;
 
