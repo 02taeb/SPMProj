@@ -92,7 +92,8 @@ float UStatComponent::GetCurrentStamina() const
 
 void UStatComponent::DecreaseStamina(float DecreaseAmount)
 {
-	Decreased = true;
+	//Decreased = true;
+	Restore = false;
 	CurrentStamina = FMath::Clamp(CurrentStamina - DecreaseAmount, 0.f, 1.f);
 }
 
@@ -174,24 +175,23 @@ void UStatComponent::RestoreStamina(float DeltaTime)
 {
 	// FTimerHandle StaminaTimer;
 	// Decreased = false;
-	// UE_LOG(LogTemp, Display, TEXT("Restoring start"));
+	UE_LOG(LogTemp, Display, TEXT("Restoring"));
 
 	// GetWorld()->GetTimerManager().SetTimer(StaminaTimer, 0.5f, false);
 
-	// if (CurrentStamina == 1)
-	// {
-	// 	return;
-	// }
+	if (CurrentStamina == 1)
+	{
+		return;
+	}
 	
-	// if (Decreased == false)
-	// {
-	// 	CurrentStamina += GetWorld()->DeltaTimeSeconds / 0.5f;
-	// 	CurrentStamina += FMath::Clamp(CurrentStamina, 0.f, 1.f);
-	// }
-	
-
-	
+	CurrentStamina += DeltaTime / 0.5f;
+	CurrentStamina += FMath::Clamp(CurrentStamina, 0.f, 1.f);
 
 	return;
 	
+}
+
+void UStatComponent::SetRestore()
+{
+	Restore = true;
 }

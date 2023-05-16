@@ -291,7 +291,7 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 	{
 		Stats->DecreaseStamina(Stats->NormalAttackCost);
 		//Stats->RestoreStamina();
-		//GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::RestoreStamina, Stats->StaminaDelayRate, true);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false,0.f);
 		PlaySound(NormalAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingNormal;
 		PlayNormalAttackAnimation();
