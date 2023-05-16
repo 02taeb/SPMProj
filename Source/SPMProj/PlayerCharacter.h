@@ -148,6 +148,7 @@ private:
 	class AMeleeWeapon* EquipedWeapon;
 
 	/*Spelaren börjar unequiped*/
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ECharacterWeaponState WeaponState = ECharacterWeaponState::ECWS_Unequiped;
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
