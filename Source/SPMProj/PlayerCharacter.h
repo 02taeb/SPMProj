@@ -257,6 +257,8 @@ private:
 	void AttackMeleeNormal(const FInputActionValue& Value);
 	void AttackMeleeHeavy(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
+	void NoClipUp(const FInputActionValue& Value);
+	void NoClipDown(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
 	void TargetLock(const FInputActionValue& Value);
 
