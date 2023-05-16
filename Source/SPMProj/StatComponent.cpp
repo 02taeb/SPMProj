@@ -170,7 +170,7 @@ void UStatComponent::SetState(const std::string& SavedState)
 	CurrentArmor = std::stof(Values[6]);
 }
 
-void UStatComponent::RestoreStamina()
+void UStatComponent::RestoreStamina(float DeltaTime)
 {
 	// FTimerHandle StaminaTimer;
 	// Decreased = false;
@@ -186,7 +186,7 @@ void UStatComponent::RestoreStamina()
 	// if (Decreased == false)
 	// {
 	// 	CurrentStamina += GetWorld()->DeltaTimeSeconds / 0.5f;
-	// 	//CurrentStamina += FMath::Clamp(CurrentStamina, 0.f, 1.f);
+	// 	CurrentStamina += FMath::Clamp(CurrentStamina, 0.f, 1.f);
 	// }
 	
 

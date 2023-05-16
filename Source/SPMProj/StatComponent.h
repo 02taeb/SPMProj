@@ -70,8 +70,8 @@ public:
 	float StaminaDelayRate;
 
 
-	UFUNCTION(BlueprintReadWrite)
-	void RestoreStamina();
+	UFUNCTION(BlueprintCallable)
+	void RestoreStamina(float DeltaTime);
 
 	UPROPERTY(BlueprintReadWrite)
 	bool Restore;
