@@ -84,13 +84,16 @@ public:
 	void Die() const;
 	// OnDeath delegate that is triggered when the enemy dies
 	FEnemyDeathSignature OnDeath;
-
+	
 	void TargetLockPlayer();
 	void MoveAlongTargetLock();
 
 private:
 	//player TargetLock
-	class APlayerCharacter* PlayerTargetLock;
+	class APlayerCharacter* PlayerTargetLock = nullptr;
 	UPROPERTY(EditAnywhere, Category=" Target Lock ")
 	float TargetLockDistance = 500.0f;
+
+public:
+	void ResetTargetLock();
 };

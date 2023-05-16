@@ -4,6 +4,7 @@
 #include "Enemy.h"
 
 #include "AIController.h"
+#include "EngineUtils.h"
 #include "MeleeWeapon.h"
 #include "PlayerCharacter.h"
 #include "StatComponent.h"
@@ -98,10 +99,10 @@ void AEnemy::PlayEnemyHitReact()
 		//get player
 		APlayerCharacter* Player = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		ensureMsgf(Player != nullptr, TEXT("Player is nullptr"));
-		if(Player != nullptr)
+		if (Player != nullptr)
 		{
-		//set player location as a BB value
-		Blackboard->SetValueAsVector("PlayerLocation", Player->GetActorLocation());
+			//set player location as a BB value
+			Blackboard->SetValueAsVector("PlayerLocation", Player->GetActorLocation());
 		}
 	}
 }
@@ -171,6 +172,8 @@ void AEnemy::PlayEnemyAttackMontage()
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	MoveAlongTargetLock();
 }
 
 // Called to bind functionality to input
@@ -188,8 +191,8 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	{
 		PlaySound(TakeDamageSoundCue);
 		OnHitBPEvent();
-		Stats->TakeDamage(DamageAmount);		
-		if(Stats->Dead())
+		Stats->TakeDamage(DamageAmount);
+		if (Stats->Dead())
 		{
 			/*
 			if (ActorToSpawn)
@@ -232,38 +235,57 @@ void AEnemy::Die() const
 
 void AEnemy::TargetLockPlayer()
 {
-	AController* PlayerController = GetController();
-	if (PlayerController == nullptr) return;
+	AController* EnemyController = GetController();
+	if (EnemyController == nullptr) return;
 	// if(ActionState != ECharacterActionState::ECAS_NoAction) return;
-	
+
 	TArray<FHitResult> HitResults;
 	FVector TraceStart = GetActorLocation();
 	FRotator TraceRot = GetActorRotation();
 	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
 	TArray<AActor*> ActorsToIgnore;
 
-	if(!PlayerTargetLock)
+	FVector CurrentActorLocation = GetActorLocation();
+
+	// Iterate through all actors in the game world
+	for (TActorIterator<AEnemy> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		// Get the enemy actor
+		AEnemy* Enemy = *ActorItr;
+
+		// Calculate the distance between the current enemy actor and the current actor
+		float Distance = FVector::Distance(CurrentActorLocation, Enemy->GetActorLocation());
+
+		// Check if the enemy actor is within the desired range
+		if (Distance <= 2000.0f) // Assuming units are in centimeters (20 meters = 2000 centimeters)
+		{
+			ActorsToIgnore.Add(Enemy);
+		}
+	}
+
+	if (!PlayerTargetLock)
 	{
 		UKismetSystemLibrary::SphereTraceMulti(
-		this,
-		TraceStart,
-		TraceEnd,
-		60.0f,
-		ETraceTypeQuery::TraceTypeQuery1,
-		false,
-		ActorsToIgnore,
-		EDrawDebugTrace::None,
-		HitResults,
-		true);
-	} else
+			this,
+			TraceStart,
+			TraceEnd,
+			60.0f,
+			ETraceTypeQuery::TraceTypeQuery1,
+			false,
+			ActorsToIgnore,
+			EDrawDebugTrace::None,
+			HitResults,
+			true);
+	}
+	else
 	{
 		PlayerTargetLock = nullptr;
 		return;
 	}
 
-	for(auto Hit : HitResults)
+	for (auto Hit : HitResults)
 	{
-		if(IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(APlayerCharacter::StaticClass()))
+		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(APlayerCharacter::StaticClass()))
 		{
 			PlayerTargetLock = Cast<APlayerCharacter>(Hit.GetActor());
 			break;
@@ -273,18 +295,24 @@ void AEnemy::TargetLockPlayer()
 
 void AEnemy::MoveAlongTargetLock()
 {
-	if(!IsValid(PlayerTargetLock))
+	if (!IsValid(PlayerTargetLock))
 		return;
-	
-	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-	if (PlayerController == nullptr) return;
 
-	if(PlayerTargetLock)
+	AController* EnemyController = GetController();
+	if (EnemyController == nullptr) return;
+
+	if (PlayerTargetLock)
 	{
-		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), PlayerTargetLock->GetActorLocation());
+		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(),
+		                                                              PlayerTargetLock->GetActorLocation());
 		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
-		PlayerController->SetControlRotation(NewRotation + Offset);
+		EnemyController->SetControlRotation(NewRotation + Offset);
 	}
+}
+
+void AEnemy::ResetTargetLock()
+{
+	PlayerTargetLock = nullptr;
 }
 
 
