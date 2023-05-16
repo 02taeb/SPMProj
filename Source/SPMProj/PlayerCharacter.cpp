@@ -109,6 +109,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Started, this, &APlayerCharacter::AttackMeleeHeavy);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Started, this, &APlayerCharacter::Dodge);
+	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipUp);
+	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipDown);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
 	//Testinputs för load och save
 	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
@@ -337,10 +339,7 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 	if(ActionState == ECharacterActionState::ECAS_Dodging) return;
 	
 	if (bNoClip)
-	{
-		SetActorLocation(GetActorLocation() + GetActorUpVector() * NoClipSpeed);
 		return;
-	}
 
 	if (Stats->GetCurrentStamina() <= 0)
 	{
@@ -363,6 +362,18 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 	}
 }
 
+void APlayerCharacter::NoClipUp(const FInputActionValue& Value)
+{
+	if (!bNoClip) return;
+	SetActorLocation(GetActorLocation() + GetActorUpVector() * NoClipSpeed);
+}
+
+void APlayerCharacter::NoClipDown(const FInputActionValue& Value)
+{
+	if (!bNoClip) return;
+	SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
+}
+
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
 	if(EquipedWeapon && EquipedWeapon->GetCollisionBox()->GetCollisionEnabled() == ECollisionEnabled::QueryOnly)
@@ -377,10 +388,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 	
 
 	if (bNoClip)
-	{
-		SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
 		return;
-	}
 	
 	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction) return;
 
@@ -491,8 +499,18 @@ void APlayerCharacter::InstaKill(const FInputActionValue& Value)
 void APlayerCharacter::NoClip(const FInputActionValue& Value)
 {
 	bNoClip = !bNoClip;
-	MovementComp -> GravityScale = bNoClip ? 0 : 1;
-	SetActorEnableCollision(!bNoClip);
+	if(bNoClip)
+	{
+		SetActorEnableCollision(false);
+		MovementComp->bCheatFlying = true;
+		MovementComp->SetMovementMode(MOVE_Flying);
+	}
+	else
+	{
+		SetActorEnableCollision(true);
+		MovementComp->bCheatFlying = false;
+		MovementComp->SetMovementMode(MOVE_Walking);
+	}
 	UE_LOG(LogTemp, Display, TEXT("No clip: %d"), bNoClip);
 }
 
