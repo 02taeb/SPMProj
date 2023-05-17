@@ -316,36 +316,51 @@ void AEnemy::TargetLockPlayer(std::string teleport)
 		if (bMoveLeft)
 		{
 			// Move left
-			FVector MoveOffset = FVector(0.0f, -MoveAroundPlayerDistance, 0.0f);
+			FVector MoveOffset = FVector(0.0f, -MoveDistanceFromPlayer, 0.0f);
 			AddActorLocalOffset(-MoveOffset);
 		}
 		else
 		{
 			// Move right
-			FVector MoveOffset = FVector(0.0f, MoveAroundPlayerDistance, 0.0f);
+			FVector MoveOffset = FVector(0.0f, MoveDistanceFromPlayer, 0.0f);
 			AddActorLocalOffset(MoveOffset);
 		}
 	}
 	else
 	{
-		AController* AIEnemyController = GetController();
-		if (AIEnemyController)
+		AController* EnemyAIController = GetController();
+		if (EnemyAIController)
 		{
-			AAIController* AIController = Cast<AAIController>(AIEnemyController);
+			AAIController* AIController = Cast<AAIController>(EnemyAIController);
 			if (AIController)
 			{
-				UBlackboardComponent* EnemyBlackboard = AIController->GetBlackboardComponent();
-				if (EnemyBlackboard)
+				UBlackboardComponent* Blackboard = AIController->GetBlackboardComponent();
+				if (Blackboard)
 				{
+					FVector PlayerLocation = FVector::ZeroVector;
+					FRotator PlayerRotation = FRotator::ZeroRotator;
+            
+					// Get the player's location and rotation
+					APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0); 
+					if (PlayerPawn)
+					{
+						PlayerLocation = PlayerPawn->GetActorLocation();
+						PlayerRotation = PlayerPawn->GetActorRotation();
+					}
+            
 					if (bMoveLeft)
 					{
-						FVector MoveOffset = GetActorLocation() +=  FVector(0.0f, -MoveAroundPlayerDistance, 0.0f);
-						EnemyBlackboard->SetValueAsVector("MoveAroundPlayerLocation", -MoveOffset);
+						// Calculate left offset from player's location and rotation
+						FVector LeftOffset = -(UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer);
+						FVector MoveToLocation = PlayerLocation + LeftOffset;
+						Blackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveToLocation);
 					}
 					else
 					{
-						FVector MoveOffset = GetActorLocation() +=  FVector(0.0f, MoveAroundPlayerDistance, 0.0f);
-						EnemyBlackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveOffset);
+						// Calculate right offset from player's location and rotation
+						FVector RightOffset = UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer;
+						FVector MoveToLocation = PlayerLocation + RightOffset;
+						Blackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveToLocation);
 					}
 				}
 			}

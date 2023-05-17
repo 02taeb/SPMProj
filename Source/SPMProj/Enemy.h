@@ -101,7 +101,7 @@ private:
 	UPROPERTY(EditAnywhere, Category=" Target Lock")
 	float TargetLockDistance = 500.0f;
 	UPROPERTY(EditAnywhere, Category= "Target Lock")
-	float MoveAroundPlayerDistance = 200.0f;
+	float MoveDistanceFromPlayer = 200.0f;
 
 
 public:
