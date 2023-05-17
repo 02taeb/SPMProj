@@ -75,6 +75,10 @@ private:
 	void PlayEnemyAttackMontage();
 
 	void PlayEnemyHitReact();
+	void SetPlayerLocationAfterOnHit();
+	FTimerHandle SetPlayerLocationTimerAfterOnHit;
+	UPROPERTY(EditAnywhere, Category= "Enemy react")
+	float TimeToReact = 2.0f;
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
@@ -88,7 +92,7 @@ public:
 	// OnDeath delegate that is triggered when the enemy dies
 	FEnemyDeathSignature OnDeath;
 	
-	void TargetLockPlayer();
+	void TargetLockPlayer(std::string);
 	void MoveAlongTargetLock();
 
 private:
@@ -97,7 +101,8 @@ private:
 	UPROPERTY(EditAnywhere, Category=" Target Lock")
 	float TargetLockDistance = 500.0f;
 	UPROPERTY(EditAnywhere, Category= "Target Lock")
-	float MoveAroundPlayerDistance = 200.0f;
+	float MoveDistanceFromPlayer = 200.0f;
+
 
 public:
 	void ResetTargetLock();

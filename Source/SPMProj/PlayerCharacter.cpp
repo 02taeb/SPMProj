@@ -142,15 +142,17 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			/*Död Logiken hör (respawn och sånt)*/
 			PlaySound(DeathSoundCue);
 
+			/* Borttaget efter inventory tagits (visuellt) bort
 			for (AItemActor* Item : Inventory->Items)
 			{
 				if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
 				{
 					//Cast<AEquipableParasite>(Item)->OnPlayerDeath();
 					Inventory->RemoveItem(Item);
-
 				}
 			}
+			*/
+			
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
 			{
@@ -374,6 +376,11 @@ void APlayerCharacter::NoClipDown(const FInputActionValue& Value)
 	SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
 }
 
+void APlayerCharacter::KillSelf()
+{
+	Stats->CurrentHealth = 0;
+}
+
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
 	if(EquipedWeapon && EquipedWeapon->GetCollisionBox()->GetCollisionEnabled() == ECollisionEnabled::QueryOnly)
@@ -536,14 +543,23 @@ void APlayerCharacter::TPThird(const FInputActionValue& Value)
 	SetActorLocation(TP3);
 }
 
-void APlayerCharacter::SetRespawnPoint(FVector Position)
+void APlayerCharacter::SetRespawnPoint(FVector Position, FRotator Rotation)
 {
 	RespawnPoint = Position;
+	RespawnRotation = Rotation;
+}
+
+FVector APlayerCharacter::GetRespawnPoint()
+{
+	return RespawnPoint;
 }
 
 void APlayerCharacter::Respawn()
 {
+	APlayerController* TempController = Cast<APlayerController>(this->GetController());
 	SetActorLocation(RespawnPoint);
+	TempController->SetControlRotation(RespawnRotation);
+
 	Stats->CurrentHealth = Stats->GetMaxHealth();
 	this->GetMesh()->SetVisibility(true);
 	this->GetMesh()->SetGenerateOverlapEvents(true);
