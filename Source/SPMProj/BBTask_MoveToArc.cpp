@@ -9,6 +9,11 @@
 #include "Kismet/KismetMathLibrary.h"
 
 
+UBBTask_MoveToArc::UBBTask_MoveToArc()
+{
+	NodeName = "Move to Arc";
+}
+
 EBTNodeResult::Type UBBTask_MoveToArc::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
