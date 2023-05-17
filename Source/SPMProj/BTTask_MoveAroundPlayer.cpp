@@ -7,7 +7,7 @@
 
 UBTTask_MoveAroundPlayer::UBTTask_MoveAroundPlayer()
 {
-	NodeName = "Move around the player";
+	NodeName = "Target Lock Player and Set MoveAroundPlayerLocation";
 }
 
 EBTNodeResult::Type UBTTask_MoveAroundPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -20,7 +20,7 @@ EBTNodeResult::Type UBTTask_MoveAroundPlayer::ExecuteTask(UBehaviorTreeComponent
 	
 	if(Enemy == nullptr) return EBTNodeResult::Failed;
 	
-	Enemy->TargetLockPlayer();
+	Enemy->TargetLockPlayer("no_TP");
 	
 	return EBTNodeResult::Succeeded;	
 	
