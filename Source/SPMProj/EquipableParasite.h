@@ -34,15 +34,18 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
 	void OnPickup();
 	void OnEquip();
 	void OnUnequip();
 	void OnPlayerDeath();
+	UFUNCTION(BlueprintCallable)
 	void OnEat();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parasite")
 	UStaticMeshComponent* StaticMeshComponent;
 
+	UPROPERTY(BlueprintReadWrite)
 	AActor* PlayerActorPtr;
 	virtual void Use(APlayerCharacter* Character) override;
 
