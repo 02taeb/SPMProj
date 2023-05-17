@@ -45,14 +45,10 @@ EBTNodeResult::Type UBTTask_MoveToArcc::ExecuteTask(UBehaviorTreeComponent& Owne
 			AIController->GetPawn()->SetActorRotation(FMath::RInterpTo(AIController->GetPawn()->GetActorRotation(),
 																	   TargetRotation, GetWorld()->GetDeltaSeconds(),
 																	   RotationInterpSpeed));
-
-		
-			FNavPathSharedPtr NavPath = ; 
-			
 			AIController->MoveTo(MoveToLocation);
-			EPathFollowingRequestResult::Type Result = AIController->MoveTo(MoveToLocation, &NavPath);
+	
 			
-			UE_LOG(LogTemp, Warning, TEXT("MoveToLocation result: %d"), static_cast<int32>(Result));
+
 			
 			UE_LOG(LogTemp, Warning, TEXT("MoveToArc task succeeded."));
 			return EBTNodeResult::Succeeded;
