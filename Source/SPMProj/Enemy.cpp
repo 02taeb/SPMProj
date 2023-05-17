@@ -83,7 +83,13 @@ void AEnemy::PlayEnemyHitReact()
 		AnimInstance->Montage_JumpToSection(SectionToPlay, EnemyHitReactMontage);
 	}
 
+	GetWorldTimerManager().SetTimer(SetPlayerLocationTimerAfterOnHit, this, &AEnemy::SetPlayerLocationAfterOnHit,
+	                                TimeToReact, false);
 	//set playerLocation if enemy has been hit by player
+}
+
+void AEnemy::SetPlayerLocationAfterOnHit()
+{
 	UBlackboardComponent* Blackboard = nullptr;
 
 	// Get the controller of the enemy actor
@@ -111,6 +117,7 @@ void AEnemy::PlayEnemyHitReact()
 		}
 	}
 }
+
 
 void AEnemy::CalculateHitDirection(const FVector ImpactPoint)
 {
@@ -235,11 +242,11 @@ void AEnemy::Die() const
 			BehaviorComp->StopTree();
 		}
 	}
-	
+
 	OnDeath.Broadcast();
 }
 
-void AEnemy::TargetLockPlayer()
+void AEnemy::TargetLockPlayer(std::string teleport)
 {
 	AController* EnemyController = GetController();
 	if (EnemyController == nullptr) return;
@@ -299,21 +306,50 @@ void AEnemy::TargetLockPlayer()
 	}
 	// Rest of the code...
 
+
 	bool bMoveLeft = FMath::RandBool(); // Randomize the movement direction
 
 	// fixa så de nt är teleport
 	
-	if (bMoveLeft)
+	if (teleport == "teleport")
 	{
-		// Move left
-		FVector MoveOffset = FVector(0.0f, -MoveAroundPlayerDistance, 0.0f); // Adjust the values as needed
-		AddActorLocalOffset(MoveOffset);
+		if (bMoveLeft)
+		{
+			// Move left
+			FVector MoveOffset = FVector(0.0f, -MoveAroundPlayerDistance, 0.0f);
+			AddActorLocalOffset(-MoveOffset);
+		}
+		else
+		{
+			// Move right
+			FVector MoveOffset = FVector(0.0f, MoveAroundPlayerDistance, 0.0f);
+			AddActorLocalOffset(MoveOffset);
+		}
 	}
 	else
 	{
-		// Move right
-		FVector MoveOffset = FVector(0.0f, MoveAroundPlayerDistance, 0.0f); // Adjust the values as needed
-		AddActorLocalOffset(MoveOffset);
+		AController* AIEnemyController = GetController();
+		if (AIEnemyController)
+		{
+			AAIController* AIController = Cast<AAIController>(AIEnemyController);
+			if (AIController)
+			{
+				UBlackboardComponent* EnemyBlackboard = AIController->GetBlackboardComponent();
+				if (EnemyBlackboard)
+				{
+					if (bMoveLeft)
+					{
+						FVector MoveOffset = GetActorLocation() +=  FVector(0.0f, -MoveAroundPlayerDistance, 0.0f);
+						EnemyBlackboard->SetValueAsVector("MoveAroundPlayerLocation", -MoveOffset);
+					}
+					else
+					{
+						FVector MoveOffset = GetActorLocation() +=  FVector(0.0f, MoveAroundPlayerDistance, 0.0f);
+						EnemyBlackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveOffset);
+					}
+				}
+			}
+		}
 	}
 
 
@@ -332,10 +368,9 @@ void AEnemy::TargetLockPlayer()
 
 	// Apply movement input
 	AddMovementInput(MovementDirection);*/
-	
+
 	//check for other players within bounds 
 	//move left or right with randomizer else dont move
-	
 }
 
 void AEnemy::MoveAlongTargetLock()
@@ -352,9 +387,7 @@ void AEnemy::MoveAlongTargetLock()
 		                                                              PlayerTargetLock->GetActorLocation());
 		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
 		EnemyController->SetControlRotation(NewRotation + Offset);
-		
 	}
-	
 }
 
 void AEnemy::ResetTargetLock()
