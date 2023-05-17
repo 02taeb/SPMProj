@@ -1,20 +1,24 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BBTask_MoveToArc.h"
+#include "BTTask_MoveToArcc.h"
 
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "BTTask_MoveToArcc.h"
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
 
-UBBTask_MoveToArc::UBBTask_MoveToArc()
+UBTTask_MoveToArcc::UBTTask_MoveToArcc()
 {
 	NodeName = "Move to Arc";
 }
 
-EBTNodeResult::Type UBBTask_MoveToArc::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTTask_MoveToArcc::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 
@@ -41,10 +45,15 @@ EBTNodeResult::Type UBBTask_MoveToArc::ExecuteTask(UBehaviorTreeComponent& Owner
 			AIController->GetPawn()->SetActorRotation(FMath::RInterpTo(AIController->GetPawn()->GetActorRotation(),
 																	   TargetRotation, GetWorld()->GetDeltaSeconds(),
 																	   RotationInterpSpeed));
-			
-			
-			AIController->MoveToLocation(MoveToLocation);
 
+		
+			FNavPathSharedPtr NavPath = ; 
+			
+			AIController->MoveTo(MoveToLocation);
+			EPathFollowingRequestResult::Type Result = AIController->MoveTo(MoveToLocation, &NavPath);
+			
+			UE_LOG(LogTemp, Warning, TEXT("MoveToLocation result: %d"), static_cast<int32>(Result));
+			
 			UE_LOG(LogTemp, Warning, TEXT("MoveToArc task succeeded."));
 			return EBTNodeResult::Succeeded;
 		}
@@ -53,3 +62,4 @@ EBTNodeResult::Type UBBTask_MoveToArc::ExecuteTask(UBehaviorTreeComponent& Owner
 	UE_LOG(LogTemp, Warning, TEXT("MoveToArc task failed."));
 	return EBTNodeResult::Failed;
 }
+
