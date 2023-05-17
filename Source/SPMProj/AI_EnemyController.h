@@ -35,6 +35,7 @@ protected:
 
 	virtual void BeginPlay() override;
 
+	virtual FPathFollowingRequestResult MoveTo(const FAIMoveRequest& MoveRequest, FNavPathSharedPtr* OutPath) override;
 private:
 	UPROPERTY(EditAnywhere, Category = "Behavior Tree")
 	class UBehaviorTree* AI_EnemyBehavior;
@@ -59,6 +60,8 @@ private:
 
 private:
 	FTimerHandle TimerHandle;
+
+	FNavPathSharedPtr NavPath;
 	
 	//void setBoolBlackBoardValue(); används inte
 };

@@ -52,9 +52,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Items")
 	void UseItem(class AItemActor* Item);
 	UFUNCTION(BlueprintCallable)
-	void OnEat ();
+	void OnEat();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* HPPar;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* ATKPar;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* DEFPar;
 	
 	bool bInstaKill = false;
+
+	UFUNCTION(BlueprintCallable)
+	void KillSelf();
 
 	//Statcomponent, är public fär blueprint access
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Stats")
@@ -111,9 +120,12 @@ private:
 
 	// Respawning
 	UFUNCTION(BlueprintCallable)
-	void SetRespawnPoint(FVector Position);
+	void SetRespawnPoint(FVector Position, FRotator Rotation);
+	UFUNCTION(BlueprintCallable)
+	FVector GetRespawnPoint();
 	void Respawn();
 	FVector RespawnPoint;
+	FRotator RespawnRotation;
 	bool bIsRespawning = false;
 	
 	//Function for saving and loading the game
