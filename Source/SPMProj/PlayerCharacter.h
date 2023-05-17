@@ -52,7 +52,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Items")
 	void UseItem(class AItemActor* Item);
 	UFUNCTION(BlueprintCallable)
-	void OnEat ();
+	void OnEat();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* HPPar;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* ATKPar;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* DEFPar;
 	
 	bool bInstaKill = false;
 

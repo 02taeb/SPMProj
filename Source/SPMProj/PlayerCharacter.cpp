@@ -142,15 +142,17 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			/*Död Logiken hör (respawn och sånt)*/
 			PlaySound(DeathSoundCue);
 
+			/* Borttaget efter inventory tagits (visuellt) bort
 			for (AItemActor* Item : Inventory->Items)
 			{
 				if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
 				{
 					//Cast<AEquipableParasite>(Item)->OnPlayerDeath();
 					Inventory->RemoveItem(Item);
-
 				}
 			}
+			*/
+			
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
 			{
