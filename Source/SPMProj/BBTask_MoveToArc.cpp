@@ -21,10 +21,12 @@ EBTNodeResult::Type UBBTask_MoveToArc::ExecuteTask(UBehaviorTreeComponent& Owner
 	AAIController* AIController = OwnerComp.GetAIOwner();
 	if (AIController)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("MoveToArc controller found "));
 		UBlackboardComponent* Blackboard = OwnerComp.GetBlackboardComponent();
 		if (Blackboard)
 		{
 			FVector TargetLocation = Blackboard->GetValueAsVector("MoveAroundPlayerLocation");
+			UE_LOG(LogTemp, Warning, TEXT("MoveToArc controller found %s"), *TargetLocation.ToString());
 			FVector OwnerLocation = AIController->GetPawn()->GetActorLocation();
 
 			// Calculate the arc offset
@@ -37,15 +39,17 @@ EBTNodeResult::Type UBBTask_MoveToArc::ExecuteTask(UBehaviorTreeComponent& Owner
 			// Rotate the AI towards the target location
 			FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(OwnerLocation, MoveToLocation);
 			AIController->GetPawn()->SetActorRotation(FMath::RInterpTo(AIController->GetPawn()->GetActorRotation(),
-			                                                           TargetRotation, GetWorld()->GetDeltaSeconds(),
-			                                                           RotationInterpSpeed));
-
-			// Move the AI towards the target location
+																	   TargetRotation, GetWorld()->GetDeltaSeconds(),
+																	   RotationInterpSpeed));
+			
+			
 			AIController->MoveToLocation(MoveToLocation);
 
+			UE_LOG(LogTemp, Warning, TEXT("MoveToArc task succeeded."));
 			return EBTNodeResult::Succeeded;
 		}
 	}
 
+	UE_LOG(LogTemp, Warning, TEXT("MoveToArc task failed."));
 	return EBTNodeResult::Failed;
 }
