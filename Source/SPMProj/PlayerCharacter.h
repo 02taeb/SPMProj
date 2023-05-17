@@ -56,6 +56,9 @@ public:
 	
 	bool bInstaKill = false;
 
+	UFUNCTION(BlueprintCallable)
+	void KillSelf();
+
 	//Statcomponent, är public fär blueprint access
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Stats")
 	class UStatComponent* Stats;
@@ -111,9 +114,12 @@ private:
 
 	// Respawning
 	UFUNCTION(BlueprintCallable)
-	void SetRespawnPoint(FVector Position);
+	void SetRespawnPoint(FVector Position, FRotator Rotation);
+	UFUNCTION(BlueprintCallable)
+	FVector GetRespawnPoint();
 	void Respawn();
 	FVector RespawnPoint;
+	FRotator RespawnRotation;
 	bool bIsRespawning = false;
 	
 	//Function for saving and loading the game
