@@ -23,5 +23,5 @@ protected:
 
 private:
 	float RotationInterpSpeed = 100.0f;
-	float MoveAroundPlayerDistance = 200.0f;
+	float MoveAroundPlayerDistance = 200000.0f;
 };
