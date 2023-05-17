@@ -3,20 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BehaviorTree/Tasks/BTTask_MoveTo.h"
-#include "BBTask_MoveToArc.generated.h"
+#include "BehaviorTree/BTTaskNode.h"
+#include "BTTask_MoveToArcc.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SPMPROJ_API UBBTask_MoveToArc : public UBTTask_MoveTo
+class SPMPROJ_API UBTTask_MoveToArcc : public UBTTaskNode
 {
 	GENERATED_BODY()
 
-
 public:
-	UBBTask_MoveToArc();
+	UBTTask_MoveToArcc();
 
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
@@ -24,4 +23,9 @@ protected:
 private:
 	float RotationInterpSpeed = 100.0f;
 	float MoveAroundPlayerDistance = 200000.0f;
+
+	
 };
+
+
+
