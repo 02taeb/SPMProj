@@ -97,9 +97,10 @@ private:
 
 	FTimerHandle StaminaTimer;
 
+	// Deprecated
 	AEquipableParasite* EquippedPar1 = nullptr;
 	AEquipableParasite* EquippedPar2 = nullptr;
-
+    
 	//Audio
 	class UAudioComponent* AudioComponent;
 
