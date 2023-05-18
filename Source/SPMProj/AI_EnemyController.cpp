@@ -48,10 +48,40 @@ void AAI_EnemyController::BeginPlay()
 	
 }
 
+FPathFollowingRequestResult AAI_EnemyController::MoveTo(const FAIMoveRequest& MoveRequest, FNavPathSharedPtr* OutPath)
+{
+	FAIMoveRequest Dest;
+	FAIMoveRequest MoveReq(Dest);
+	bool bUsePathfinding = true;
+	MoveReq.SetUsePathfinding(bUsePathfinding);
+	bool bAllowPartialPaths = true;
+	MoveReq.SetAllowPartialPath(bAllowPartialPaths);
+	bool bProjectDestinationToNavigation = true;
+	MoveReq.SetProjectGoalLocation(bProjectDestinationToNavigation);
+	TSubclassOf<UNavigationQueryFilter> DefaultNavigationFilterClasss = nullptr ;
+	TSubclassOf<UNavigationQueryFilter>::TClassType* FilterClass = nullptr;
+	MoveReq.SetNavigationFilter(DefaultNavigationFilterClasss);
+	float AcceptanceRadius = 10.0f;
+	MoveReq.SetAcceptanceRadius(AcceptanceRadius);
+	bool bStopOnOverlap = false;
+	MoveReq.SetReachTestIncludesAgentRadius(bStopOnOverlap);
+	bool bCanStrafe = true;
+	MoveReq.SetCanStrafe(bCanStrafe);
+	
+	return Super::MoveTo(MoveRequest, OutPath);
+}
+
 
 void AAI_EnemyController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
+
+	UE_LOG(LogTemp, Warning, TEXT("Possessed AI Controller: %s"), *GetName());
+	if (InPawn)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Possessed Pawn: %s"), *InPawn->GetName());
+	}
+
 
 	//UE_LOG(LogTemp, Display, TEXT("OnPossess method being called"));
 	

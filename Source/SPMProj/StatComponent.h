@@ -66,6 +66,19 @@ public:
 	float RollCost;
 	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
 	float JumpCost;
+	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
+	float StaminaDelayRate;
+	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
+	float StaminaRestoreRate;
+
+
+	UFUNCTION(BlueprintCallable)
+	void RestoreStamina(float DeltaTime);
+
+	void SetRestore();
+
+	UPROPERTY(BlueprintReadWrite)
+	bool Restore;
 
 private:
 	// Health at beginning of game
@@ -75,6 +88,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	float MaxHealth;
 
+	bool Decreased;
 
 	// Attack damage at beginning of game
 	UPROPERTY(EditDefaultsOnly)

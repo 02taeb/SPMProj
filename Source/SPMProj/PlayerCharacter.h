@@ -52,9 +52,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Items")
 	void UseItem(class AItemActor* Item);
 	UFUNCTION(BlueprintCallable)
-	void OnEat ();
+	void OnEat();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* HPPar;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* ATKPar;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* DEFPar;
 	
 	bool bInstaKill = false;
+
+	UFUNCTION(BlueprintCallable)
+	void KillSelf();
 
 	//Statcomponent, är public fär blueprint access
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Stats")
@@ -86,6 +95,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "InputSpeeds")
 	float AddedGravityWhenFalling = 0.5f;
 
+	FTimerHandle StaminaTimer;
+
 	AEquipableParasite* EquippedPar1 = nullptr;
 	AEquipableParasite* EquippedPar2 = nullptr;
 
@@ -109,9 +120,12 @@ private:
 
 	// Respawning
 	UFUNCTION(BlueprintCallable)
-	void SetRespawnPoint(FVector Position);
+	void SetRespawnPoint(FVector Position, FRotator Rotation);
+	UFUNCTION(BlueprintCallable)
+	FVector GetRespawnPoint();
 	void Respawn();
 	FVector RespawnPoint;
+	FRotator RespawnRotation;
 	bool bIsRespawning = false;
 	
 	//Function for saving and loading the game
@@ -146,6 +160,7 @@ private:
 	class AMeleeWeapon* EquipedWeapon;
 
 	/*Spelaren börjar unequiped*/
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ECharacterWeaponState WeaponState = ECharacterWeaponState::ECWS_Unequiped;
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -254,6 +269,8 @@ private:
 	void AttackMeleeNormal(const FInputActionValue& Value);
 	void AttackMeleeHeavy(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
+	void NoClipUp(const FInputActionValue& Value);
+	void NoClipDown(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
 	void TargetLock(const FInputActionValue& Value);
 
