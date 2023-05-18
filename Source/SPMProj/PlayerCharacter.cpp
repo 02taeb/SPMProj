@@ -109,6 +109,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Started, this, &APlayerCharacter::AttackMeleeHeavy);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Started, this, &APlayerCharacter::Dodge);
+	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipUp);
+	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipDown);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
 	//Testinputs för load och save
 	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
@@ -132,20 +134,25 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 	if(Stats)
 	{
 		Stats->TakeDamage(DamageAmount);
+		
+		PlaySound(TakeDamageSoundCue);
+
 		if(Stats->Dead())
 		{
 			/*Död Logiken hör (respawn och sånt)*/
 			PlaySound(DeathSoundCue);
 
+			/* Borttaget efter inventory tagits (visuellt) bort
 			for (AItemActor* Item : Inventory->Items)
 			{
 				if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
 				{
 					//Cast<AEquipableParasite>(Item)->OnPlayerDeath();
 					Inventory->RemoveItem(Item);
-
 				}
 			}
+			*/
+			
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
 			{
@@ -161,14 +168,14 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			}
 			//this->GetController()->UnPossess();
 			DisableInput(Cast<APlayerController>(this->GetController()));
+			ActionState = ECharacterActionState::ECAS_NoAction;
 			//Destroy();
 			FTimerHandle RespawnTimer;
-			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,5);
+			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,1);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
 		} else
 		{
 			PlayPlayerHitReact();
-			PlaySound(TakeDamageSoundCue);
 		}
 	}
 	
@@ -278,8 +285,20 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
+	if (Stats->GetCurrentStamina() <= 0)
+	{
+		return;
+	}
+	
+	if (!Super::CanJump())
+	{
+		return;
+	}
+
 	if(CanAttack())
 	{
+		Stats->DecreaseStamina(Stats->NormalAttackCost);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
 		PlaySound(NormalAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingNormal;
 		PlayNormalAttackAnimation();
@@ -288,12 +307,26 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 {
+
+	if (Stats->GetCurrentStamina() <= 0)
+	{
+		return;
+	}
+
+	if (!Super::CanJump())
+	{
+		return;
+	}
+	
 	if(CanAttack()) /*if(CanAttack() && !bHeavyAttackUsed)*/
 	{
 		///bHeavyAttackUsed = true;
 		PlaySound(HeavyAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
 		PlayHeavyAttackAnimation();
+		Stats->DecreaseStamina(Stats->HeavyAttackCost);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
+
 		//GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
 	}
 }
@@ -308,17 +341,44 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 	if(ActionState == ECharacterActionState::ECAS_Dodging) return;
 	
 	if (bNoClip)
+		return;
+
+	if (Stats->GetCurrentStamina() <= 0)
 	{
-		SetActorLocation(GetActorLocation() + GetActorUpVector() * NoClipSpeed);
 		return;
 	}
-	Super::Jump();
-	PlaySound(JumpSoundCue);
-	JumpMaxHoldTime = JumpTime;
+	
+	if (Super::CanJump())
+	{
+			
+		Super::Jump();
+		Stats->DecreaseStamina(Stats->JumpCost);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
+		PlaySound(JumpSoundCue);
+		JumpMaxHoldTime = JumpTime;
 
-	FTimerHandle PlayerStopJumpingHandle;
-	FTimerDelegate PlayerStopJumpingDelegate = FTimerDelegate::CreateUObject(this, &Super::StopJumping);
-	GetWorldTimerManager().SetTimer(PlayerStopJumpingHandle, PlayerStopJumpingDelegate, JumpTime, false);
+		FTimerHandle PlayerStopJumpingHandle;
+		FTimerDelegate PlayerStopJumpingDelegate = FTimerDelegate::CreateUObject(this, &Super::StopJumping);
+		GetWorldTimerManager().SetTimer(PlayerStopJumpingHandle, PlayerStopJumpingDelegate, JumpTime, false);
+
+	}
+}
+
+void APlayerCharacter::NoClipUp(const FInputActionValue& Value)
+{
+	if (!bNoClip) return;
+	SetActorLocation(GetActorLocation() + GetActorUpVector() * NoClipSpeed);
+}
+
+void APlayerCharacter::NoClipDown(const FInputActionValue& Value)
+{
+	if (!bNoClip) return;
+	SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
+}
+
+void APlayerCharacter::KillSelf()
+{
+	Stats->CurrentHealth = 0;
 }
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
@@ -328,13 +388,23 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		SetWeaponCollison(ECollisionEnabled::NoCollision);
 	}
 	
-	if (bNoClip)
+	if (!Super::CanJump())
 	{
-		SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
 		return;
 	}
 	
+
+	if (bNoClip)
+		return;
+	
 	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction) return;
+
+
+	if (Stats->GetCurrentStamina() <= 0)
+	{
+		return;
+	}
+	
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if(AnimInstance && DodgeMontage)
@@ -344,28 +414,38 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		
 		float ForwardAxisValue = PlayerEIComponent->GetAxisValue("Forward");
 		float RightAxisValue = PlayerEIComponent->GetAxisValue("Right");
-
-		if(FMath::Abs(ForwardAxisValue) == FMath::Abs(RightAxisValue)) return;
+		if(FMath::Abs(ForwardAxisValue) == 0 && FMath::Abs(RightAxisValue) == 0) return;
 
 		AnimInstance->Montage_Play(DodgeMontage);
-
+		PlaySound(RollSoundCue);
 		ActionState = ECharacterActionState::ECAS_Dodging;
+		Stats->DecreaseStamina(Stats->RollCost);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
 
-		if (ForwardAxisValue > 0)
+		if(FMath::Abs(ForwardAxisValue) == 1 && FMath::Abs(RightAxisValue) == 1)
 		{
-			AnimInstance->Montage_JumpToSection(FName("DodgeForward"), DodgeMontage);
-		}
-		else if (ForwardAxisValue < 0)
+			if(ForwardAxisValue == 1 && RightAxisValue == -1) AnimInstance->Montage_JumpToSection(FName("DodgeFL"), DodgeMontage);
+			if(ForwardAxisValue == 1 && RightAxisValue == 1) AnimInstance->Montage_JumpToSection(FName("DodgeFR"), DodgeMontage);
+			if(ForwardAxisValue == -1 && RightAxisValue == -1) AnimInstance->Montage_JumpToSection(FName("DodgeBL"), DodgeMontage);
+			if(ForwardAxisValue == -1 && RightAxisValue == 1) AnimInstance->Montage_JumpToSection(FName("DodgeBR"), DodgeMontage);
+		} else
 		{
-			AnimInstance->Montage_JumpToSection(FName("DodgeBackwards"), DodgeMontage);
-		}
-		else if (RightAxisValue > 0)
-		{
-			AnimInstance->Montage_JumpToSection(FName("DodgeRight"), DodgeMontage);
-		}
-		else if (RightAxisValue < 0)
-		{
-			AnimInstance->Montage_JumpToSection(FName("DodgeLeft"), DodgeMontage);
+			if (ForwardAxisValue > 0)
+			{
+				AnimInstance->Montage_JumpToSection(FName("DodgeForward"), DodgeMontage);
+			}
+			else if (ForwardAxisValue < 0)
+			{
+				AnimInstance->Montage_JumpToSection(FName("DodgeBackwards"), DodgeMontage);
+			}
+			else if (RightAxisValue > 0)
+			{
+				AnimInstance->Montage_JumpToSection(FName("DodgeRight"), DodgeMontage);
+			}
+			else if (RightAxisValue < 0)
+			{
+				AnimInstance->Montage_JumpToSection(FName("DodgeLeft"), DodgeMontage);
+			}
 		}
 	}
 }
@@ -426,8 +506,18 @@ void APlayerCharacter::InstaKill(const FInputActionValue& Value)
 void APlayerCharacter::NoClip(const FInputActionValue& Value)
 {
 	bNoClip = !bNoClip;
-	MovementComp -> GravityScale = bNoClip ? 0 : 1;
-	SetActorEnableCollision(!bNoClip);
+	if(bNoClip)
+	{
+		SetActorEnableCollision(false);
+		MovementComp->bCheatFlying = true;
+		MovementComp->SetMovementMode(MOVE_Flying);
+	}
+	else
+	{
+		SetActorEnableCollision(true);
+		MovementComp->bCheatFlying = false;
+		MovementComp->SetMovementMode(MOVE_Walking);
+	}
 	UE_LOG(LogTemp, Display, TEXT("No clip: %d"), bNoClip);
 }
 
@@ -453,14 +543,23 @@ void APlayerCharacter::TPThird(const FInputActionValue& Value)
 	SetActorLocation(TP3);
 }
 
-void APlayerCharacter::SetRespawnPoint(FVector Position)
+void APlayerCharacter::SetRespawnPoint(FVector Position, FRotator Rotation)
 {
 	RespawnPoint = Position;
+	RespawnRotation = Rotation;
+}
+
+FVector APlayerCharacter::GetRespawnPoint()
+{
+	return RespawnPoint;
 }
 
 void APlayerCharacter::Respawn()
 {
+	APlayerController* TempController = Cast<APlayerController>(this->GetController());
 	SetActorLocation(RespawnPoint);
+	TempController->SetControlRotation(RespawnRotation);
+
 	Stats->CurrentHealth = Stats->GetMaxHealth();
 	this->GetMesh()->SetVisibility(true);
 	this->GetMesh()->SetGenerateOverlapEvents(true);
@@ -607,9 +706,29 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 			UE_LOG(LogTemp, Display, TEXT("No Owning Inventory"));
 			return;
 		}
-		
+		// Max two equipped parasites
+		AEquipableParasite* EquippingPar = Cast<AEquipableParasite>(Item);
+		if (EquippingPar != nullptr)
+		{
+			if (EquippedPar2 != nullptr && EquippedPar2 == EquippingPar)
+				EquippedPar2 = nullptr;
+			else if (EquippedPar1 != nullptr && EquippedPar1 == EquippingPar)
+			{
+				EquippedPar1 = EquippedPar2;
+				EquippedPar2 = nullptr;
+			}
+			else if (EquippedPar1 == nullptr)
+				EquippedPar1 = EquippingPar;
+			else if (EquippedPar2 == nullptr)
+				EquippedPar2 = EquippingPar;
+			else
+				return;
+		}
+
 		Item->Use(this);
 		Item->OnUse(this); //Blueprint event
+		if (EquippingPar != nullptr)
+			OnEquipParasite(EquippedPar1, EquippedPar2);
 	}
 	
 }
@@ -634,6 +753,11 @@ void APlayerCharacter::OnEat()
 		
 	}
 	
+}
+
+bool APlayerCharacter::BothParSlotsFull(AEquipableParasite* UsingPar)
+{
+	return EquippedPar1 != nullptr && EquippedPar2 != nullptr && EquippedPar1 != UsingPar && EquippedPar2 != UsingPar;
 }
 
 void APlayerCharacter::SaveGame()

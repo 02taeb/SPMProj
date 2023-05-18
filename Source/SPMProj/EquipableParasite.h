@@ -34,15 +34,18 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
 	void OnPickup();
 	void OnEquip();
 	void OnUnequip();
 	void OnPlayerDeath();
+	UFUNCTION(BlueprintCallable)
 	void OnEat();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parasite")
 	UStaticMeshComponent* StaticMeshComponent;
 
+	UPROPERTY(BlueprintReadWrite)
 	AActor* PlayerActorPtr;
 	virtual void Use(APlayerCharacter* Character) override;
 
@@ -51,8 +54,8 @@ public:
 private:
 	class UStatComponent* StatComponentPtr;
 	bool bCanEquip = false;
-	int TimesUpgraded = 0;
-
+	float CurrentAmount;
+	
 	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Parasite")
 	// UStaticMeshComponent* StaticMeshComponent;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite")
@@ -63,6 +66,8 @@ private:
 	float StartAmount = 0;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
 	float OnEatUpgradeAmount = 2;
+	UPROPERTY(EditDefaultsOnly, Category="Parasite|Affect")
+	float MaxAmount = 10;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite")
 	class UNiagaraSystem* Particles;
 	UNiagaraComponent* System;

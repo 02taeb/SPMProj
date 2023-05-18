@@ -8,6 +8,7 @@
 #include "CharacterStates.h"
 #include "PlayerCharacter.generated.h"
 
+class AEquipableParasite;
 class AMeleeWeapon;
 UCLASS()
 class SPMPROJ_API APlayerCharacter : public ACharacter
@@ -51,9 +52,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Items")
 	void UseItem(class AItemActor* Item);
 	UFUNCTION(BlueprintCallable)
-	void OnEat ();
+	void OnEat();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* HPPar;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* ATKPar;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* DEFPar;
 	
 	bool bInstaKill = false;
+
+	UFUNCTION(BlueprintCallable)
+	void KillSelf();
 
 	//Statcomponent, är public fär blueprint access
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Stats")
@@ -61,6 +71,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnHeal();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEquipParasite(AEquipableParasite* Par1, AEquipableParasite* Par2);
+	UFUNCTION(BlueprintCallable)
+	bool BothParSlotsFull(AEquipableParasite* UsingPar);
 private:
 	// Cheat vars
 	UPROPERTY(EditAnywhere, Category = "Cheats")
@@ -81,6 +95,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = "InputSpeeds")
 	float AddedGravityWhenFalling = 0.5f;
 
+	FTimerHandle StaminaTimer;
+
+	AEquipableParasite* EquippedPar1 = nullptr;
+	AEquipableParasite* EquippedPar2 = nullptr;
 
 	//Audio
 	class UAudioComponent* AudioComponent;
@@ -97,12 +115,17 @@ private:
 	class USoundCue* TakeDamageSoundCue;
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
 	class USoundCue* DeathSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* RollSoundCue;
 
 	// Respawning
 	UFUNCTION(BlueprintCallable)
-	void SetRespawnPoint(FVector Position);
+	void SetRespawnPoint(FVector Position, FRotator Rotation);
+	UFUNCTION(BlueprintCallable)
+	FVector GetRespawnPoint();
 	void Respawn();
 	FVector RespawnPoint;
+	FRotator RespawnRotation;
 	bool bIsRespawning = false;
 	
 	//Function for saving and loading the game
@@ -137,6 +160,7 @@ private:
 	class AMeleeWeapon* EquipedWeapon;
 
 	/*Spelaren börjar unequiped*/
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ECharacterWeaponState WeaponState = ECharacterWeaponState::ECWS_Unequiped;
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -245,6 +269,8 @@ private:
 	void AttackMeleeNormal(const FInputActionValue& Value);
 	void AttackMeleeHeavy(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
+	void NoClipUp(const FInputActionValue& Value);
+	void NoClipDown(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
 	void TargetLock(const FInputActionValue& Value);
 
