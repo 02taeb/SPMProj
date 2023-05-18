@@ -83,9 +83,9 @@ void AEnemy::PlayEnemyHitReact()
 		AnimInstance->Montage_JumpToSection(SectionToPlay, EnemyHitReactMontage);
 	}
 
+	//set playerLocation if enemy has been hit by player
 	GetWorldTimerManager().SetTimer(SetPlayerLocationTimerAfterOnHit, this, &AEnemy::SetPlayerLocationAfterOnHit,
 	                                TimeToReact, false);
-	//set playerLocation if enemy has been hit by player
 }
 
 void AEnemy::SetPlayerLocationAfterOnHit()
