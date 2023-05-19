@@ -27,6 +27,7 @@ EBTNodeResult::Type UBBTask_MoveToArc::ExecuteTask(UBehaviorTreeComponent& Owner
 		{
 			FVector TargetLocation = Blackboard->GetValueAsVector("MoveAroundPlayerLocation");
 			UE_LOG(LogTemp, Warning, TEXT("MoveToArc controller found %s"), *TargetLocation.ToString());
+			if (AIController->GetPawn() == nullptr) return EBTNodeResult::Failed;
 			FVector OwnerLocation = AIController->GetPawn()->GetActorLocation();
 
 			// Calculate the arc offset

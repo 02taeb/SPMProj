@@ -17,6 +17,7 @@ void AHealthItemActor::Use(class APlayerCharacter *Character)
     
      if (Character)
      {
+     	if (Character->Stats == nullptr) return;
         Character->Stats->HealHealth(HealthToHeal);
 
         if (OwningInventory)

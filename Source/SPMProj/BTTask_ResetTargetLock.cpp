@@ -15,7 +15,7 @@ EBTNodeResult::Type UBTTask_ResetTargetLock::ExecuteTask(UBehaviorTreeComponent&
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 
 	if(OwnerComp.GetAIOwner() == nullptr) return EBTNodeResult::Failed;
-    
+	if (OwnerComp.GetAIOwner()->GetPawn() == nullptr) return EBTNodeResult::Failed;
 	AEnemy* Enemy = Cast<AEnemy>(OwnerComp.GetAIOwner()->GetPawn());
 	
 	if(Enemy == nullptr) return EBTNodeResult::Failed;
