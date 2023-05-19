@@ -18,6 +18,7 @@ class SPMPROJ_API AAI_EnemyController : public AAIController
 public:
 	AAI_EnemyController(const FObjectInitializer& ObjectInitializer);
 
+	UPROPERTY()
 	class UAISenseConfig_Sight* Sight;
 
 	UPROPERTY(BlueprintReadOnly)

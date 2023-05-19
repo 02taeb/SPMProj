@@ -39,7 +39,8 @@ private:
 	float TransparencyMultiplier = 0.5;
 	
 	float TransparencyDegree;
-	
+
+	UPROPERTY()
 	AActor* BlockingActor;
 	
 	void SetTransparency(const FHitResult& HitResult, const FVector TraceStart, const FVector );

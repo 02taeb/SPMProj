@@ -56,6 +56,7 @@ public:
 	bool bIsEquipped = false;
 	
 private:
+	UPROPERTY()
 	class UStatComponent* StatComponentPtr;
 	bool bCanEquip = false;
 	float CurrentAmount;
@@ -74,6 +75,7 @@ private:
 	float MaxAmount = 10;
 	UPROPERTY(EditDefaultsOnly, Category="Parasite")
 	class UNiagaraSystem* Particles;
+	UPROPERTY()
 	UNiagaraComponent* System;
 
 };
