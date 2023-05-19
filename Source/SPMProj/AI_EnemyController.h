@@ -14,6 +14,7 @@ UCLASS()
 class SPMPROJ_API AAI_EnemyController : public AAIController
 {
 	GENERATED_BODY()
+
 public:
 	AAI_EnemyController(const FObjectInitializer& ObjectInitializer);
 
@@ -21,11 +22,11 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	class APlayerCharacter* Agent;
-	
+
 	UFUNCTION()
 	void OnPerception(AActor* Actor, FAIStimulus Stimulus);
-	
-	virtual void OnPossess(APawn* InPawn) override; 
+
+	virtual void OnPossess(APawn* InPawn) override;
 	//virtual void Tick(float DeltaTime) override;
 
 protected:
@@ -33,8 +34,8 @@ protected:
 	class UAIPerceptionComponent* AIPerceptionComponent;
 
 	virtual void BeginPlay() override;
-	
-private: 
+
+private:
 	UPROPERTY(EditAnywhere, Category = "Behavior Tree")
 	class UBehaviorTree* AI_EnemyBehavior;
 
@@ -56,4 +57,7 @@ private:
 	UPROPERTY(EditAnywhere, Category= "AI Perception")
 	bool DetectFriendies = true;
 
+private:
+	FTimerHandle TimerHandle;
+	void setBoolBlackBoardValue();
 };
