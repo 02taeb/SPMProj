@@ -153,6 +153,16 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			}
 			*/
 			
+			AEquipableParasite* Temp = Cast<AEquipableParasite>(HPPar);
+			if (Temp->bIsEquipped)
+				Temp->OnPlayerDeath();
+			Temp = Cast<AEquipableParasite>(ATKPar);
+			if (Temp->bIsEquipped)
+				Temp->OnPlayerDeath();
+			Temp = Cast<AEquipableParasite>(DEFPar);
+			if (Temp->bIsEquipped)
+				Temp->OnPlayerDeath();
+			
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
 			{
@@ -706,6 +716,7 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 			UE_LOG(LogTemp, Display, TEXT("No Owning Inventory"));
 			return;
 		}
+		
 		// Max two equipped parasites
 		AEquipableParasite* EquippingPar = Cast<AEquipableParasite>(Item);
 		if (EquippingPar != nullptr)

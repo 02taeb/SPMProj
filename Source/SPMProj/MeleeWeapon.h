@@ -20,6 +20,7 @@ public:
 	void AttachWeaponOnPlayer(USceneComponent* Player, FName SocketLabel);
 
 	/*Used to store already hit actors under a single attack so that no two overlaps are generated on the same actor*/
+	UPROPERTY()
 	TArray<AActor*> ActorsToIgnore;
 
 	//För partikeleffekt vid hit
