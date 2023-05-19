@@ -52,6 +52,7 @@ private:
 
 
 	//Audio
+	UPROPERTY()
 	class UAudioComponent* AudioComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
@@ -97,6 +98,7 @@ public:
 
 private:
 	//player TargetLock
+	UPROPERTY()
 	class APlayerCharacter* PlayerTargetLock = nullptr;
 	UPROPERTY(EditAnywhere, Category=" Target Lock")
 	float TargetLockDistance = 500.0f;

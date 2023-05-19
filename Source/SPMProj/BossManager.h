@@ -39,7 +39,11 @@ private:
 	bool bFightStarted = false;
 	bool bPassedChecks = true;
 	bool bAllEnemiesKilled = true;
+
+	UPROPERTY()
 	TArray<AActor*> SpawnedEnemies;
+
+	UPROPERTY()
 	USceneComponent* DummyParentForColls;
 
 	UPROPERTY(EditAnywhere, Category = "BossFight|Values")
@@ -65,8 +69,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = "BossFight|Crystals")
 	TArray<TSoftObjectPtr<ABossCrystal>> BossCrystals;
 
-	
+	UPROPERTY()
 	UStaticMeshComponent* BossCloud;
+
+	UPROPERTY()
 	UBoxComponent* ArenaCollider;
 	
 	UPROPERTY(EditAnywhere, Category = "BossFight|AttackPatterns")
