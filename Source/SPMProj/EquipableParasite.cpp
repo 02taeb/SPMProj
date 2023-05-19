@@ -3,7 +3,12 @@
 
 #include "EquipableParasite.h"
 
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "PlayerCharacter.h"
 #include "StatComponent.h"
+#include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AEquipableParasite::AEquipableParasite()
@@ -19,11 +24,7 @@ AEquipableParasite::AEquipableParasite()
 void AEquipableParasite::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// Set PlayerPtr
-	//PlayerActorPtr = GetWorld()->GetFirstPlayerController()->GetOwner();
-	
-	// It would probably be okay to set them already here instead of waiting for pickup
+	CurrentAmount = StartAmount;
 }
 	
 void AEquipableParasite::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -59,6 +60,10 @@ void AEquipableParasite::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	
+	if (System && System->IsActive())
+		System->SetWorldLocation(UGameplayStatics::GetPlayerCharacter(this, 0)->GetActorLocation());
+	
 }
 
 void AEquipableParasite::OnPickup()
@@ -112,6 +117,23 @@ void AEquipableParasite::OnEquip()
 			TEXT("ParasiteSocket"));
 	}
 
+	if (Particles && !System)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Spawning Particles!"));
+		FVector Loc = UGameplayStatics::GetPlayerCharacter(this, 0)->GetActorLocation();
+		Loc.Z -= 100;
+		System = UNiagaraFunctionLibrary::SpawnSystemAttached(
+			Particles,
+			UGameplayStatics::GetPlayerCharacter(this, 0)->GetMesh(),
+			TEXT("ball_rSocket"),
+			Loc,
+			FRotator(0),
+			EAttachLocation::KeepWorldPosition,
+			false);
+	}
+	else if(System)
+		System->Activate();
+	
 	// Give buff to player
 	switch (Stat)
 	{
@@ -148,16 +170,19 @@ void AEquipableParasite::OnUnequip()
 		StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
+	if(Particles && System)
+		System->Deactivate();
+
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(-(StartAmount + OnEatUpgradeAmount * TimesUpgraded));
+		StatComponentPtr->IncreaseMaxHealth(-CurrentAmount);
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-(StartAmount + OnEatUpgradeAmount * TimesUpgraded));
+		StatComponentPtr->IncreaseArmor(-CurrentAmount);
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(-(StartAmount + OnEatUpgradeAmount * TimesUpgraded));
+		StatComponentPtr->IncreaseAttackDamage(-CurrentAmount);
 		break;
 	default:
 		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for equipping parasite: %s"),
@@ -171,27 +196,41 @@ void AEquipableParasite::OnUnequip()
 
 void AEquipableParasite::OnPlayerDeath()
 {
-	//TODO: Kalla på den här metoden när spelaren dör
-	// Destroy this
-
-	//Kommenterade bort då jag tror Destroy kommer skapa problem då pointers i inventory kommer vara null, kanske borde göras genom remove item istället
-	// Destroy();
+	if (bIsEquipped)
+	{
+		switch (Stat)
+		{
+		case EAffectedStat::Health:
+			StatComponentPtr->IncreaseMaxHealth(-OnEatUpgradeAmount);
+			break;
+		case EAffectedStat::Armor:
+			StatComponentPtr->IncreaseArmor(-OnEatUpgradeAmount);
+			break;
+		case EAffectedStat::AttackDamage:
+			StatComponentPtr->IncreaseAttackDamage(-OnEatUpgradeAmount);
+			break;
+		default:
+			UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for upgrading parasite: %s"),
+				*GetActorNameOrLabel());
+			break;
+		}
+	}
 }
 
 void AEquipableParasite::OnEat()
 {
 	UE_LOG(LogTemp, Display, TEXT("Reached Parasites OnEat"));
-	TimesUpgraded++;
+	
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
-		StatComponentPtr->IncreaseMaxHealth(OnEatUpgradeAmount);
+		StatComponentPtr->IncreaseMaxHealth(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
 		break;
 	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(OnEatUpgradeAmount);
+		StatComponentPtr->IncreaseArmor(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
 		break;
 	case EAffectedStat::AttackDamage:
-		StatComponentPtr->IncreaseAttackDamage(OnEatUpgradeAmount);
+		StatComponentPtr->IncreaseAttackDamage(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
 		break;
 	default:
 		UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for upgrading parasite: %s"),

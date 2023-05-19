@@ -17,6 +17,7 @@ class SPMPROJ_API UBTTask_ClearBlackboardValue : public UBTTask_BlackboardBase
 public: 
 	UBTTask_ClearBlackboardValue();
 
-protected: 
+protected:
+	//override member function 
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) override;
 };

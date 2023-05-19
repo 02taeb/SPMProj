@@ -5,6 +5,12 @@
 
 #include <string>
 
+#include "NiagaraFunctionLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
+
+
 // Sets default values for this component's properties
 UStatComponent::UStatComponent()
 {
@@ -21,6 +27,7 @@ void UStatComponent::BeginPlay()
 	Super::BeginPlay();
 	/*I guess...*/
 	CurrentHealth = InitialMaxHealth; //Ska ändras vara dynamisk
+	CurrentStamina = 1;
 	// ...
 	
 }
@@ -76,6 +83,18 @@ float UStatComponent::GetInitialArmor() const
 float UStatComponent::GetCurrentArmor() const
 {
 	return CurrentArmor;
+}
+
+float UStatComponent::GetCurrentStamina() const
+{
+	return CurrentStamina;
+}
+
+void UStatComponent::DecreaseStamina(float DecreaseAmount)
+{
+	//Decreased = true;
+	Restore = false;
+	CurrentStamina = FMath::Clamp(CurrentStamina - DecreaseAmount, 0.f, 1.f);
 }
 
 void UStatComponent::IncreaseMaxHealth(const float Delta)
@@ -150,4 +169,30 @@ void UStatComponent::SetState(const std::string& SavedState)
 	CurrentAttackDamage = std::stof(Values[4]);
 	InitialArmor = std::stof(Values[5]);
 	CurrentArmor = std::stof(Values[6]);
+}
+
+void UStatComponent::RestoreStamina(float DeltaTime)
+{
+	// FTimerHandle StaminaTimer;
+	// Decreased = false;
+	UE_LOG(LogTemp, Display, TEXT("Restoring"));
+
+	// GetWorld()->GetTimerManager().SetTimer(StaminaTimer, 0.5f, false);
+
+	if (CurrentStamina == 1)
+	{
+		Restore = false;
+		return;
+	}
+	
+	CurrentStamina += DeltaTime / StaminaRestoreRate;
+	CurrentStamina = FMath::Clamp(CurrentStamina, 0.f, 1.f);
+
+	return;
+	
+}
+
+void UStatComponent::SetRestore()
+{
+	Restore = true;
 }

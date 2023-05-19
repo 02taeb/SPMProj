@@ -4,6 +4,7 @@
 #include "HealthItemActor.h"
 #include "PlayerCharacter.h"
 #include "InventoryComponent.h"
+#include "StatComponent.h"
 
 AHealthItemActor::AHealthItemActor()
 {
@@ -16,14 +17,12 @@ void AHealthItemActor::Use(class APlayerCharacter *Character)
     
      if (Character)
      {
-        Character->Health += HealthToHeal;
+        Character->Stats->HealHealth(HealthToHeal);
 
         if (OwningInventory)
         {
             OwningInventory->RemoveItem(this);
         }
-        
-        
      }
      
 }

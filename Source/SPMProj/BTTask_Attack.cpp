@@ -4,14 +4,14 @@
 #include "BTTask_Attack.h"
 #include "AIController.h"
 #include "Enemy.h"
-#include "Animation/AnimInstance.h"
+//#include "Animation/AnimInstance.h"
 
 
 
 UBTTask_Attack::UBTTask_Attack()
 {
    NodeName = TEXT("Perform MeeleAttack");
-    
+	
 }
 
 EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)

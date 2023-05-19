@@ -27,7 +27,7 @@ public:
 	void OnPerception(AActor* Actor, FAIStimulus Stimulus);
 
 	virtual void OnPossess(APawn* InPawn) override;
-	//virtual void Tick(float DeltaTime) override;
+	/*virtual void Tick(float DeltaTime) override;*/
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "AI Perception")
@@ -35,6 +35,7 @@ protected:
 
 	virtual void BeginPlay() override;
 
+	virtual FPathFollowingRequestResult MoveTo(const FAIMoveRequest& MoveRequest, FNavPathSharedPtr* OutPath) override;
 private:
 	UPROPERTY(EditAnywhere, Category = "Behavior Tree")
 	class UBehaviorTree* AI_EnemyBehavior;
@@ -59,5 +60,8 @@ private:
 
 private:
 	FTimerHandle TimerHandle;
-	void setBoolBlackBoardValue();
+
+	FNavPathSharedPtr NavPath;
+	
+	//void setBoolBlackBoardValue(); används inte
 };

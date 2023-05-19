@@ -8,6 +8,7 @@
 #include "CharacterStates.h"
 #include "PlayerCharacter.generated.h"
 
+class AEquipableParasite;
 class AMeleeWeapon;
 UCLASS()
 class SPMPROJ_API APlayerCharacter : public ACharacter
@@ -35,6 +36,8 @@ public:
 
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
+	void CalculateHitDirection(const FVector ImpactPoint);
+
 	/*Functions to enable or disable weapon box collison in blueprints*/
 	UFUNCTION(BlueprintCallable)
 	void SetWeaponCollison(ECollisionEnabled::Type Collision);
@@ -49,13 +52,29 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Items")
 	void UseItem(class AItemActor* Item);
 	UFUNCTION(BlueprintCallable)
-	void OnEat ();
+	void OnEat();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* HPPar;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* ATKPar;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
+	AActor* DEFPar;
 	
 	bool bInstaKill = false;
+
+	UFUNCTION(BlueprintCallable)
+	void KillSelf();
 
 	//Statcomponent, är public fär blueprint access
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Stats")
 	class UStatComponent* Stats;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHeal();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEquipParasite(AEquipableParasite* Par1, AEquipableParasite* Par2);
+	UFUNCTION(BlueprintCallable)
+	bool BothParSlotsFull(AEquipableParasite* UsingPar);
 private:
 	// Cheat vars
 	UPROPERTY(EditAnywhere, Category = "Cheats")
@@ -71,12 +90,51 @@ private:
 	FVector TP2;
 	UPROPERTY(EditAnywhere, Category = "Cheats")
 	FVector TP3;
+
+	float GravityScale;
+	UPROPERTY(EditAnywhere, Category = "InputSpeeds")
+	float AddedGravityWhenFalling = 0.5f;
+
+	FTimerHandle StaminaTimer;
+
+	AEquipableParasite* EquippedPar1 = nullptr;
+	AEquipableParasite* EquippedPar2 = nullptr;
+
+	//Audio
+	class UAudioComponent* AudioComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* EatingSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* NormalAttackSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* HeavyAttackSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* JumpSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* TakeDamageSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* DeathSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* RollSoundCue;
+
+	// Respawning
+	UFUNCTION(BlueprintCallable)
+	void SetRespawnPoint(FVector Position, FRotator Rotation);
+	UFUNCTION(BlueprintCallable)
+	FVector GetRespawnPoint();
+	void Respawn();
+	FVector RespawnPoint;
+	FRotator RespawnRotation;
+	bool bIsRespawning = false;
 	
 	//Function for saving and loading the game
+	UFUNCTION(BlueprintCallable)
 	void SaveGame();
-
 	void LoadGame();
-	
+
+	//Function for setting soundcue and playing sound
+	void PlaySound(class USoundCue* Sound);
 
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
@@ -102,16 +160,17 @@ private:
 	class AMeleeWeapon* EquipedWeapon;
 
 	/*Spelaren börjar unequiped*/
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ECharacterWeaponState WeaponState = ECharacterWeaponState::ECWS_Unequiped;
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ECharacterActionState ActionState = ECharacterActionState::ECAS_NoAction;
 
-	/*Cooldown variables*/
+	/*/*Cooldown variables#1#
 	FTimerHandle HeavyAttackTimer;
 	bool bHeavyAttackUsed;
 	UPROPERTY(EditAnywhere, Category=Cooldown)
-	float HeavyAttackCooldown;
+	float HeavyAttackCooldown;*/
 
 	/*Target lock*/
 	class AEnemy* EnemyTargetLock;
@@ -129,6 +188,15 @@ private:
 	/*Animation montage for dodge*/ 
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
 	class UAnimMontage* DodgeMontage;
+
+	//Anims för ätande
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	UAnimMontage* CrouchMontage;
+
+	/*Animation montage för hit react*/
+	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
+	UAnimMontage* HitReactMontage;
+	double HitAngle;
 	
 	/*UPROPERTY(EditAnywhere, Category = "Interacting")
 	TSoftObjectPtr<AActor> InteractableActor;*/
@@ -201,6 +269,8 @@ private:
 	void AttackMeleeNormal(const FInputActionValue& Value);
 	void AttackMeleeHeavy(const FInputActionValue& Value);
 	void JumpChar(const FInputActionValue& Value);
+	void NoClipUp(const FInputActionValue& Value);
+	void NoClipDown(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
 	void TargetLock(const FInputActionValue& Value);
 
@@ -216,17 +286,20 @@ private:
 
 	void PlayNormalAttackAnimation();
 	void PlayHeavyAttackAnimation();
+	void PlayPlayerHitReact();
+	void PlayCrouchAnimation();
+	void StopCrouch();
 	
 	/*Kollar om States uppfyller kravet för att kunna attackera*/
 	bool CanAttack();
 
 	/*Cooldown metoder*/
-	void ResetHeavyAttackCooldown();
+	//void ResetHeavyAttackCooldown();
 public:
 	/*Setter for MeleeWeapon class, BeginOverlap sets the weapon pointer to MeleeWeapon object, EndOverlap setts the weapon to nullptr
 	 * Här i public längst under för att vi har en forward deklaration uppe.
 	 */ 
 	FORCEINLINE void SetOverlapWeapon(AMeleeWeapon* Weapon) { OverlapWeapon = Weapon; }
 	FORCEINLINE ECharacterActionState GetPlayerAttackType() { return ActionState; }
-	/*Dumb fucking function, tried too access Player via default Animation bluepring but didnt work... Remove in future*/
+	
 };
