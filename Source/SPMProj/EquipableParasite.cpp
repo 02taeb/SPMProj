@@ -93,6 +93,7 @@ void AEquipableParasite::OnPickup()
 
 void AEquipableParasite::OnEquip()
 {
+	UE_LOG(LogTemp, Display, TEXT("Equipping par!"));
 	if (Stat == EAffectedStat::None)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Unset stat type for equipping parasite: %s"), *GetActorNameOrLabel());
@@ -161,7 +162,7 @@ void AEquipableParasite::OnEquip()
 void AEquipableParasite::OnUnequip()
 {
 	if (!bIsEquipped) return;
-
+	UE_LOG(LogTemp, Display, TEXT("UnEquipping par!"));
 	if(bUseStaticMesh)
 	{
 		// Reverse of OnEquip()
@@ -196,12 +197,25 @@ void AEquipableParasite::OnUnequip()
 
 void AEquipableParasite::OnPlayerDeath()
 {
-	//TODO: Kalla på den här metoden när spelaren dör
-	// Destroy this
 	if (bIsEquipped)
-		OnUnequip();
-	//Kommenterade bort då jag tror Destroy kommer skapa problem då pointers i inventory kommer vara null, kanske borde göras genom remove item istället
-	// Destroy();
+	{
+		switch (Stat)
+		{
+		case EAffectedStat::Health:
+			StatComponentPtr->IncreaseMaxHealth(-OnEatUpgradeAmount);
+			break;
+		case EAffectedStat::Armor:
+			StatComponentPtr->IncreaseArmor(-OnEatUpgradeAmount);
+			break;
+		case EAffectedStat::AttackDamage:
+			StatComponentPtr->IncreaseAttackDamage(-OnEatUpgradeAmount);
+			break;
+		default:
+			UE_LOG(LogTemp, Warning, TEXT("Unrecognised stat for upgrading parasite: %s"),
+				*GetActorNameOrLabel());
+			break;
+		}
+	}
 }
 
 void AEquipableParasite::OnEat()
