@@ -24,6 +24,7 @@ void UBTService_StartLocation::OnBecomeRelevant(UBehaviorTreeComponent& OwnerCom
 	
 	if (!bStartLocationSet)
 	{
+		//test
 		//set startlocation and startrotation, only once as soon as the service becomes relevant	
 		OwnerComp.GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"),
 		                                                     OwnerComp.GetAIOwner()->GetPawn()->GetActorLocation());

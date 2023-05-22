@@ -27,5 +27,6 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
 	//call enemys attack method
     Enemy->EnemyAttackBasic();
 	
+	
     return EBTNodeResult::Succeeded;
 }
