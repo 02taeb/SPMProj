@@ -17,6 +17,8 @@ void UBTService_LastPlayerLocation::TickNode(UBehaviorTreeComponent &OwnerComp, 
 
     //ignore actors that are of enemy
 
+    // göra om till AI sight percpetion
+
     const APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
     if (PlayerPawn == nullptr)
         return;
@@ -27,5 +29,6 @@ void UBTService_LastPlayerLocation::TickNode(UBehaviorTreeComponent &OwnerComp, 
     {
         OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), PlayerPawn->GetActorLocation());
     }
+    
     
 }

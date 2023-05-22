@@ -13,13 +13,14 @@ UBTTask_MoveAroundPlayer::UBTTask_MoveAroundPlayer()
 EBTNodeResult::Type UBTTask_MoveAroundPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
-
+	
+	ensureMsgf(OwnerComp.GetAIOwner() != nullptr, TEXT("AI controller is Nullptr"));
 	if(OwnerComp.GetAIOwner() == nullptr) return EBTNodeResult::Failed;
     
 	AEnemy* Enemy = Cast<AEnemy>(OwnerComp.GetAIOwner()->GetPawn());
-	
+	ensureMsgf(Enemy != nullptr, TEXT("Enemy is Nullptr"));
 	if(Enemy == nullptr) return EBTNodeResult::Failed;
-	
+	//call Enemy Target lock method
 	Enemy->TargetLockPlayer("no_TP");
 	
 	return EBTNodeResult::Succeeded;	
