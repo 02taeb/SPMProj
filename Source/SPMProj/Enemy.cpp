@@ -393,7 +393,6 @@ void AEnemy::MoveAlongTargetLock()
 {
 	if (!IsValid(PlayerTargetLock))
 	{
-		ensureMsgf(false, TEXT("PlayerTargetLock is not valid."));
 		return;
 	}
 
