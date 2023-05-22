@@ -48,13 +48,13 @@ void AAI_EnemyController::BeginPlay()
 void AAI_EnemyController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
-	
+	//define which metod to call when perception gets updated 
 	AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AAI_EnemyController::OnPerception);
 }
 
 void AAI_EnemyController::OnPerception(AActor* Actor, FAIStimulus Stimulus)
 {
-	
+	//set Blackboard value if stimulus was succesfully sensed
 	if (Stimulus.WasSuccessfullySensed())
 	{
 		GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), true);
