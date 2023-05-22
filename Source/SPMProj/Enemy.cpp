@@ -139,6 +139,11 @@ void AEnemy::CalculateHitDirection(const FVector ImpactPoint)
 }
 
 
+const bool AEnemy::GetIsAttacking()
+{
+	return IsAttacking;
+}
+
 UStatComponent* AEnemy::GetStats() const
 {
 	return Stats;
@@ -181,6 +186,7 @@ void AEnemy::PlayEnemyAttackMontage()
 
 		AnimInstance->Montage_JumpToSection(SectionToPlay, EnemyAttackMontage);
 	}
+	
 }
 
 // Called every frame
@@ -258,64 +264,7 @@ void AEnemy::Die() const
 //Daniel
 void AEnemy::TargetLockPlayer(std::string teleport)
 {
-	AController* EnemyController = GetController();
-	ensureMsgf(EnemyController != nullptr, TEXT("EnemyController is Nullptr"));
-	if (EnemyController == nullptr) return;
-
-	TArray<FHitResult> HitResults;
-	FVector TraceStart = GetActorLocation();
-	FRotator TraceRot = GetActorRotation();
-	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
-	TArray<AActor*> ActorsToIgnore;
-
-	FVector CurrentActorLocation = GetActorLocation();
-
-	// Add actors to ignoreArray
-	for (TActorIterator<AEnemy> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		// Get the enemy actor
-		AEnemy* Enemy = *ActorItr;
-
-		// Calculate the distance between the current enemy actor and the current actor
-		float Distance = FVector::Distance(CurrentActorLocation, Enemy->GetActorLocation());
-
-		// Check if the enemy actor is within the desired range
-		if (Distance <= 2000.0f)
-		{
-			ActorsToIgnore.Add(Enemy);
-		}
-	}
 	
-	if (!PlayerTargetLock)
-	{
-		UKismetSystemLibrary::SphereTraceMulti(
-			this,
-			TraceStart,
-			TraceEnd,
-			60.0f,
-			ETraceTypeQuery::TraceTypeQuery1,
-			false,
-			ActorsToIgnore,
-			EDrawDebugTrace::None,
-			HitResults,
-			true);
-	}
-	else
-	{
-		PlayerTargetLock = nullptr;
-		return;
-	}
-
-	//Check if hitresult is of the player
-	for (auto Hit : HitResults)
-	{
-		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(APlayerCharacter::StaticClass()))
-		{
-			PlayerTargetLock = Cast<APlayerCharacter>(Hit.GetActor());
-			break;
-		}
-	}
-
 	bool bMoveLeft = FMath::RandBool(); // Randomize the movement direction
 
 	//two behavoirs, decided by the method parameter string value
@@ -365,22 +314,33 @@ void AEnemy::TargetLockPlayer(std::string teleport)
 							PlayerRotation = PlayerPawn->GetActorRotation();
 						}
 
+						FVector MoveToLocation;
+
 						if (bMoveLeft)
 						{
 							// Calculate left offset from player's location and rotation
-							FVector LeftOffset = -(UKismetMathLibrary::GetRightVector(PlayerRotation) *
-								MoveDistanceFromPlayer);
-							FVector MoveToLocation = PlayerLocation + LeftOffset;
-							Blackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveToLocation);
+							FVector LeftOffset = -(UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer);
+							MoveToLocation = PlayerLocation + LeftOffset;
 						}
 						else
 						{
 							// Calculate right offset from player's location and rotation
-							FVector RightOffset = UKismetMathLibrary::GetRightVector(PlayerRotation) *
-								MoveDistanceFromPlayer;
-							FVector MoveToLocation = PlayerLocation + RightOffset;
-							Blackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveToLocation);
+							FVector RightOffset = UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer;
+							MoveToLocation = PlayerLocation + RightOffset;
 						}
+
+						// Ensure that the MoveToLocation is always on the correct side of the player
+						FVector DirectionToPlayer = PlayerLocation - GetActorLocation();
+						FVector DirectionToMoveLocation = MoveToLocation - GetActorLocation();
+						float DotProduct = FVector::DotProduct(DirectionToPlayer, DirectionToMoveLocation);
+
+						if (DotProduct < 0)
+						{
+							MoveToLocation = PlayerLocation - DirectionToMoveLocation;
+						}
+
+						UE_LOG(LogTemp, Warning, TEXT("MoveToLocation: %s"), *MoveToLocation.ToString());
+						Blackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveToLocation);
 					}
 				}
 			}
