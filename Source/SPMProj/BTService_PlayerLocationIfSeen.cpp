@@ -16,12 +16,15 @@ void UBTService_PlayerLocationIfSeen::TickNode(UBehaviorTreeComponent& OwnerComp
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	ensureMsgf(PlayerPawn != nullptr, TEXT("Player is nullptr"));
 	if (PlayerPawn == nullptr)
 		return;
-
+	
+	ensureMsgf(OwnerComp.GetAIOwner() != nullptr, TEXT("AI controlller is nullptr"));
 	if (OwnerComp.GetAIOwner() == nullptr)
 		return;
-	
+
+	//if fetched boolean value is true, set player location, else clear value
 	if (OwnerComp.GetBlackboardComponent()->GetValueAsBool("IsFacingTowardsPlayer"))
 	{
 		OwnerComp.GetBlackboardComponent()->
