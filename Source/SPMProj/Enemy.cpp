@@ -375,7 +375,7 @@ void AEnemy::MoveAlongTargetLock()
 	}
 }
 
-void AEnemy::SetIsLocked(bool Locked)
+void AEnemy::SetTargetIndicator(bool Locked)
 {
 	UWidgetComponent* IndicatorWidgetComponent = Cast<UWidgetComponent>(GetComponentByClass(UWidgetComponent::StaticClass()));
 	if(!IndicatorWidgetComponent) return;
