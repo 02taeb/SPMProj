@@ -27,9 +27,6 @@ AEnemy::AEnemy()
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
 	
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>("Audio");
-
-	//IndicatorWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("Target Lock Indicator");
-	//IndicatorWidgetComponent->SetHiddenInGame(true);
 }
 
 // Called when the game starts or when spawned
@@ -380,8 +377,8 @@ void AEnemy::MoveAlongTargetLock()
 
 void AEnemy::SetIsLocked(bool Locked)
 {
-	//IsLockedOn = Locked;
 	UWidgetComponent* IndicatorWidgetComponent = Cast<UWidgetComponent>(GetComponentByClass(UWidgetComponent::StaticClass()));
+	if(!IndicatorWidgetComponent) return;
 	
 	if(Locked)
 	{
