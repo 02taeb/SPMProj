@@ -42,8 +42,11 @@ void AEquipableParasite::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	case EAffectedStat::Health:
 		StatComponentPtr->IncreaseMaxHealth(-StartAmount);
 		break;
-	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-StartAmount);
+	case EAffectedStat::Stamina:
+		StatComponentPtr->NormalAttackCost *= 0.8;
+		StatComponentPtr->HeavyAttackCost *= 0.8;
+		StatComponentPtr->RollCost *= 0.8;
+		StatComponentPtr->JumpCost *= 0.8;
 		break;
 	case EAffectedStat::AttackDamage:
 		StatComponentPtr->IncreaseAttackDamage(-StartAmount);
@@ -142,8 +145,7 @@ void AEquipableParasite::OnEquip()
 	case EAffectedStat::Health:
 		StatComponentPtr->IncreaseMaxHealth(StartAmount);
 		break;
-	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(StartAmount);
+	case EAffectedStat::Stamina:
 		break;
 	case EAffectedStat::AttackDamage:
 		StatComponentPtr->IncreaseAttackDamage(StartAmount);
@@ -180,8 +182,7 @@ void AEquipableParasite::OnUnequip()
 	case EAffectedStat::Health:
 		StatComponentPtr->IncreaseMaxHealth(-CurrentAmount);
 		break;
-	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-CurrentAmount);
+	case EAffectedStat::Stamina:
 		break;
 	case EAffectedStat::AttackDamage:
 		StatComponentPtr->IncreaseAttackDamage(-CurrentAmount);
@@ -205,8 +206,11 @@ void AEquipableParasite::OnPlayerDeath()
 		case EAffectedStat::Health:
 			StatComponentPtr->IncreaseMaxHealth(-OnEatUpgradeAmount);
 			break;
-		case EAffectedStat::Armor:
-			StatComponentPtr->IncreaseArmor(-OnEatUpgradeAmount);
+		case EAffectedStat::Stamina:
+			StatComponentPtr->NormalAttackCost *= 1.2;
+			StatComponentPtr->HeavyAttackCost *= 1.2;
+			StatComponentPtr->RollCost *= 1.2;
+			StatComponentPtr->JumpCost *= 1.2;
 			break;
 		case EAffectedStat::AttackDamage:
 			StatComponentPtr->IncreaseAttackDamage(-OnEatUpgradeAmount);
@@ -228,8 +232,11 @@ void AEquipableParasite::OnEat()
 	case EAffectedStat::Health:
 		StatComponentPtr->IncreaseMaxHealth(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
 		break;
-	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
+	case EAffectedStat::Stamina:
+		StatComponentPtr->NormalAttackCost *= 0.8;
+		StatComponentPtr->HeavyAttackCost *= 0.8;
+		StatComponentPtr->RollCost *= 0.8;
+		StatComponentPtr->JumpCost *= 0.8;
 		break;
 	case EAffectedStat::AttackDamage:
 		StatComponentPtr->IncreaseAttackDamage(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));

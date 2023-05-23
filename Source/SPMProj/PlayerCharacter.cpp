@@ -172,7 +172,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 				if (Temp->bIsEquipped)
 					Temp->OnPlayerDeath();
 			}
-			Temp = Cast<AEquipableParasite>(DEFPar);
+			Temp = Cast<AEquipableParasite>(STMPar);
 			if (Temp != nullptr)
 			{
 				if (Temp->bIsEquipped)

@@ -61,7 +61,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
 	AActor* ATKPar;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
-	AActor* DEFPar;
+	AActor* STMPar;
 	
 	bool bInstaKill = false;
 
