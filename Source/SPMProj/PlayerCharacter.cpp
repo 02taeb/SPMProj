@@ -118,8 +118,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipDown);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
 	//Testinputs för load och save
-	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
-	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
+	// No longer used
+	//PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
+	//PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
 	//Cheat inputs
 	PlayerEIComponent->BindAction(InputGodMode, ETriggerEvent::Started, this, &APlayerCharacter::GodMode);
 	PlayerEIComponent->BindAction(InputInstaKill, ETriggerEvent::Started, this, &APlayerCharacter::InstaKill);
