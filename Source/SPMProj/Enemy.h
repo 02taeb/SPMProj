@@ -52,6 +52,7 @@ private:
 
 
 	//Audio
+	UPROPERTY()
 	class UAudioComponent* AudioComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
@@ -79,6 +80,8 @@ private:
 	FTimerHandle SetPlayerLocationTimerAfterOnHit;
 	UPROPERTY(EditAnywhere, Category= "Enemy react")
 	float TimeToReact = 2.0f;
+	bool IsAttacking;
+	const bool GetIsAttacking();
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
@@ -97,12 +100,14 @@ public:
 
 private:
 	//player TargetLock
+	UPROPERTY()
 	class APlayerCharacter* PlayerTargetLock = nullptr;
 	UPROPERTY(EditAnywhere, Category=" Target Lock")
 	float TargetLockDistance = 500.0f;
 	UPROPERTY(EditAnywhere, Category= "Target Lock")
 	float MoveDistanceFromPlayer = 200.0f;
 
+	
 
 public:
 	void ResetTargetLock();

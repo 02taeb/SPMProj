@@ -81,6 +81,7 @@ private:
 	TSubclassOf<AMeleeWeapon> MeleeWeaponClass;
 	UPROPERTY(EditAnywhere, Category = "Cheats")
 	float NoClipSpeed = 50;
+	UPROPERTY()
 	UCharacterMovementComponent* MovementComp;
 	bool bGodMode = false;
 	bool bNoClip = false;
@@ -97,10 +98,14 @@ private:
 
 	FTimerHandle StaminaTimer;
 
+	// Deprecated
+	UPROPERTY()
 	AEquipableParasite* EquippedPar1 = nullptr;
+	UPROPERTY()
 	AEquipableParasite* EquippedPar2 = nullptr;
-
+    
 	//Audio
+	UPROPERTY()
 	class UAudioComponent* AudioComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
@@ -173,6 +178,7 @@ private:
 	float HeavyAttackCooldown;*/
 
 	/*Target lock*/
+	UPROPERTY()
 	class AEnemy* EnemyTargetLock;
 	UPROPERTY(EditAnywhere)
 	float TargetLockDistance = 500.0f;

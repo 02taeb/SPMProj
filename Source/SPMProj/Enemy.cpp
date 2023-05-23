@@ -83,28 +83,31 @@ void AEnemy::PlayEnemyHitReact()
 		AnimInstance->Montage_JumpToSection(SectionToPlay, EnemyHitReactMontage);
 	}
 
+	//set playerLocation if enemy has been hit by player after timer
 	GetWorldTimerManager().SetTimer(SetPlayerLocationTimerAfterOnHit, this, &AEnemy::SetPlayerLocationAfterOnHit,
 	                                TimeToReact, false);
-	//set playerLocation if enemy has been hit by player
 }
 
+//Daniel
 void AEnemy::SetPlayerLocationAfterOnHit()
 {
 	UBlackboardComponent* Blackboard = nullptr;
 
 	// Get the controller of the enemy actor
 	AController* EnemyController = GetController();
+	ensureMsgf(EnemyController != nullptr, TEXT("EnemyController is nullptr"));
 	if (EnemyController)
 	{
 		// Try to cast the controller to an AAIController
 		AAIController* AIController = Cast<AAIController>(EnemyController);
+		ensureMsgf(AIController != nullptr, TEXT("AIController is nullptr"));
 		if (AIController)
 		{
 			// Get the Blackboard component from the AI controller
 			Blackboard = AIController->GetBlackboardComponent();
 		}
 	}
-
+	ensureMsgf(Blackboard != nullptr, TEXT("Blackboard is nullptr"));
 	if (Blackboard)
 	{
 		//get player
@@ -135,6 +138,11 @@ void AEnemy::CalculateHitDirection(const FVector ImpactPoint)
 	if (CrossProduct.Z < 0) HitAngle *= -1.f;
 }
 
+
+const bool AEnemy::GetIsAttacking()
+{
+	return IsAttacking;
+}
 
 UStatComponent* AEnemy::GetStats() const
 {
@@ -178,6 +186,7 @@ void AEnemy::PlayEnemyAttackMontage()
 
 		AnimInstance->Montage_JumpToSection(SectionToPlay, EnemyAttackMontage);
 	}
+	
 }
 
 // Called every frame
@@ -233,11 +242,17 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	return DamageAmount;
 }
 
+//Daniel
 void AEnemy::Die() const
 {
-	if (AController* AIController = GetController())
+	//stop behavoir tree and broadcast death
+	AController* AIController = GetController();
+	ensureMsgf(AIController != nullptr, TEXT("AI controller is nullptr"));
+	if (AIController != nullptr)
 	{
-		if (UBehaviorTreeComponent* BehaviorComp = AIController->FindComponentByClass<UBehaviorTreeComponent>())
+		UBehaviorTreeComponent* BehaviorComp = AIController->FindComponentByClass<UBehaviorTreeComponent>();
+		ensureMsgf(BehaviorComp != nullptr, TEXT("BehavoirComp is nullptr"));
+		if (BehaviorComp != nullptr)
 		{
 			BehaviorComp->StopTree();
 		}
@@ -246,71 +261,13 @@ void AEnemy::Die() const
 	OnDeath.Broadcast();
 }
 
+//Daniel
 void AEnemy::TargetLockPlayer(std::string teleport)
 {
-	AController* EnemyController = GetController();
-	if (EnemyController == nullptr) return;
-	// if(ActionState != ECharacterActionState::ECAS_NoAction) return;
-
-	TArray<FHitResult> HitResults;
-	FVector TraceStart = GetActorLocation();
-	FRotator TraceRot = GetActorRotation();
-	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
-	TArray<AActor*> ActorsToIgnore;
-
-	FVector CurrentActorLocation = GetActorLocation();
-
-	// Iterate through all actors in the game world
-	for (TActorIterator<AEnemy> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		// Get the enemy actor
-		AEnemy* Enemy = *ActorItr;
-
-		// Calculate the distance between the current enemy actor and the current actor
-		float Distance = FVector::Distance(CurrentActorLocation, Enemy->GetActorLocation());
-
-		// Check if the enemy actor is within the desired range
-		if (Distance <= 2000.0f) // Assuming units are in centimeters (20 meters = 2000 centimeters)
-		{
-			ActorsToIgnore.Add(Enemy);
-		}
-	}
-
-	if (!PlayerTargetLock)
-	{
-		UKismetSystemLibrary::SphereTraceMulti(
-			this,
-			TraceStart,
-			TraceEnd,
-			60.0f,
-			ETraceTypeQuery::TraceTypeQuery1,
-			false,
-			ActorsToIgnore,
-			EDrawDebugTrace::None,
-			HitResults,
-			true);
-	}
-	else
-	{
-		PlayerTargetLock = nullptr;
-		return;
-	}
-
-	for (auto Hit : HitResults)
-	{
-		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(APlayerCharacter::StaticClass()))
-		{
-			PlayerTargetLock = Cast<APlayerCharacter>(Hit.GetActor());
-			break;
-		}
-	}
-	// Rest of the code...
-
-
+	
 	bool bMoveLeft = FMath::RandBool(); // Randomize the movement direction
 
-	// fixa så de nt är teleport
-	
+	//two behavoirs, decided by the method parameter string value
 	if (teleport == "teleport")
 	{
 		if (bMoveLeft)
@@ -328,72 +285,79 @@ void AEnemy::TargetLockPlayer(std::string teleport)
 	}
 	else
 	{
-		AController* EnemyAIController = GetController();
-		if (EnemyAIController)
 		{
-			AAIController* AIController = Cast<AAIController>(EnemyAIController);
-			if (AIController)
+			AController* EnemyAIController = GetController();
+			ensureMsgf(EnemyAIController != nullptr, TEXT("EnemyAIController is null."));
+
+			if (EnemyAIController)
 			{
-				UBlackboardComponent* Blackboard = AIController->GetBlackboardComponent();
-				if (Blackboard)
+				AAIController* AIController = Cast<AAIController>(EnemyAIController);
+				ensureMsgf(AIController != nullptr, TEXT("AIController is null."));
+
+				if (AIController)
 				{
-					FVector PlayerLocation = FVector::ZeroVector;
-					FRotator PlayerRotation = FRotator::ZeroRotator;
-            
-					// Get the player's location and rotation
-					APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0); 
-					if (PlayerPawn)
+					UBlackboardComponent* Blackboard = AIController->GetBlackboardComponent();
+					ensureMsgf(Blackboard != nullptr, TEXT("Blackboard is null."));
+
+					if (Blackboard)
 					{
-						PlayerLocation = PlayerPawn->GetActorLocation();
-						PlayerRotation = PlayerPawn->GetActorRotation();
-					}
-            
-					if (bMoveLeft)
-					{
-						// Calculate left offset from player's location and rotation
-						FVector LeftOffset = -(UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer);
-						FVector MoveToLocation = PlayerLocation + LeftOffset;
-						Blackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveToLocation);
-					}
-					else
-					{
-						// Calculate right offset from player's location and rotation
-						FVector RightOffset = UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer;
-						FVector MoveToLocation = PlayerLocation + RightOffset;
+						FVector PlayerLocation = FVector::ZeroVector;
+						FRotator PlayerRotation = FRotator::ZeroRotator;
+
+						// Get the player's location and rotation
+						APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+						ensureMsgf(PlayerPawn != nullptr, TEXT("PlayerPawn is null."));
+
+						if (PlayerPawn)
+						{
+							PlayerLocation = PlayerPawn->GetActorLocation();
+							PlayerRotation = PlayerPawn->GetActorRotation();
+						}
+
+						FVector MoveToLocation;
+
+						if (bMoveLeft)
+						{
+							// Calculate left offset from player's location and rotation
+							FVector LeftOffset = -(UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer);
+							MoveToLocation = PlayerLocation + LeftOffset;
+						}
+						else
+						{
+							// Calculate right offset from player's location and rotation
+							FVector RightOffset = UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer;
+							MoveToLocation = PlayerLocation + RightOffset;
+						}
+
+						// Ensure that the MoveToLocation is always on the correct side of the player
+						FVector DirectionToPlayer = PlayerLocation - GetActorLocation();
+						FVector DirectionToMoveLocation = MoveToLocation - GetActorLocation();
+						float DotProduct = FVector::DotProduct(DirectionToPlayer, DirectionToMoveLocation);
+
+						if (DotProduct < 0)
+						{
+							MoveToLocation = PlayerLocation - DirectionToMoveLocation;
+						}
+
+						UE_LOG(LogTemp, Warning, TEXT("MoveToLocation: %s"), *MoveToLocation.ToString());
 						Blackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveToLocation);
 					}
 				}
 			}
 		}
 	}
-
-
-	/*FVector MovementDirection = FVector::ZeroVector;
-
-	if (bMoveLeft)
-	{
-		// Move left
-		MovementDirection = FVector(0, -MoveAroundPlayerDistance, 0);
-	}
-	else
-	{
-		// Move right
-		MovementDirection = FVector(0, MoveAroundPlayerDistance, 0);
-	}
-
-	// Apply movement input
-	AddMovementInput(MovementDirection);*/
-
-	//check for other players within bounds 
-	//move left or right with randomizer else dont move
 }
 
+//Daniel
 void AEnemy::MoveAlongTargetLock()
 {
 	if (!IsValid(PlayerTargetLock))
+	{
 		return;
+	}
 
 	AController* EnemyController = GetController();
+	ensureMsgf(EnemyController != nullptr, TEXT("EnemyController is null."));
 	if (EnemyController == nullptr) return;
 
 	if (PlayerTargetLock)
@@ -405,6 +369,7 @@ void AEnemy::MoveAlongTargetLock()
 	}
 }
 
+//Daniel
 void AEnemy::ResetTargetLock()
 {
 	PlayerTargetLock = nullptr;

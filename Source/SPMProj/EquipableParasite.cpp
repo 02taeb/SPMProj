@@ -93,6 +93,7 @@ void AEquipableParasite::OnPickup()
 
 void AEquipableParasite::OnEquip()
 {
+	UE_LOG(LogTemp, Display, TEXT("Equipping par!"));
 	if (Stat == EAffectedStat::None)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Unset stat type for equipping parasite: %s"), *GetActorNameOrLabel());
@@ -161,7 +162,7 @@ void AEquipableParasite::OnEquip()
 void AEquipableParasite::OnUnequip()
 {
 	if (!bIsEquipped) return;
-
+	UE_LOG(LogTemp, Display, TEXT("UnEquipping par!"));
 	if(bUseStaticMesh)
 	{
 		// Reverse of OnEquip()

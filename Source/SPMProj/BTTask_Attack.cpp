@@ -11,20 +11,22 @@
 UBTTask_Attack::UBTTask_Attack()
 {
    NodeName = TEXT("Perform MeeleAttack");
-	
 }
 
 EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
-
+	ensureMsgf(OwnerComp.GetAIOwner() != nullptr, TEXT("AI controller is Nullptr"));
     if(OwnerComp.GetAIOwner() == nullptr) return EBTNodeResult::Failed;
     
     AEnemy* Enemy = Cast<AEnemy>(OwnerComp.GetAIOwner()->GetPawn());
-	
+
+	ensureMsgf(Enemy != nullptr, TEXT("Enemy is Nullptr"));
     if(Enemy == nullptr) return EBTNodeResult::Failed;
-	
+
+	//call enemys attack method
     Enemy->EnemyAttackBasic();
+	
 	
     return EBTNodeResult::Succeeded;
 }
