@@ -27,7 +27,7 @@ void UStatComponent::BeginPlay()
 	Super::BeginPlay();
 	/*I guess...*/
 	CurrentHealth = InitialMaxHealth; //Ska ändras vara dynamisk
-	CurrentStamina = 1;
+	CurrentStamina = MaxStamina;
 	// ...
 	
 }
@@ -96,12 +96,13 @@ void UStatComponent::DecreaseStamina(float DecreaseAmount)
 {
 	//Decreased = true;
 	Restore = false;
-	CurrentStamina = FMath::Clamp(CurrentStamina - DecreaseAmount, 0.f, 1.f);
+	CurrentStamina = FMath::Clamp(CurrentStamina - DecreaseAmount, 0.f, MaxStamina);
 }
 
 void UStatComponent::IncreaseMaxHealth(const float Delta)
 {
 	MaxHealth += Delta;
+	OnMaxHealthUpdated.Broadcast();
 }
 
 void UStatComponent::IncreaseAttackDamage(const float Delta)
@@ -112,6 +113,12 @@ void UStatComponent::IncreaseAttackDamage(const float Delta)
 void UStatComponent::IncreaseArmor(const float Delta)
 {
 	CurrentArmor += Delta;
+}
+//Hugo
+void UStatComponent::IncreaseMaxStamina(const float Delta)
+{
+	MaxStamina += Delta;
+	OnMaxStaminaUpdated.Broadcast();
 }
 
 void UStatComponent::TakeDamage(const float Damage)
@@ -182,14 +189,14 @@ void UStatComponent::RestoreStamina(float DeltaTime)
 
 	// GetWorld()->GetTimerManager().SetTimer(StaminaTimer, 0.5f, false);
 
-	if (CurrentStamina == 1)
+	if (CurrentStamina == 100)
 	{
 		Restore = false;
 		return;
 	}
 	
 	CurrentStamina += DeltaTime / StaminaRestoreRate;
-	CurrentStamina = FMath::Clamp(CurrentStamina, 0.f, 1.f);
+	CurrentStamina = FMath::Clamp(CurrentStamina, 0.f, MaxStamina);
 
 	return;
 	
