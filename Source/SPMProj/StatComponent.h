@@ -9,6 +9,8 @@
 #include "StatComponent.generated.h"
 
 
+//Hugo (det som används av Stamina)
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPMPROJ_API UStatComponent : public UActorComponent
 {

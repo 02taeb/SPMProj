@@ -11,6 +11,7 @@ class UBoxComponent;
 class UNiagaraSystem;
 class ABossCrystal;
 
+//Deprecated, boss not in final game
 UCLASS()
 class SPMPROJ_API ABossManager : public AActor
 {

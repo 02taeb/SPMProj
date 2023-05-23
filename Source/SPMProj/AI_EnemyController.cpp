@@ -12,6 +12,7 @@ AAI_EnemyController::AAI_EnemyController(const FObjectInitializer& ObjectInitial
 {
 	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
 
+	if (AIPerceptionComponent == nullptr) return;
 	AIPerceptionComponent->bAutoActivate = true;
 	// sight perception
 	Sight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight"));
@@ -27,7 +28,7 @@ void AAI_EnemyController::BeginPlay()
 		RunBehaviorTree(AI_EnemyBehavior);
 	}
 
-	//setup sight values
+	if (Sight == nullptr) return;
 	Sight->SightRadius = SightRadius;
 	Sight->LoseSightRadius = LoseSightRadius;
 	Sight->PeripheralVisionAngleDegrees = PeripheralVisionAngleDegrees;
@@ -38,9 +39,11 @@ void AAI_EnemyController::BeginPlay()
 	SetPerceptionComponent(*AIPerceptionComponent);
 
 	// configure sense
+	if (AIPerceptionComponent == nullptr) return;
 	AIPerceptionComponent->ConfigureSense(*Sight);
 
 	// set dominant sense
+	if (Sight->GetSenseImplementation() == nullptr) return;
 	AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());
 	
 }
