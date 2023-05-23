@@ -44,6 +44,7 @@ public:
 	void IncreaseMaxHealth(const float Delta);
 	void IncreaseAttackDamage(const float Delta);
 	void IncreaseArmor(const float Delta);
+	void IncreaseStamina(const float Delta);
 	
 	void TakeDamage(const float Damage);
 	void HealHealth(const float HealAmount);
