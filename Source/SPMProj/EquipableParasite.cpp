@@ -69,6 +69,7 @@ void AEquipableParasite::Tick(float DeltaTime)
 void AEquipableParasite::OnPickup()
 {
 	// Hide object in world
+	if (StaticMeshComponent == nullptr) return;
 	StaticMeshComponent->SetVisibility(false);
 
 	// Set statcomponentptr

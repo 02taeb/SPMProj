@@ -118,8 +118,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipDown);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
 	//Testinputs för load och save
-	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
-	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
+	// No longer used
+	//PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
+	//PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
 	//Cheat inputs
 	PlayerEIComponent->BindAction(InputGodMode, ETriggerEvent::Started, this, &APlayerCharacter::GodMode);
 	PlayerEIComponent->BindAction(InputInstaKill, ETriggerEvent::Started, this, &APlayerCharacter::InstaKill);
@@ -758,8 +759,8 @@ void APlayerCharacter::UseItem(AItemActor* Item)
 			UE_LOG(LogTemp, Display, TEXT("No Owning Inventory"));
 			return;
 		}
-
-		// Max two equipped parasites
+		
+		// Deprecated, Max two equipped parasites
 		AEquipableParasite* EquippingPar = Cast<AEquipableParasite>(Item);
 		if (EquippingPar != nullptr)
 		{
@@ -805,6 +806,7 @@ void APlayerCharacter::OnEat()
 	}
 }
 
+//Deprecated
 bool APlayerCharacter::BothParSlotsFull(AEquipableParasite* UsingPar)
 {
 	return EquippedPar1 != nullptr && EquippedPar2 != nullptr && EquippedPar1 != UsingPar && EquippedPar2 != UsingPar;
