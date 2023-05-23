@@ -28,18 +28,17 @@ public:
 	void OnPerception(AActor* Actor, FAIStimulus Stimulus);
 
 	virtual void OnPossess(APawn* InPawn) override;
-	/*virtual void Tick(float DeltaTime) override;*/
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "AI Perception")
-	class UAIPerceptionComponent* AIPerceptionComponent;
+	UAIPerceptionComponent* AIPerceptionComponent;
 
 	virtual void BeginPlay() override;
-
-	virtual FPathFollowingRequestResult MoveTo(const FAIMoveRequest& MoveRequest, FNavPathSharedPtr* OutPath) override;
+	
 private:
+	
 	UPROPERTY(EditAnywhere, Category = "Behavior Tree")
-	class UBehaviorTree* AI_EnemyBehavior;
+	UBehaviorTree* AI_EnemyBehavior;
 
 	UPROPERTY(EditAnywhere, Category= "AI Perception")
 	float SightRadius = 500.0f;
@@ -57,12 +56,6 @@ private:
 	bool DetectNeutrals = true;
 
 	UPROPERTY(EditAnywhere, Category= "AI Perception")
-	bool DetectFriendies = true;
+	bool DetectFriendlies = true;
 
-private:
-	FTimerHandle TimerHandle;
-
-	FNavPathSharedPtr NavPath;
-	
-	//void setBoolBlackBoardValue(); används inte
 };

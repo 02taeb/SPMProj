@@ -31,7 +31,7 @@
 // Sets default values
 APlayerCharacter::APlayerCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	/*Stats*/
@@ -39,13 +39,13 @@ APlayerCharacter::APlayerCharacter()
 
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>("Audio");
 
-		//TESTING FÖR INVENTORY
+	//TESTING FÖR INVENTORY
 	Inventory = CreateDefaultSubobject<UInventoryComponent>("Inventory");
 	Inventory->Capacity = 20;
-	
-	
+
+
 	// Health = 100.f;
-	
+
 	/*bHeavyAttackUsed = false;
 	HeavyAttackCooldown = 7.0f;*/
 }
@@ -70,33 +70,36 @@ void APlayerCharacter::Tick(float DeltaTime)
 	KeepRotationOnTarget();
 
 	// Inc grav when falling
-	MovementComp->GravityScale = GetVelocity().Z < 0 ? MovementComp->GravityScale + AddedGravityWhenFalling : GravityScale;
+	MovementComp->GravityScale = GetVelocity().Z < 0
+		                             ? MovementComp->GravityScale + AddedGravityWhenFalling
+		                             : GravityScale;
 }
 
 // Called to bind functionality to input
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	
+
 	// Get controller
 	auto PlayerController = Cast<APlayerController>(GetController());
 	if (PlayerController == nullptr) return;
-	
-    // Get the local player enhanced input subsystem
-    auto EISubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+
+	// Get the local player enhanced input subsystem
+	auto EISubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
+		PlayerController->GetLocalPlayer());
 	if (EISubsystem == nullptr) return;
-	
-    //Add the input mapping context
-    EISubsystem->AddMappingContext(InputMapping, 0);
- 
-    // Get the EnhancedInputComponent
-    auto PlayerEIComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+
+	//Add the input mapping context
+	EISubsystem->AddMappingContext(InputMapping, 0);
+
+	// Get the EnhancedInputComponent
+	auto PlayerEIComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	if (PlayerEIComponent == nullptr) return;
 
 	/*Test*/
 	PlayerInputComponent->BindAxis("Forward", this, &APlayerCharacter::Forward);
 	PlayerInputComponent->BindAxis("Right", this, &APlayerCharacter::Right);
-	
+
 	// Enhanced inputs tar bara input actions, därmed behöver man bara använda BindAction (inte BindAxis etc)
 	PlayerEIComponent->BindAction(InputMoveForward, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveForward);
 	PlayerEIComponent->BindAction(InputMoveRight, ETriggerEvent::Triggered, this, &APlayerCharacter::MoveRight);
@@ -105,8 +108,10 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputLookRight, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRight);
 	PlayerEIComponent->BindAction(InputLookRightRate, ETriggerEvent::Triggered, this, &APlayerCharacter::LookRightRate);
 	PlayerEIComponent->BindAction(InputInteract, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
-	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Started, this, &APlayerCharacter::AttackMeleeNormal);
-	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Started, this, &APlayerCharacter::AttackMeleeHeavy);
+	PlayerEIComponent->BindAction(InputAttackMeleeNormal, ETriggerEvent::Started, this,
+	                              &APlayerCharacter::AttackMeleeNormal);
+	PlayerEIComponent->BindAction(InputAttackMeleeHeavy, ETriggerEvent::Started, this,
+	                              &APlayerCharacter::AttackMeleeHeavy);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Started, this, &APlayerCharacter::JumpChar);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Started, this, &APlayerCharacter::Dodge);
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipUp);
@@ -126,18 +131,18 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 }
 
 float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
-	AActor* DamageCauser)
+                                   AActor* DamageCauser)
 {
 	if (ActionState == ECharacterActionState::ECAS_Dodging || bGodMode || bIsRespawning) return 0;
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
-	
-	if(Stats)
+
+	if (Stats)
 	{
 		Stats->TakeDamage(DamageAmount);
-		
+
 		PlaySound(TakeDamageSoundCue);
 
-		if(Stats->Dead())
+		if (Stats->Dead())
 		{
 			/*Död Logiken hör (respawn och sånt)*/
 			PlaySound(DeathSoundCue);
@@ -152,19 +157,27 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 				}
 			}
 			*/
-			
+
 			AEquipableParasite* Temp = Cast<AEquipableParasite>(HPPar);
-			if (Temp->bIsEquipped)
-				Temp->OnPlayerDeath();
+			if (Temp != nullptr)
+			{
+				if (Temp->bIsEquipped)
+					Temp->OnPlayerDeath();
+			}
 			Temp = Cast<AEquipableParasite>(ATKPar);
-			if (Temp->bIsEquipped)
-				Temp->OnPlayerDeath();
+			if (Temp != nullptr)
+			{
+				if (Temp->bIsEquipped)
+					Temp->OnPlayerDeath();
+			}
 			Temp = Cast<AEquipableParasite>(DEFPar);
-			if (Temp->bIsEquipped)
-				Temp->OnPlayerDeath();
-			
+			if (Temp != nullptr)
+			{
+				if (Temp->bIsEquipped)
+					Temp->OnPlayerDeath();
+			}
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-			if(AnimInstance && AnimInstance->IsAnyMontagePlaying())
+			if (AnimInstance && AnimInstance->IsAnyMontagePlaying())
 			{
 				AnimInstance->StopAllMontages(0.1f);
 			}
@@ -181,20 +194,21 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			ActionState = ECharacterActionState::ECAS_NoAction;
 			//Destroy();
 			FTimerHandle RespawnTimer;
-			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn,1);
+			GetWorld()->GetTimerManager().SetTimer(RespawnTimer, this, &APlayerCharacter::Respawn, 1);
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER SHOULD DIE"));
-		} else
+		}
+		else
 		{
 			PlayPlayerHitReact();
 		}
 	}
-	
+
 	return DamageAmount;
 }
 
 void APlayerCharacter::SetWeaponCollison(ECollisionEnabled::Type Collision)
 {
-	if(EquipedWeapon && EquipedWeapon->GetCollisionBox())
+	if (EquipedWeapon && EquipedWeapon->GetCollisionBox())
 	{
 		EquipedWeapon->GetCollisionBox()->SetCollisionEnabled(Collision);
 		EquipedWeapon->ActorsToIgnore.Empty();
@@ -209,16 +223,16 @@ void APlayerCharacter::Right(float Value)
 {
 }
 
-void APlayerCharacter::MoveForward(const FInputActionValue & Value)
+void APlayerCharacter::MoveForward(const FInputActionValue& Value)
 {
 	if (bNoClip)
 	{
 		SetActorLocation(GetActorLocation() + GetActorForwardVector() * Value.Get<float>() * NoClipSpeed);
 		return;
 	}
-	
+
 	/*Cant move under attack, will be changed!!*/
-	if(ActionState == ECharacterActionState::ECAS_NoAction)
+	if (ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
 }
 
@@ -229,9 +243,9 @@ void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 		SetActorLocation(GetActorLocation() + GetActorRightVector() * Value.Get<float>() * NoClipSpeed);
 		return;
 	}
-	
+
 	/*Cant move under attack, will be changed!!*/
-	if(ActionState == ECharacterActionState::ECAS_NoAction)
+	if (ActionState == ECharacterActionState::ECAS_NoAction)
 		AddMovementInput(GetActorRightVector() * Value.Get<float>());
 }
 
@@ -240,28 +254,29 @@ void APlayerCharacter::LookUp(const FInputActionValue& Value)
 	AddControllerPitchInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
-void APlayerCharacter::LookUpRate(const FInputActionValue &Value)
+void APlayerCharacter::LookUpRate(const FInputActionValue& Value)
 {
 	AddControllerPitchInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::LookRight(const FInputActionValue& Value)
 {
-	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy)
+	if (ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState !=
+		ECharacterActionState::ECAS_AttackingHeavy)
 		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
-void APlayerCharacter::LookRightRate(const FInputActionValue &Value)
+void APlayerCharacter::LookRightRate(const FInputActionValue& Value)
 {
-	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy)
+	if (ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState !=
+		ECharacterActionState::ECAS_AttackingHeavy)
 		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::Interact(const FInputActionValue& Value)
 {
-
 	/*Equip part, just a first test place*/
-	if(AMeleeWeapon* Weapon = Cast<AMeleeWeapon>(OverlapWeapon))
+	if (AMeleeWeapon* Weapon = Cast<AMeleeWeapon>(OverlapWeapon))
 	{
 		Weapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
 		/*Association the Player attaching the weapon to the weapon itself, so that we can get the instigator controller in ApplyDamage. GetInstigator() and GetOwner() return Player now when called from Weapon class if it is attached*/
@@ -273,14 +288,15 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		WeaponState = ECharacterWeaponState::ECWS_Equiped;
 	}
 
-	
+
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
 
 	FHitResult HitResult;
 	FVector TraceLocStart = GetActorLocation();
 	FVector TraceLocEnd = TraceLocStart + GetActorForwardVector() * InteractableReach;
-	bool bHitSucceed = GetWorld()->SweepSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, FQuat::Identity, ECC_GameTraceChannel1, FCollisionShape::MakeCapsule(34, 100));
+	bool bHitSucceed = GetWorld()->SweepSingleByChannel(HitResult, TraceLocStart, TraceLocEnd, FQuat::Identity,
+	                                                    ECC_GameTraceChannel1, FCollisionShape::MakeCapsule(34, 100));
 
 	if (bHitSucceed)
 	{
@@ -299,16 +315,17 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 	{
 		return;
 	}
-	
+
 	if (!Super::CanJump())
 	{
 		return;
 	}
 
-	if(CanAttack())
+	if (CanAttack())
 	{
 		Stats->DecreaseStamina(Stats->NormalAttackCost);
-		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore,
+		                                       Stats->StaminaDelayRate, false);
 		PlaySound(NormalAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingNormal;
 		PlayNormalAttackAnimation();
@@ -317,7 +334,6 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 
 void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 {
-
 	if (Stats->GetCurrentStamina() <= 0)
 	{
 		return;
@@ -327,15 +343,16 @@ void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 	{
 		return;
 	}
-	
-	if(CanAttack()) /*if(CanAttack() && !bHeavyAttackUsed)*/
+
+	if (CanAttack()) /*if(CanAttack() && !bHeavyAttackUsed)*/
 	{
 		///bHeavyAttackUsed = true;
 		PlaySound(HeavyAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingHeavy;
 		PlayHeavyAttackAnimation();
 		Stats->DecreaseStamina(Stats->HeavyAttackCost);
-		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore,
+		                                       Stats->StaminaDelayRate, false);
 
 		//GetWorld()->GetTimerManager().SetTimer(HeavyAttackTimer, this, &APlayerCharacter::ResetHeavyAttackCooldown, HeavyAttackCooldown, false); //HeavyAttackMontage->GetPlayLength()
 	}
@@ -348,8 +365,8 @@ void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 
 void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 {
-	if(ActionState == ECharacterActionState::ECAS_Dodging) return;
-	
+	if (ActionState == ECharacterActionState::ECAS_Dodging) return;
+
 	if (bNoClip)
 		return;
 
@@ -357,20 +374,19 @@ void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 	{
 		return;
 	}
-	
+
 	if (Super::CanJump())
 	{
-			
 		Super::Jump();
 		Stats->DecreaseStamina(Stats->JumpCost);
-		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore,
+		                                       Stats->StaminaDelayRate, false);
 		PlaySound(JumpSoundCue);
 		JumpMaxHoldTime = JumpTime;
 
 		FTimerHandle PlayerStopJumpingHandle;
 		FTimerDelegate PlayerStopJumpingDelegate = FTimerDelegate::CreateUObject(this, &Super::StopJumping);
 		GetWorldTimerManager().SetTimer(PlayerStopJumpingHandle, PlayerStopJumpingDelegate, JumpTime, false);
-
 	}
 }
 
@@ -393,52 +409,64 @@ void APlayerCharacter::KillSelf()
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
-	if(EquipedWeapon && EquipedWeapon->GetCollisionBox()->GetCollisionEnabled() == ECollisionEnabled::QueryOnly)
+	if (EquipedWeapon && EquipedWeapon->GetCollisionBox()->GetCollisionEnabled() == ECollisionEnabled::QueryOnly)
 	{
 		SetWeaponCollison(ECollisionEnabled::NoCollision);
 	}
-	
+
 	if (!Super::CanJump())
 	{
 		return;
 	}
-	
+
 
 	if (bNoClip)
 		return;
-	
-	if(ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState != ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction) return;
+
+	if (ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState !=
+		ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction)
+		return;
 
 
 	if (Stats->GetCurrentStamina() <= 0)
 	{
 		return;
 	}
-	
+
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && DodgeMontage)
+	if (AnimInstance && DodgeMontage)
 	{
 		auto PlayerEIComponent = FindComponentByClass<UInputComponent>();
 		if (PlayerEIComponent == nullptr) return;
-		
+
 		float ForwardAxisValue = PlayerEIComponent->GetAxisValue("Forward");
 		float RightAxisValue = PlayerEIComponent->GetAxisValue("Right");
-		if(FMath::Abs(ForwardAxisValue) == 0 && FMath::Abs(RightAxisValue) == 0) return;
+		if (FMath::Abs(ForwardAxisValue) == 0 && FMath::Abs(RightAxisValue) == 0) return;
 
 		AnimInstance->Montage_Play(DodgeMontage);
 		PlaySound(RollSoundCue);
 		ActionState = ECharacterActionState::ECAS_Dodging;
 		Stats->DecreaseStamina(Stats->RollCost);
-		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore,
+		                                       Stats->StaminaDelayRate, false);
 
-		if(FMath::Abs(ForwardAxisValue) == 1 && FMath::Abs(RightAxisValue) == 1)
+		if (FMath::Abs(ForwardAxisValue) == 1 && FMath::Abs(RightAxisValue) == 1)
 		{
-			if(ForwardAxisValue == 1 && RightAxisValue == -1) AnimInstance->Montage_JumpToSection(FName("DodgeFL"), DodgeMontage);
-			if(ForwardAxisValue == 1 && RightAxisValue == 1) AnimInstance->Montage_JumpToSection(FName("DodgeFR"), DodgeMontage);
-			if(ForwardAxisValue == -1 && RightAxisValue == -1) AnimInstance->Montage_JumpToSection(FName("DodgeBL"), DodgeMontage);
-			if(ForwardAxisValue == -1 && RightAxisValue == 1) AnimInstance->Montage_JumpToSection(FName("DodgeBR"), DodgeMontage);
-		} else
+			if (ForwardAxisValue == 1 && RightAxisValue == -1)
+				AnimInstance->Montage_JumpToSection(
+					FName("DodgeFL"), DodgeMontage);
+			if (ForwardAxisValue == 1 && RightAxisValue == 1)
+				AnimInstance->Montage_JumpToSection(
+					FName("DodgeFR"), DodgeMontage);
+			if (ForwardAxisValue == -1 && RightAxisValue == -1)
+				AnimInstance->Montage_JumpToSection(
+					FName("DodgeBL"), DodgeMontage);
+			if (ForwardAxisValue == -1 && RightAxisValue == 1)
+				AnimInstance->Montage_JumpToSection(
+					FName("DodgeBR"), DodgeMontage);
+		}
+		else
 		{
 			if (ForwardAxisValue > 0)
 			{
@@ -464,36 +492,37 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 {
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
-	if(ActionState != ECharacterActionState::ECAS_NoAction) return;
-	
+	if (ActionState != ECharacterActionState::ECAS_NoAction) return;
+
 	TArray<FHitResult> HitResults;
 	FVector TraceStart = GetActorLocation();
 	FRotator TraceRot = GetActorRotation();
 	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
 	TArray<AActor*> ActorsToIgnore;
 
-	if(!EnemyTargetLock)
+	if (!EnemyTargetLock)
 	{
 		UKismetSystemLibrary::SphereTraceMulti(
-		this,
-		TraceStart,
-		TraceEnd,
-		60.0f,
-		ETraceTypeQuery::TraceTypeQuery1,
-		false,
-		ActorsToIgnore,
-		EDrawDebugTrace::None,
-		HitResults,
-		true);
-	} else
+			this,
+			TraceStart,
+			TraceEnd,
+			60.0f,
+			ETraceTypeQuery::TraceTypeQuery1,
+			false,
+			ActorsToIgnore,
+			EDrawDebugTrace::None,
+			HitResults,
+			true);
+	}
+	else
 	{
 		EnemyTargetLock = nullptr;
 		return;
 	}
 
-	for(auto Hit : HitResults)
+	for (auto Hit : HitResults)
 	{
-		if(IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()))
+		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()))
 		{
 			EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
 			break;
@@ -516,7 +545,7 @@ void APlayerCharacter::InstaKill(const FInputActionValue& Value)
 void APlayerCharacter::NoClip(const FInputActionValue& Value)
 {
 	bNoClip = !bNoClip;
-	if(bNoClip)
+	if (bNoClip)
 	{
 		SetActorEnableCollision(false);
 		MovementComp->bCheatFlying = true;
@@ -584,15 +613,16 @@ void APlayerCharacter::Respawn()
 
 void APlayerCharacter::KeepRotationOnTarget()
 {
-	if(!IsValid(EnemyTargetLock))
+	if (!IsValid(EnemyTargetLock))
 		return;
-	
+
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
 
-	if(EnemyTargetLock)
+	if (EnemyTargetLock)
 	{
-		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), EnemyTargetLock->GetActorLocation());
+		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(),
+		                                                              EnemyTargetLock->GetActorLocation());
 		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
 		PlayerController->SetControlRotation(NewRotation + Offset);
 	}
@@ -602,8 +632,8 @@ void APlayerCharacter::PlayNormalAttackAnimation()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	//UAnimInstance* AnimInstance = MySkeletalMeshComponent->GetAnimInstance();
-	
-	if(AnimInstance && NormalAttackMontage)
+
+	if (AnimInstance && NormalAttackMontage)
 	{
 		AnimInstance->Montage_Play(NormalAttackMontage);
 		//const int32 RandomAnimation = FMath::RandRange(0, 1);
@@ -626,7 +656,7 @@ void APlayerCharacter::PlayNormalAttackAnimation()
 		default:
 			break;
 		}
-		
+
 		AnimInstance->Montage_JumpToSection(AnimSection, NormalAttackMontage);
 	}
 }
@@ -634,7 +664,7 @@ void APlayerCharacter::PlayNormalAttackAnimation()
 void APlayerCharacter::PlayHeavyAttackAnimation()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && NormalAttackMontage)
+	if (AnimInstance && NormalAttackMontage)
 	{
 		AnimInstance->Montage_Play(HeavyAttackMontage);
 	}
@@ -645,7 +675,7 @@ void APlayerCharacter::PlayCrouchAnimation()
 	DisableInput(Cast<APlayerController>(Controller));
 	ActionState = ECharacterActionState::ECAS_Crouching;
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && CrouchMontage)
+	if (AnimInstance && CrouchMontage)
 		AnimInstance->Montage_Play(CrouchMontage);
 	FTimerHandle StopEatingHandle;
 	GetWorld()->GetTimerManager().SetTimer(StopEatingHandle, this, &APlayerCharacter::StopCrouch, 1);
@@ -660,31 +690,35 @@ void APlayerCharacter::StopCrouch()
 
 bool APlayerCharacter::CanAttack()
 {
-	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped && ActionState != ECharacterActionState::ECAS_Dodging;
+	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped &&
+		ActionState != ECharacterActionState::ECAS_Dodging;
 }
 
 void APlayerCharacter::PlayPlayerHitReact()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	
-	if(AnimInstance && HitReactMontage)
+
+	if (AnimInstance && HitReactMontage)
 	{
 		AnimInstance->Montage_Play(HitReactMontage);
 		ActionState = ECharacterActionState::ECAS_IsHit;
-		
+
 		FName SectionToPlay = FName("HitStraight");
 
-		if((HitAngle >= -45.f && HitAngle < 45.f) /*|| (HitAngle >= -135.f && HitAngle < 135.f)*/) /*From hit from front or from back (same animation for now)*/
-			{
+		if ((HitAngle >= -45.f && HitAngle < 45.f) /*|| (HitAngle >= -135.f && HitAngle < 135.f)*/)
+		/*From hit from front or from back (same animation for now)*/
+		{
 			SectionToPlay = FName("HitStraight");
-			} else if(HitAngle >= -135.f && HitAngle < -45.f)
-			{
-				SectionToPlay = FName("HitFromLeft");
-			} else if(HitAngle >= 45.f && HitAngle < 135.f)
-			{
-				SectionToPlay = FName("HitFromRight");
-			}
-		
+		}
+		else if (HitAngle >= -135.f && HitAngle < -45.f)
+		{
+			SectionToPlay = FName("HitFromLeft");
+		}
+		else if (HitAngle >= 45.f && HitAngle < 135.f)
+		{
+			SectionToPlay = FName("HitFromRight");
+		}
+
 		AnimInstance->Montage_JumpToSection(SectionToPlay, HitReactMontage);
 	}
 }
@@ -702,12 +736,12 @@ void APlayerCharacter::CalculateHitDirection(const FVector ImpactPoint)
 	/*If CrossProduct is positive, the player is hit from the right*/
 	/*If CrossProduct is negative, the player is hit from the left*/
 	const FVector CrossProduct = FVector::CrossProduct(ForwardV, ToImpact);
-	if(CrossProduct.Z < 0) HitAngle *= -1.f;
+	if (CrossProduct.Z < 0) HitAngle *= -1.f;
 }
 
 //Använda det item som klickas på, finns möjlighet för c++ och blueprint
-	//Är implementerad i blueprint just nu
-void APlayerCharacter::UseItem(AItemActor *Item)
+//Är implementerad i blueprint just nu
+void APlayerCharacter::UseItem(AItemActor* Item)
 {
 	if (Item)
 	{
@@ -741,12 +775,10 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 		if (EquippingPar != nullptr)
 			OnEquipParasite(EquippedPar1, EquippedPar2);
 	}
-	
 }
 
 void APlayerCharacter::OnEat()
 {
-
 	PlaySound(EatingSoundCue);
 
 	// Heala spelaren
@@ -761,9 +793,7 @@ void APlayerCharacter::OnEat()
 		{
 			Cast<AEquipableParasite>(Item)->OnEat();
 		}
-		
 	}
-	
 }
 
 //Deprecated
@@ -789,11 +819,10 @@ void APlayerCharacter::SaveGame()
 	{
 		if (Cast<AEquipableItemActor>(Item) && Cast<AEquipableItemActor>(Item)->Equipped)
 		{
-			SaveGameInstance->EquippedItems.Add(Cast<AEquipableItemActor>(Item));	
+			SaveGameInstance->EquippedItems.Add(Cast<AEquipableItemActor>(Item));
 		}
-		
 	}
-	
+
 
 	//save game instance
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
@@ -804,11 +833,12 @@ void APlayerCharacter::SaveGame()
 }
 
 void APlayerCharacter::LoadGame()
-{	
+{
 	//Create instance of save game
 	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
 	//Load saved game into instance variable
-	SaveGameInstance = Cast<USavedGame>(UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
+	SaveGameInstance = Cast<USavedGame>(
+		UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
 	//set players position from saved position
 	this->SetActorLocation(SaveGameInstance->PlayerPosition);
 
@@ -816,9 +846,7 @@ void APlayerCharacter::LoadGame()
 	Inventory->Items.Empty();
 
 	//Inventory->Items = SaveGameInstance->CurrentItems;
-	
 
-	
 
 	for (AItemActor* Item : SaveGameInstance->CurrentItems)
 	{
@@ -826,7 +854,7 @@ void APlayerCharacter::LoadGame()
 		{
 			Cast<AEquipableItemActor>(Item)->Equipped = false;
 		}
-		
+
 		Inventory->AddItem(Item);
 	}
 
@@ -834,19 +862,17 @@ void APlayerCharacter::LoadGame()
 	{
 		Item->Equipped = true;
 	}
-	
 
 
 	//log to check for load
 	UE_LOG(LogTemp, Display, TEXT("Loaded"));
 }
 
-void APlayerCharacter::PlaySound(USoundCue *Sound)
+void APlayerCharacter::PlaySound(USoundCue* Sound)
 {
 	if (AudioComponent && Sound)
 	{
 		AudioComponent->SetSound(Sound);
 		AudioComponent->Play();
 	}
-	
 }

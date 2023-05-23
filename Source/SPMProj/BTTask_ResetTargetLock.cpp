@@ -13,13 +13,14 @@ UBTTask_ResetTargetLock::UBTTask_ResetTargetLock()
 EBTNodeResult::Type UBTTask_ResetTargetLock::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
-
+	
+	ensureMsgf(OwnerComp.GetAIOwner() != nullptr, TEXT("AI controller is Nullptr"));
 	if(OwnerComp.GetAIOwner() == nullptr) return EBTNodeResult::Failed;
 	if (OwnerComp.GetAIOwner()->GetPawn() == nullptr) return EBTNodeResult::Failed;
 	AEnemy* Enemy = Cast<AEnemy>(OwnerComp.GetAIOwner()->GetPawn());
-	
+	ensureMsgf(Enemy != nullptr, TEXT("Enemy is Nullptr"));
 	if(Enemy == nullptr) return EBTNodeResult::Failed;
-	
+	//Call enemy ResetTarget lock Function
 	Enemy->ResetTargetLock();
 	
 	return EBTNodeResult::Succeeded;	

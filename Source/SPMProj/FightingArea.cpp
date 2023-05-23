@@ -20,31 +20,6 @@ void AFightingArea::BeginPlay()
 	GetWorldTimerManager().SetTimer(SetTimer, this, &AFightingArea::SetUpFightingArea, 0.5f, false);
 }
 
-void AFightingArea::CheckEnemiesDead()
-{	
-	UE_LOG(LogTemp, Warning, TEXT("Checking if enemies are dead"));
-	// Check if all enemies are dead
-	for (AEnemy* Enemy : Enemies)
-	{
-		if (Enemy == nullptr) return;
-		if (Enemy->GetStats() == nullptr) return;
-		if (!Enemy->GetStats()->Dead())
-		{
-			return;
-		}
-	}
-	// Open the door if all enemies are dead
-	UE_LOG(LogTemp, Warning, TEXT("ALl enemies were dead"));
-	//Ensure door is not nullptr
-	ensureMsgf(Door != nullptr, TEXT("Door is nullptr"));
-	if (Door != nullptr)
-	{
-		//Open door
-		Door->SetActorEnableCollision(false);
-		Door->SetActorHiddenInGame(true);
-	}
-}
-
 void AFightingArea::SetUpFightingArea()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Set up arena "));
@@ -71,3 +46,25 @@ void AFightingArea::SetUpFightingArea()
 		}
 	}
 }
+
+void AFightingArea::CheckEnemiesDead()
+{	
+	// Check if all enemies are dead
+	for (AEnemy* Enemy : Enemies)
+	{
+		if (!Enemy->GetStats()->Dead())
+		{
+			return;
+		}
+	}
+	// Open the door if all enemies are dead
+	//Ensure door is not nullptr
+	ensureMsgf(Door != nullptr, TEXT("Door is nullptr"));
+	if (Door != nullptr)
+	{
+		//Open door
+		Door->SetActorEnableCollision(false);
+		Door->SetActorHiddenInGame(true);
+	}
+}
+

@@ -80,6 +80,8 @@ private:
 	FTimerHandle SetPlayerLocationTimerAfterOnHit;
 	UPROPERTY(EditAnywhere, Category= "Enemy react")
 	float TimeToReact = 2.0f;
+	bool IsAttacking;
+	const bool GetIsAttacking();
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
@@ -105,6 +107,7 @@ private:
 	UPROPERTY(EditAnywhere, Category= "Target Lock")
 	float MoveDistanceFromPlayer = 200.0f;
 
+	
 
 public:
 	void ResetTargetLock();
