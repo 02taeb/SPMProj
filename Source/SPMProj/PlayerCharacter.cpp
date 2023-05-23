@@ -33,7 +33,7 @@ APlayerCharacter::APlayerCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 	/*Stats*/
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
 
@@ -521,6 +521,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	}
 	else
 	{
+		EnemyTargetLock->SetIsLocked(false);
 		EnemyTargetLock = nullptr;
 		ActionState = ECharacterActionState::ECAS_NoAction;
 		return;
@@ -531,6 +532,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
 		{
 			EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+			EnemyTargetLock->SetIsLocked(true);
 			ActionState = ECharacterActionState::ECAS_TargetLocked;
 			break;
 		}
@@ -555,6 +557,7 @@ void APlayerCharacter::KeepRotationOnTarget()
 
 	if(EnemyTargetLock->GetStats()->Dead())
 	{
+		EnemyTargetLock->SetIsLocked(false);
 		EnemyTargetLock = nullptr;
 		ActionState = ECharacterActionState::ECAS_NoAction;
 	}
