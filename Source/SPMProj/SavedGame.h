@@ -25,8 +25,8 @@ public:
 	FVector PlayerPosition;
 
 	//Health att spara ner kanske inte behövs om vi kör checkpoints som bonfires
-	UPROPERTY(VisibleAnywhere, Category = "Generic")
-	std::string StatsState;
+	/*UPROPERTY(VisibleAnywhere, Category = "Generic")
+	std::string StatsState = "";*/
 
 	//Används inte men kanske något sånt i framtiden
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
@@ -40,8 +40,8 @@ public:
 	TArray <class AItemActor*> CurrentItems;
 
 	//Alla items som är equipped när spelaren sparar, behövs nog inte längre
-	/*UPROPERTY(VisibleAnywhere, Category = "Generic")
-	TArray <class AEquipableItemActor*> EquippedItems;*/
+	UPROPERTY(VisibleAnywhere, Category = "Generic")
+	TArray <class AEquipableItemActor*> EquippedItems;
 
 	//namnet på save slot, ändras inte nu så finns bara en save
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
