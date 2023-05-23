@@ -97,7 +97,7 @@ public:
 	void TargetLockPlayer(std::string);
 	void MoveAlongTargetLock();
 
-	void SetIsLocked(bool Locked);
+	void SetTargetIndicator(bool Locked);
 
 private:
 	//player TargetLock

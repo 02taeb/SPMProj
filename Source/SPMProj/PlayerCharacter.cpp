@@ -521,7 +521,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	}
 	else
 	{
-		EnemyTargetLock->SetIsLocked(false);
+		EnemyTargetLock->SetTargetIndicator(false);
 		EnemyTargetLock = nullptr;
 		ActionState = ECharacterActionState::ECAS_NoAction;
 		return;
@@ -532,7 +532,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
 		{
 			EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
-			EnemyTargetLock->SetIsLocked(true);
+			EnemyTargetLock->SetTargetIndicator(true);
 			ActionState = ECharacterActionState::ECAS_TargetLocked;
 			break;
 		}
@@ -557,7 +557,7 @@ void APlayerCharacter::KeepRotationOnTarget()
 
 	if(EnemyTargetLock->GetStats()->Dead())
 	{
-		EnemyTargetLock->SetIsLocked(false);
+		EnemyTargetLock->SetTargetIndicator(false);
 		EnemyTargetLock = nullptr;
 		ActionState = ECharacterActionState::ECAS_NoAction;
 	}
