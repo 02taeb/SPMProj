@@ -717,7 +717,7 @@ void APlayerCharacter::UseItem(AItemActor *Item)
 			return;
 		}
 		
-		// Max two equipped parasites
+		// Deprecated, Max two equipped parasites
 		AEquipableParasite* EquippingPar = Cast<AEquipableParasite>(Item);
 		if (EquippingPar != nullptr)
 		{
@@ -766,6 +766,7 @@ void APlayerCharacter::OnEat()
 	
 }
 
+//Deprecated
 bool APlayerCharacter::BothParSlotsFull(AEquipableParasite* UsingPar)
 {
 	return EquippedPar1 != nullptr && EquippedPar2 != nullptr && EquippedPar1 != UsingPar && EquippedPar2 != UsingPar;
