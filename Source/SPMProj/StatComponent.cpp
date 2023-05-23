@@ -18,7 +18,6 @@ UStatComponent::UStatComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 	// ...
-	UE_LOG(LogTemp, Warning, TEXT("UStatComponent::UStatComponent()"));
 }
 
 
@@ -30,7 +29,7 @@ void UStatComponent::BeginPlay()
 	CurrentHealth = InitialMaxHealth; //Ska ändras vara dynamisk
 	CurrentStamina = 1;
 	// ...
-	UE_LOG(LogTemp, Warning, TEXT("UStatComponent::BeginPlay()"));
+	
 }
 
 

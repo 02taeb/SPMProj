@@ -11,7 +11,7 @@ UENUM()
 enum class EAffectedStat {
 	None,
 	Health,
-	Stamina,
+	Armor,
 	AttackDamage
 };
 
