@@ -11,6 +11,10 @@
 
 //Hugo (det som används av Stamina)
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMaxHealthUpdated);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMaxStaminaUpdated);
+
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SPMPROJ_API UStatComponent : public UActorComponent
 {
@@ -44,7 +48,13 @@ public:
 	void IncreaseMaxHealth(const float Delta);
 	void IncreaseAttackDamage(const float Delta);
 	void IncreaseArmor(const float Delta);
-	void IncreaseStamina(const float Delta);
+	void IncreaseMaxStamina(const float Delta);
+
+	//test för blueprint
+	UPROPERTY(BlueprintAssignable, Category = "Stats")
+	FOnMaxHealthUpdated OnMaxHealthUpdated;
+	UPROPERTY(BlueprintAssignable, Category = "Stats")
+	FOnMaxStaminaUpdated OnMaxStaminaUpdated;
 	
 	void TakeDamage(const float Damage);
 	void HealHealth(const float HealAmount);
@@ -60,6 +70,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	float CurrentStamina;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxStamina;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Stamina")
 	float NormalAttackCost;
