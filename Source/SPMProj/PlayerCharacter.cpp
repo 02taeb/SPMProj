@@ -118,8 +118,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipDown);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
 	//Testinputs för load och save
-	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
-	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
+	// No longer used
+	//PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
+	//PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
 	//Cheat inputs
 	PlayerEIComponent->BindAction(InputGodMode, ETriggerEvent::Started, this, &APlayerCharacter::GodMode);
 	PlayerEIComponent->BindAction(InputInstaKill, ETriggerEvent::Started, this, &APlayerCharacter::InstaKill);
@@ -130,8 +131,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputTPThird, ETriggerEvent::Started, this, &APlayerCharacter::TPThird);
 }
 
-float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
-                                   AActor* DamageCauser)
+
+//Mihajlo och Hugo
+float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	if (ActionState == ECharacterActionState::ECAS_Dodging || bGodMode || bIsRespawning) return 0;
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
@@ -309,6 +311,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 	}
 }
 
+//Mihajlo och Hugo
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
 	if (Stats->GetCurrentStamina() <= 0)
@@ -324,14 +327,14 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 	if (CanAttack())
 	{
 		Stats->DecreaseStamina(Stats->NormalAttackCost);
-		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore,
-		                                       Stats->StaminaDelayRate, false);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
 		PlaySound(NormalAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingNormal;
 		PlayNormalAttackAnimation();
 	}
 }
 
+//Mihajlo och Hugo
 void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 {
 	if (Stats->GetCurrentStamina() <= 0)
@@ -363,6 +366,7 @@ void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 	bHeavyAttackUsed = false;
 }*/
 
+//Mihajlo och Hugo
 void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 {
 	if (ActionState == ECharacterActionState::ECAS_Dodging) return;
@@ -402,6 +406,7 @@ void APlayerCharacter::NoClipDown(const FInputActionValue& Value)
 	SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
 }
 
+//Hugo, bara för testing vid death
 void APlayerCharacter::KillSelf()
 {
 	Stats->CurrentHealth = 0;
@@ -582,6 +587,7 @@ void APlayerCharacter::TPThird(const FInputActionValue& Value)
 	SetActorLocation(TP3);
 }
 
+//Lucas och Hugo
 void APlayerCharacter::SetRespawnPoint(FVector Position, FRotator Rotation)
 {
 	RespawnPoint = Position;
@@ -593,6 +599,7 @@ FVector APlayerCharacter::GetRespawnPoint()
 	return RespawnPoint;
 }
 
+//Lucas och Hugo
 void APlayerCharacter::Respawn()
 {
 	APlayerController* TempController = Cast<APlayerController>(this->GetController());
@@ -741,6 +748,8 @@ void APlayerCharacter::CalculateHitDirection(const FVector ImpactPoint)
 
 //Använda det item som klickas på, finns möjlighet för c++ och blueprint
 //Är implementerad i blueprint just nu
+
+//Lucas och Hugo
 void APlayerCharacter::UseItem(AItemActor* Item)
 {
 	if (Item)
@@ -750,8 +759,8 @@ void APlayerCharacter::UseItem(AItemActor* Item)
 			UE_LOG(LogTemp, Display, TEXT("No Owning Inventory"));
 			return;
 		}
-
-		// Max two equipped parasites
+		
+		// Deprecated, Max two equipped parasites
 		AEquipableParasite* EquippingPar = Cast<AEquipableParasite>(Item);
 		if (EquippingPar != nullptr)
 		{
@@ -777,6 +786,7 @@ void APlayerCharacter::UseItem(AItemActor* Item)
 	}
 }
 
+//Lucas och Hugo
 void APlayerCharacter::OnEat()
 {
 	PlaySound(EatingSoundCue);
@@ -796,11 +806,13 @@ void APlayerCharacter::OnEat()
 	}
 }
 
+//Deprecated
 bool APlayerCharacter::BothParSlotsFull(AEquipableParasite* UsingPar)
 {
 	return EquippedPar1 != nullptr && EquippedPar2 != nullptr && EquippedPar1 != UsingPar && EquippedPar2 != UsingPar;
 }
 
+//Hugo
 void APlayerCharacter::SaveGame()
 {
 	//Create instance of SavedGame
@@ -831,6 +843,7 @@ void APlayerCharacter::SaveGame()
 	UE_LOG(LogTemp, Display, TEXT("SAVED"));
 }
 
+//Hugo
 void APlayerCharacter::LoadGame()
 {
 	//Create instance of save game
@@ -867,6 +880,7 @@ void APlayerCharacter::LoadGame()
 	UE_LOG(LogTemp, Display, TEXT("Loaded"));
 }
 
+//Hugo
 void APlayerCharacter::PlaySound(USoundCue* Sound)
 {
 	if (AudioComponent && Sound)
