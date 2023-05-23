@@ -50,6 +50,11 @@ private:
 	class UAnimMontage* EnemyHitReactMontage;
 	double HitAngle;
 
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	bool IsLockedOn = false;
+	//Target Lock indicator widget
+	//UPROPERTY(EditAnywhere, Category = "Target Lock Indicator")
+	//class UWidgetComponent* IndicatorWidgetComponent;
 
 	//Audio
 	UPROPERTY()
@@ -97,6 +102,8 @@ public:
 	
 	void TargetLockPlayer(std::string);
 	void MoveAlongTargetLock();
+
+	void SetIsLocked(bool Locked);
 
 private:
 	//player TargetLock

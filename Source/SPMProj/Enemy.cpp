@@ -14,6 +14,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/AudioComponent.h"
+#include "Components/WidgetComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Sound/SoundCue.h"
@@ -24,8 +25,11 @@ AEnemy::AEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 	//Components dont need to be attached.
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
-
+	
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>("Audio");
+
+	//IndicatorWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("Target Lock Indicator");
+	//IndicatorWidgetComponent->SetHiddenInGame(true);
 }
 
 // Called when the game starts or when spawned
@@ -371,6 +375,20 @@ void AEnemy::MoveAlongTargetLock()
 		                                                              PlayerTargetLock->GetActorLocation());
 		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
 		EnemyController->SetControlRotation(NewRotation + Offset);
+	}
+}
+
+void AEnemy::SetIsLocked(bool Locked)
+{
+	//IsLockedOn = Locked;
+	UWidgetComponent* IndicatorWidgetComponent = Cast<UWidgetComponent>(GetComponentByClass(UWidgetComponent::StaticClass()));
+	
+	if(Locked)
+	{
+		IndicatorWidgetComponent->SetHiddenInGame(false);
+	} else
+	{
+		IndicatorWidgetComponent->SetHiddenInGame(true);
 	}
 }
 
