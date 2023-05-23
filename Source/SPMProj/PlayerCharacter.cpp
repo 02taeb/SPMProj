@@ -641,6 +641,14 @@ void APlayerCharacter::Respawn()
 	{
 		EquipedWeapon->MeleeWeaponMesh->SetVisibility(true);
 	}
+
+	if(EnemyTargetLock)
+	{
+		EnemyTargetLock->SetTargetIndicator(false);
+		EnemyTargetLock = nullptr;
+		ActionState = ECharacterActionState::ECAS_NoAction;
+	}
+	
 	EnableInput(Cast<APlayerController>(this->GetController()));
 	bIsRespawning = false;
 }
