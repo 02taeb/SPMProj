@@ -20,24 +20,28 @@ public:
 	
 	USavedGame();
 
+	//kanske inte används om checkpoints används istället
 	UPROPERTY(EditAnywhere, Category = "Generic")
 	FVector PlayerPosition;
 
 	//Health att spara ner kanske inte behövs om vi kör checkpoints som bonfires
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
-	float Health;
+	std::string StatsState;
 
 	//Används inte men kanske något sånt i framtiden
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
-	UObject* Checkpoint;
+	FVector CheckpointLocation;
+
+	UPROPERTY(VisibleAnywhere, Category = "Generic")
+	FRotator CheckpointRotation;
 
 	//Hela inventory som sparas
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
 	TArray <class AItemActor*> CurrentItems;
 
-	//Alla items som är equipped när spelaren sparar
-	UPROPERTY(VisibleAnywhere, Category = "Generic")
-	TArray <class AEquipableItemActor*> EquippedItems;
+	//Alla items som är equipped när spelaren sparar, behövs nog inte längre
+	/*UPROPERTY(VisibleAnywhere, Category = "Generic")
+	TArray <class AEquipableItemActor*> EquippedItems;*/
 
 	//namnet på save slot, ändras inte nu så finns bara en save
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
