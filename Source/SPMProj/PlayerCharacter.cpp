@@ -511,7 +511,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 			this,
 			TraceStart,
 			TraceEnd,
-			60.0f,
+			100.0f,
 			ETraceTypeQuery::TraceTypeQuery1,
 			false,
 			ActorsToIgnore,
