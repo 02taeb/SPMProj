@@ -6,6 +6,8 @@
 #include "ItemActor.h"
 #include "EquipableItemActor.generated.h"
 
+//Hugo allt
+
 /**
  * 
  */

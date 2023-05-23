@@ -380,7 +380,7 @@ void AEnemy::ResetTargetLock()
 	PlayerTargetLock = nullptr;
 }
 
-
+//Hugo
 void AEnemy::PlaySound(USoundCue* Sound)
 {
 	if (AudioComponent && Sound)
