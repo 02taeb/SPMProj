@@ -38,7 +38,7 @@ void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (CurrentHealth <= 0)
+	/*if (CurrentHealth <= 0)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Player is dead"));
 		// Death anim
@@ -47,7 +47,7 @@ void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 		// Påverka inv ?
 		// Save/Load
 		// Kallelse till Level blueprint som får sköta det
-	}
+	} */
 }
 
 float UStatComponent::GetInitialMaxHealth() const
@@ -85,11 +85,13 @@ float UStatComponent::GetCurrentArmor() const
 	return CurrentArmor;
 }
 
+//Hugo
 float UStatComponent::GetCurrentStamina() const
 {
 	return CurrentStamina;
 }
 
+//Hugo
 void UStatComponent::DecreaseStamina(float DecreaseAmount)
 {
 	//Decreased = true;
@@ -171,6 +173,7 @@ void UStatComponent::SetState(const std::string& SavedState)
 	CurrentArmor = std::stof(Values[6]);
 }
 
+//Hugo
 void UStatComponent::RestoreStamina(float DeltaTime)
 {
 	// FTimerHandle StaminaTimer;
@@ -192,6 +195,7 @@ void UStatComponent::RestoreStamina(float DeltaTime)
 	
 }
 
+//Hugo
 void UStatComponent::SetRestore()
 {
 	Restore = true;

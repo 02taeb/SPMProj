@@ -7,6 +7,8 @@
 #include "EquipableParasite.h"
 #include "PlayerCharacter.h"
 
+//Hugo allt
+
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
 {

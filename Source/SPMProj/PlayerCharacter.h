@@ -8,6 +8,9 @@
 #include "CharacterStates.h"
 #include "PlayerCharacter.generated.h"
 
+//Hugo (det som behövs av de metoder jag gjort/jobbat med)
+
+
 class AEquipableParasite;
 class AMeleeWeapon;
 UCLASS()
