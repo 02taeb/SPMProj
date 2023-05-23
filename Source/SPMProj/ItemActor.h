@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "ItemActor.generated.h"
 
+//Hugo allt
+
+
 UCLASS(Abstract, BlueprintType, Blueprintable)
 class SPMPROJ_API AItemActor : public AActor
 {
@@ -17,7 +20,7 @@ public:
 
 // virtual class UWorld* GetWorld() const { return World; };
 
-	//Item vet om sin värld ifall partikeleffekter behöver spawnas vid use
+	//Item vet om sin värld ifall partikeleffekter behöver spawnas vid use, är från när items var UObjects och då inte hade fysisk representering
 	UPROPERTY(Transient)
 	class UWorld* World;
 
@@ -25,13 +28,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	FText UseText;
 
-	//bildenm på item i inventory
+	//bilden på item i inventory
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	class UTexture2D* ItemThumbnail;
 
+	//Namn på item
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item")
 	FText ItemName;
 
+	//Description av item
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Item", meta = (MultiLine = true))
 	FText ItemDescription;
 	

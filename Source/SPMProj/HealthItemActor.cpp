@@ -6,6 +6,8 @@
 #include "InventoryComponent.h"
 #include "StatComponent.h"
 
+//Hugo allt
+
 AHealthItemActor::AHealthItemActor()
 {
    
