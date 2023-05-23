@@ -4,6 +4,9 @@
 #include "EquipableItemActor.h"
 #include "PlayerCharacter.h"
 
+//Hugo allt
+
+
 AEquipableItemActor::AEquipableItemActor()
 {
 

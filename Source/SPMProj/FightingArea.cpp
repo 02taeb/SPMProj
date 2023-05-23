@@ -41,6 +41,7 @@ void AFightingArea::SetUpFightingArea()
 			UE_LOG(LogTemp, Warning, TEXT("Found an enemy in bounds"));
 			Enemies.Add(Enemy);
 			// Bind to the OnDeath event of the enemy to check if all enemies are dead
+			// TODO: Might be causing crashes, debug with rider and see stack trace
 			Enemy->OnDeath.AddDynamic(this, &AFightingArea::CheckEnemiesDead);
 		}
 	}

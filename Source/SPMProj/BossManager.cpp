@@ -14,10 +14,13 @@ ABossManager::ABossManager()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
 	BossCloud = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Compoenet"));
+	if (BossCloud == nullptr) return;
 	BossCloud->SetupAttachment(RootComponent);
 	ArenaCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Component"));
+	if (ArenaCollider == nullptr) return;
 	ArenaCollider->SetupAttachment(RootComponent);
 	DummyParentForColls = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Component"));
+	if ( DummyParentForColls== nullptr) return;
 	DummyParentForColls->SetupAttachment(RootComponent);
 }
 

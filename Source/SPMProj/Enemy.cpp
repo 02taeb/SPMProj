@@ -38,9 +38,11 @@ void AEnemy::BeginPlay()
 	if (GetWorld() && WeaponClass)
 	{
 		AMeleeWeapon* EquipedWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
+		if(EquipedWeapon == nullptr) return;
 		EquipedWeapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
 		EquipedWeapon->SetOwner(this);
 		EquipedWeapon->SetInstigator(this);
+		if (EquipedWeapon->GetComponentByClass(USphereComponent::StaticClass()) == nullptr) return;
 		EquipedWeapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
 		EnemyWeapon = EquipedWeapon;
 	}
@@ -53,11 +55,13 @@ void AEnemy::EnemyAttackBasic()
 
 void AEnemy::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
+	if (EnemyWeapon == nullptr) return;
 	EnemyWeapon->Destroy();
 }
 
 void AEnemy::PlayEnemyHitReact()
 {
+	if (GetMesh() == nullptr) return;
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 
 	if (AnimInstance && EnemyHitReactMontage)
@@ -104,6 +108,7 @@ void AEnemy::SetPlayerLocationAfterOnHit()
 		if (AIController)
 		{
 			// Get the Blackboard component from the AI controller
+			if (AIController->GetBlackboardComponent() == nullptr) return;
 			Blackboard = AIController->GetBlackboardComponent();
 		}
 	}
@@ -375,7 +380,7 @@ void AEnemy::ResetTargetLock()
 	PlayerTargetLock = nullptr;
 }
 
-
+//Hugo
 void AEnemy::PlaySound(USoundCue* Sound)
 {
 	if (AudioComponent && Sound)
