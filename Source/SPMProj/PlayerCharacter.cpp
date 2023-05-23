@@ -234,7 +234,7 @@ void APlayerCharacter::MoveForward(const FInputActionValue& Value)
 	}
 
 	/*Cant move under attack, will be changed!!*/
-	if (ActionState == ECharacterActionState::ECAS_NoAction)
+	if (ActionState == ECharacterActionState::ECAS_NoAction || ActionState == ECharacterActionState::ECAS_TargetLocked)
 		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
 }
 
@@ -247,7 +247,7 @@ void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 	}
 
 	/*Cant move under attack, will be changed!!*/
-	if (ActionState == ECharacterActionState::ECAS_NoAction)
+	if (ActionState == ECharacterActionState::ECAS_NoAction || ActionState == ECharacterActionState::ECAS_TargetLocked)
 		AddMovementInput(GetActorRightVector() * Value.Get<float>());
 }
 
@@ -264,14 +264,14 @@ void APlayerCharacter::LookUpRate(const FInputActionValue& Value)
 void APlayerCharacter::LookRight(const FInputActionValue& Value)
 {
 	if (ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState !=
-		ECharacterActionState::ECAS_AttackingHeavy)
+		ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_TargetLocked)
 		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::LookRightRate(const FInputActionValue& Value)
 {
 	if (ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState !=
-		ECharacterActionState::ECAS_AttackingHeavy)
+		ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_TargetLocked)
 		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
@@ -429,7 +429,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		return;
 
 	if (ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState !=
-		ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction)
+		ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction && ActionState != ECharacterActionState::ECAS_TargetLocked)
 		return;
 
 
@@ -497,7 +497,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 {
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
-	if (ActionState != ECharacterActionState::ECAS_NoAction) return;
+	if (ActionState != ECharacterActionState::ECAS_NoAction && ActionState != ECharacterActionState::ECAS_TargetLocked) return;
 
 	TArray<FHitResult> HitResults;
 	FVector TraceStart = GetActorLocation();
@@ -511,7 +511,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 			this,
 			TraceStart,
 			TraceEnd,
-			60.0f,
+			100.0f,
 			ETraceTypeQuery::TraceTypeQuery1,
 			false,
 			ActorsToIgnore,
@@ -522,16 +522,41 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	else
 	{
 		EnemyTargetLock = nullptr;
+		ActionState = ECharacterActionState::ECAS_NoAction;
 		return;
 	}
 
 	for (auto Hit : HitResults)
 	{
-		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()))
+		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
 		{
 			EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+			ActionState = ECharacterActionState::ECAS_TargetLocked;
 			break;
 		}
+	}
+}
+
+void APlayerCharacter::KeepRotationOnTarget()
+{
+	if (!IsValid(EnemyTargetLock))
+		return;
+
+	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController == nullptr) return;
+
+	if (EnemyTargetLock)
+	{
+		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(),
+																	  EnemyTargetLock->GetActorLocation());
+		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
+		PlayerController->SetControlRotation(NewRotation + Offset);
+	}
+
+	if(EnemyTargetLock->GetStats()->Dead())
+	{
+		EnemyTargetLock = nullptr;
+		ActionState = ECharacterActionState::ECAS_NoAction;
 	}
 }
 
@@ -617,24 +642,6 @@ void APlayerCharacter::Respawn()
 	bIsRespawning = false;
 }
 
-
-void APlayerCharacter::KeepRotationOnTarget()
-{
-	if (!IsValid(EnemyTargetLock))
-		return;
-
-	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-	if (PlayerController == nullptr) return;
-
-	if (EnemyTargetLock)
-	{
-		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(),
-		                                                              EnemyTargetLock->GetActorLocation());
-		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
-		PlayerController->SetControlRotation(NewRotation + Offset);
-	}
-}
-
 void APlayerCharacter::PlayNormalAttackAnimation()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
@@ -697,7 +704,7 @@ void APlayerCharacter::StopCrouch()
 
 bool APlayerCharacter::CanAttack()
 {
-	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped &&
+	return (ActionState == ECharacterActionState::ECAS_NoAction || ActionState == ECharacterActionState::ECAS_TargetLocked) && WeaponState == ECharacterWeaponState::ECWS_Equiped &&
 		ActionState != ECharacterActionState::ECAS_Dodging;
 }
 

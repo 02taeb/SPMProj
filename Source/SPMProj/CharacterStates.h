@@ -14,6 +14,7 @@ enum class ECharacterActionState : uint8
 	ECAS_AttackingNormal UMETA(DisplayName = "AttackingNormal"),
 	ECAS_AttackingHeavy UMETA(DisplayName = "AttackingHeavy"),
 	ECAS_Dodging UMETA(DisplayName = "Dodging"),
+	ECAS_TargetLocked UMETA(DisplayName = "TargetLocked"),
 	ECAS_Crouching UMETA(DisplayName = "Crouching"),
-	ECAS_IsHit UMETA(DisplayName = "IsHit")
+	ECAS_IsHit UMETA(DisplayName = "IsHit") 
 };
