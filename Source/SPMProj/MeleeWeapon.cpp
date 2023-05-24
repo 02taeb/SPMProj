@@ -71,62 +71,62 @@ void AMeleeWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	BoxHit,  
 	true);  /*Ignores itself for overlaps*/
 	
-	OnHit(BoxHit.GetActor(), BoxHit.ImpactPoint, BoxHit);
-	HandleWeaponBoxHit(BoxHit.GetActor(), BoxHit.ImpactPoint);
+	HandleWeaponBoxHit(BoxHit.GetActor(), BoxHit.ImpactPoint, BoxHit);
 }
 
-void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor, const FVector ImpactPoint)
+void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor, const FVector ImpactPoint, FHitResult HitResult)
 {
-	if(Actor)
-	{
-		if(GetOwner()->ActorHasTag(FName("Enemy")) && Actor->ActorHasTag(FName("Enemy"))) return;
-		ActorsToIgnore.AddUnique(Actor);
+	if(!Actor) return;
+	if(GetOwner()->ActorHasTag(FName("Enemy")) && Actor->ActorHasTag(FName("Enemy"))) return;
+	
+	OnHit(Actor, ImpactPoint, HitResult);
+	ActorsToIgnore.AddUnique(Actor);
 		
-		if(GetOwner()->ActorHasTag(FName("Enemy")))
+	if(GetOwner()->ActorHasTag(FName("Enemy")))
+	{
+		AEnemy* EnemyInstigator = Cast<AEnemy>(this->GetOwner());
+		if(EnemyInstigator)
 		{
-			AEnemy* EnemyInstigator = Cast<AEnemy>(this->GetOwner());
-			if(EnemyInstigator)
-			{
-				APlayerCharacter* HitPlayer = Cast<APlayerCharacter>(Actor);
-				if(HitPlayer) HitPlayer->CalculateHitDirection(ImpactPoint);
-				UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
-				UE_LOG(LogTemp, Warning, TEXT("ENEMY"));
-			}
-		} else
-		{
-			APlayerCharacter* PlayerInstigator = Cast<APlayerCharacter>(this->GetOwner());
-			if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingNormal)
-			{
-				if (PlayerInstigator->bInstaKill)
-				{
-					UGameplayStatics::ApplyDamage(Actor, DefaultDamage * 9999, GetInstigator()->GetController(), this, UDamageType::StaticClass());
-				}
-				else
-				{
-					AEnemy* HitEnemy = Cast<AEnemy>(Actor);
-					if(HitEnemy) HitEnemy->CalculateHitDirection(ImpactPoint); /*Viktigt att kallas innan ApplyDamage!!*/
-					UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
-				}
-				UE_LOG(LogTemp, Warning, TEXT("PLAYER DEF"));
-			}
-			else if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingHeavy)
-			{
-				if (PlayerInstigator->bInstaKill)
-				{
-					UGameplayStatics::ApplyDamage(Actor, HeavyDamage * 9999, GetInstigator()->GetController(), this, UDamageType::StaticClass());
-				}
-				else
-				{
-					AEnemy* HitEnemy = Cast<AEnemy>(Actor);
-					if(HitEnemy) HitEnemy->CalculateHitDirection(ImpactPoint); /*Viktigt att kallas innan ApplyDamage!!*/
-					UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
-				}
-				UE_LOG(LogTemp, Warning, TEXT("PLAYER HEV"));
-			}
+			APlayerCharacter* HitPlayer = Cast<APlayerCharacter>(Actor);
+			if(HitPlayer) HitPlayer->CalculateHitDirection(ImpactPoint);
+			UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+			UE_LOG(LogTemp, Warning, TEXT("ENEMY"));
 		}
-		//är test för partikeleffekt när vapen träffar något
-		UNiagaraComponent* NiagaraComp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, GetActorLocation());
-	} 
+	} else
+	{
+		APlayerCharacter* PlayerInstigator = Cast<APlayerCharacter>(this->GetOwner());
+		if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingNormal)
+		{
+			if (PlayerInstigator->bInstaKill)
+			{
+				UGameplayStatics::ApplyDamage(Actor, DefaultDamage * 9999, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+			}
+			else
+			{
+				AEnemy* HitEnemy = Cast<AEnemy>(Actor);
+				if(HitEnemy) HitEnemy->CalculateHitDirection(ImpactPoint); /*Viktigt att kallas innan ApplyDamage!!*/
+				UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+			}
+			UE_LOG(LogTemp, Warning, TEXT("PLAYER DEF"));
+		}
+		else if(PlayerInstigator && PlayerInstigator->GetPlayerAttackType() == ECharacterActionState::ECAS_AttackingHeavy)
+		{
+			if (PlayerInstigator->bInstaKill)
+			{
+				UGameplayStatics::ApplyDamage(Actor, HeavyDamage * 9999, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+			}
+			else
+			{
+				AEnemy* HitEnemy = Cast<AEnemy>(Actor);
+				if(HitEnemy) HitEnemy->CalculateHitDirection(ImpactPoint); /*Viktigt att kallas innan ApplyDamage!!*/
+				UGameplayStatics::ApplyDamage(Actor, HeavyDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+			}
+			UE_LOG(LogTemp, Warning, TEXT("PLAYER HEV"));
+		}
+	}
+	//är test för partikeleffekt när vapen träffar något
+	UNiagaraComponent* NiagaraComp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitEffect, GetActorLocation());
+
 }
 
 void AMeleeWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
