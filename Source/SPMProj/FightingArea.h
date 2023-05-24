@@ -26,7 +26,7 @@ protected:
 	UBoxComponent* Bounds;
 	
 	// Door that opens when all enemies are dead
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	AActor* Door;
 	
 	// Override BeginPlay() to initialize the fighting area
@@ -35,6 +35,10 @@ protected:
 	// Check if all enemies are dead and open the door if so
 	UFUNCTION()
 	void CheckEnemiesDead();
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void EnemiesLeft(int EnemiesAlive);
 
 private:
 	//timer 
