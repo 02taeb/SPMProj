@@ -45,17 +45,26 @@ void AFightingArea::SetUpFightingArea()
 			Enemy->OnDeath.AddDynamic(this, &AFightingArea::CheckEnemiesDead);
 		}
 	}
+	EnemiesLeft(Enemies.Num());
 }
 
 void AFightingArea::CheckEnemiesDead()
-{	
+{
+	int counter = 0;
+	bool bAnyEnemyRemains = false;
 	// Check if all enemies are dead
 	for (AEnemy* Enemy : Enemies)
 	{
 		if (!Enemy->GetStats()->Dead())
 		{
-			return;
+			bAnyEnemyRemains = true;
+			counter++;
 		}
+	}
+	if (bAnyEnemyRemains)
+	{
+		EnemiesLeft(counter);
+		return;
 	}
 	// Open the door if all enemies are dead
 	//Ensure door is not nullptr
