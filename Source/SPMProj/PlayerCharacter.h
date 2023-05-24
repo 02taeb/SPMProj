@@ -125,6 +125,8 @@ private:
 	class USoundCue* DeathSoundCue;
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
 	class USoundCue* RollSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* PickupWeaponSoundCue;
 
 	// Respawning
 	UFUNCTION(BlueprintCallable)
