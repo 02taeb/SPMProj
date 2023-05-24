@@ -288,6 +288,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		OverlapWeapon = nullptr;
 		Weapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
 		WeaponState = ECharacterWeaponState::ECWS_Equiped;
+		PlaySound(PickupWeaponSoundCue);
 	}
 
 
