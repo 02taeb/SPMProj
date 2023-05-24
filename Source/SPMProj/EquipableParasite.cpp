@@ -42,8 +42,7 @@ void AEquipableParasite::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	case EAffectedStat::Health:
 		StatComponentPtr->IncreaseMaxHealth(-StartAmount);
 		break;
-	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-StartAmount);
+	case EAffectedStat::Stamina:
 		break;
 	case EAffectedStat::AttackDamage:
 		StatComponentPtr->IncreaseAttackDamage(-StartAmount);
@@ -118,23 +117,6 @@ void AEquipableParasite::OnEquip()
 			FAttachmentTransformRules::KeepRelativeTransform,
 			TEXT("ParasiteSocket"));
 	}
-
-	if (Particles && !System)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Spawning Particles!"));
-		FVector Loc = UGameplayStatics::GetPlayerCharacter(this, 0)->GetActorLocation();
-		Loc.Z -= 100;
-		System = UNiagaraFunctionLibrary::SpawnSystemAttached(
-			Particles,
-			UGameplayStatics::GetPlayerCharacter(this, 0)->GetMesh(),
-			TEXT("ball_rSocket"),
-			Loc,
-			FRotator(0),
-			EAttachLocation::KeepWorldPosition,
-			false);
-	}
-	else if(System)
-		System->Activate();
 	
 	// Give buff to player
 	switch (Stat)
@@ -142,8 +124,8 @@ void AEquipableParasite::OnEquip()
 	case EAffectedStat::Health:
 		StatComponentPtr->IncreaseMaxHealth(StartAmount);
 		break;
-	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(StartAmount);
+	case EAffectedStat::Stamina:
+		StatComponentPtr->IncreaseMaxStamina(StartAmount);
 		break;
 	case EAffectedStat::AttackDamage:
 		StatComponentPtr->IncreaseAttackDamage(StartAmount);
@@ -172,16 +154,17 @@ void AEquipableParasite::OnUnequip()
 		StaticMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
+	/* Deprecated
 	if(Particles && System)
 		System->Deactivate();
+	*/
 
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
 		StatComponentPtr->IncreaseMaxHealth(-CurrentAmount);
 		break;
-	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(-CurrentAmount);
+	case EAffectedStat::Stamina:
 		break;
 	case EAffectedStat::AttackDamage:
 		StatComponentPtr->IncreaseAttackDamage(-CurrentAmount);
@@ -205,8 +188,8 @@ void AEquipableParasite::OnPlayerDeath()
 		case EAffectedStat::Health:
 			StatComponentPtr->IncreaseMaxHealth(-OnEatUpgradeAmount);
 			break;
-		case EAffectedStat::Armor:
-			StatComponentPtr->IncreaseArmor(-OnEatUpgradeAmount);
+		case EAffectedStat::Stamina:
+			StatComponentPtr->IncreaseMaxStamina(-OnEatUpgradeAmount);
 			break;
 		case EAffectedStat::AttackDamage:
 			StatComponentPtr->IncreaseAttackDamage(-OnEatUpgradeAmount);
@@ -222,14 +205,31 @@ void AEquipableParasite::OnPlayerDeath()
 void AEquipableParasite::OnEat()
 {
 	UE_LOG(LogTemp, Display, TEXT("Reached Parasites OnEat"));
+
+	if (Particles && !System)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Spawning Particles!"));
+		FVector Loc = UGameplayStatics::GetPlayerCharacter(this, 0)->GetActorLocation();
+		Loc.Z -= 100;
+		System = UNiagaraFunctionLibrary::SpawnSystemAttached(
+			Particles,
+			UGameplayStatics::GetPlayerCharacter(this, 0)->GetMesh(),
+			TEXT("ball_rSocket"),
+			Loc,
+			FRotator(0),
+			EAttachLocation::KeepWorldPosition,
+			false);
+	}
+	else if(System)
+		System->Activate();
 	
 	switch (Stat)
 	{
 	case EAffectedStat::Health:
 		StatComponentPtr->IncreaseMaxHealth(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
 		break;
-	case EAffectedStat::Armor:
-		StatComponentPtr->IncreaseArmor(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
+	case EAffectedStat::Stamina:
+		StatComponentPtr->IncreaseMaxStamina(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));
 		break;
 	case EAffectedStat::AttackDamage:
 		StatComponentPtr->IncreaseAttackDamage(FMath::Min(MaxAmount - CurrentAmount, OnEatUpgradeAmount));

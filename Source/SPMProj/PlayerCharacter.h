@@ -61,7 +61,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
 	AActor* ATKPar;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
-	AActor* DEFPar;
+	AActor* STMPar;
 	
 	bool bInstaKill = false;
 
@@ -125,6 +125,8 @@ private:
 	class USoundCue* DeathSoundCue;
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
 	class USoundCue* RollSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* PickupWeaponSoundCue;
 
 	// Respawning
 	UFUNCTION(BlueprintCallable)
