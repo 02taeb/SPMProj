@@ -5,6 +5,8 @@
 #include "InventoryComponent.h"
 #include "PlayerCharacter.h"
 
+//Hugo allt
+
 // Sets default values
 AItemActor::AItemActor()
 {

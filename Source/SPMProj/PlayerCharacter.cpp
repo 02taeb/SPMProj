@@ -33,7 +33,7 @@ APlayerCharacter::APlayerCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 	/*Stats*/
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
 
@@ -118,8 +118,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipDown);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
 	//Testinputs för load och save
-	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
-	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
+	// No longer used
+	//PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
+	//PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
 	//Cheat inputs
 	PlayerEIComponent->BindAction(InputGodMode, ETriggerEvent::Started, this, &APlayerCharacter::GodMode);
 	PlayerEIComponent->BindAction(InputInstaKill, ETriggerEvent::Started, this, &APlayerCharacter::InstaKill);
@@ -130,8 +131,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputTPThird, ETriggerEvent::Started, this, &APlayerCharacter::TPThird);
 }
 
-float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
-                                   AActor* DamageCauser)
+
+//Mihajlo och Hugo
+float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	if (ActionState == ECharacterActionState::ECAS_Dodging || bGodMode || bIsRespawning) return 0;
 	UE_LOG(LogTemp, Warning, TEXT("PLAYER HAS TAKEN DAMAGE"));
@@ -170,7 +172,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 				if (Temp->bIsEquipped)
 					Temp->OnPlayerDeath();
 			}
-			Temp = Cast<AEquipableParasite>(DEFPar);
+			Temp = Cast<AEquipableParasite>(STMPar);
 			if (Temp != nullptr)
 			{
 				if (Temp->bIsEquipped)
@@ -232,7 +234,7 @@ void APlayerCharacter::MoveForward(const FInputActionValue& Value)
 	}
 
 	/*Cant move under attack, will be changed!!*/
-	if (ActionState == ECharacterActionState::ECAS_NoAction)
+	if (ActionState == ECharacterActionState::ECAS_NoAction || ActionState == ECharacterActionState::ECAS_TargetLocked)
 		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
 }
 
@@ -245,7 +247,7 @@ void APlayerCharacter::MoveRight(const FInputActionValue& Value)
 	}
 
 	/*Cant move under attack, will be changed!!*/
-	if (ActionState == ECharacterActionState::ECAS_NoAction)
+	if (ActionState == ECharacterActionState::ECAS_NoAction || ActionState == ECharacterActionState::ECAS_TargetLocked)
 		AddMovementInput(GetActorRightVector() * Value.Get<float>());
 }
 
@@ -262,14 +264,14 @@ void APlayerCharacter::LookUpRate(const FInputActionValue& Value)
 void APlayerCharacter::LookRight(const FInputActionValue& Value)
 {
 	if (ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState !=
-		ECharacterActionState::ECAS_AttackingHeavy)
+		ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_TargetLocked)
 		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::LookRightRate(const FInputActionValue& Value)
 {
 	if (ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState !=
-		ECharacterActionState::ECAS_AttackingHeavy)
+		ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_TargetLocked)
 		AddControllerYawInput(Value.Get<float>() * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
@@ -286,6 +288,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		OverlapWeapon = nullptr;
 		Weapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
 		WeaponState = ECharacterWeaponState::ECWS_Equiped;
+		PlaySound(PickupWeaponSoundCue);
 	}
 
 
@@ -309,6 +312,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 	}
 }
 
+//Mihajlo och Hugo
 void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 {
 	if (Stats->GetCurrentStamina() <= 0)
@@ -324,14 +328,14 @@ void APlayerCharacter::AttackMeleeNormal(const FInputActionValue& Value)
 	if (CanAttack())
 	{
 		Stats->DecreaseStamina(Stats->NormalAttackCost);
-		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore,
-		                                       Stats->StaminaDelayRate, false);
+		GetWorld()->GetTimerManager().SetTimer(StaminaTimer, Stats, &UStatComponent::SetRestore, Stats->StaminaDelayRate, false);
 		PlaySound(NormalAttackSoundCue);
 		ActionState = ECharacterActionState::ECAS_AttackingNormal;
 		PlayNormalAttackAnimation();
 	}
 }
 
+//Mihajlo och Hugo
 void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 {
 	if (Stats->GetCurrentStamina() <= 0)
@@ -363,6 +367,7 @@ void APlayerCharacter::AttackMeleeHeavy(const FInputActionValue& Value)
 	bHeavyAttackUsed = false;
 }*/
 
+//Mihajlo och Hugo
 void APlayerCharacter::JumpChar(const FInputActionValue& Value)
 {
 	if (ActionState == ECharacterActionState::ECAS_Dodging) return;
@@ -402,6 +407,7 @@ void APlayerCharacter::NoClipDown(const FInputActionValue& Value)
 	SetActorLocation(GetActorLocation() + GetActorUpVector() * -NoClipSpeed);
 }
 
+//Hugo, bara för testing vid death
 void APlayerCharacter::KillSelf()
 {
 	Stats->CurrentHealth = 0;
@@ -424,7 +430,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		return;
 
 	if (ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState !=
-		ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction)
+		ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction && ActionState != ECharacterActionState::ECAS_TargetLocked)
 		return;
 
 
@@ -492,7 +498,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 {
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
-	if (ActionState != ECharacterActionState::ECAS_NoAction) return;
+	if (ActionState != ECharacterActionState::ECAS_NoAction && ActionState != ECharacterActionState::ECAS_TargetLocked) return;
 
 	TArray<FHitResult> HitResults;
 	FVector TraceStart = GetActorLocation();
@@ -506,7 +512,7 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 			this,
 			TraceStart,
 			TraceEnd,
-			60.0f,
+			90.0f,
 			ETraceTypeQuery::TraceTypeQuery1,
 			false,
 			ActorsToIgnore,
@@ -516,17 +522,45 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	}
 	else
 	{
+		EnemyTargetLock->SetTargetIndicator(false);
 		EnemyTargetLock = nullptr;
+		ActionState = ECharacterActionState::ECAS_NoAction;
 		return;
 	}
 
 	for (auto Hit : HitResults)
 	{
-		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()))
+		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
 		{
 			EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+			EnemyTargetLock->SetTargetIndicator(true);
+			ActionState = ECharacterActionState::ECAS_TargetLocked;
 			break;
 		}
+	}
+}
+
+void APlayerCharacter::KeepRotationOnTarget()
+{
+	if (!IsValid(EnemyTargetLock))
+		return;
+
+	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	if (PlayerController == nullptr) return;
+
+	if (EnemyTargetLock)
+	{
+		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(),
+																	  EnemyTargetLock->GetActorLocation());
+		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
+		PlayerController->SetControlRotation(NewRotation + Offset);
+	}
+
+	if(EnemyTargetLock->GetStats()->Dead())
+	{
+		EnemyTargetLock->SetTargetIndicator(false);
+		EnemyTargetLock = nullptr;
+		ActionState = ECharacterActionState::ECAS_NoAction;
 	}
 }
 
@@ -582,6 +616,7 @@ void APlayerCharacter::TPThird(const FInputActionValue& Value)
 	SetActorLocation(TP3);
 }
 
+//Lucas och Hugo
 void APlayerCharacter::SetRespawnPoint(FVector Position, FRotator Rotation)
 {
 	RespawnPoint = Position;
@@ -593,6 +628,7 @@ FVector APlayerCharacter::GetRespawnPoint()
 	return RespawnPoint;
 }
 
+//Lucas och Hugo
 void APlayerCharacter::Respawn()
 {
 	APlayerController* TempController = Cast<APlayerController>(this->GetController());
@@ -606,26 +642,16 @@ void APlayerCharacter::Respawn()
 	{
 		EquipedWeapon->MeleeWeaponMesh->SetVisibility(true);
 	}
+
+	if(EnemyTargetLock)
+	{
+		EnemyTargetLock->SetTargetIndicator(false);
+		EnemyTargetLock = nullptr;
+		ActionState = ECharacterActionState::ECAS_NoAction;
+	}
+	
 	EnableInput(Cast<APlayerController>(this->GetController()));
 	bIsRespawning = false;
-}
-
-
-void APlayerCharacter::KeepRotationOnTarget()
-{
-	if (!IsValid(EnemyTargetLock))
-		return;
-
-	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-	if (PlayerController == nullptr) return;
-
-	if (EnemyTargetLock)
-	{
-		FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(),
-		                                                              EnemyTargetLock->GetActorLocation());
-		FRotator Offset = FRotator(-15.f, 0.f, 0.f);
-		PlayerController->SetControlRotation(NewRotation + Offset);
-	}
 }
 
 void APlayerCharacter::PlayNormalAttackAnimation()
@@ -690,7 +716,7 @@ void APlayerCharacter::StopCrouch()
 
 bool APlayerCharacter::CanAttack()
 {
-	return ActionState == ECharacterActionState::ECAS_NoAction && WeaponState == ECharacterWeaponState::ECWS_Equiped &&
+	return (ActionState == ECharacterActionState::ECAS_NoAction || ActionState == ECharacterActionState::ECAS_TargetLocked) && WeaponState == ECharacterWeaponState::ECWS_Equiped &&
 		ActionState != ECharacterActionState::ECAS_Dodging;
 }
 
@@ -741,6 +767,8 @@ void APlayerCharacter::CalculateHitDirection(const FVector ImpactPoint)
 
 //Använda det item som klickas på, finns möjlighet för c++ och blueprint
 //Är implementerad i blueprint just nu
+
+//Lucas och Hugo
 void APlayerCharacter::UseItem(AItemActor* Item)
 {
 	if (Item)
@@ -750,8 +778,8 @@ void APlayerCharacter::UseItem(AItemActor* Item)
 			UE_LOG(LogTemp, Display, TEXT("No Owning Inventory"));
 			return;
 		}
-
-		// Max two equipped parasites
+		
+		// Deprecated, Max two equipped parasites
 		AEquipableParasite* EquippingPar = Cast<AEquipableParasite>(Item);
 		if (EquippingPar != nullptr)
 		{
@@ -777,6 +805,7 @@ void APlayerCharacter::UseItem(AItemActor* Item)
 	}
 }
 
+//Lucas och Hugo
 void APlayerCharacter::OnEat()
 {
 	PlaySound(EatingSoundCue);
@@ -796,11 +825,13 @@ void APlayerCharacter::OnEat()
 	}
 }
 
+//Deprecated
 bool APlayerCharacter::BothParSlotsFull(AEquipableParasite* UsingPar)
 {
 	return EquippedPar1 != nullptr && EquippedPar2 != nullptr && EquippedPar1 != UsingPar && EquippedPar2 != UsingPar;
 }
 
+//Hugo
 void APlayerCharacter::SaveGame()
 {
 	//Create instance of SavedGame
@@ -831,6 +862,7 @@ void APlayerCharacter::SaveGame()
 	UE_LOG(LogTemp, Display, TEXT("SAVED"));
 }
 
+//Hugo
 void APlayerCharacter::LoadGame()
 {
 	//Create instance of save game
@@ -867,6 +899,7 @@ void APlayerCharacter::LoadGame()
 	UE_LOG(LogTemp, Display, TEXT("Loaded"));
 }
 
+//Hugo
 void APlayerCharacter::PlaySound(USoundCue* Sound)
 {
 	if (AudioComponent && Sound)

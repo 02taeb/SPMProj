@@ -14,6 +14,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/AudioComponent.h"
+#include "Components/WidgetComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Sound/SoundCue.h"
@@ -24,7 +25,7 @@ AEnemy::AEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 	//Components dont need to be attached.
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
-
+	
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>("Audio");
 }
 
@@ -38,9 +39,11 @@ void AEnemy::BeginPlay()
 	if (GetWorld() && WeaponClass)
 	{
 		AMeleeWeapon* EquipedWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
+		if(EquipedWeapon == nullptr) return;
 		EquipedWeapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
 		EquipedWeapon->SetOwner(this);
 		EquipedWeapon->SetInstigator(this);
+		if (EquipedWeapon->GetComponentByClass(USphereComponent::StaticClass()) == nullptr) return;
 		EquipedWeapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
 		EnemyWeapon = EquipedWeapon;
 	}
@@ -53,11 +56,13 @@ void AEnemy::EnemyAttackBasic()
 
 void AEnemy::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
+	if (EnemyWeapon == nullptr) return;
 	EnemyWeapon->Destroy();
 }
 
 void AEnemy::PlayEnemyHitReact()
 {
+	if (GetMesh() == nullptr) return;
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 
 	if (AnimInstance && EnemyHitReactMontage)
@@ -104,6 +109,7 @@ void AEnemy::SetPlayerLocationAfterOnHit()
 		if (AIController)
 		{
 			// Get the Blackboard component from the AI controller
+			if (AIController->GetBlackboardComponent() == nullptr) return;
 			Blackboard = AIController->GetBlackboardComponent();
 		}
 	}
@@ -369,13 +375,27 @@ void AEnemy::MoveAlongTargetLock()
 	}
 }
 
+void AEnemy::SetTargetIndicator(bool Locked)
+{
+	UWidgetComponent* IndicatorWidgetComponent = Cast<UWidgetComponent>(GetComponentByClass(UWidgetComponent::StaticClass()));
+	if(!IndicatorWidgetComponent) return;
+	
+	if(Locked)
+	{
+		IndicatorWidgetComponent->SetHiddenInGame(false);
+	} else
+	{
+		IndicatorWidgetComponent->SetHiddenInGame(true);
+	}
+}
+
 //Daniel
 void AEnemy::ResetTargetLock()
 {
 	PlayerTargetLock = nullptr;
 }
 
-
+//Hugo
 void AEnemy::PlaySound(USoundCue* Sound)
 {
 	if (AudioComponent && Sound)

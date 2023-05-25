@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "BossCrystal.generated.h"
 
+//Deprecated, boss not in final game
 UCLASS()
 class SPMPROJ_API ABossCrystal : public AActor
 {

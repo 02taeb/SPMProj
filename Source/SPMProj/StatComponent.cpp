@@ -27,7 +27,7 @@ void UStatComponent::BeginPlay()
 	Super::BeginPlay();
 	/*I guess...*/
 	CurrentHealth = InitialMaxHealth; //Ska ändras vara dynamisk
-	CurrentStamina = 1;
+	CurrentStamina = MaxStamina;
 	// ...
 	
 }
@@ -38,7 +38,7 @@ void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (CurrentHealth <= 0)
+	/*if (CurrentHealth <= 0)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Player is dead"));
 		// Death anim
@@ -47,7 +47,7 @@ void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 		// Påverka inv ?
 		// Save/Load
 		// Kallelse till Level blueprint som får sköta det
-	}
+	} */
 }
 
 float UStatComponent::GetInitialMaxHealth() const
@@ -85,21 +85,24 @@ float UStatComponent::GetCurrentArmor() const
 	return CurrentArmor;
 }
 
+//Hugo
 float UStatComponent::GetCurrentStamina() const
 {
 	return CurrentStamina;
 }
 
+//Hugo
 void UStatComponent::DecreaseStamina(float DecreaseAmount)
 {
 	//Decreased = true;
 	Restore = false;
-	CurrentStamina = FMath::Clamp(CurrentStamina - DecreaseAmount, 0.f, 1.f);
+	CurrentStamina = FMath::Clamp(CurrentStamina - DecreaseAmount, 0.f, MaxStamina);
 }
 
 void UStatComponent::IncreaseMaxHealth(const float Delta)
 {
 	MaxHealth += Delta;
+	OnMaxHealthUpdated.Broadcast();
 }
 
 void UStatComponent::IncreaseAttackDamage(const float Delta)
@@ -110,6 +113,12 @@ void UStatComponent::IncreaseAttackDamage(const float Delta)
 void UStatComponent::IncreaseArmor(const float Delta)
 {
 	CurrentArmor += Delta;
+}
+//Hugo
+void UStatComponent::IncreaseMaxStamina(const float Delta)
+{
+	MaxStamina += Delta;
+	OnMaxStaminaUpdated.Broadcast();
 }
 
 void UStatComponent::TakeDamage(const float Damage)
@@ -171,6 +180,7 @@ void UStatComponent::SetState(const std::string& SavedState)
 	CurrentArmor = std::stof(Values[6]);
 }
 
+//Hugo
 void UStatComponent::RestoreStamina(float DeltaTime)
 {
 	// FTimerHandle StaminaTimer;
@@ -179,19 +189,20 @@ void UStatComponent::RestoreStamina(float DeltaTime)
 
 	// GetWorld()->GetTimerManager().SetTimer(StaminaTimer, 0.5f, false);
 
-	if (CurrentStamina == 1)
+	if (CurrentStamina == 100)
 	{
 		Restore = false;
 		return;
 	}
 	
 	CurrentStamina += DeltaTime / StaminaRestoreRate;
-	CurrentStamina = FMath::Clamp(CurrentStamina, 0.f, 1.f);
+	CurrentStamina = FMath::Clamp(CurrentStamina, 0.f, MaxStamina);
 
 	return;
 	
 }
 
+//Hugo
 void UStatComponent::SetRestore()
 {
 	Restore = true;

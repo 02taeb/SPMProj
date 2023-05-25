@@ -50,7 +50,6 @@ private:
 	class UAnimMontage* EnemyHitReactMontage;
 	double HitAngle;
 
-
 	//Audio
 	UPROPERTY()
 	class UAudioComponent* AudioComponent;
@@ -97,6 +96,8 @@ public:
 	
 	void TargetLockPlayer(std::string);
 	void MoveAlongTargetLock();
+
+	void SetTargetIndicator(bool Locked);
 
 private:
 	//player TargetLock

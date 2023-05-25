@@ -67,7 +67,7 @@ private:
 
 	//TArray<AActor*> ActorsToIgnore;
 
-	void HandleWeaponBoxHit(AActor* Actor, const FVector ImpactPoint);
+	void HandleWeaponBoxHit(AActor* Actor, const FVector ImpactPoint, FHitResult HitResult);
 public:
 	UBoxComponent* GetCollisionBox() const;
 	

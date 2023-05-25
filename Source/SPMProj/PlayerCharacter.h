@@ -8,6 +8,9 @@
 #include "CharacterStates.h"
 #include "PlayerCharacter.generated.h"
 
+//Hugo (det som behövs av de metoder jag gjort/jobbat med)
+
+
 class AEquipableParasite;
 class AMeleeWeapon;
 UCLASS()
@@ -58,7 +61,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
 	AActor* ATKPar;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Items|Parasites")
-	AActor* DEFPar;
+	AActor* STMPar;
 	
 	bool bInstaKill = false;
 
@@ -122,6 +125,8 @@ private:
 	class USoundCue* DeathSoundCue;
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
 	class USoundCue* RollSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* PickupWeaponSoundCue;
 
 	// Respawning
 	UFUNCTION(BlueprintCallable)
@@ -142,7 +147,7 @@ private:
 	void PlaySound(class USoundCue* Sound);
 
 	//Show rotation speed in the Editor, Define value in BP inspector
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
 	float RotationRate = 10;
 	//Show Movement speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))

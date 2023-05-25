@@ -17,7 +17,7 @@ EBTNodeResult::Type UBTTask_MoveAroundPlayer::ExecuteTask(UBehaviorTreeComponent
 	
 	ensureMsgf(OwnerComp.GetAIOwner() != nullptr, TEXT("AI controller is Nullptr"));
 	if(OwnerComp.GetAIOwner() == nullptr) return EBTNodeResult::Failed;
-    
+	if (OwnerComp.GetAIOwner()->GetPawn() == nullptr) return EBTNodeResult::Failed;
 	AEnemy* Enemy = Cast<AEnemy>(OwnerComp.GetAIOwner()->GetPawn());
 	ensureMsgf(Enemy != nullptr, TEXT("Enemy is Nullptr"));
 	if(Enemy == nullptr) return EBTNodeResult::Failed;
