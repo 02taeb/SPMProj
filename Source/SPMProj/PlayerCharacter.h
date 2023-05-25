@@ -110,6 +110,8 @@ private:
 	//Audio
 	UPROPERTY()
 	class UAudioComponent* AudioComponent;
+	UPROPERTY()
+	class UAudioComponent* FootstepsComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
 	class USoundCue* EatingSoundCue;
@@ -127,6 +129,8 @@ private:
 	class USoundCue* RollSoundCue;
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
 	class USoundCue* PickupWeaponSoundCue;
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	class USoundCue* FootstepSoundCue;
 
 	// Respawning
 	UFUNCTION(BlueprintCallable)
@@ -145,6 +149,10 @@ private:
 
 	//Function for setting soundcue and playing sound
 	void PlaySound(class USoundCue* Sound);
+
+	//Start and stop playing footsteps
+	UFUNCTION(BlueprintCallable)
+	void PlayFootsteps(bool Play);
 
 	//Show rotation speed in the Editor, Define value in BP inspector
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InputSpeeds", meta = (AllowPrivateAccess = "true"))
