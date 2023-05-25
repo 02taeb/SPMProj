@@ -25,7 +25,7 @@ AEnemy::AEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 	//Components dont need to be attached.
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
-	
+
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>("Audio");
 }
 
@@ -39,7 +39,7 @@ void AEnemy::BeginPlay()
 	if (GetWorld() && WeaponClass)
 	{
 		AMeleeWeapon* EquipedWeapon = GetWorld()->SpawnActor<AMeleeWeapon>(WeaponClass);
-		if(EquipedWeapon == nullptr) return;
+		if (EquipedWeapon == nullptr) return;
 		EquipedWeapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
 		EquipedWeapon->SetOwner(this);
 		EquipedWeapon->SetInstigator(this);
@@ -192,7 +192,6 @@ void AEnemy::PlayEnemyAttackMontage()
 
 		AnimInstance->Montage_JumpToSection(SectionToPlay, EnemyAttackMontage);
 	}
-	
 }
 
 // Called every frame
@@ -270,10 +269,11 @@ void AEnemy::Die() const
 //Daniel
 void AEnemy::TargetLockPlayer(std::string teleport)
 {
-	
 	bool bMoveLeft = FMath::RandBool(); // Randomize the movement direction
 
 	//two behavoirs, decided by the method parameter string value
+
+	//need collision check here
 	if (teleport == "teleport")
 	{
 		if (bMoveLeft)
@@ -291,66 +291,62 @@ void AEnemy::TargetLockPlayer(std::string teleport)
 	}
 	else
 	{
+		AController* EnemyAIController = GetController();
+		ensureMsgf(EnemyAIController != nullptr, TEXT("EnemyAIController is null."));
+
+		if (EnemyAIController == nullptr) return;
+
+		AAIController* AIController = Cast<AAIController>(EnemyAIController);
+		ensureMsgf(AIController != nullptr, TEXT("AIController is null."));
+		if (AIController == nullptr) return;
+
+		UBlackboardComponent* Blackboard = AIController->GetBlackboardComponent();
+		ensureMsgf(Blackboard != nullptr, TEXT("Blackboard is null."));
+
+		if (Blackboard == nullptr) return;
+
+		FVector PlayerLocation = FVector::ZeroVector;
+		FRotator PlayerRotation = FRotator::ZeroRotator;
+
+		
+		APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+		ensureMsgf(PlayerPawn != nullptr, TEXT("PlayerPawn is null."));
+
+		// Get the player's location and rotation
+		if (PlayerPawn)
 		{
-			AController* EnemyAIController = GetController();
-			ensureMsgf(EnemyAIController != nullptr, TEXT("EnemyAIController is null."));
-
-			if (EnemyAIController)
-			{
-				AAIController* AIController = Cast<AAIController>(EnemyAIController);
-				ensureMsgf(AIController != nullptr, TEXT("AIController is null."));
-
-				if (AIController)
-				{
-					UBlackboardComponent* Blackboard = AIController->GetBlackboardComponent();
-					ensureMsgf(Blackboard != nullptr, TEXT("Blackboard is null."));
-
-					if (Blackboard)
-					{
-						FVector PlayerLocation = FVector::ZeroVector;
-						FRotator PlayerRotation = FRotator::ZeroRotator;
-
-						// Get the player's location and rotation
-						APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-						ensureMsgf(PlayerPawn != nullptr, TEXT("PlayerPawn is null."));
-
-						if (PlayerPawn)
-						{
-							PlayerLocation = PlayerPawn->GetActorLocation();
-							PlayerRotation = PlayerPawn->GetActorRotation();
-						}
-
-						FVector MoveToLocation;
-
-						if (bMoveLeft)
-						{
-							// Calculate left offset from player's location and rotation
-							FVector LeftOffset = -(UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer);
-							MoveToLocation = PlayerLocation + LeftOffset;
-						}
-						else
-						{
-							// Calculate right offset from player's location and rotation
-							FVector RightOffset = UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer;
-							MoveToLocation = PlayerLocation + RightOffset;
-						}
-
-						// Ensure that the MoveToLocation is always on the correct side of the player
-						FVector DirectionToPlayer = PlayerLocation - GetActorLocation();
-						FVector DirectionToMoveLocation = MoveToLocation - GetActorLocation();
-						float DotProduct = FVector::DotProduct(DirectionToPlayer, DirectionToMoveLocation);
-
-						if (DotProduct < 0)
-						{
-							MoveToLocation = PlayerLocation - DirectionToMoveLocation;
-						}
-
-						UE_LOG(LogTemp, Warning, TEXT("MoveToLocation: %s"), *MoveToLocation.ToString());
-						Blackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveToLocation);
-					}
-				}
-			}
+			PlayerLocation = PlayerPawn->GetActorLocation();
+			PlayerRotation = PlayerPawn->GetActorRotation();
 		}
+
+		FVector MoveToLocation;
+
+		//need collision check here
+		if (bMoveLeft)
+		{
+			// Calculate left offset from player's location and rotation
+			FVector LeftOffset = -(UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer);
+			MoveToLocation = PlayerLocation + LeftOffset;
+		}
+		else
+		{
+			// Calculate right offset from player's location and rotation
+			FVector RightOffset = UKismetMathLibrary::GetRightVector(PlayerRotation) * MoveDistanceFromPlayer;
+			MoveToLocation = PlayerLocation + RightOffset;
+		}
+
+		// Ensure that the MoveToLocation is always on the correct side of the player
+		FVector DirectionToPlayer = PlayerLocation - GetActorLocation();
+		FVector DirectionToMoveLocation = MoveToLocation - GetActorLocation();
+		float DotProduct = FVector::DotProduct(DirectionToPlayer, DirectionToMoveLocation);
+
+		if (DotProduct < 0)
+		{
+			MoveToLocation = PlayerLocation - DirectionToMoveLocation;
+		}
+
+		UE_LOG(LogTemp, Warning, TEXT("MoveToLocation: %s"), *MoveToLocation.ToString());
+		Blackboard->SetValueAsVector("MoveAroundPlayerLocation", MoveToLocation);
 	}
 }
 
@@ -377,13 +373,15 @@ void AEnemy::MoveAlongTargetLock()
 
 void AEnemy::SetTargetIndicator(bool Locked)
 {
-	UWidgetComponent* IndicatorWidgetComponent = Cast<UWidgetComponent>(GetComponentByClass(UWidgetComponent::StaticClass()));
-	if(!IndicatorWidgetComponent) return;
-	
-	if(Locked)
+	UWidgetComponent* IndicatorWidgetComponent = Cast<UWidgetComponent>(
+		GetComponentByClass(UWidgetComponent::StaticClass()));
+	if (!IndicatorWidgetComponent) return;
+
+	if (Locked)
 	{
 		IndicatorWidgetComponent->SetHiddenInGame(false);
-	} else
+	}
+	else
 	{
 		IndicatorWidgetComponent->SetHiddenInGame(true);
 	}

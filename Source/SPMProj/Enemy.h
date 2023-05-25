@@ -109,7 +109,16 @@ private:
 	float MoveDistanceFromPlayer = 200.0f;
 
 	
-
 public:
 	void ResetTargetLock();
+	
+	//for patrolling enemy
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol")
+	TArray<AActor*> PatrolActors;
+	UPROPERTY(EditAnywhere, Category="Patrol")
+	float PatrolSpeed;
+	UPROPERTY(EditAnywhere, Category="Speed")
+	float NormalSpeed = 600.0f;
+	
+	
 };
