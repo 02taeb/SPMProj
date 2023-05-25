@@ -72,8 +72,9 @@ void AFightingArea::CheckEnemiesDead()
 	if (Door != nullptr)
 	{
 		//Open door
-		Door->SetActorEnableCollision(false);
-		Door->SetActorHiddenInGame(true);
+		OpenDoor();
+		//Door->SetActorEnableCollision(false);
+		//Door->SetActorHiddenInGame(true);
 	}
 }
 
