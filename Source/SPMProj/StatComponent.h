@@ -33,7 +33,10 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	float GetInitialMaxHealth() const;
+
+	UFUNCTION(BlueprintCallable)
 	float GetMaxHealth() const;
+	
 	float GetCurrentHealth() const;
 
 	float GetInitialAttackDamage() const;
@@ -43,6 +46,10 @@ public:
 	float GetCurrentArmor() const;
 
 	float GetCurrentStamina() const;
+
+	UFUNCTION(BlueprintCallable)
+	float GetMaxStamina() const;
+
 	void DecreaseStamina(float DecreaseAmount);
 
 	void IncreaseMaxHealth(const float Delta);
@@ -115,4 +122,6 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float InitialArmor;
 	float CurrentArmor;
+
+	FTimerHandle StaminaTimer;
 };
