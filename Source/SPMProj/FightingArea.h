@@ -39,7 +39,8 @@ protected:
 public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void EnemiesLeft(int EnemiesAlive);
-
+    UFUNCTION(BlueprintImplementableEvent)
+    void OpenDoor();
 private:
 	//timer 
 	FTimerHandle SetTimer;
