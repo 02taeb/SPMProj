@@ -92,6 +92,12 @@ float UStatComponent::GetCurrentStamina() const
 }
 
 //Hugo
+float UStatComponent::GetMaxStamina() const
+{
+	return MaxStamina;
+}
+
+//Hugo
 void UStatComponent::DecreaseStamina(float DecreaseAmount)
 {
 	//Decreased = true;
@@ -101,12 +107,21 @@ void UStatComponent::DecreaseStamina(float DecreaseAmount)
 
 void UStatComponent::IncreaseMaxHealth(const float Delta)
 {
+	if (Delta <= 0)
+	{
+		return;
+	}
+	
 	MaxHealth += Delta;
 	OnMaxHealthUpdated.Broadcast();
 }
 
 void UStatComponent::IncreaseAttackDamage(const float Delta)
 {
+	if (Delta <= 0)
+	{
+		return;
+	}
 	CurrentAttackDamage += Delta;
 }
 
@@ -117,8 +132,14 @@ void UStatComponent::IncreaseArmor(const float Delta)
 //Hugo
 void UStatComponent::IncreaseMaxStamina(const float Delta)
 {
+	if (Delta <= 0)
+	{
+		return;
+	}
+	
 	MaxStamina += Delta;
 	OnMaxStaminaUpdated.Broadcast();
+	GetWorld()->GetTimerManager().SetTimer(StaminaTimer, this, &UStatComponent::SetRestore, StaminaDelayRate, false);
 }
 
 void UStatComponent::TakeDamage(const float Damage)
@@ -189,7 +210,7 @@ void UStatComponent::RestoreStamina(float DeltaTime)
 
 	// GetWorld()->GetTimerManager().SetTimer(StaminaTimer, 0.5f, false);
 
-	if (CurrentStamina == 100)
+	if (CurrentStamina == MaxStamina)
 	{
 		Restore = false;
 		return;

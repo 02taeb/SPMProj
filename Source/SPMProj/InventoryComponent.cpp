@@ -64,7 +64,7 @@ bool UInventoryComponent::AddItem(AItemActor *Item)
 	//Update UI
 	OnInventoryUpdated.Broadcast();
 
-	 if (AEquipableParasite* Par = Cast<AEquipableParasite>(Item))
+	if (AEquipableParasite* Par = Cast<AEquipableParasite>(Item))
 	 	Par->OnPickup();
 
 	if (Cast<AEquipableParasite>(Item))
