@@ -36,6 +36,7 @@ void AAI_EnemyController::BeginPlay()
 	Sight->DetectionByAffiliation.bDetectNeutrals = DetectNeutrals;
 	Sight->DetectionByAffiliation.bDetectFriendlies = DetectFriendlies;
 
+
 	SetPerceptionComponent(*AIPerceptionComponent);
 
 	// configure sense
@@ -45,7 +46,6 @@ void AAI_EnemyController::BeginPlay()
 	// set dominant sense
 	if (Sight->GetSenseImplementation() == nullptr) return;
 	AIPerceptionComponent->SetDominantSense(Sight->GetSenseImplementation());
-	
 }
 
 void AAI_EnemyController::OnPossess(APawn* InPawn)
@@ -57,13 +57,18 @@ void AAI_EnemyController::OnPossess(APawn* InPawn)
 
 void AAI_EnemyController::OnPerception(AActor* Actor, FAIStimulus Stimulus)
 {
-	//set Blackboard value if stimulus was succesfully sensed
-	if (Stimulus.WasSuccessfullySensed())
+	// Set Blackboard value if stimulus was successfully sensed
+	APlayerCharacter* Player = Cast<APlayerCharacter>(Actor);
+
+	if (Player != nullptr)
 	{
-		GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), true);
-	}
-	else
-	{
-		GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), false);
+		if (Stimulus.WasSuccessfullySensed())
+		{
+			GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), true);
+		}
+		else
+		{
+			GetBlackboardComponent()->SetValueAsBool(TEXT("IsFacingTowardsPlayer"), false);
+		}
 	}
 }
