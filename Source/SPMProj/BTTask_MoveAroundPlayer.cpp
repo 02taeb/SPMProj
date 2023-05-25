@@ -4,6 +4,7 @@
 #include "BTTask_MoveAroundPlayer.h"
 #include "AIController.h"
 #include "Enemy.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 UBTTask_MoveAroundPlayer::UBTTask_MoveAroundPlayer()
 {
@@ -21,7 +22,18 @@ EBTNodeResult::Type UBTTask_MoveAroundPlayer::ExecuteTask(UBehaviorTreeComponent
 	ensureMsgf(Enemy != nullptr, TEXT("Enemy is Nullptr"));
 	if(Enemy == nullptr) return EBTNodeResult::Failed;
 	//call Enemy Target lock method
+
+	ensureMsgf(OwnerComp.GetBlackboardComponent() != nullptr, TEXT("Blackboard is null"));
+	bool ShouldTeleport = OwnerComp.GetBlackboardComponent()->GetValueAsBool("ShouldTeleport");
+	
+	if(ShouldTeleport)
+	{
+		Enemy->TargetLockPlayer("teleport");
+	} else
+	{
+		
 	Enemy->TargetLockPlayer("no_TP");
+	}
 	
 	return EBTNodeResult::Succeeded;	
 	
