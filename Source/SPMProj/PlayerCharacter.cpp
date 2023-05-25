@@ -38,6 +38,8 @@ APlayerCharacter::APlayerCharacter()
 	Stats = CreateDefaultSubobject<UStatComponent>("Stats");
 
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>("Audio");
+	FootstepsComponent = CreateDefaultSubobject<UAudioComponent>("FootstepAudio");
+	
 
 	//TESTING FÖR INVENTORY
 	Inventory = CreateDefaultSubobject<UInventoryComponent>("Inventory");
@@ -233,9 +235,13 @@ void APlayerCharacter::MoveForward(const FInputActionValue& Value)
 		return;
 	}
 
+	
+
 	/*Cant move under attack, will be changed!!*/
 	if (ActionState == ECharacterActionState::ECAS_NoAction || ActionState == ECharacterActionState::ECAS_TargetLocked)
+	{
 		AddMovementInput(GetActorForwardVector() * Value.Get<float>());
+	}
 }
 
 void APlayerCharacter::MoveRight(const FInputActionValue& Value)
@@ -907,4 +913,21 @@ void APlayerCharacter::PlaySound(USoundCue* Sound)
 		AudioComponent->SetSound(Sound);
 		AudioComponent->Play();
 	}
+}
+
+void APlayerCharacter::PlayFootsteps(bool Play)
+{
+	FootstepsComponent->SetSound(FootstepSoundCue);
+	
+	if (Play)
+	{
+		FootstepsComponent->Play();
+		UE_LOG(LogTemp, Display, TEXT("PLAY"));
+	}
+	else
+	{
+		FootstepsComponent->Stop();
+		UE_LOG(LogTemp, Display, TEXT("STOP"));
+	}
+	
 }

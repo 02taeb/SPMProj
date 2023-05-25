@@ -206,7 +206,6 @@ void UStatComponent::RestoreStamina(float DeltaTime)
 {
 	// FTimerHandle StaminaTimer;
 	// Decreased = false;
-	UE_LOG(LogTemp, Display, TEXT("Restoring"));
 
 	// GetWorld()->GetTimerManager().SetTimer(StaminaTimer, 0.5f, false);
 
