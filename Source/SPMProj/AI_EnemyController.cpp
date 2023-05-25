@@ -28,6 +28,7 @@ void AAI_EnemyController::BeginPlay()
 		RunBehaviorTree(AI_EnemyBehavior);
 	}
 
+	ensureMsgf(Sight != nullptr, TEXT("Sight configt is nullptr"));
 	if (Sight == nullptr) return;
 	Sight->SightRadius = SightRadius;
 	Sight->LoseSightRadius = LoseSightRadius;
@@ -57,7 +58,7 @@ void AAI_EnemyController::OnPossess(APawn* InPawn)
 
 void AAI_EnemyController::OnPerception(AActor* Actor, FAIStimulus Stimulus)
 {
-	// Set Blackboard value if stimulus was successfully sensed
+	// Set Blackboard value if stimulus was successfully sensed of a player
 	APlayerCharacter* Player = Cast<APlayerCharacter>(Actor);
 
 	if (Player != nullptr)
