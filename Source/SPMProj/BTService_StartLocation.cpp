@@ -21,17 +21,23 @@ UBTService_StartLocation::UBTService_StartLocation()
 void UBTService_StartLocation::OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::OnBecomeRelevant(OwnerComp, NodeMemory);
-	
+
 	if (!bStartLocationSet)
 	{
-		//set startlocation and startrotation	
+		//set startlocation and startrotation
+		ensureMsgf(OwnerComp.GetBlackboardComponent() != nullptr, TEXT("BB component is nullptr"));
 		if (OwnerComp.GetBlackboardComponent() == nullptr) return;
+
+		ensureMsgf(OwnerComp.GetAIOwner() != nullptr, TEXT("AI controller is nullptr"));
 		if (OwnerComp.GetAIOwner() == nullptr) return;
+
+		ensureMsgf(OwnerComp.GetAIOwner()->GetPawn() != nullptr, TEXT("AI pawn is nullptr"));
 		if (OwnerComp.GetAIOwner()->GetPawn() == nullptr) return;
+
 		OwnerComp.GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"),
 		                                                     OwnerComp.GetAIOwner()->GetPawn()->GetActorLocation());
 		OwnerComp.GetBlackboardComponent()->SetValueAsRotator(TEXT("StartRotation"),
-															 OwnerComp.GetAIOwner()->GetPawn()->GetActorRotation());
+		                                                      OwnerComp.GetAIOwner()->GetPawn()->GetActorRotation());
 		bStartLocationSet = true;
 	}
 }

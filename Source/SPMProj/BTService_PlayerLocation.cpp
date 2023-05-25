@@ -15,9 +15,10 @@ void UBTService_PlayerLocation::TickNode(UBehaviorTreeComponent& OwnerComp, uint
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 	
 	//Set player location if player is not null 
-	
-	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+
+	const APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	ensureMsgf(PlayerPawn != nullptr, TEXT("Player is Nullptr"));
+	
 	if (PlayerPawn != nullptr) OwnerComp.GetBlackboardComponent()->SetValueAsVector(
 		GetSelectedBlackboardKey(), PlayerPawn->GetActorLocation());
 	
