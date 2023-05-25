@@ -18,6 +18,8 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
     Super::ExecuteTask(OwnerComp, NodeMemory);
 	ensureMsgf(OwnerComp.GetAIOwner() != nullptr, TEXT("AI controller is Nullptr"));
     if(OwnerComp.GetAIOwner() == nullptr) return EBTNodeResult::Failed;
+
+	ensureMsgf(OwnerComp.GetAIOwner()->GetPawn() != nullptr, TEXT("AI Pawn is Nullptr"));
 	if (OwnerComp.GetAIOwner()->GetPawn() == nullptr) return EBTNodeResult::Failed;
     AEnemy* Enemy = Cast<AEnemy>(OwnerComp.GetAIOwner()->GetPawn());
 
@@ -26,7 +28,6 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
 
 	//call enemys attack method
     Enemy->EnemyAttackBasic();
-	
 	
     return EBTNodeResult::Succeeded;
 }

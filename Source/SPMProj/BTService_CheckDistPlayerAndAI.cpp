@@ -22,19 +22,17 @@ void UBTService_CheckDistPlayerAndAI::TickNode(UBehaviorTreeComponent& OwnerComp
 
 	// Get the player character
 	ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	ensureMsgf(PlayerCharacter != nullptr, TEXT("Player character is nullptr"));
 	if (PlayerCharacter == nullptr)
 	{
-		// Ensure that the player character is valid
-		ensureMsgf(false, TEXT("Player character is nullptr"));
 		return;
 	}
 
 	// Get the blackboard component
 	UBlackboardComponent* Blackboard = OwnerComp.GetBlackboardComponent();
+	ensureMsgf(Blackboard != nullptr, TEXT("Blackboard component is nullptr"));
 	if (Blackboard == nullptr)
 	{
-		// Ensure that the blackboard component is valid
-		ensureMsgf(false, TEXT("Blackboard component is nullptr"));
 		return;
 	}
 
