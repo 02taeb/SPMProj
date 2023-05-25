@@ -54,14 +54,12 @@ EBTNodeResult::Type UBTTask_MoveToPatrolLocation::ExecuteTask(UBehaviorTreeCompo
 		FVector TargetLocation = TargetActor->GetActorLocation();
 		Blackboard->SetValueAsVector("PatrolLocation", TargetLocation);
 	}
-
-
+	
 	PatrolIndex++;
 	if (PatrolActors.Num() == PatrolIndex)
 	{
 		PatrolIndex = 0;
 	}
-
-
+	
 	return Super::ExecuteTask(OwnerComp, NodeMemory);
 }

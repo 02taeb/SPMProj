@@ -16,8 +16,6 @@ class SPMPROJ_API UBTService_StartLocation : public UBTService_BlackboardBase
 
 public:
 	UBTService_StartLocation();
-
-public:
 	virtual void OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 private:

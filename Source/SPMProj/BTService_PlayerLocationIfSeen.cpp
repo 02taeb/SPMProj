@@ -43,7 +43,7 @@ void UBTService_PlayerLocationIfSeen::TickNode(UBehaviorTreeComponent& OwnerComp
 		ensureMsgf(CharacterMovement != nullptr, TEXT("Char_Movement is nullptr"));
 		if (CharacterMovement != nullptr)
 		{
-			CharacterMovement->MaxWalkSpeed =Enemy->NormalSpeed;
+			CharacterMovement->MaxWalkSpeed = Enemy->NormalSpeed;
 		}
 		OwnerComp.GetBlackboardComponent()->
 		          SetValueAsVector(GetSelectedBlackboardKey(), PlayerPawn->GetActorLocation());
