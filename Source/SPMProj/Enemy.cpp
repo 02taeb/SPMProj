@@ -376,7 +376,7 @@ void AEnemy::SetTargetIndicator(bool Locked)
 	UWidgetComponent* IndicatorWidgetComponent = Cast<UWidgetComponent>(
 		GetComponentByClass(UWidgetComponent::StaticClass()));
 	if (!IndicatorWidgetComponent) return;
-
+	
 	if (Locked)
 	{
 		IndicatorWidgetComponent->SetHiddenInGame(false);

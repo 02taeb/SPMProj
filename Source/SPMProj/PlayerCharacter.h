@@ -195,6 +195,8 @@ private:
 	class AEnemy* EnemyTargetLock;
 	UPROPERTY(EditAnywhere)
 	float TargetLockDistance = 500.0f;
+	TArray<FHitResult> TargetHitResults;
+	TArray<AEnemy*> RecentlyTargeted;
 
 	/*Attack animation montages*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
@@ -249,6 +251,8 @@ private:
 	class UInputAction* InputDodge;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputTargetLock;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputTargetChange;
 
 	//testinputs för save och load
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
@@ -292,6 +296,7 @@ private:
 	void NoClipDown(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
 	void TargetLock(const FInputActionValue& Value);
+	void TargetChange(const FInputActionValue& Value);
 
 	void GodMode(const FInputActionValue& Value);
 	void InstaKill(const FInputActionValue& Value);
