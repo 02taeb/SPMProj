@@ -147,7 +147,6 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		Stats->TakeDamage(DamageAmount);
 
 		PlaySound(TakeDamageSoundCue);
-
 		if (Stats->Dead())
 		{
 			/*Död Logiken hör (respawn och sånt)*/
@@ -182,6 +181,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 				if (Temp->bIsEquipped)
 					Temp->OnPlayerDeath();
 			}
+			OnDeathBPEvent();
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 			if (AnimInstance && AnimInstance->IsAnyMontagePlaying())
 			{
