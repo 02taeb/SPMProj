@@ -24,6 +24,7 @@
 #include "StatComponent.h"
 #include "Components/SphereComponent.h"
 #include "EquipableParasite.h"
+#include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/AudioComponent.h"
 #include "Sound/SoundCue.h"
@@ -119,6 +120,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipUp);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipDown);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
+	PlayerEIComponent->BindAction(InputTargetChange, ETriggerEvent::Started, this, &APlayerCharacter::TargetChange);
 	//Testinputs för load och save
 	// No longer used
 	//PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
@@ -506,50 +508,97 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	if (PlayerController == nullptr) return;
 	if (ActionState != ECharacterActionState::ECAS_NoAction && ActionState != ECharacterActionState::ECAS_TargetLocked) return;
 
-	TArray<FHitResult> HitResults;
-	FVector TraceStart = GetActorLocation();
-	FRotator TraceRot = GetActorRotation();
+	//TArray<FHitResult> HitResults;
+	UCameraComponent* Camera = Cast<UCameraComponent>(
+		GetComponentByClass(UCameraComponent::StaticClass()));
+
+	FRotator OffsetRot = FRotator(10.0f, 0.0f, 0.0f);
+	FRotator TraceRot = Camera->GetComponentRotation() + OffsetRot;
+
+	FVector OffsetDistance = TraceRot.Vector() * 400.f;
+	FVector TraceStart = Camera->GetComponentLocation() + OffsetDistance;
 	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
+	
 	TArray<AActor*> ActorsToIgnore;
 
+	FCollisionShape Sphere = FCollisionShape::MakeSphere(150.0f);
+	
 	if (!EnemyTargetLock)
 	{
-		UKismetSystemLibrary::SphereTraceMulti(
-			this,
-			TraceStart,
-			TraceEnd,
-			90.0f,
-			ETraceTypeQuery::TraceTypeQuery1,
-			false,
-			ActorsToIgnore,
-			EDrawDebugTrace::None,
-			HitResults,
-			true);
+		bool bHit = GetWorld()->SweepMultiByChannel(TargetHitResults, TraceStart, TraceEnd, FQuat::Identity, ECC_GameTraceChannel2, Sphere);
+
+		for (auto Hit : TargetHitResults)
+		{
+			if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
+			{
+				EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+				EnemyTargetLock->SetTargetIndicator(true);
+				RecentlyTargeted.AddUnique(EnemyTargetLock);
+				ActionState = ECharacterActionState::ECAS_TargetLocked;
+				break;
+			}
+		}
 	}
 	else
 	{
 		EnemyTargetLock->SetTargetIndicator(false);
 		EnemyTargetLock = nullptr;
+		TargetHitResults.Empty();
+		RecentlyTargeted.Empty();
 		ActionState = ECharacterActionState::ECAS_NoAction;
-		return;
+	}
+}
+
+void APlayerCharacter::TargetChange(const FInputActionValue& Value)
+{
+	if(!IsValid(EnemyTargetLock)) return;
+	if(TargetHitResults.IsEmpty()) return;
+	if(TargetHitResults.Num() == 1) return;
+
+	EnemyTargetLock->SetTargetIndicator(false);
+
+	bool bReset = false;
+
+	for (auto Hit : TargetHitResults)
+	{
+		if(!IsValid(Cast<AEnemy>(Hit.GetActor()))) continue;
+		if(RecentlyTargeted.Contains(Cast<AEnemy>(Hit.GetActor())))
+		{
+			bReset = true;
+		} else
+		{
+			bReset = false;
+		}
 	}
 
-	for (auto Hit : HitResults)
+	if(bReset)
+	{
+		RecentlyTargeted.Empty();
+	}
+	
+	for (auto Hit : TargetHitResults)
 	{
 		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
 		{
-			EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
-			EnemyTargetLock->SetTargetIndicator(true);
-			ActionState = ECharacterActionState::ECAS_TargetLocked;
-			break;
+			if(!RecentlyTargeted.Contains(Cast<AEnemy>(Hit.GetActor())))
+			{
+				EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+				EnemyTargetLock->SetTargetIndicator(true);
+				RecentlyTargeted.AddUnique(EnemyTargetLock);
+				break;
+			} 
 		}
+		/*else if (Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
+		{
+			TargetHitResults.RemoveAt(Hit.ElementIndex);
+			RecentlyTargeted.Remove(Cast<AEnemy>(Hit.GetActor()));
+		}*/
 	}
 }
 
 void APlayerCharacter::KeepRotationOnTarget()
 {
-	if (!IsValid(EnemyTargetLock))
-		return;
+	if (!IsValid(EnemyTargetLock)) return;
 
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
@@ -566,6 +615,8 @@ void APlayerCharacter::KeepRotationOnTarget()
 	{
 		EnemyTargetLock->SetTargetIndicator(false);
 		EnemyTargetLock = nullptr;
+		TargetHitResults.Empty();
+		RecentlyTargeted.Empty();
 		ActionState = ECharacterActionState::ECAS_NoAction;
 	}
 }
