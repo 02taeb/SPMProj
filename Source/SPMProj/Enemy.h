@@ -100,7 +100,7 @@ public:
 	void MoveAlongTargetLock();
 
 	void SetTargetIndicator(bool Locked);
-	
+
 	FORCEINLINE float GetAttackMontageDuration() const { return AttackMontageDuration; }
 
 private:
@@ -111,6 +111,7 @@ private:
 	float TargetLockDistance = 500.0f;
 	UPROPERTY(EditAnywhere, Category= "Target Lock")
 	float MoveDistanceFromPlayer = 200.0f;
+	
 
 public:
 	void ResetTargetLock();
@@ -122,4 +123,7 @@ public:
 	float PatrolSpeed;
 	UPROPERTY(EditAnywhere, Category="Speed")
 	float NormalSpeed = 600.0f;
+
+	UPROPERTY(EditAnywhere, Category="Effects", BlueprintReadWrite)
+	bool ShouldTeleportEffectPlay = false;
 };

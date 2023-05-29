@@ -191,8 +191,8 @@ void AEnemy::PlayEnemyAttackMontage()
 		}
 
 		AnimInstance->Montage_JumpToSection(SectionToPlay, EnemyAttackMontage);
-		
-		AttackMontageDuration = EnemyAttackMontage->GetPlayLength() / 2 ;
+
+		AttackMontageDuration = EnemyAttackMontage->GetPlayLength() / 2;
 	}
 }
 
@@ -279,13 +279,14 @@ void AEnemy::TargetLockPlayer(std::string teleport)
 	if (teleport == "teleport")
 	{
 		UE_LOG(LogTemp, Warning, TEXT("bMoveLeft: %s"), bMoveLeft ? TEXT("True") : TEXT("False"));
-		
+
 		if (bMoveLeft)
 		{
 			// Move left
 			FVector MoveOffset = FVector(0.0f, MoveDistanceFromPlayer, 0.0f);
 			UE_LOG(LogTemp, Warning, TEXT("MoveOffset: %s"), *MoveOffset.ToString());
 			AddActorLocalOffset(MoveOffset);
+			ShouldTeleportEffectPlay = true;
 		}
 		else
 		{
@@ -293,6 +294,7 @@ void AEnemy::TargetLockPlayer(std::string teleport)
 			FVector MoveOffset = FVector(0.0f, -MoveDistanceFromPlayer, 0.0f);
 			UE_LOG(LogTemp, Warning, TEXT("MoveOffset: %s"), *MoveOffset.ToString());
 			AddActorLocalOffset(MoveOffset);
+			ShouldTeleportEffectPlay = true;
 		}
 	}
 	else
@@ -314,7 +316,7 @@ void AEnemy::TargetLockPlayer(std::string teleport)
 		FVector PlayerLocation = FVector::ZeroVector;
 		FRotator PlayerRotation = FRotator::ZeroRotator;
 
-		
+
 		APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 		ensureMsgf(PlayerPawn != nullptr, TEXT("PlayerPawn is null."));
 
@@ -382,7 +384,7 @@ void AEnemy::SetTargetIndicator(bool Locked)
 	UWidgetComponent* IndicatorWidgetComponent = Cast<UWidgetComponent>(
 		GetComponentByClass(UWidgetComponent::StaticClass()));
 	if (!IndicatorWidgetComponent) return;
-	
+
 	if (Locked)
 	{
 		IndicatorWidgetComponent->SetHiddenInGame(false);

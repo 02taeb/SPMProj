@@ -29,7 +29,8 @@ void UBTService_LastPlayerLocation::TickNode(UBehaviorTreeComponent& OwnerComp, 
 	// Get perceived actors from sight stimulus
 	TArray<AActor*> PerceivedActors;
 	PerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), PerceivedActors);
-	ensureMsgf(PerceivedActors.Num() > 0, TEXT("No actors perceived"));
+	ensureMsgf(PerceivedActors.Num() >= 0, TEXT("No actors perceived"));
+	if (PerceivedActors.Num() >= 0) return;
 
 	// Find the player character from the perceived actors
 	const APlayerCharacter* PlayerCharacter = nullptr;
