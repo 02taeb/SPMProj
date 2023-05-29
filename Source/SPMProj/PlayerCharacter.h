@@ -299,7 +299,7 @@ private:
 	void NoClipDown(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
 	void TargetLock(const FInputActionValue& Value);
-	void TargetChange(const FInputActionValue& Value);
+	void TargetSwitch(const FInputActionValue& Value);
 
 	void GodMode(const FInputActionValue& Value);
 	void InstaKill(const FInputActionValue& Value);
