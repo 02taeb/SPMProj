@@ -28,6 +28,17 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
 
 	//call enemys attack method
     Enemy->EnemyAttackBasic();
+	//wait for Attack animation to finish the return task succeeded
 	
-    return EBTNodeResult::Succeeded;
+	float AttackDuration = Enemy->GetAttackMontageDuration();
+	UE_LOG(LogTemp, Warning, TEXT("Enemy attack duration: %f"), AttackDuration);
+	
+	FTimerHandle TimerHandle;
+	Enemy->GetWorldTimerManager().SetTimer(TimerHandle, [this, &OwnerComp]() {
+		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+	}, Enemy->GetAttackMontageDuration(), false);
+	
+	//wait for enemy attack method to finish
+	
+    return EBTNodeResult::InProgress;
 }
