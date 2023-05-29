@@ -72,6 +72,8 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 	KeepRotationOnTarget();
 
+	UE_LOG(LogTemp, Warning, TEXT("%d"), TargetHitResults.Num());
+
 	// Inc grav when falling
 	MovementComp->GravityScale = GetVelocity().Z < 0
 		                             ? MovementComp->GravityScale + AddedGravityWhenFalling
@@ -120,7 +122,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipUp);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipDown);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
-	PlayerEIComponent->BindAction(InputTargetChange, ETriggerEvent::Started, this, &APlayerCharacter::TargetChange);
+	PlayerEIComponent->BindAction(InputTargetChange, ETriggerEvent::Started, this, &APlayerCharacter::TargetSwitch);
 	//Testinputs för load och save
 	// No longer used
 	//PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
@@ -549,50 +551,43 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	}
 }
 
-void APlayerCharacter::TargetChange(const FInputActionValue& Value)
+void APlayerCharacter::TargetSwitch(const FInputActionValue& Value)
 {
 	if(!IsValid(EnemyTargetLock)) return;
 	if(TargetHitResults.IsEmpty()) return;
 	if(TargetHitResults.Num() == 1) return;
 
 	EnemyTargetLock->SetTargetIndicator(false);
-
-	bool bReset = false;
-
-	for (auto Hit : TargetHitResults)
-	{
-		if(!IsValid(Cast<AEnemy>(Hit.GetActor()))) continue;
-		if(RecentlyTargeted.Contains(Cast<AEnemy>(Hit.GetActor())))
-		{
-			bReset = true;
-		} else
-		{
-			bReset = false;
-		}
-	}
-
-	if(bReset)
-	{
-		RecentlyTargeted.Empty();
-	}
+	EnemyTargetLock = nullptr;
 	
-	for (auto Hit : TargetHitResults)
+	for (auto Target : TargetHitResults)
 	{
-		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
+		if (IsValid(Target.GetActor()) && Target.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Target.GetActor())->GetStats()->Dead())
 		{
-			if(!RecentlyTargeted.Contains(Cast<AEnemy>(Hit.GetActor())))
+			if(!RecentlyTargeted.Contains(Cast<AEnemy>(Target.GetActor())))
 			{
-				EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+				EnemyTargetLock = Cast<AEnemy>(Target.GetActor());
 				EnemyTargetLock->SetTargetIndicator(true);
 				RecentlyTargeted.AddUnique(EnemyTargetLock);
 				break;
 			} 
 		}
-		/*else if (Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
+	}
+
+	if(!EnemyTargetLock)
+	{
+		RecentlyTargeted.Empty();
+		
+		for (auto Target : TargetHitResults)
 		{
-			TargetHitResults.RemoveAt(Hit.ElementIndex);
-			RecentlyTargeted.Remove(Cast<AEnemy>(Hit.GetActor()));
-		}*/
+			if (IsValid(Target.GetActor()) && Target.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Target.GetActor())->GetStats()->Dead())
+			{
+				EnemyTargetLock = Cast<AEnemy>(Target.GetActor());
+				EnemyTargetLock->SetTargetIndicator(true);
+				RecentlyTargeted.AddUnique(EnemyTargetLock);
+				break;
+			}
+		}
 	}
 }
 
