@@ -10,9 +10,8 @@
 
 
 //Hugo (det som används av Stamina)
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMaxHealthUpdated);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMaxStaminaUpdated);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthUpdated, float, Delta);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxStaminaUpdated, float, Delta);
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

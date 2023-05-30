@@ -107,21 +107,12 @@ void UStatComponent::DecreaseStamina(float DecreaseAmount)
 
 void UStatComponent::IncreaseMaxHealth(const float Delta)
 {
-	if (Delta <= 0)
-	{
-		return;
-	}
-	
 	MaxHealth += Delta;
-	OnMaxHealthUpdated.Broadcast();
+	OnMaxHealthUpdated.Broadcast(Delta);
 }
 
 void UStatComponent::IncreaseAttackDamage(const float Delta)
 {
-	if (Delta <= 0)
-	{
-		return;
-	}
 	CurrentAttackDamage += Delta;
 }
 
@@ -132,13 +123,10 @@ void UStatComponent::IncreaseArmor(const float Delta)
 //Hugo
 void UStatComponent::IncreaseMaxStamina(const float Delta)
 {
-	if (Delta <= 0)
-	{
-		return;
-	}
+
 	
 	MaxStamina += Delta;
-	OnMaxStaminaUpdated.Broadcast();
+	OnMaxStaminaUpdated.Broadcast(Delta);
 	GetWorld()->GetTimerManager().SetTimer(StaminaTimer, this, &UStatComponent::SetRestore, StaminaDelayRate, false);
 }
 
