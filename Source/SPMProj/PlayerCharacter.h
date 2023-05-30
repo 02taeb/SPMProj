@@ -291,6 +291,7 @@ private:
 	void LookUpRate(const FInputActionValue &Value);
 	void LookRight(const FInputActionValue& Value);
 	void LookRightRate(const FInputActionValue &Value);
+	UFUNCTION(BlueprintCallable)
 	void Interact(const FInputActionValue& Value);
 	void AttackMeleeNormal(const FInputActionValue& Value);
 	void AttackMeleeHeavy(const FInputActionValue& Value);

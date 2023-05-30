@@ -290,6 +290,8 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 	/*Equip part, just a first test place*/
 	if (AMeleeWeapon* Weapon = Cast<AMeleeWeapon>(OverlapWeapon))
 	{
+		if (EquipedWeapon == nullptr)
+			PlaySound(PickupWeaponSoundCue);
 		Weapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
 		/*Association the Player attaching the weapon to the weapon itself, so that we can get the instigator controller in ApplyDamage. GetInstigator() and GetOwner() return Player now when called from Weapon class if it is attached*/
 		Weapon->SetOwner(this);
@@ -298,7 +300,6 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		OverlapWeapon = nullptr;
 		Weapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
 		WeaponState = ECharacterWeaponState::ECWS_Equiped;
-		PlaySound(PickupWeaponSoundCue);
 	}
 
 
