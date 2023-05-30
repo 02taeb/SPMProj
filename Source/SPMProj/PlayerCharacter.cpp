@@ -61,7 +61,7 @@ void APlayerCharacter::BeginPlay()
 	MovementComp = GetCharacterMovement();
 	if (MovementComp) MovementComp->MaxWalkSpeed = MovementSpeed; // Set the max walking speed here
 
-	RespawnPoint = GetActorLocation();
+	//RespawnPoint = GetActorLocation();
 	GravityScale = MovementComp->GravityScale;
 }
 
@@ -125,8 +125,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputTargetChange, ETriggerEvent::Started, this, &APlayerCharacter::TargetSwitch);
 	//Testinputs för load och save
 	// No longer used
-	//PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
-	//PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
+	PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
+	PlayerEIComponent->BindAction(InputLoadGame, ETriggerEvent::Started, this, &APlayerCharacter::LoadGame);
 	//Cheat inputs
 	PlayerEIComponent->BindAction(InputGodMode, ETriggerEvent::Started, this, &APlayerCharacter::GodMode);
 	PlayerEIComponent->BindAction(InputInstaKill, ETriggerEvent::Started, this, &APlayerCharacter::InstaKill);
@@ -684,6 +684,11 @@ FVector APlayerCharacter::GetRespawnPoint()
 //Lucas och Hugo
 void APlayerCharacter::Respawn()
 {
+	if (RespawnPoint == FVector::ZeroVector)
+	{
+		RespawnPoint = FVector(2307.280732,-3817.228635,208.359359);
+	}
+	
 	APlayerController* TempController = Cast<APlayerController>(this->GetController());
 	SetActorLocation(RespawnPoint);
 	TempController->SetControlRotation(RespawnRotation);
@@ -869,13 +874,13 @@ void APlayerCharacter::OnEat()
 	PlayCrouchAnimation();
 
 	// Uppgradera equipped parasiter
-	for (AItemActor* Item : Inventory->Items)
+	/*for (AItemActor* Item : Inventory->Items)
 	{
 		if (Cast<AEquipableParasite>(Item) && Cast<AEquipableParasite>(Item)->bIsEquipped == true)
 		{
 			Cast<AEquipableParasite>(Item)->OnEat();
 		}
-	}
+	} */
 }
 
 //Deprecated
@@ -889,22 +894,19 @@ void APlayerCharacter::SaveGame()
 {
 	//Create instance of SavedGame
 	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
-	//Set save game instance location to players current location
-	SaveGameInstance->PlayerPosition = this->GetActorLocation();
-
-	//Reset equipped items
-	SaveGameInstance->EquippedItems.Empty();
-
-	//set current inventory to be saved
-	SaveGameInstance->CurrentItems = Inventory->Items;
-
-	for (AItemActor* Item : SaveGameInstance->CurrentItems)
+	
+	if (RespawnPoint != FVector::ZeroVector)
 	{
-		if (Cast<AEquipableItemActor>(Item) && Cast<AEquipableItemActor>(Item)->Equipped)
-		{
-			SaveGameInstance->EquippedItems.Add(Cast<AEquipableItemActor>(Item));
-		}
+		SaveGameInstance->CheckpointLocation = RespawnPoint;
+		SaveGameInstance->CheckpointRotation = RespawnRotation;
 	}
+	else
+	{
+		//Startposition i main leveln
+		SaveGameInstance->CheckpointLocation = (FVector(2307.280732,-3817.228635,208.359359));
+	}
+
+	SaveGameInstance->PlayerState = Stats->GetState();
 
 
 	//save game instance
@@ -924,15 +926,22 @@ void APlayerCharacter::LoadGame()
 	SaveGameInstance = Cast<USavedGame>(
 		UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
 	//set players position from saved position
-	this->SetActorLocation(SaveGameInstance->PlayerPosition);
+	this->SetActorLocation(SaveGameInstance->CheckpointLocation);
+	APlayerController* TempController = Cast<APlayerController>(this->GetController());
+	TempController->SetControlRotation(SaveGameInstance->CheckpointRotation);
+
+	if (Stats)
+	{
+		Stats->SetState(SaveGameInstance->PlayerState);	
+	}
 
 	//set inventory
-	Inventory->Items.Empty();
+	//Inventory->Items.Empty();
 
 	//Inventory->Items = SaveGameInstance->CurrentItems;
 
 
-	for (AItemActor* Item : SaveGameInstance->CurrentItems)
+	/*for (AItemActor* Item : SaveGameInstance->CurrentItems)
 	{
 		if (Cast<AEquipableItemActor>(Item))
 		{
@@ -945,7 +954,7 @@ void APlayerCharacter::LoadGame()
 	for (AEquipableItemActor* Item : SaveGameInstance->EquippedItems)
 	{
 		Item->Equipped = true;
-	}
+	}*/
 
 
 	//log to check for load

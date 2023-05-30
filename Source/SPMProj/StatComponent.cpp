@@ -109,7 +109,7 @@ void UStatComponent::DecreaseStamina(float DecreaseAmount)
 
 void UStatComponent::IncreaseMaxHealth(const float Delta)
 {
-	if (MaxHealth += Delta <= InitialMaxHealth)
+	if (MaxHealth + Delta < InitialMaxHealth)
 		return;
 	MaxHealth += Delta;
 	OnMaxHealthUpdated.Broadcast(Delta);
@@ -117,22 +117,23 @@ void UStatComponent::IncreaseMaxHealth(const float Delta)
 
 void UStatComponent::IncreaseAttackDamage(const float Delta)
 {
-	if (CurrentAttackDamage += Delta <= InitialAttackDamage)
+	if (CurrentAttackDamage + Delta < InitialAttackDamage)
 		return;
 	CurrentAttackDamage += Delta;
 }
 
 void UStatComponent::IncreaseArmor(const float Delta)
 {
-	if (CurrentArmor += Delta <= InitialArmor)
+	if (CurrentArmor + Delta < InitialArmor)
 		return;
 	CurrentArmor += Delta;
 }
 //Hugo
 void UStatComponent::IncreaseMaxStamina(const float Delta)
 {
-	if (MaxStamina += Delta <= InitialMaxStamina)
+	if (MaxStamina + Delta < InitialMaxStamina)
 		return;
+
 	MaxStamina += Delta;
 	OnMaxStaminaUpdated.Broadcast(Delta);
 	GetWorld()->GetTimerManager().SetTimer(StaminaTimer, this, &UStatComponent::SetRestore, StaminaDelayRate, false);
@@ -161,14 +162,16 @@ bool UStatComponent::Dead() const
 
 std::string UStatComponent::GetState() const
 {
+	//kanske göra om state till en array istället
+
 	std::string State = "";
 	State += std::to_string(InitialMaxHealth) + ";";
 	State += std::to_string(MaxHealth) + ";";
 	State += std::to_string(CurrentHealth) + ";";
 	State += std::to_string(InitialAttackDamage) + ";";
 	State += std::to_string(CurrentAttackDamage) + ";";
-	State += std::to_string(InitialArmor) + ";";
-	State += std::to_string(CurrentArmor);
+	State += std::to_string(MaxStamina) + ";";
+	State += std::to_string(CurrentStamina);
 	return State;
 }
 
@@ -193,8 +196,9 @@ void UStatComponent::SetState(const std::string& SavedState)
 	CurrentHealth = std::stof(Values[2]);
 	InitialAttackDamage = std::stof(Values[3]);
 	CurrentAttackDamage = std::stof(Values[4]);
-	InitialArmor = std::stof(Values[5]);
-	CurrentArmor = std::stof(Values[6]);
+	MaxStamina = std::stof(Values[5]);
+	IncreaseMaxStamina(std::stof(Values[5]) - 100);
+	CurrentStamina = MaxStamina;
 }
 
 //Hugo
