@@ -906,6 +906,9 @@ void APlayerCharacter::SaveGame()
 		SaveGameInstance->CheckpointLocation = (FVector(2307.280732,-3817.228635,208.359359));
 	}
 
+	SaveGameInstance->PlayerState = Stats->GetState();
+
+
 	//save game instance
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 
@@ -927,6 +930,10 @@ void APlayerCharacter::LoadGame()
 	APlayerController* TempController = Cast<APlayerController>(this->GetController());
 	TempController->SetControlRotation(SaveGameInstance->CheckpointRotation);
 
+	if (Stats)
+	{
+		Stats->SetState(SaveGameInstance->PlayerState);	
+	}
 
 	//set inventory
 	//Inventory->Items.Empty();
