@@ -279,20 +279,40 @@ void AEnemy::TargetLockPlayer(std::string teleport)
 	if (teleport == "teleport")
 	{
 		UE_LOG(LogTemp, Warning, TEXT("bMoveLeft: %s"), bMoveLeft ? TEXT("True") : TEXT("False"));
-
+		float Rando = MoveDistanceFromPlayer;
+		Rando += FMath::FRandRange(-50.0f, 50.0f);
 		if (bMoveLeft)
 		{
 			// Move left
-			FVector MoveOffset = FVector(0.0f, MoveDistanceFromPlayer, 0.0f);
+			FVector MoveOffset = FVector(0.0f, Rando, 0.0f);
 			UE_LOG(LogTemp, Warning, TEXT("MoveOffset: %s"), *MoveOffset.ToString());
+			FVector NewPos = GetActorLocation() + MoveOffset;
+			FHitResult Hit;
+			GetWorld()->SweepSingleByChannel(Hit, NewPos, NewPos, FQuat::Identity, ECC_Pawn, FCollisionShape::MakeCapsule(35, 10));
+			if(Hit.GetActor())
+			{
+				TargetLockPlayer("could_not_TP");
+				UE_LOG(LogTemp, Error, TEXT("Could not tp"));
+				return;
+			}
 			AddActorLocalOffset(MoveOffset);
+			
 			ShouldTeleportEffectPlay = true;
 		}
 		else
 		{
 			// Move right
-			FVector MoveOffset = FVector(0.0f, -MoveDistanceFromPlayer, 0.0f);
+			FVector MoveOffset = FVector(0.0f, -Rando, 0.0f);
 			UE_LOG(LogTemp, Warning, TEXT("MoveOffset: %s"), *MoveOffset.ToString());
+			FVector NewPos = GetActorLocation() + MoveOffset;
+			FHitResult Hit;
+			GetWorld()->SweepSingleByChannel(Hit, NewPos, NewPos, FQuat::Identity, ECC_Pawn, FCollisionShape::MakeCapsule(35, 10));
+			if(Hit.GetActor())
+			{
+				TargetLockPlayer("could_not_TP");
+				UE_LOG(LogTemp, Error, TEXT("Could not tp"));
+				return;
+			}
 			AddActorLocalOffset(MoveOffset);
 			ShouldTeleportEffectPlay = true;
 		}
