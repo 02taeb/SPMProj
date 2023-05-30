@@ -518,13 +518,11 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	FRotator OffsetRot = FRotator(10.0f, 0.0f, 0.0f);
 	FRotator TraceRot = Camera->GetComponentRotation() + OffsetRot;
 
-	FVector OffsetDistance = TraceRot.Vector() * 750.f;
+	FVector OffsetDistance = TraceRot.Vector() * 500.f;
 	FVector TraceStart = Camera->GetComponentLocation() + OffsetDistance;
 	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
-	
-	TArray<AActor*> ActorsToIgnore;
 
-	FCollisionShape Sphere = FCollisionShape::MakeSphere(400.0f);
+	FCollisionShape Sphere = FCollisionShape::MakeSphere(180.0f);
 	
 	if (!EnemyTargetLock)
 	{
