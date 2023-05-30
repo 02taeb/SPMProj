@@ -5,30 +5,53 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Pawn.h"
 #include "AIController.h"
+#include "PlayerCharacter.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISense_Sight.h"
 
 UBTService_LastPlayerLocation::UBTService_LastPlayerLocation()
 {
-    NodeName = TEXT("Update Last Known Player Location");
+	NodeName = TEXT("Update Last Known Player Location");
 }
 
-void UBTService_LastPlayerLocation::TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds)
+void UBTService_LastPlayerLocation::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
-    Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
+	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
-    //ignore actors that are of enemy
+	// Get AI perception component
+	UAIPerceptionComponent* PerceptionComponent = OwnerComp.GetAIOwner()->GetPerceptionComponent();
+	ensureMsgf(PerceptionComponent != nullptr, TEXT("Perception component is nullptr"));
+	if (PerceptionComponent == nullptr)
+	{
+		return;
+	}
 
-    // göra om till AI sight percpetion
+	// Get perceived actors from sight stimulus
+	TArray<AActor*> PerceivedActors;
+	PerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), PerceivedActors);
+	ensureMsgf(PerceivedActors.Num() >= 0, TEXT("No actors perceived"));
+	if (PerceivedActors.Num() >= 0) return;
 
-    const APawn *PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-    if (PlayerPawn == nullptr)
-        return;
+	// Find the player character from the perceived actors
+	const APlayerCharacter* PlayerCharacter = nullptr;
+	for (AActor* PerceivedActor : PerceivedActors)
+	{
+		PlayerCharacter = Cast<APlayerCharacter>(PerceivedActor);
+		if (PlayerCharacter != nullptr)
+		{
+			break;
+		}
+	}
 
-    if (OwnerComp.GetAIOwner() == nullptr)
-        return;
-    if (OwnerComp.GetAIOwner()->LineOfSightTo(PlayerPawn))
-    {
-        OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), PlayerPawn->GetActorLocation());
-    }
-    
-    
+	if (PlayerCharacter != nullptr)
+	{
+		// Player character detected through stimulus
+		const FVector PlayerLocation = PlayerCharacter->GetActorLocation();
+		OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), PlayerLocation);
+	}
+	else
+	{
+		// Player character not detected
+		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
+	}
 }

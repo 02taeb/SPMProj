@@ -24,6 +24,7 @@
 #include "StatComponent.h"
 #include "Components/SphereComponent.h"
 #include "EquipableParasite.h"
+#include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/AudioComponent.h"
 #include "Sound/SoundCue.h"
@@ -70,6 +71,8 @@ void APlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	KeepRotationOnTarget();
+
+	UE_LOG(LogTemp, Warning, TEXT("%d"), TargetHitResults.Num());
 
 	// Inc grav when falling
 	MovementComp->GravityScale = GetVelocity().Z < 0
@@ -119,6 +122,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerEIComponent->BindAction(InputJump, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipUp);
 	PlayerEIComponent->BindAction(InputDodge, ETriggerEvent::Triggered, this, &APlayerCharacter::NoClipDown);
 	PlayerEIComponent->BindAction(InputTargetLock, ETriggerEvent::Started, this, &APlayerCharacter::TargetLock);
+	PlayerEIComponent->BindAction(InputTargetChange, ETriggerEvent::Started, this, &APlayerCharacter::TargetSwitch);
 	//Testinputs för load och save
 	// No longer used
 	//PlayerEIComponent->BindAction(InputSaveGame, ETriggerEvent::Started, this, &APlayerCharacter::SaveGame);
@@ -145,7 +149,6 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 		Stats->TakeDamage(DamageAmount);
 
 		PlaySound(TakeDamageSoundCue);
-
 		if (Stats->Dead())
 		{
 			/*Död Logiken hör (respawn och sånt)*/
@@ -180,6 +183,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 				if (Temp->bIsEquipped)
 					Temp->OnPlayerDeath();
 			}
+			OnDeathBPEvent();
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 			if (AnimInstance && AnimInstance->IsAnyMontagePlaying())
 			{
@@ -286,6 +290,8 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 	/*Equip part, just a first test place*/
 	if (AMeleeWeapon* Weapon = Cast<AMeleeWeapon>(OverlapWeapon))
 	{
+		if (EquipedWeapon == nullptr)
+			PlaySound(PickupWeaponSoundCue);
 		Weapon->AttachWeaponOnPlayer(GetMesh(), FName("RightHandWeaponSocket"));
 		/*Association the Player attaching the weapon to the weapon itself, so that we can get the instigator controller in ApplyDamage. GetInstigator() and GetOwner() return Player now when called from Weapon class if it is attached*/
 		Weapon->SetOwner(this);
@@ -294,7 +300,6 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
 		OverlapWeapon = nullptr;
 		Weapon->GetComponentByClass(USphereComponent::StaticClass())->DestroyComponent();
 		WeaponState = ECharacterWeaponState::ECWS_Equiped;
-		PlaySound(PickupWeaponSoundCue);
 	}
 
 
@@ -506,50 +511,90 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	if (PlayerController == nullptr) return;
 	if (ActionState != ECharacterActionState::ECAS_NoAction && ActionState != ECharacterActionState::ECAS_TargetLocked) return;
 
-	TArray<FHitResult> HitResults;
-	FVector TraceStart = GetActorLocation();
-	FRotator TraceRot = GetActorRotation();
+	//TArray<FHitResult> HitResults;
+	UCameraComponent* Camera = Cast<UCameraComponent>(
+		GetComponentByClass(UCameraComponent::StaticClass()));
+
+	FRotator OffsetRot = FRotator(10.0f, 0.0f, 0.0f);
+	FRotator TraceRot = Camera->GetComponentRotation() + OffsetRot;
+
+	FVector OffsetDistance = TraceRot.Vector() * 400.f;
+	FVector TraceStart = Camera->GetComponentLocation() + OffsetDistance;
 	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
+	
 	TArray<AActor*> ActorsToIgnore;
 
+	FCollisionShape Sphere = FCollisionShape::MakeSphere(150.0f);
+	
 	if (!EnemyTargetLock)
 	{
-		UKismetSystemLibrary::SphereTraceMulti(
-			this,
-			TraceStart,
-			TraceEnd,
-			90.0f,
-			ETraceTypeQuery::TraceTypeQuery1,
-			false,
-			ActorsToIgnore,
-			EDrawDebugTrace::None,
-			HitResults,
-			true);
+		bool bHit = GetWorld()->SweepMultiByChannel(TargetHitResults, TraceStart, TraceEnd, FQuat::Identity, ECC_GameTraceChannel2, Sphere);
+
+		for (auto Hit : TargetHitResults)
+		{
+			if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
+			{
+				EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
+				EnemyTargetLock->SetTargetIndicator(true);
+				RecentlyTargeted.AddUnique(EnemyTargetLock);
+				ActionState = ECharacterActionState::ECAS_TargetLocked;
+				break;
+			}
+		}
 	}
 	else
 	{
 		EnemyTargetLock->SetTargetIndicator(false);
 		EnemyTargetLock = nullptr;
+		TargetHitResults.Empty();
+		RecentlyTargeted.Empty();
 		ActionState = ECharacterActionState::ECAS_NoAction;
-		return;
+	}
+}
+
+void APlayerCharacter::TargetSwitch(const FInputActionValue& Value)
+{
+	if(!IsValid(EnemyTargetLock)) return;
+	if(TargetHitResults.IsEmpty()) return;
+	if(TargetHitResults.Num() == 1) return;
+
+	EnemyTargetLock->SetTargetIndicator(false);
+	EnemyTargetLock = nullptr;
+	
+	for (auto Target : TargetHitResults)
+	{
+		if (IsValid(Target.GetActor()) && Target.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Target.GetActor())->GetStats()->Dead())
+		{
+			if(!RecentlyTargeted.Contains(Cast<AEnemy>(Target.GetActor())))
+			{
+				EnemyTargetLock = Cast<AEnemy>(Target.GetActor());
+				EnemyTargetLock->SetTargetIndicator(true);
+				RecentlyTargeted.AddUnique(EnemyTargetLock);
+				break;
+			} 
+		}
 	}
 
-	for (auto Hit : HitResults)
+	if(!EnemyTargetLock)
 	{
-		if (IsValid(Hit.GetActor()) && Hit.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Hit.GetActor())->GetStats()->Dead())
+		RecentlyTargeted.Empty();
+		
+		for (auto Target : TargetHitResults)
 		{
-			EnemyTargetLock = Cast<AEnemy>(Hit.GetActor());
-			EnemyTargetLock->SetTargetIndicator(true);
-			ActionState = ECharacterActionState::ECAS_TargetLocked;
-			break;
+			if (IsValid(Target.GetActor()) && Target.GetActor()->IsA(AEnemy::StaticClass()) && !Cast<AEnemy>(Target.GetActor())->GetStats()->Dead())
+			{
+				EnemyTargetLock = Cast<AEnemy>(Target.GetActor());
+				EnemyTargetLock->SetTargetIndicator(true);
+				RecentlyTargeted.AddUnique(EnemyTargetLock);
+				break;
+			}
 		}
 	}
 }
 
 void APlayerCharacter::KeepRotationOnTarget()
 {
-	if (!IsValid(EnemyTargetLock))
-		return;
+	if (!IsValid(EnemyTargetLock)) return;
 
 	AController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr) return;
@@ -566,6 +611,8 @@ void APlayerCharacter::KeepRotationOnTarget()
 	{
 		EnemyTargetLock->SetTargetIndicator(false);
 		EnemyTargetLock = nullptr;
+		TargetHitResults.Empty();
+		RecentlyTargeted.Empty();
 		ActionState = ECharacterActionState::ECAS_NoAction;
 	}
 }

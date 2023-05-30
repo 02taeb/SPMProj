@@ -1,4 +1,7 @@
 // Include necessary headers
+
+#pragma once
+
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "FightingArea.generated.h"

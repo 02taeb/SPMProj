@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "StatComponent.h"
 
 // Sets default values
 AMeleeWeapon::AMeleeWeapon()
@@ -105,7 +106,9 @@ void AMeleeWeapon::HandleWeaponBoxHit(AActor* Actor, const FVector ImpactPoint, 
 			{
 				AEnemy* HitEnemy = Cast<AEnemy>(Actor);
 				if(HitEnemy) HitEnemy->CalculateHitDirection(ImpactPoint); /*Viktigt att kallas innan ApplyDamage!!*/
-				UGameplayStatics::ApplyDamage(Actor, DefaultDamage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
+				float Damage = DefaultDamage;
+				Damage += PlayerInstigator->Stats->GetCurrentAttackDamage();
+				UGameplayStatics::ApplyDamage(Actor, Damage, GetInstigator()->GetController(), this, UDamageType::StaticClass());
 			}
 			UE_LOG(LogTemp, Warning, TEXT("PLAYER DEF"));
 		}

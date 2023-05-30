@@ -81,6 +81,8 @@ private:
 	float TimeToReact = 2.0f;
 	bool IsAttacking;
 	const bool GetIsAttacking();
+	//time for attack to finish
+	float AttackMontageDuration;
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
@@ -93,11 +95,13 @@ public:
 	void Die() const;
 	// OnDeath delegate that is triggered when the enemy dies
 	FEnemyDeathSignature OnDeath;
-	
+
 	void TargetLockPlayer(std::string);
 	void MoveAlongTargetLock();
 
 	void SetTargetIndicator(bool Locked);
+
+	FORCEINLINE float GetAttackMontageDuration() const { return AttackMontageDuration; }
 
 private:
 	//player TargetLock
@@ -107,11 +111,11 @@ private:
 	float TargetLockDistance = 500.0f;
 	UPROPERTY(EditAnywhere, Category= "Target Lock")
 	float MoveDistanceFromPlayer = 200.0f;
-
 	
+
 public:
 	void ResetTargetLock();
-	
+
 	//for patrolling enemy
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol")
 	TArray<AActor*> PatrolActors;
@@ -119,6 +123,7 @@ public:
 	float PatrolSpeed;
 	UPROPERTY(EditAnywhere, Category="Speed")
 	float NormalSpeed = 600.0f;
-	
-	
+
+	UPROPERTY(EditAnywhere, Category="Effects", BlueprintReadWrite)
+	bool ShouldTeleportEffectPlay = false;
 };

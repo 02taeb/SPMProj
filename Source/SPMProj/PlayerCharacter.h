@@ -34,6 +34,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDeathBPEvent();
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -195,6 +198,8 @@ private:
 	class AEnemy* EnemyTargetLock;
 	UPROPERTY(EditAnywhere)
 	float TargetLockDistance = 500.0f;
+	TArray<FHitResult> TargetHitResults;
+	TArray<AEnemy*> RecentlyTargeted;
 
 	/*Attack animation montages*/
 	UPROPERTY(EditDefaultsOnly, Category=AnimationMontages)
@@ -249,6 +254,8 @@ private:
 	class UInputAction* InputDodge;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InputTargetLock;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
+	class UInputAction* InputTargetChange;
 
 	//testinputs för save och load
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input", meta = (AllowPrivateAccess = "true"))
@@ -284,6 +291,7 @@ private:
 	void LookUpRate(const FInputActionValue &Value);
 	void LookRight(const FInputActionValue& Value);
 	void LookRightRate(const FInputActionValue &Value);
+	UFUNCTION(BlueprintCallable)
 	void Interact(const FInputActionValue& Value);
 	void AttackMeleeNormal(const FInputActionValue& Value);
 	void AttackMeleeHeavy(const FInputActionValue& Value);
@@ -292,6 +300,7 @@ private:
 	void NoClipDown(const FInputActionValue& Value);
 	void Dodge(const FInputActionValue& Value);
 	void TargetLock(const FInputActionValue& Value);
+	void TargetSwitch(const FInputActionValue& Value);
 
 	void GodMode(const FInputActionValue& Value);
 	void InstaKill(const FInputActionValue& Value);

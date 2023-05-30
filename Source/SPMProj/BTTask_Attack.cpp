@@ -18,6 +18,8 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
     Super::ExecuteTask(OwnerComp, NodeMemory);
 	ensureMsgf(OwnerComp.GetAIOwner() != nullptr, TEXT("AI controller is Nullptr"));
     if(OwnerComp.GetAIOwner() == nullptr) return EBTNodeResult::Failed;
+
+	ensureMsgf(OwnerComp.GetAIOwner()->GetPawn() != nullptr, TEXT("AI Pawn is Nullptr"));
 	if (OwnerComp.GetAIOwner()->GetPawn() == nullptr) return EBTNodeResult::Failed;
     AEnemy* Enemy = Cast<AEnemy>(OwnerComp.GetAIOwner()->GetPawn());
 
@@ -26,7 +28,17 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
 
 	//call enemys attack method
     Enemy->EnemyAttackBasic();
+	//wait for Attack animation to finish the return task succeeded
 	
+	float AttackDuration = Enemy->GetAttackMontageDuration();
+	UE_LOG(LogTemp, Warning, TEXT("Enemy attack duration: %f"), AttackDuration);
 	
-    return EBTNodeResult::Succeeded;
+	FTimerHandle TimerHandle;
+	Enemy->GetWorldTimerManager().SetTimer(TimerHandle, [this, &OwnerComp]() {
+		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+	}, Enemy->GetAttackMontageDuration(), false);
+	
+	//wait for enemy attack method to finish
+	
+    return EBTNodeResult::InProgress;
 }

@@ -14,27 +14,30 @@ UBTTask_MoveAroundPlayer::UBTTask_MoveAroundPlayer()
 EBTNodeResult::Type UBTTask_MoveAroundPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
-	
+
 	ensureMsgf(OwnerComp.GetAIOwner() != nullptr, TEXT("AI controller is Nullptr"));
-	if(OwnerComp.GetAIOwner() == nullptr) return EBTNodeResult::Failed;
+	if (OwnerComp.GetAIOwner() == nullptr) return EBTNodeResult::Failed;
+
+	ensureMsgf(OwnerComp.GetAIOwner()->GetPawn() != nullptr, TEXT("AI pawn is Nullptr"));
 	if (OwnerComp.GetAIOwner()->GetPawn() == nullptr) return EBTNodeResult::Failed;
+
 	AEnemy* Enemy = Cast<AEnemy>(OwnerComp.GetAIOwner()->GetPawn());
 	ensureMsgf(Enemy != nullptr, TEXT("Enemy is Nullptr"));
-	if(Enemy == nullptr) return EBTNodeResult::Failed;
-	//call Enemy Target lock method
+	if (Enemy == nullptr) return EBTNodeResult::Failed;
+	
 
 	ensureMsgf(OwnerComp.GetBlackboardComponent() != nullptr, TEXT("Blackboard is null"));
 	bool ShouldTeleport = OwnerComp.GetBlackboardComponent()->GetValueAsBool("ShouldTeleport");
-	
-	if(ShouldTeleport)
+
+	//call target lock with paramater
+	if (ShouldTeleport)
 	{
 		Enemy->TargetLockPlayer("teleport");
-	} else
-	{
-		
-	Enemy->TargetLockPlayer("no_TP");
 	}
-	
-	return EBTNodeResult::Succeeded;	
-	
+	else
+	{
+		Enemy->TargetLockPlayer("no_TP");
+	}
+
+	return EBTNodeResult::Succeeded;
 }
