@@ -121,6 +121,7 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float InitialArmor;
 	float CurrentArmor;
-
+	
+	float InitialMaxStamina;
 	FTimerHandle StaminaTimer;
 };

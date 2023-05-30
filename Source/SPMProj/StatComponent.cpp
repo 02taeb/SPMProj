@@ -6,6 +6,7 @@
 #include <string>
 
 #include "NiagaraFunctionLibrary.h"
+#include "GenericPlatform/GenericPlatformCrashContext.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -28,6 +29,7 @@ void UStatComponent::BeginPlay()
 	/*I guess...*/
 	CurrentHealth = InitialMaxHealth; //Ska ändras vara dynamisk
 	CurrentStamina = MaxStamina;
+	InitialMaxStamina = MaxStamina;
 	// ...
 	
 }
@@ -107,24 +109,30 @@ void UStatComponent::DecreaseStamina(float DecreaseAmount)
 
 void UStatComponent::IncreaseMaxHealth(const float Delta)
 {
+	if (MaxHealth += Delta <= InitialMaxHealth)
+		return;
 	MaxHealth += Delta;
 	OnMaxHealthUpdated.Broadcast(Delta);
 }
 
 void UStatComponent::IncreaseAttackDamage(const float Delta)
 {
+	if (CurrentAttackDamage += Delta <= InitialAttackDamage)
+		return;
 	CurrentAttackDamage += Delta;
 }
 
 void UStatComponent::IncreaseArmor(const float Delta)
 {
+	if (CurrentArmor += Delta <= InitialArmor)
+		return;
 	CurrentArmor += Delta;
 }
 //Hugo
 void UStatComponent::IncreaseMaxStamina(const float Delta)
 {
-
-	
+	if (MaxStamina += Delta <= InitialMaxStamina)
+		return;
 	MaxStamina += Delta;
 	OnMaxStaminaUpdated.Broadcast(Delta);
 	GetWorld()->GetTimerManager().SetTimer(StaminaTimer, this, &UStatComponent::SetRestore, StaminaDelayRate, false);
