@@ -35,7 +35,8 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Generic")
 	FRotator CheckpointRotation;
 
-	std::string PlayerState;
+	UPROPERTY()
+	TArray <float> PlayerState;
 
 	//Hela inventory som sparas
 	//UPROPERTY(VisibleAnywhere, Category = "Generic")
