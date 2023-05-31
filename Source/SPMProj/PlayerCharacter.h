@@ -10,6 +10,7 @@
 
 //Hugo (det som behövs av de metoder jag gjort/jobbat med)
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameLoaded);
 
 class AEquipableParasite;
 class AMeleeWeapon;
@@ -33,6 +34,11 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+
+	UPROPERTY(BlueprintAssignable)
+	FOnGameLoaded OnGameLoaded;
+
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnDeathBPEvent();
@@ -150,6 +156,7 @@ private:
 	//Function for saving and loading the game
 	UFUNCTION(BlueprintCallable)
 	void SaveGame();
+	UFUNCTION(BlueprintCallable)
 	void LoadGame();
 
 	//Function for setting soundcue and playing sound

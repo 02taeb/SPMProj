@@ -12,6 +12,6 @@ USavedGame::USavedGame()
 {
 
     PlayerPosition = FVector (0.f, 0.f, 0.f);
-    SaveSlotName = TEXT("TestSaveSlot");
+    SaveSlotName = TEXT("MainSave");
     UserIndex = 0;
 }
