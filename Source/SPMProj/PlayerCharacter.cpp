@@ -72,7 +72,7 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 	KeepRotationOnTarget();
 
-	UE_LOG(LogTemp, Warning, TEXT("%d"), TargetHitResults.Num());
+	//UE_LOG(LogTemp, Warning, TEXT("%d"), TargetHitResults.Num());
 
 	// Inc grav when falling
 	MovementComp->GravityScale = GetVelocity().Z < 0
@@ -191,12 +191,14 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			}
 			bIsRespawning = true;
 			Stats->CurrentHealth = 0;
+			/*
 			this->GetMesh()->SetVisibility(false);
 			this->GetMesh()->SetGenerateOverlapEvents(false);
 			if (EquipedWeapon)
 			{
 				EquipedWeapon->MeleeWeaponMesh->SetVisibility(false);
 			}
+			*/
 			//this->GetController()->UnPossess();
 			DisableInput(Cast<APlayerController>(this->GetController()));
 			ActionState = ECharacterActionState::ECAS_NoAction;
@@ -518,13 +520,11 @@ void APlayerCharacter::TargetLock(const FInputActionValue& Value)
 	FRotator OffsetRot = FRotator(10.0f, 0.0f, 0.0f);
 	FRotator TraceRot = Camera->GetComponentRotation() + OffsetRot;
 
-	FVector OffsetDistance = TraceRot.Vector() * 750.f;
+	FVector OffsetDistance = TraceRot.Vector() * 500.f;
 	FVector TraceStart = Camera->GetComponentLocation() + OffsetDistance;
 	FVector TraceEnd = TraceStart + TraceRot.Vector() * TargetLockDistance;
-	
-	TArray<AActor*> ActorsToIgnore;
 
-	FCollisionShape Sphere = FCollisionShape::MakeSphere(400.0f);
+	FCollisionShape Sphere = FCollisionShape::MakeSphere(180.0f);
 	
 	if (!EnemyTargetLock)
 	{
@@ -684,6 +684,7 @@ FVector APlayerCharacter::GetRespawnPoint()
 //Lucas och Hugo
 void APlayerCharacter::Respawn()
 {
+	OnRespawnBPEvent();
 	if (RespawnPoint == FVector::ZeroVector)
 	{
 		RespawnPoint = FVector(2307.280732,-3817.228635,208.359359);
@@ -694,20 +695,20 @@ void APlayerCharacter::Respawn()
 	TempController->SetControlRotation(RespawnRotation);
 
 	Stats->CurrentHealth = Stats->GetMaxHealth();
+	/*
 	this->GetMesh()->SetVisibility(true);
 	this->GetMesh()->SetGenerateOverlapEvents(true);
 	if (EquipedWeapon)
 	{
 		EquipedWeapon->MeleeWeaponMesh->SetVisibility(true);
 	}
-
+	*/
 	if(EnemyTargetLock)
 	{
 		EnemyTargetLock->SetTargetIndicator(false);
 		EnemyTargetLock = nullptr;
 		ActionState = ECharacterActionState::ECAS_NoAction;
 	}
-	
 	EnableInput(Cast<APlayerController>(this->GetController()));
 	bIsRespawning = false;
 }
@@ -908,7 +909,10 @@ void APlayerCharacter::SaveGame()
 
 	SaveGameInstance->PlayerState = Stats->GetState();
 
-
+	if (SaveGameInstance->PlayerState.IsEmpty() )
+	{
+		UE_LOG(LogTemp, Display, TEXT("Empty on save"));
+	}
 	//save game instance
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 
@@ -924,16 +928,34 @@ void APlayerCharacter::LoadGame()
 	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
 	//Load saved game into instance variable
 	SaveGameInstance = Cast<USavedGame>(
-		UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
+		UGameplayStatics::AsyncLoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
 	//set players position from saved position
+
+	if (SaveGameInstance->CheckpointLocation == FVector::ZeroVector)
+	{
+		SaveGameInstance->CheckpointLocation = FVector((2307.280732,-3817.228635,217.188033));
+		SaveGameInstance->CheckpointRotation = FRotator(0,0,0);
+	}
+	
+
 	this->SetActorLocation(SaveGameInstance->CheckpointLocation);
 	APlayerController* TempController = Cast<APlayerController>(this->GetController());
 	TempController->SetControlRotation(SaveGameInstance->CheckpointRotation);
+
+
+	if (SaveGameInstance->PlayerState.IsEmpty())
+	{
+		UE_LOG(LogTemp, Display, TEXT("Empty Array"));
+		return;
+	}
+	
 
 	if (Stats)
 	{
 		Stats->SetState(SaveGameInstance->PlayerState);	
 	}
+
+	OnGameLoaded.Broadcast();
 
 	//set inventory
 	//Inventory->Items.Empty();
@@ -958,7 +980,7 @@ void APlayerCharacter::LoadGame()
 
 
 	//log to check for load
-	UE_LOG(LogTemp, Display, TEXT("Loaded"));
+	UE_LOG(LogTemp, Display, TEXT("Fully Loaded"));
 }
 
 //Hugo
