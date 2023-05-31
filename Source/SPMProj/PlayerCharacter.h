@@ -36,6 +36,8 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnDeathBPEvent();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRespawnBPEvent();
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
