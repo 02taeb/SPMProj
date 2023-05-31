@@ -160,10 +160,10 @@ bool UStatComponent::Dead() const
 	return CurrentHealth <= 0.f;
 }
 
-std::string UStatComponent::GetState() const
+TArray <float> UStatComponent::GetState() const
 {
 	//kanske göra om state till en array istället
-
+	/*
 	std::string State = "";
 	State += std::to_string(InitialMaxHealth) + ";";
 	State += std::to_string(MaxHealth) + ";";
@@ -172,12 +172,15 @@ std::string UStatComponent::GetState() const
 	State += std::to_string(CurrentAttackDamage) + ";";
 	State += std::to_string(MaxStamina) + ";";
 	State += std::to_string(CurrentStamina);
+	*/
+
+	TArray <float> State{InitialMaxHealth, MaxHealth, CurrentHealth, InitialAttackDamage, CurrentAttackDamage, MaxStamina, StaminaUpgrades, HealthUpgrades, AttackUpgrades};
 	return State;
 }
 
-void UStatComponent::SetState(const std::string& SavedState)
+void UStatComponent::SetState(TArray <float> SavedState)
 {
-	int Counter = 0;
+	/*int Counter = 0;
 	std::string Values[7];
 	std::string Temp = "";
 	
@@ -198,7 +201,20 @@ void UStatComponent::SetState(const std::string& SavedState)
 	CurrentAttackDamage = std::stof(Values[4]);
 	MaxStamina = std::stof(Values[5]);
 	IncreaseMaxStamina(std::stof(Values[5]) - 100);
+	CurrentStamina = MaxStamina;*/
+
+	InitialMaxHealth = SavedState[0];
+	IncreaseMaxHealth(SavedState[1]-100);
+	CurrentHealth = SavedState[2];
+	InitialAttackDamage = SavedState[3];
+	CurrentAttackDamage = SavedState[4];
+	IncreaseMaxStamina(SavedState[5]-100);
 	CurrentStamina = MaxStamina;
+
+	StaminaUpgrades = SavedState[6];
+	HealthUpgrades = SavedState[7];
+	AttackUpgrades = SavedState[8];
+
 }
 
 //Hugo
