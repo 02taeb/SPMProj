@@ -67,8 +67,8 @@ public:
 
 	bool Dead() const;
 
-	std::string GetState() const;
-	void SetState(const std::string& SavedState);
+	TArray <float> GetState() const;
+	void SetState(TArray <float> State);
 
 	// Current Health, är public så den kan nås i blueprint
 	UPROPERTY(BlueprintReadOnly)
@@ -101,6 +101,13 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	bool Restore;
+
+	UPROPERTY(BlueprintReadWrite)
+	float StaminaUpgrades;
+	UPROPERTY(BlueprintReadWrite)
+	float AttackUpgrades;
+	UPROPERTY(BlueprintReadWrite)
+	float HealthUpgrades;
 
 private:
 	// Health at beginning of game
