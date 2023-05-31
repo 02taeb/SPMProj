@@ -928,7 +928,7 @@ void APlayerCharacter::LoadGame()
 	USavedGame* SaveGameInstance = Cast<USavedGame>(UGameplayStatics::CreateSaveGameObject(USavedGame::StaticClass()));
 	//Load saved game into instance variable
 	SaveGameInstance = Cast<USavedGame>(
-		UGameplayStatics::AsyncLoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
+		UGameplayStatics::LoadGameFromSlot(SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex));
 	//set players position from saved position
 
 	if (SaveGameInstance->CheckpointLocation == FVector::ZeroVector)
