@@ -191,12 +191,14 @@ float APlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damag
 			}
 			bIsRespawning = true;
 			Stats->CurrentHealth = 0;
+			/*
 			this->GetMesh()->SetVisibility(false);
 			this->GetMesh()->SetGenerateOverlapEvents(false);
 			if (EquipedWeapon)
 			{
 				EquipedWeapon->MeleeWeaponMesh->SetVisibility(false);
 			}
+			*/
 			//this->GetController()->UnPossess();
 			DisableInput(Cast<APlayerController>(this->GetController()));
 			ActionState = ECharacterActionState::ECAS_NoAction;
@@ -682,6 +684,7 @@ FVector APlayerCharacter::GetRespawnPoint()
 //Lucas och Hugo
 void APlayerCharacter::Respawn()
 {
+	OnRespawnBPEvent();
 	if (RespawnPoint == FVector::ZeroVector)
 	{
 		RespawnPoint = FVector(2307.280732,-3817.228635,208.359359);
@@ -692,20 +695,20 @@ void APlayerCharacter::Respawn()
 	TempController->SetControlRotation(RespawnRotation);
 
 	Stats->CurrentHealth = Stats->GetMaxHealth();
+	/*
 	this->GetMesh()->SetVisibility(true);
 	this->GetMesh()->SetGenerateOverlapEvents(true);
 	if (EquipedWeapon)
 	{
 		EquipedWeapon->MeleeWeaponMesh->SetVisibility(true);
 	}
-
+	*/
 	if(EnemyTargetLock)
 	{
 		EnemyTargetLock->SetTargetIndicator(false);
 		EnemyTargetLock = nullptr;
 		ActionState = ECharacterActionState::ECAS_NoAction;
 	}
-	
 	EnableInput(Cast<APlayerController>(this->GetController()));
 	bIsRespawning = false;
 }
