@@ -31,7 +31,7 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
 	//wait for Attack animation to finish the return task succeeded
 	
 	float TotalAttackDuration = Enemy->GetAttackMontageDuration();
-	UE_LOG(LogTemp, Warning, TEXT("Enemy attack duration: %f"), AttackDuration);
+	
 	
 	FTimerHandle TimerHandle;
 	//divid attack duration with 2 to get one attack anim lenght.  (There are two anims in the montage currently)
