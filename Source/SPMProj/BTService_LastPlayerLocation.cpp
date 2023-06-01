@@ -29,8 +29,8 @@ void UBTService_LastPlayerLocation::TickNode(UBehaviorTreeComponent& OwnerComp, 
 	// Get perceived actors from sight stimulus
 	TArray<AActor*> PerceivedActors;
 	PerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), PerceivedActors);
-	ensureMsgf(PerceivedActors.Num() >= 0, TEXT("No actors perceived"));
-	if (PerceivedActors.Num() >= 0) return;
+	//ensureMsgf(PerceivedActors.Num() >= 0, TEXT("No actors perceived"));
+	if (PerceivedActors.Num() <= 0) return;
 
 	// Find the player character from the perceived actors
 	const APlayerCharacter* PlayerCharacter = nullptr;
@@ -48,10 +48,5 @@ void UBTService_LastPlayerLocation::TickNode(UBehaviorTreeComponent& OwnerComp, 
 		// Player character detected through stimulus
 		const FVector PlayerLocation = PlayerCharacter->GetActorLocation();
 		OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), PlayerLocation);
-	}
-	else
-	{
-		// Player character not detected
-		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 	}
 }
