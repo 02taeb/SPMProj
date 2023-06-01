@@ -39,6 +39,8 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnGameLoaded OnGameLoaded;
 
+	UPROPERTY(BlueprintReadWrite)
+	TArray<AActor*> ChestsOpened;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnDeathBPEvent();
@@ -111,7 +113,6 @@ private:
 	float AddedGravityWhenFalling = 0.5f;
 
 	FTimerHandle StaminaTimer;
-
 	// Deprecated
 	UPROPERTY()
 	AEquipableParasite* EquippedPar1 = nullptr;
