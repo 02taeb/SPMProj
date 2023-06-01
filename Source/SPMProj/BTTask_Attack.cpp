@@ -30,15 +30,16 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent &OwnerCom
     Enemy->EnemyAttackBasic();
 	//wait for Attack animation to finish the return task succeeded
 	
-	float AttackDuration = Enemy->GetAttackMontageDuration();
+	float TotalAttackDuration = Enemy->GetAttackMontageDuration();
 	UE_LOG(LogTemp, Warning, TEXT("Enemy attack duration: %f"), AttackDuration);
 	
 	FTimerHandle TimerHandle;
+	//divid attack duration with 2 to get one attack anim lenght.  (There are two anims in the montage currently)
 	Enemy->GetWorldTimerManager().SetTimer(TimerHandle, [this, &OwnerComp]() {
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
-	}, Enemy->GetAttackMontageDuration(), false);
+	}, TotalAttackDuration / 2, false);
 	
-	//wait for enemy attack method to finish
+	//wait for enemy anim to finish
 	
     return EBTNodeResult::InProgress;
 }
