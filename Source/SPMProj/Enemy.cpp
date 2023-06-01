@@ -249,7 +249,7 @@ float AEnemy::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AC
 	return DamageAmount;
 }
 
-//Daniel
+
 void AEnemy::Die() const
 {
 	//stop behavoir tree and broadcast death
@@ -268,7 +268,7 @@ void AEnemy::Die() const
 	OnDeath.Broadcast();
 }
 
-//Daniel
+
 void AEnemy::TargetLockPlayer(std::string teleport)
 {
 	bool bMoveLeft = FMath::RandBool(); // Randomize the movement direction
@@ -378,7 +378,7 @@ void AEnemy::TargetLockPlayer(std::string teleport)
 	}
 }
 
-//Daniel
+
 void AEnemy::MoveAlongTargetLock()
 {
 	if (!IsValid(PlayerTargetLock))
@@ -415,7 +415,7 @@ void AEnemy::SetTargetIndicator(bool Locked)
 	}
 }
 
-//Daniel
+
 void AEnemy::ResetTargetLock()
 {
 	PlayerTargetLock = nullptr;
