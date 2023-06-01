@@ -953,6 +953,11 @@ void APlayerCharacter::LoadGame()
 		SaveGameInstance->CheckpointLocation = FVector((2307.280732,-3817.228635,217.188033));
 		SaveGameInstance->CheckpointRotation = FRotator(0,0,0);
 	}
+	else
+	{
+		RespawnPoint = SaveGameInstance->CheckpointLocation;
+		RespawnRotation = SaveGameInstance->CheckpointRotation;
+	}
 	
 
 	this->SetActorLocation(SaveGameInstance->CheckpointLocation);
@@ -981,8 +986,11 @@ void APlayerCharacter::LoadGame()
 
 	for (AActor* Chest : SaveGameInstance->Chests)
 	{
-		Chest->SetActorHiddenInGame(true);
-		Chest->SetActorEnableCollision(false);
+		if (Chest)
+		{
+			Chest->SetActorHiddenInGame(true);
+			Chest->SetActorEnableCollision(false);	
+		}
 	}
 	
 	
