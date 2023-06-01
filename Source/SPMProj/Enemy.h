@@ -35,7 +35,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(VisibleAnywhere, Category=Stats)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Stats, meta = (AllowPrivateAccess = true))
 	class UStatComponent* Stats;
 
 	UPROPERTY(EditDefaultsOnly, Category = Damaged)
