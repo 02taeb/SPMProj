@@ -4,149 +4,149 @@
 		{
 			"name": "Launch SPMProj (Debug)",
 			"request": "launch",
-			"program": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
+			"program": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Debug.exe",
 			"preLaunchTask": "SPMProj Win64 Debug Build",
 			"args": [
 			],
-			"cwd": "C:\\UE_5.1",
+			"cwd": "D:\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "D:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "D:\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProj (DebugGame)",
 			"request": "launch",
-			"program": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
+			"program": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-DebugGame.exe",
 			"preLaunchTask": "SPMProj Win64 DebugGame Build",
 			"args": [
 			],
-			"cwd": "C:\\UE_5.1",
+			"cwd": "D:\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "D:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "D:\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProj (Development)",
 			"request": "launch",
-			"program": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame.exe",
+			"program": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Binaries\\Win64\\UnrealGame.exe",
 			"preLaunchTask": "SPMProj Win64 Development Build",
 			"args": [
 			],
-			"cwd": "C:\\UE_5.1",
+			"cwd": "D:\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "D:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "D:\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProj (Test)",
 			"request": "launch",
-			"program": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
+			"program": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Test.exe",
 			"preLaunchTask": "SPMProj Win64 Test Build",
 			"args": [
 			],
-			"cwd": "C:\\UE_5.1",
+			"cwd": "D:\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "D:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "D:\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProj (Shipping)",
 			"request": "launch",
-			"program": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
+			"program": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Binaries\\Win64\\UnrealGame-Win64-Shipping.exe",
 			"preLaunchTask": "SPMProj Win64 Shipping Build",
 			"args": [
 			],
-			"cwd": "C:\\UE_5.1",
+			"cwd": "D:\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "D:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "D:\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProjEditor (Debug)",
 			"request": "launch",
-			"program": "C:\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
+			"program": "D:\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-Debug.exe",
 			"preLaunchTask": "SPMProjEditor Win64 Debug Build",
 			"args": [
-				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
+				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject"
 			],
-			"cwd": "C:\\UE_5.1",
+			"cwd": "D:\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "D:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "D:\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProjEditor (DebugGame)",
 			"request": "launch",
-			"program": "C:\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
+			"program": "D:\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor-Win64-DebugGame.exe",
 			"preLaunchTask": "SPMProjEditor Win64 DebugGame Build",
 			"args": [
-				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
+				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject"
 			],
-			"cwd": "C:\\UE_5.1",
+			"cwd": "D:\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "D:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "D:\\UE_5.1"
 			}
 		},
 		{
 			"name": "Launch SPMProjEditor (Development)",
 			"request": "launch",
-			"program": "C:\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
+			"program": "D:\\UE_5.1\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
 			"preLaunchTask": "SPMProjEditor Win64 Development Build",
 			"args": [
-				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject"
+				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject"
 			],
-			"cwd": "C:\\UE_5.1",
+			"cwd": "D:\\UE_5.1",
 			"stopAtEntry": false,
 			"console": "externalTerminal",
 			"type": "cppvsdbg",
-			"visualizerFile": "C:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
+			"visualizerFile": "D:\\UE_5.1\\Engine\\Extras\\VisualStudioDebugging\\Unreal.natvis",
 			"sourceFileMap": {
-				"D:\\build\\++UE5\\Sync": "C:\\UE_5.1"
+				"D:\\build\\++UE5\\Sync": "D:\\UE_5.1"
 			}
 		},
 		{
 			"name": "Generate Project Files",
 			"type": "coreclr",
 			"request": "launch",
-			"program": "C:\\UE_5.1\\Engine\\Build\\BatchFiles\\RunUBT.bat",
+			"program": "D:\\UE_5.1\\Engine\\Build\\BatchFiles\\RunUBT.bat",
 			"args": [
 				"-projectfiles",
 				"-vscode",
-				"-project=C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
+				"-project=D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
 				"-game",
 				"-engine"
 			],
 			"console": "externalTerminal",
 			"stopAtEntry": false,
-			"cwd": "C:\\UE_5.1"
+			"cwd": "D:\\UE_5.1"
 		}
 	]
 }
