@@ -1,466 +1,466 @@
 [
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\AI_EnemyController.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\AI_EnemyController.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\AI_EnemyController.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\AI_EnemyController.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTService_CheckDistPlayerAndAI.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_CheckDistPlayerAndAI.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTService_CheckDistPlayerAndAI.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_CheckDistPlayerAndAI.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTService_LastPlayerLocation.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_LastPlayerLocation.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTService_LastPlayerLocation.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_LastPlayerLocation.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocation.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocation.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocation.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocation.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocationIfSeen.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocationIfSeen.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocationIfSeen.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_PlayerLocationIfSeen.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTService_StartLocation.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_StartLocation.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTService_StartLocation.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTService_StartLocation.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTTask_Attack.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_Attack.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTTask_Attack.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_Attack.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTTask_ClearBlackboardValue.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_ClearBlackboardValue.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTTask_ClearBlackboardValue.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_ClearBlackboardValue.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTTask_MoveAroundPlayer.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_MoveAroundPlayer.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTTask_MoveAroundPlayer.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_MoveAroundPlayer.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTTask_MoveToPatrolLocation.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_MoveToPatrolLocation.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTTask_MoveToPatrolLocation.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_MoveToPatrolLocation.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTTask_ResetTargetLock.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_ResetTargetLock.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BTTask_ResetTargetLock.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BTTask_ResetTargetLock.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BossCrystal.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BossCrystal.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BossCrystal.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BossCrystal.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BossManager.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BossManager.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\BossManager.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\BossManager.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\CameraTransparencyComponent.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\CharacterStates.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\CharacterStates.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\Enemy.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\Enemy.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\Enemy.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\Enemy.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\EquipableItemActor.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\EquipableItemActor.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\EquipableItemActor.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\EquipableItemActor.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\EquipableParasite.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\EquipableParasite.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\EquipableParasite.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\EquipableParasite.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\FightingArea.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\FightingArea.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\FightingArea.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\FightingArea.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\HealthItemActor.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\HealthItemActor.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\HealthItemActor.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\HealthItemActor.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\InteractableComponent.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InteractableComponent.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\InteractableComponent.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InteractableComponent.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\InventoryComponent.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InventoryComponent.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\InventoryComponent.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\InventoryComponent.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\ItemActor.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\ItemActor.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\ItemActor.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\ItemActor.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\MeleeWeapon.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\MeleeWeapon.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\MeleeWeapon.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\MeleeWeapon.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\PlayerCharacter.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\PlayerCharacter.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\PlayerCharacter.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\PlayerCharacter.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\SPMProj.Build.cs",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProj.Build.cs",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\SPMProj.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProj.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\SPMProj.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProj.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SPMProjGameModeBase.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\SavedGame.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SavedGame.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\SavedGame.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\SavedGame.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\StatComponent.cpp",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\StatComponent.cpp",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	},
 	{
-		"file": "D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\Source\\SPMProj\\StatComponent.h",
+		"file": "C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\Source\\SPMProj\\StatComponent.h",
 		"arguments": [
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\cl.exe",
-			"@D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.256.rsp"
+			"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe",
+			"@C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\.vscode\\compileCommands_Default\\SPMProj.262.rsp"
 		],
-		"directory": "D:\\UE_5.1\\Engine\\Source"
+		"directory": "C:\\UE_5.1\\Engine\\Source"
 	}
 ]

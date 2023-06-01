@@ -9,13 +9,13 @@
 				"SPMProj",
 				"Win64",
 				"Debug",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -26,7 +26,7 @@
 				"SPMProj",
 				"Win64",
 				"Debug",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -35,7 +35,7 @@
 			],
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -46,13 +46,13 @@
 				"SPMProj",
 				"Win64",
 				"Debug",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -63,13 +63,13 @@
 				"SPMProj",
 				"Win64",
 				"DebugGame",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -80,7 +80,7 @@
 				"SPMProj",
 				"Win64",
 				"DebugGame",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -89,7 +89,7 @@
 			],
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -100,13 +100,13 @@
 				"SPMProj",
 				"Win64",
 				"DebugGame",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -117,13 +117,13 @@
 				"SPMProj",
 				"Win64",
 				"Development",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -134,7 +134,7 @@
 				"SPMProj",
 				"Win64",
 				"Development",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -143,7 +143,7 @@
 			],
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -154,13 +154,13 @@
 				"SPMProj",
 				"Win64",
 				"Development",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -171,13 +171,13 @@
 				"SPMProj",
 				"Win64",
 				"Test",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -188,7 +188,7 @@
 				"SPMProj",
 				"Win64",
 				"Test",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -197,7 +197,7 @@
 			],
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -208,13 +208,13 @@
 				"SPMProj",
 				"Win64",
 				"Test",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -225,13 +225,13 @@
 				"SPMProj",
 				"Win64",
 				"Shipping",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -242,7 +242,7 @@
 				"SPMProj",
 				"Win64",
 				"Shipping",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -251,7 +251,7 @@
 			],
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -262,283 +262,13 @@
 				"SPMProj",
 				"Win64",
 				"Shipping",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Debug Build",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Build.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Debug",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Debug Rebuild",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Build.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Debug",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"dependsOn": [
-				"SPMProj HoloLens Debug Clean"
-			],
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Debug Clean",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Clean.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Debug",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens DebugGame Build",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Build.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"DebugGame",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens DebugGame Rebuild",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Build.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"DebugGame",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"dependsOn": [
-				"SPMProj HoloLens DebugGame Clean"
-			],
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens DebugGame Clean",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Clean.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"DebugGame",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Development Build",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Build.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Development",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Development Rebuild",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Build.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Development",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"dependsOn": [
-				"SPMProj HoloLens Development Clean"
-			],
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Development Clean",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Clean.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Development",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Test Build",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Build.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Test",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Test Rebuild",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Build.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Test",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"dependsOn": [
-				"SPMProj HoloLens Test Clean"
-			],
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Test Clean",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Clean.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Test",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Shipping Build",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Build.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Shipping",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Shipping Rebuild",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Build.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Shipping",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"dependsOn": [
-				"SPMProj HoloLens Shipping Clean"
-			],
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
-			}
-		},
-		{
-			"label": "SPMProj HoloLens Shipping Clean",
-			"group": "build",
-			"command": "Engine\\Build\\BatchFiles\\Clean.bat",
-			"args": [
-				"SPMProj",
-				"HoloLens",
-				"Shipping",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
-				"-waitmutex"
-			],
-			"problemMatcher": "$msCompile",
-			"type": "shell",
-			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -549,13 +279,13 @@
 				"SPMProjEditor",
 				"Win64",
 				"Debug",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -566,7 +296,7 @@
 				"SPMProjEditor",
 				"Win64",
 				"Debug",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -575,7 +305,7 @@
 			],
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -586,13 +316,13 @@
 				"SPMProjEditor",
 				"Win64",
 				"Debug",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -603,13 +333,13 @@
 				"SPMProjEditor",
 				"Win64",
 				"DebugGame",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -620,7 +350,7 @@
 				"SPMProjEditor",
 				"Win64",
 				"DebugGame",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -629,7 +359,7 @@
 			],
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -640,13 +370,13 @@
 				"SPMProjEditor",
 				"Win64",
 				"DebugGame",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -657,13 +387,13 @@
 				"SPMProjEditor",
 				"Win64",
 				"Development",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -674,7 +404,7 @@
 				"SPMProjEditor",
 				"Win64",
 				"Development",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
@@ -683,7 +413,7 @@
 			],
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		},
 		{
@@ -694,13 +424,13 @@
 				"SPMProjEditor",
 				"Win64",
 				"Development",
-				"D:\\Therese Skola\\GitHub\\SPMProj\\SPMProj\\SPMProj.uproject",
+				"C:\\Users\\huwe8756\\Documents\\GitHub\\SPMProj\\SPMProj.uproject",
 				"-waitmutex"
 			],
 			"problemMatcher": "$msCompile",
 			"type": "shell",
 			"options": {
-				"cwd": "D:\\UE_5.1"
+				"cwd": "C:\\UE_5.1"
 			}
 		}
 	]
