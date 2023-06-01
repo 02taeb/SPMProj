@@ -38,6 +38,12 @@ public:
 	UPROPERTY()
 	TArray <float> PlayerState;
 
+	UPROPERTY()
+	TArray <AActor*> Chests;
+
+	UPROPERTY()
+	bool hasWeapon;
+
 	//Hela inventory som sparas
 	//UPROPERTY(VisibleAnywhere, Category = "Generic")
 	//TArray <class AItemActor*> CurrentItems;

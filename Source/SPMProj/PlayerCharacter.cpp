@@ -289,6 +289,7 @@ void APlayerCharacter::LookRightRate(const FInputActionValue& Value)
 
 void APlayerCharacter::Interact(const FInputActionValue& Value)
 {
+
 	/*Equip part, just a first test place*/
 	if (AMeleeWeapon* Weapon = Cast<AMeleeWeapon>(OverlapWeapon))
 	{
@@ -650,7 +651,8 @@ void APlayerCharacter::NoClip(const FInputActionValue& Value)
 void APlayerCharacter::SpawnSword(const FInputActionValue& Value)
 {
 	const FVector SpawnLoc = GetActorLocation();
-	GetWorld()->SpawnActor(MeleeWeaponClass, &SpawnLoc);
+	AMeleeWeapon* test =Cast<AMeleeWeapon> (GetWorld()->SpawnActor(MeleeWeaponClass, &SpawnLoc));
+	SetOverlapWeapon(test);
 	UE_LOG(LogTemp, Display, TEXT("Spawned Sword"));
 }
 
@@ -903,8 +905,11 @@ void APlayerCharacter::SaveGame()
 	}
 	else
 	{
-		//Startposition i main leveln
-		SaveGameInstance->CheckpointLocation = (FVector(2307.280732,-3817.228635,208.359359));
+		if (SaveGameInstance->CheckpointLocation == FVector::ZeroVector)
+		{
+			//Startposition i main leveln
+			SaveGameInstance->CheckpointLocation = (FVector(2307.280732,-3817.228635,208.359359));
+		}
 	}
 
 	SaveGameInstance->PlayerState = Stats->GetState();
@@ -913,6 +918,18 @@ void APlayerCharacter::SaveGame()
 	{
 		UE_LOG(LogTemp, Display, TEXT("Empty on save"));
 	}
+
+	if (EquipedWeapon)
+	{
+		SaveGameInstance->hasWeapon = true;
+	}
+	else
+	{
+		SaveGameInstance->hasWeapon = false;
+	}
+	
+	SaveGameInstance->Chests = ChestsOpened;
+
 	//save game instance
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->SaveSlotName, SaveGameInstance->UserIndex);
 
@@ -954,6 +971,22 @@ void APlayerCharacter::LoadGame()
 	{
 		Stats->SetState(SaveGameInstance->PlayerState);	
 	}
+
+	if (SaveGameInstance->hasWeapon)
+	{
+		FInputActionValue value;
+		SpawnSword(value);
+		Interact(value);
+	}
+
+	for (AActor* Chest : SaveGameInstance->Chests)
+	{
+		Chest->SetActorHiddenInGame(true);
+		Chest->SetActorEnableCollision(false);
+	}
+	
+	
+
 
 	OnGameLoaded.Broadcast();
 
