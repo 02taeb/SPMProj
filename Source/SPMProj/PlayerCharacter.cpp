@@ -429,41 +429,44 @@ void APlayerCharacter::KillSelf()
 
 void APlayerCharacter::Dodge(const FInputActionValue& Value)
 {
+    UE_LOG(LogTemp, Warning, TEXT("1"));
 	if (EquipedWeapon && EquipedWeapon->GetCollisionBox()->GetCollisionEnabled() == ECollisionEnabled::QueryOnly)
 	{
 		SetWeaponCollison(ECollisionEnabled::NoCollision);
 	}
-
+	UE_LOG(LogTemp, Warning, TEXT("2"));
 	if (!Super::CanJump())
 	{
 		return;
 	}
-
+	UE_LOG(LogTemp, Warning, TEXT("3"));
 
 	if (bNoClip)
 		return;
-
+	UE_LOG(LogTemp, Warning, TEXT("4"));
 	if (ActionState != ECharacterActionState::ECAS_AttackingNormal && ActionState !=
 		ECharacterActionState::ECAS_AttackingHeavy && ActionState != ECharacterActionState::ECAS_NoAction && ActionState != ECharacterActionState::ECAS_TargetLocked)
 		return;
-
+	UE_LOG(LogTemp, Warning, TEXT("5"));
 
 	if (Stats->GetCurrentStamina() <= 0)
 	{
 		return;
 	}
-
+	UE_LOG(LogTemp, Warning, TEXT("6"));
 
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	UE_LOG(LogTemp, Warning, TEXT("7"));
 	if (AnimInstance && DodgeMontage)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("8"));
 		auto PlayerEIComponent = FindComponentByClass<UInputComponent>();
 		if (PlayerEIComponent == nullptr) return;
-
+		UE_LOG(LogTemp, Warning, TEXT("9"));
 		float ForwardAxisValue = PlayerEIComponent->GetAxisValue("Forward");
 		float RightAxisValue = PlayerEIComponent->GetAxisValue("Right");
 		if (FMath::Abs(ForwardAxisValue) == 0 && FMath::Abs(RightAxisValue) == 0) return;
-
+		UE_LOG(LogTemp, Warning, TEXT("10"));
 		AnimInstance->Montage_Play(DodgeMontage);
 		PlaySound(RollSoundCue);
 		ActionState = ECharacterActionState::ECAS_Dodging;
@@ -473,6 +476,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 
 		if (FMath::Abs(ForwardAxisValue) == 1 && FMath::Abs(RightAxisValue) == 1)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("11"));
 			if (ForwardAxisValue == 1 && RightAxisValue == -1)
 				AnimInstance->Montage_JumpToSection(
 					FName("DodgeFL"), DodgeMontage);
@@ -488,6 +492,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 		}
 		else
 		{
+			UE_LOG(LogTemp, Warning, TEXT("12"));
 			if (ForwardAxisValue > 0)
 			{
 				AnimInstance->Montage_JumpToSection(FName("DodgeForward"), DodgeMontage);
@@ -506,6 +511,7 @@ void APlayerCharacter::Dodge(const FInputActionValue& Value)
 			}
 		}
 	}
+	UE_LOG(LogTemp, Warning, TEXT("13"));
 }
 
 void APlayerCharacter::TargetLock(const FInputActionValue& Value)
